@@ -6,6 +6,9 @@ import requests
 import threading
 import tkinter as tk
 from tkinter import messagebox
+"""
+Dll监听20035，并向20042发送信息
+"""
 
 def get_wx_version():
     try:
@@ -27,7 +30,7 @@ def get_wx_version():
 def request_handler(endpoint, method='POST'):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            url = f"http://localhost:8080{endpoint}"
+            url = f"http://localhost:20035{endpoint}"
             headers = {'Content-Type': 'application/json'}
             payload = func(*args, **kwargs)
 

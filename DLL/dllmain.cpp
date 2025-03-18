@@ -135,7 +135,7 @@ private:
             return false;
         }
 
-        if (HttpAddUrlToUrlGroup(m_urlGroupId, L"http://localhost:8080/", 0, 0) != NO_ERROR) {
+        if (HttpAddUrlToUrlGroup(m_urlGroupId, L"http://localhost:20035/", 0, 0) != NO_ERROR) {
             HttpCloseUrlGroup(m_urlGroupId);
             HttpCloseServerSession(m_serverSessionId);
             return false;
@@ -159,8 +159,8 @@ private:
         default: method = "UNKNOWN"; break;
         }
 
-        std::wstring urlPathW(pRequest->CookedUrl.pFullUrl + wcslen(L"http://localhost:8080"),
-            pRequest->CookedUrl.FullUrlLength / sizeof(WCHAR) - wcslen(L"http://localhost:8080"));
+        std::wstring urlPathW(pRequest->CookedUrl.pFullUrl + wcslen(L"http://localhost:20035"),
+            pRequest->CookedUrl.FullUrlLength / sizeof(WCHAR) - wcslen(L"http://localhost:20035"));
         std::string urlPath(urlPathW.begin(), urlPathW.end());
 
         std::unordered_map<std::string, std::function<bool(const json&)>> handlers = {
@@ -313,11 +313,8 @@ void PeriodicSendText() {
     while (g_running) {
         // 准备要发送的消息
         json jsonData;
-        jsonData["who"] = "filehelper";
-        jsonData["msg"] = "Hello";
-
-        // 调用SendText发送消息
-        bool sendResult = SendText(jsonData);
+        jsonData["Heart"] = "Information";
+        jsonData["Msg"] = "Pengpeng";
 
         // 将JSON对象序列化为字符串
         std::string message = jsonData.dump();
@@ -325,7 +322,7 @@ void PeriodicSendText() {
         // 调用SendTOClient发送消息到指定的IP和端口
         bool sendToClientResult = SendTOClient(message);
 
-        if (!sendResult || !sendToClientResult) {
+        if (!sendToClientResult) {
             OutputDebugStringA("Failed to send messages.");
         }
 
