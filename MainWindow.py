@@ -112,8 +112,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             if isinstance(popup, QListView):
                 popup.setStyleSheet(common.load_stylesheet("completer_QListView.css"))
             self.receiver_lineEdit.setCompleter(completer)
-        except Exception as e:
-            print(e)
+        except Exception:
+            pass
 
     def update_wx(self):
         global wx
