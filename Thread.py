@@ -51,7 +51,8 @@ class AiWorkerThread(QThread):
     def run(self):
         if self.receiver != "全局Ai接管":
             try:
-                self.app_instance.wx.SendMsg(msg=" ", who=self.receiver)
+                if not self.app_instance.wx.SendMsg(msg=" ", who=self.receiver):
+                    raise ValueError(f"Ai接管初始化出错,被接管人不存在。")
             except Exception as e:
                 log("ERROR", f"{str(e)}")
                 self.app_instance.on_thread_finished()
@@ -78,8 +79,11 @@ class AiWorkerThread(QThread):
                                                 raise FileNotFoundError(
                                                     f"回复规则有误,没有 {os.path.basename(reply)} 文件")
                                         else:
-                                            log("INFO", f"根据规则自动回复 {reply}")
-                                            self.app_instance.wx.SendMsg(msg=reply, who=who)
+                                            log("INFO", f"根据规则自动回复 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply}")
+                                            if not self.app_instance.wx.SendMsg(msg=reply, who=who):
+                                                raise ValueError(
+                                                    f"抱歉, 发给 {reply[:8] + '……' if len(reply) > 6 else reply}"
+                                                    f" 的 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply} 失败了")
                                 else:
                                     self.main(msg, who)
                             else:
@@ -99,8 +103,11 @@ class AiWorkerThread(QThread):
                                         else:
                                             raise FileNotFoundError(f"回复规则有误,没有 {os.path.basename(reply)} 文件")
                                     else:
-                                        log("INFO", f"根据规则自动回复 {reply}")
-                                        self.app_instance.wx.SendMsg(msg=reply, who=self.receiver)
+                                        log("INFO", f"根据规则自动回复 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply}")
+                                        if not self.app_instance.wx.SendMsg(msg=reply, who=self.receiver):
+                                            raise ValueError(
+                                                f"抱歉, 发给 {reply[:8] + '……' if len(reply) > 6 else reply}"
+                                                f" 的 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply} 失败了")
                             else:
                                 self.main(msg, self.receiver)
                         else:
@@ -169,8 +176,11 @@ class AiWorkerThread(QThread):
             result = response['choices'][0]['message']['content'] if response else "无法解析响应"
 
         if result:
-            self.app_instance.wx.SendMsg(msg=result, who=who)
-            log("INFO", f"Ai发送:{result}")
+            if not self.app_instance.wx.SendMsg(msg=result, who=who):
+                raise ValueError(
+                    f"抱歉, 发给 {result[:8] + '……' if len(result) > 6 else result}"
+                    f" 的 {result[:8] + '……' + result[-8:] if len(result) > 20 else result} 失败了")
+            log("INFO", f"Ai发送:{result[:8] + '……' + result[-8:] if len(result) > 20 else result}")
 
 
 class SplitWorkerThread(QThread):
@@ -193,7 +203,10 @@ class SplitWorkerThread(QThread):
 
             try:
                 log("INFO", f"发送 '{sentence}' 给 {self.receiver}")
-                self.app_instance.wx.SendMsg(msg=sentence, who=self.receiver)
+                if not self.app_instance.wx.SendMsg(msg=sentence, who=self.receiver):
+                    raise ValueError(
+                        f"抱歉, 发给 {sentence[:8] + '……' if len(sentence) > 6 else sentence}"
+                        f" 的 {sentence[:8] + '……' + sentence[-8:] if len(sentence) > 20 else sentence} 失败了")
             except Exception as e:
                 log("ERROR", f"{str(e)}")
                 self.app_instance.is_sending = False
@@ -269,18 +282,22 @@ class WorkerThread(QtCore.QThread):
                             break
                         self.app_instance.wx.VideoCall(who=name)
                     else:
-                        log("INFO", f"开始把 {info[:25] + '……' if len(info) > 25 else info} 发给 {name[:8]}")
+                        log("INFO", f"开始把 {info[:8] + '……' + info[-8:] if len(info) > 20 else info}"
+                                    f" 发给 {name[:8] + '……' if len(name) > 6 else name}")
                         if self.interrupted:
                             break
                         if "@所有人" in info:
                             info = info.replace("@所有人", "").strip()
                             self.app_instance.wx.AtAll(msg=info, who=name)
                         else:
-                            self.app_instance.wx.SendMsg(msg=info, who=name)
+                            if not self.app_instance.wx.SendMsg(msg=info, who=name):
+                                raise ValueError(f"抱歉, 发给 {name[:8] + '……' if len(name) > 6 else name}"
+                                                 f" 的 {info[:8] + '……' + info[-8:] if len(info) > 20 else info} 失败了")
 
                     if self.interrupted:
                         break
-                    log("DEBUG", f"成功把 {info[:25] + '……' if len(info) > 25 else info} 发给 {name[:8]} ")
+                    log("DEBUG", f"成功把 {info[:8] + '……' + info[-8:] if len(info) > 20 else info}"
+                                 f" 发给 {name[:8] + '……' if len(name) > 6 else name} ")
                     success = True
                 except Exception as e:
                     if str(e) and retries < max_retries:
