@@ -8,7 +8,7 @@ from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import QCompleter, QListView
-from wxauto import WeChat
+from wxautox import WeChat
 
 import common
 from ActivitiesWindow import ActivitiesWindow
