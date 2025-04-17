@@ -23,14 +23,14 @@ AppUpdatesURL={#MyAppURL}
 VersionInfoVersion=4.3.9.2
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=D:\code\Python\LeafAuto\license.txt
+LicenseFile=D:\code\Python\LeafAuto_Pro\license.txt
 ; 以下行取消注释，以在非管理安装模式下运行（仅为当前用户安装）。
 ;PrivilegesRequired=lowest
 ; 以管理员身份运行
 PrivilegesRequired=admin
 OutputDir=C:\Users\YangShengzhou\Desktop
 OutputBaseFilename=枫叶信息{#MyAppVersion}
-SetupIconFile=D:\code\Python\LeafAuto\resources\img\setup.ico
+SetupIconFile=D:\code\Python\LeafAuto_Pro\resources\img\setup.ico
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
