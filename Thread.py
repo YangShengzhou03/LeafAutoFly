@@ -8,6 +8,7 @@ from datetime import datetime
 import requests
 from PyQt6 import QtCore, QtMultimedia
 from PyQt6.QtCore import QThread, pyqtSignal
+import validators
 
 from common import log, get_current_time
 
@@ -290,10 +291,16 @@ class WorkerThread(QtCore.QThread):
                             info = info.replace("@所有人", "").strip()
                             self.app_instance.wx.AtAll(msg=info, who=name)
                         else:
-                            if not self.app_instance.wx.SendMsg(msg=info, who=name):
-                                raise ValueError(f"抱歉, 发给 {name[:8] + '……' if len(name) > 6 else name}"
-                                                 f" 的 {info[:8] + '……' + info[-8:] if len(info) > 20 else info} 失败了")
-
+                            def is_url_advanced(string):
+                                return validators.url(string)
+                            if is_url_advanced(info):
+                                if not self.app_instance.wx.SendUrlCard(url=info, friends=name):
+                                    raise ValueError(f"抱歉, 发给 {name[:8] + '……' if len(name) > 6 else name}"
+                                                     f" 的 {info[:8] + '……' + info[-8:] if len(info) > 16 else info} 失败了")
+                            else:
+                                if not self.app_instance.wx.SendMsg(msg=info, who=name):
+                                    raise ValueError(f"抱歉, 发给 {name[:8] + '……' if len(name) > 6 else name}"
+                                                     f" 的 {info[:8] + '……' + info[-8:] if len(info) > 20 else info} 失败了")
                     if self.interrupted:
                         break
                     log("DEBUG", f"成功把 {info[:8] + '……' + info[-8:] if len(info) > 20 else info}"
