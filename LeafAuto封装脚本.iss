@@ -1,12 +1,12 @@
 ﻿; 脚本由 Inno Setup 脚本向导 生成！
 ; 有关创建 Inno Setup 脚本文件的详细资料请查阅帮助文档！
 
-#define MyAppName "LeafAuto"
+#define MyAppName "LeafAuto PRO"
 #define MyAppVersion "4.3.9.2"
 #define MyAppPublisher "Yangshengzhou"
 #define MyAppURL "https://blog.csdn.net/Yang_shengzhou"
 #define AppSupportURL "https://blog.csdn.net/Yang_shengzhou/article/details/143782041"
-#define MyAppExeName "LeafAuto.exe"
+#define MyAppExeName "LeafAuto PRO.exe"
 
 [Setup]
 ; 注: AppId的值为单独标识该应用程序。

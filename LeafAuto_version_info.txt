@@ -16,12 +16,12 @@ VSVersionInfo(
           '040904B0',
           [
             StringStruct('CompanyName', 'Yangshengzhou'),
-            StringStruct('FileDescription', 'LeafAuto'),
+            StringStruct('FileDescription', 'LeafAuto PRO'),
             StringStruct('FileVersion', '4.3.9.2'),
-            StringStruct('InternalName', 'LeafAuto'),
+            StringStruct('InternalName', 'LeafAuto PRO'),
             StringStruct('LegalCopyright', 'Copyright © 2025 YangShengzhou 版权所有'),
-            StringStruct('OriginalFilename', 'LeafAuto.exe'),
-            StringStruct('ProductName', 'LeafAuto'),
+            StringStruct('OriginalFilename', 'LeafAuto PRO.exe'),
+            StringStruct('ProductName', 'LeafAuto PRO'),
             StringStruct('ProductVersion', '4.3.9.2')
           ]
         )
