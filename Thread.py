@@ -278,10 +278,10 @@ class WorkerThread(QtCore.QThread):
                         else:
                             raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                     elif info == 'Video_chat':
-                        log("INFO", f"开始与 {name} 视频通话")
+                        log("INFO", f"PRO版已移除视频通话功能")
                         if self.interrupted:
                             break
-                        self.app_instance.wx.VideoCall(who=name)
+                        # self.app_instance.wx.VideoCall(who=name)
                     else:
                         log("INFO", f"开始把 {info[:8] + '……' + info[-8:] if len(info) > 20 else info}"
                                     f" 发给 {name[:8] + '……' if len(name) > 6 else name}")
