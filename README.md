@@ -2,13 +2,8 @@
 
 > 🌟 让重复办公任务更轻松，用 AI 助手 + 自动化脚本提升微信效率的桌面工具
 
-![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+[![License: GPL-2.0](https://img.shields.io/badge/License-GPL--2.0-blue.svg)](./LICENSE)
 ![GitHub stars](https://img.shields.io/github/stars/Yangshengzhou/lucky-smss?style=social)
-![GitHub release](https://img.shields.io/github/v/release/yangshengzhou/lucky-smss)
----
-![GitHub contributors](https://img.shields.io/github/contributors/yangshengzhou/lucky-smss)
-![GitHub last commit](https://img.shields.io/github/last-commit/yangshengzhou/lucky-smss)
-![GitHub issues](https://img.shields.io/github/issues/yangshengzhou/lucky-smss)
 ---
 
 ## 📚 目录
