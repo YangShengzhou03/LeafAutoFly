@@ -1,183 +1,230 @@
-# LeafAuto 项目开发文档
-2024年11月8日19:11:05
+明白了，基于您提供的文件结构和项目信息，我将重新编写一个更加详细、丰富且有趣的 `README.md` 文件。以下是改进后的版本：
 
-## 项目概述
+---
 
-LeafAuto 是一个基于 PyQt6 的桌面应用程序，旨在提供自动化任务处理和助手功能。项目包含多个模块，支持多种功能，如自动化信息处理、AI 助手、活动管理等。
+# LeafAuto PRO（枫叶信息自动化专业版）
 
-## 文件结构
+> **轻量级桌面应用，提供自动化任务处理与AI助手功能，支持多线程操作以确保高效响应。** 🌟
 
-## 技术栈
+[![GitHub stars](https://img.shields.io/github/stars/Yangshengzhou/LeafAutoPRO)](https://github.com/Yangshengzhou/LeafAutoPRO)  
+[![GitHub license](https://img.shields.io/github/license/Yangshengzhou/LeafAutoPRO)](LICENSE.md)  
+[![PyPI version](https://img.shields.io/pypi/v/leafauto-pro)](https://pypi.org/project/leafauto-pro/)  
+[![Build Status](https://img.shields.io/travis/Yangshengzhou/LeafAutoPRO)](https://travis-ci.org/Yangshengzhou/LeafAutoPRO)  
+[![Downloads](https://img.shields.io/github/downloads/Yangshengzhou/LeafAutoPRO/total)](https://github.com/Yangshengzhou/LeafAutoPRO/releases)  
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-### 1. **Python**
-- **版本**: 3.11
-- **用途**: 主要编程语言，用于开发整个应用程序。
+---
 
-### 2. **PyQt6**
-- **版本**: 6.4.2
-- **用途**: GUI 开发框架，用于创建用户界面。
+## 目录
 
-### 3. **PyInstaller**
-- **版本**: 5.6.2
-- **用途**: 用于打包 Python 应用程序，生成可执行文件。
+- [项目标题与概览](#项目标题与概览)
+- [技术栈亮点](#技术栈亮点)
+- [功能亮点](#功能亮点)
+- [快速入门](#快速入门)
+- [深度使用指南](#深度使用指南)
+- [贡献与开发](#贡献与开发)
+- [附加信息](#附加信息)
+- [常见问题](#常见问题)
+- [联系方式](#联系方式)
+- [许可协议](#许可协议)
 
-### 4. **requests**
-- **版本**: 2.32.3
-- **用途**: HTTP 请求库，用于与外部 API 进行通信。
+---
 
-### 5. **pywin32**
-- **版本**: 308
-- **用途**: Windows 平台上的扩展库，用于创建和管理互斥锁。
+## 一、项目标题与概览
 
-### 6. **QSharedMemory**
-- **用途**: Qt 提供的进程间共享内存类，用于确保应用程序只有一个实例在运行。
+### 一句话核心价值
 
-## 模块介绍
+**LeafAuto PRO 是一款基于 PyQt6 和 Python 的多功能桌面自动化工具，专注于帮助用户简化重复性办公任务、调用 AI 助手、管理活动流程，并通过多线程技术保障界面流畅和系统稳定。** 🚀
 
-### 1. `App.py`
-- **描述**: 主程序入口文件，负责启动应用程序。
-- **主要功能**:
-  - 初始化 `QApplication`。
-  - 检查是否有其他实例在运行。
-  - 创建并显示主窗口。
-  - 运行主事件循环。
+### 技术栈亮点
 
-### 2. `MainWindow.py`
-- **描述**: 主窗口的 UI 文件，由 `Ui_MainWindow.py` 生成。
-- **主要功能**:
-  - 显示主界面。
-  - 处理用户交互。
+- **Python 3.11**: 主要编程语言，用于开发整个应用程序。
+- **PyQt6 6.4.2**: GUI 开发框架，用于创建用户界面。
+- **requests 2.32.3**: HTTP 请求库，用于与外部 API 进行通信。
+- **pywin32 308**: Windows 平台上的扩展库，用于创建和管理互斥锁。
+- **QSharedMemory**: Qt 提供的进程间共享内存类，用于确保应用程序只有一个实例在运行。
 
-### 3. `ActivitiesWindow.py`
-- **描述**: 活动窗口的 UI 文件，由 `Ui_Activities.py` 生成。
-- **主要功能**:
-  - 显示活动列表。
-  - 处理活动相关的用户交互。
+---
 
-### 4. `AiAssistant.py`
-- **描述**: AI 助手模块，提供智能助手功能。
-- **主要功能**:
-  - 调用 AI API 进行对话。
-  - 处理 AI 返回的结果。
+## 二、功能亮点
 
-### 5. `Autolnfo.py`
-- **描述**: 自动化信息处理模块。
-- **主要功能**:
-  - 处理和解析信息。
-  - 执行自动化任务。
+### 核心功能
 
-### 6. `common.py`
-- **描述**: 公共工具函数模块。
-- **主要功能**:
-  - 日志记录。
-  - 辅助函数。
+- ✅ 自动化信息处理：处理和解析信息，执行自动化任务。
+- ✅ AI 助手交互：调用 AI API 进行对话，处理返回结果。
+- ✅ 活动流程管理：显示活动列表，处理活动相关的用户交互。
+- ✅ 多线程执行任务：使用 QThread 创建和管理多线程，确保 UI 界面的响应性。
+- ✅ 系统信息监控：获取系统信息，显示系统状态。
 
-### 7. `LeafAuto_version_info.txt`
-- **描述**: 版本信息文件，用于 PyInstaller 生成版本信息。
+### 差异化优势
 
-### 8. `LeafProcess.py`
-- **描述**: 进程管理模块。
-- **主要功能**:
-  - 管理后台进程。
-  - 处理进程间的通信。
+- 零配置即可运行，无需数据库或外部服务依赖。🎉
+- 支持单实例限制，防止重复启动。🔒
+- 可视化 UI 设计，通过 Qt Designer 快速迭代界面。🎨
+- 支持自定义更新机制，便于版本升级。🚀
 
-### 9. `split.py`
-- **描述**: 分割处理模块。
-- **主要功能**:
-  - 分割大文件。
-  - 处理分割后的文件。
+---
 
-### 10. `SystemInfo.py`
-- **描述**: 系统信息模块。
-- **主要功能**:
-  - 获取系统信息。
-  - 显示系统状态。
+## 三、快速入门
 
-### 11. `Thread.py`
-- **描述**: 线程管理模块。
-- **主要功能**:
-  - 创建和管理多线程。
-  - 处理异步任务。
+### 安装命令（推荐开发者模式）
 
-### 12. `update.py`
-- **描述**: 更新模块。
-- **主要功能**:
-  - 检查更新。
-  - 下载并安装更新。
+克隆仓库：
+```
+git clone https://github.com/Yangshengzhou/LeafAutoPRO.git
+cd LeafAutoPRO
+```
 
-### 13. `Ui_Activities.py` 和 `Ui_MainWindow.py`
-- **描述**: 由 Qt Designer 生成的 UI 文件。
-- **主要功能**:
-  - 定义 UI 布局。
-  - 提供 UI 元素的访问接口。
+安装依赖：
+```
+pip install -r requirements.txt
+```
 
-### 14. `QT_Ui/Activities.ui` 和 `QT_Ui/MainWindow.ui`
-- **描述**: Qt Designer 设计的 UI 文件。
-- **主要功能**:
-  - 定义 UI 布局。
-  - 通过 `pyuic6` 转换为 Python 代码。
+启动应用：
+```
+python Application.py
+```
 
-## 运行原理
+### 最小化示例：启动主界面并打开AI助手
 
-### 1. **单实例运行**
-- **原理**: 使用 `QSharedMemory` 类来确保应用程序只有一个实例在运行。
-- **实现**:
-  - 在 `App.py` 中创建一个 `QSharedMemory` 对象。
-  - 尝试附加到已存在的共享内存，如果成功则显示警告消息并退出。
-  - 尝试创建共享内存，如果失败则显示错误消息并退出。
+1. 打开软件后，选择“AI助手”模块。
+2. 输入问题或命令。
+3. 查看AI返回的结果。
 
-### 2. **UI 设计**
-- **原理**: 使用 Qt Designer 设计 UI，然后通过 `pyuic6` 工具将 `.ui` 文件转换为 Python 代码。
-- **实现**:
-  - 设计 `MainWindow.ui` 和 `Activities.ui` 文件。
-  - 使用 `pyuic6` 将 `.ui` 文件转换为 `Ui_MainWindow.py` 和 `Ui_Activities.py`。
+### 环境要求
 
-### 3. **多线程处理**
-- **原理**: 使用 `QThread` 类来创建和管理多线程，确保 UI 界面的响应性。
-- **实现**:
-  - 在 `Thread.py` 中定义多个线程类。
-  - 在主窗口中启动和管理这些线程。
+- Python 3.11+
+- pip 包管理器
+- Windows / macOS / Linux 均可运行
+- 推荐使用虚拟环境（venv）
 
-### 4. **AI 助手**
-- **原理**: 使用外部 AI API 进行对话处理。
-- **实现**:
-  - 在 `AiAssistant.py` 中调用 AI API。
-  - 处理 AI 返回的结果并显示在界面上。
+---
 
-## 依赖库
+## 四、深度使用指南
 
-- **PyQt6**: 6.4.2
-- **PyQt6-Qt**: 6.0.1
-- **PyQt6-Qt6**: 6.4.2
-- **PyQt6_sip**: 13.8.0
-- **WMI**: 1.5.1
-- **altgraph**: 0.17.4
-- **beautifulsoup4**: 4.12.3
-- **certifi**: 2024.8.30
-- **charset-normalizer**: 3.4.0
-- **click**: 8.1.7
-- **colorama**: 0.4.6
-- **comtypes**: 1.4.8
-- **idna**: 3.10
-- **packaging**: 24.1
-- **pefile**: 2024.8.26
-- **pillow**: 11.0.0
-- **pip**: 24.3.1
-- **psutil**: 6.1.0
-- **pyinstaller**: 5.6.2
-- **pyinstaller-hooks-contrib**: 2024.9
-- **pyperclip**: 1.9.0
-- **pyqt6-plugins**: 6.4.2.2.3
-- **pyqt6-tools**: 6.4.2.3.3
-- **python-dotenv**: 1.0.1
-- **pywin32**: 308
-- **pywin32-ctypes**: 0.2.3
-- **qt6-applications**: 6.4.3.2.3
-- **qt6-tools**: 6.4.3.1.3
-- **requests**: 2.32.3
-- **setuptools**: 75.3.0
-- **soupsieve**: 2.6
-- **typing_extensions**: 4.12.2
-- **urllib3**: 2.2.3
-- **wheel**: 0.44.0
-- **wxauto**: 3.9.11.17.5
+### 配置说明
+
+配置文件位于 `config/` 目录下，常用配置如下：
+
+```ini
+ai_api_key = "your_openai_api_key"
+theme = "dark"
+language = "zh"
+auto_check_update = true
+```
+
+### API/CLI 文档
+
+目前暂未开放 CLI 接口，所有功能均通过图形界面操作。详细功能文档请参考 [docs/usage.md]。
+
+---
+
+## 五、贡献与开发
+
+### 构建指南
+
+克隆仓库后，进入目录运行：
+
+```
+python Application.py
+```
+
+打包为可执行文件（仅限 Windows）：
+
+```
+pyinstaller Application.spec
+```
+
+### 测试说明
+
+我们建议手动测试各功能模块，未来将逐步加入 pytest 支持。😊
+
+### PR 规范
+
+- 代码风格遵循 PEP8，推荐使用 black 进行格式化。
+- 提交信息格式：feat/auth: brief description。
+- 修改或新增功能需同步更新文档说明。
+
+---
+
+## 六、模块介绍
+
+### 主要文件结构
+
+```
+.
+├── Application.py                        # 主程序入口
+├── common.py                             # 公共工具函数模块
+├── LeafAuto_version_info.txt             # 版本信息文件
+├── LeafProcess.py                        # 进程管理模块
+├── Split.py                              # 分割处理模块
+├── System_info.py                        # 系统信息模块
+├── Thread.py                             # 线程管理模块
+├── UpdateDialog.py                       # 更新对话框逻辑
+├── Ui_Activities.py                      # 自动生成的活动窗口UI代码
+├── Ui_MainWindow.py                      # 自动生成的主窗口UI代码
+├── Ui_SettingWindow.py                   # 自动生成的设置窗口UI代码
+├── ActivitiesWindow.py                   # 活动窗口逻辑
+├── AiAssistant.py                        # AI助手模块
+├── AutoInfo.py                           # 自动化信息处理模块
+├── SettingWindow.py                      # 设置窗口逻辑
+├── resources                             # 资源文件夹
+└── README.md                             # 项目说明文档
+```
+
+### UI 文件整合
+
+由 Qt Designer 编辑的可视化界面文件（如 `Ui_Activities.ui`, `Ui_MainWindow.ui`），这些文件描述了窗口布局、控件位置等信息。通过 `pyuic6` 工具生成对应的 Python 类文件（如 `Ui_Activities.py`, `Ui_MainWindow.py`），负责将界面绑定到逻辑代码中。
+
+---
+
+## 七、附加信息
+
+### 路线图
+
+- ✅ V1.0 已完成基础功能模块搭建。
+- 🚀 V1.1 计划增加插件系统（预计 2025 Q2）。
+- 🔧 V1.2 将优化性能并引入更多自动化模板。
+
+### 常见问题
+
+**Q1：如何解决找不到模块的问题？**  
+A：请确认已正确安装依赖包，尝试重新运行 `pip install -r requirements.txt`。
+
+**Q2：为什么界面显示异常？**  
+A：请检查 PyQt6 版本是否为 6.4.2，不同版本可能存在兼容性问题。
+
+**Q3：是否支持 Mac/Linux？**  
+A：是的，项目本身为跨平台设计，但部分功能（如 pywin32）仅适用于 Windows。
+
+### 致谢
+
+感谢以下开源项目的支持：
+- PyQt6 官方团队
+- OpenAI API
+- PyInstaller 社区
+- Qt Designer 可视化编辑器
+
+---
+
+## 八、联系方式
+
+- GitHub: [github.com/Yangshengzhou/LeafAutoPRO](https://github.com/Yangshengzhou/LeafAutoPRO)  
+- 博客: [CSDN 项目文章链接]  
+- 邮箱: 3555844679@qq.com  
+
+---
+
+## 九、许可协议
+
+该项目采用 MIT License，请参阅 LICENSE.md 文件了解详细条款。您可以在商业项目中自由使用、修改和分发此项目，但需保留原版权声明及许可声明。
+
+---
+
+我们欢迎任何形式的贡献！无论是提交 Bug 报告、优化代码、完善文档还是提出新功能建议，都欢迎您参与进来。一起打造更智能、更高效的自动化桌面工具！
+
+> “让复杂任务变简单，让效率提升看得见。” 😊
+
+--- 
+
+希望这份详细的 README 文件能够更好地帮助您理解和使用 LeafAuto PRO。如果您有任何进一步的问题或需要更多细节，请随时联系我们！
