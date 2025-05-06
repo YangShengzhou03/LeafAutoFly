@@ -1,18 +1,14 @@
-理解您的需求，这里提供一个更为详尽的 `README.md` 文件，内容超过8000字，并优化徽章展示。由于篇幅限制，这里将提供部分内容示例，您可以根据需要扩展或调整。
-
----
-
 # LeafAuto PRO（枫叶信息自动化专业版）
 
-> 🌟 让重复办公任务更轻松，用 AI 助手 + 自动化脚本提升效率的桌面工具
+> 🌟 让重复办公任务更轻松，用 AI 助手 + 自动化脚本提升微信效率的桌面工具
 
-[![GitHub stars](https://img.shields.io/github/stars/Yangshengzhou/LeafAutoPRO?style=social)](https://github.com/Yangshengzhou/LeafAutoPRO)  
-[![GitHub license](https://img.shields.io/github/license/Yangshengzhou/LeafAutoPRO)](LICENSE.md)  
-[![PyPI version](https://img.shields.io/pypi/v/leafauto-pro?color=blue&logo=python&logoColor=white)](https://pypi.org/project/leafauto-pro/)  
-[![Build Status](https://img.shields.io/travis/Yangshengzhou/LeafAutoPRO?logo=travis)](https://travis-ci.org/Yangshengzhou/LeafAutoPRO)  
-[![Downloads](https://img.shields.io/github/downloads/Yangshengzhou/LeafAutoPRO/total?color=green&logo=github)](https://github.com/Yangshengzhou/LeafAutoPRO/releases)  
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?logo=black)](https://github.com/psf/black)
-
+![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+![GitHub stars](https://img.shields.io/github/stars/Yangshengzhou/lucky-smss?style=social)
+![GitHub release](https://img.shields.io/github/v/release/yangshengzhou/lucky-smss)
+---
+![GitHub contributors](https://img.shields.io/github/contributors/yangshengzhou/lucky-smss)
+![GitHub last commit](https://img.shields.io/github/last-commit/yangshengzhou/lucky-smss)
+![GitHub issues](https://img.shields.io/github/issues/yangshengzhou/lucky-smss)
 ---
 
 ## 📚 目录
@@ -46,6 +42,8 @@
 虽然这些任务可以通过编写脚本来完成，但对普通用户来说门槛太高。而市面上一些 RPA 工具又过于复杂或昂贵。
 
 因此，我们设计了 **LeafAuto PRO**，一个轻量级、可视化、可扩展、适合新手和开发者的桌面自动化工具。
+
+LeafAuto PRO 专业版在任务执行效率与多任务兼容性方面进行了深度优化。相较于普通版本，其在处理微信信息发送任务时拥有更快的响应速度，并支持与前台用户操作无缝并行运行，确保在执行自动化任务期间不影响正常的桌面交互体验。
 
 ---
 
@@ -457,7 +455,7 @@ A：建议创建一个 `plugins/` 目录，采用动态导入方式加载模块�
 欢迎任何形式的贡献！无论是提交 Bug、优化代码、完善文档还是提出新功能建议，都欢迎您参与进来！
 
 - 🐱 GitHub 仓库：[Yangshengzhou/LeafAutoPRO](https://github.com/Yangshengzhou/LeafAutoPRO)
-- 📝 博客文章（持续更新）：[CSDN博客链接]
+- 📝 博客文章（持续更新）：[https://blog.csdn.net/Yang_shengzhou/article/details/143782041]
 - 📧 联系邮箱：yangsz03@foxmail.com
 
 ---
@@ -470,6 +468,6 @@ A：建议创建一个 `plugins/` 目录，采用动态导入方式加载模块�
 
 ## ❤️ 最后一句话
 
-> “如果你也厌倦了每天重复点击鼠标，那就来试试 LeafAuto PRO 吧，让工作变得高效而有趣。”
+> “如果你也厌倦了每天定时发微信，那就来试试 LeafAuto PRO 吧，让工作变得高效而有趣。”
 
 ---
