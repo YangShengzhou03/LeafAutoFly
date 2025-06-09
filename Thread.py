@@ -3,389 +3,558 @@ import json
 import os
 import re
 import threading
+import time
 from datetime import datetime
+from typing import Optional, Dict, List
 
 import requests
 from PyQt6 import QtCore, QtMultimedia
-from PyQt6.QtCore import QThread, pyqtSignal
-import validators
+from PyQt6.QtCore import QDateTime
 
 from common import log, get_current_time
 
 
-class AiWorkerThread(QThread):
-    pause_changed = pyqtSignal(bool)
-    finished = pyqtSignal()
+class WorkerThreadBase(QtCore.QThread):
+    """工作线程基类，提供通用功能"""
+    pause_changed = QtCore.pyqtSignal(bool)
+    finished = QtCore.pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+        self._is_paused = False
+        self._is_running = False
+        self._stop_event = threading.Event()
+
+    def run(self):
+        """线程运行方法，由子类实现"""
+        raise NotImplementedError("子类必须实现run方法")
+
+    def pause(self):
+        """暂停线程执行"""
+        self._is_paused = True
+        self.pause_changed.emit(True)
+
+    def resume(self):
+        """恢复线程执行"""
+        self._is_paused = False
+        self.pause_changed.emit(False)
+
+    def requestInterruption(self):
+        """请求中断线程执行"""
+        self._stop_event.set()
+        self._is_running = False
+
+    def isPaused(self) -> bool:
+        """检查线程是否暂停"""
+        return self._is_paused
+
+    def isRunning(self) -> bool:
+        """检查线程是否正在运行"""
+        return self._is_running
+
+
+class AiWorkerThread(WorkerThreadBase):
+    """AI自动回复工作线程"""
 
     def __init__(self, app_instance, receiver, model="月之暗面", role="你很温馨,回复简单明了。"):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.model = model
-        self.stop_event = threading.Event()
-        self.running = True
         self.system_content = role
-        self.rules = self.load_rules()
+        self.rules = self._load_rules()
+        self._is_running = True
 
-    def load_rules(self):
+    def _load_rules(self) -> Optional[List[Dict]]:
+        """加载自动回复规则"""
         try:
-            with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            log("WARNING", "回复规则未创建,您可新建规则")
-            return None
+            if os.path.exists('_internal/AutoReply_Rules.json'):
+                with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            else:
+                log("WARNING", "回复规则文件不存在,您可新建规则")
+                return None
         except json.JSONDecodeError:
             log("ERROR", "接管规则文件格式错误")
             return []
+        except Exception as e:
+            log("ERROR", f"加载回复规则时出错: {str(e)}")
+            return []
 
-    def match_rule(self, msg):
+    def _match_rule(self, msg: str) -> List[str]:
+        """匹配回复规则"""
+        if not self.rules:
+            return []
+
         matched_replies = []
         for rule in self.rules:
-            if rule['match_type'] == '全匹配':
-                if msg.strip() == rule['keyword'].strip():
-                    matched_replies.append(rule['reply_content'])
-            elif rule['match_type'] == '半匹配':
-                if rule['keyword'].strip() in msg.strip():
-                    matched_replies.append(rule['reply_content'])
+            try:
+                if rule['match_type'] == '全匹配':
+                    if msg.strip() == rule['keyword'].strip():
+                        matched_replies.append(rule['reply_content'])
+                elif rule['match_type'] == '半匹配':
+                    if rule['keyword'].strip() in msg.strip():
+                        matched_replies.append(rule['reply_content'])
+            except KeyError:
+                log("ERROR", f"规则格式错误: {rule}")
+
         return matched_replies
 
     def run(self):
-        if self.receiver != "全局Ai接管":
-            try:
-                if not self.app_instance.wx.SendMsg(msg=" ", who=self.receiver):
-                    raise ValueError(f"Ai接管初始化出错,被接管人不存在。")
-            except Exception as e:
-                log("ERROR", f"{str(e)}")
-                self.app_instance.on_thread_finished()
+        """线程主循环"""
+        self._is_running = True
 
-        while self.running and not self.stop_event.is_set():
+        # 尝试向接收者发送消息，确认连接
+        if self.receiver != "全局Ai接管" and self._is_running:
             try:
+                self.app_instance.wx.SendMsg(msg=" ", who=self.receiver)
+            except Exception as e:
+                log("ERROR", f"初始化与 {self.receiver} 的连接失败: {str(e)}")
+                self._is_running = False
+
+        # 主循环
+        while self._is_running and not self._stop_event.is_set():
+            try:
+                if self._is_paused:
+                    time.sleep(0.1)  # 暂停时休眠
+                    continue
+
                 if self.receiver == "全局Ai接管":
-                    new_msg = self.app_instance.wx.GetAllNewMessage()
-                    if new_msg is not None and new_msg:
-                        who = next(iter(new_msg))
-                        who = re.sub(r'\s*[（(]\d+[）)]\s*$', '', who)
-                        msgs = self.app_instance.wx.GetAllMessage()
-                        if msgs and msgs[-1].type == "friend":
-                            msg = msgs[-1].content
-                            if self.rules is not None:
-                                matched_replies = self.match_rule(msg)
-                                if matched_replies:
-                                    for reply in matched_replies:
-                                        if os.path.isdir(os.path.dirname(reply)):
-                                            if os.path.isfile(reply):
-                                                log("INFO", f"根据规则发送文件 {os.path.basename(reply)}")
-                                                self.app_instance.wx.SendFiles(filepath=reply, who=who)
-                                            else:
-                                                raise FileNotFoundError(
-                                                    f"回复规则有误,没有 {os.path.basename(reply)} 文件")
-                                        else:
-                                            log("INFO", f"根据规则自动回复 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply}")
-                                            if not self.app_instance.wx.SendMsg(msg=reply, who=who):
-                                                raise ValueError(
-                                                    f"抱歉, 发给 {reply[:8] + '……' if len(reply) > 6 else reply}"
-                                                    f" 的 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply} 失败了")
-                                else:
-                                    self.main(msg, who)
-                            else:
-                                self.main(msg, who)
+                    self._handle_global_messages()
                 else:
-                    msgs = self.app_instance.wx.GetAllMessage()
-                    if msgs and msgs[-1].type == "friend":
-                        msg = msgs[-1].content
-                        if self.rules is not None:
-                            matched_replies = self.match_rule(msg)
-                            if matched_replies:
-                                for reply in matched_replies:
-                                    if os.path.isdir(os.path.dirname(reply)):
-                                        if os.path.isfile(reply):
-                                            log("INFO", f"根据规则发送文件 {os.path.basename(reply)}")
-                                            self.app_instance.wx.SendFiles(filepath=reply, who=self.receiver)
-                                        else:
-                                            raise FileNotFoundError(f"回复规则有误,没有 {os.path.basename(reply)} 文件")
-                                    else:
-                                        log("INFO", f"根据规则自动回复 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply}")
-                                        if not self.app_instance.wx.SendMsg(msg=reply, who=self.receiver):
-                                            raise ValueError(
-                                                f"抱歉, 发给 {reply[:8] + '……' if len(reply) > 6 else reply}"
-                                                f" 的 {reply[:8] + '……' + reply[-8:] if len(reply) > 20 else reply} 失败了")
-                            else:
-                                self.main(msg, self.receiver)
-                        else:
-                            self.main(msg, self.receiver)
+                    self._handle_specific_messages()
+
             except Exception as e:
-                log("ERROR", f"{str(e)}")
-                break
+                log("ERROR", f"处理消息时出错: {str(e)}")
+                # 出错后适当休眠，避免CPU占用过高
+                time.sleep(1)
             finally:
+                # 短暂休眠，避免CPU占用过高
                 self.msleep(100)
-        self.app_instance.on_thread_finished()
 
-    def requestInterruption(self):
-        self.stop_event.set()
+        self.finished.emit()
 
-    def query_api(self, url, payload=None, headers=None, params=None, method='POST'):
+    def _handle_global_messages(self):
+        """处理全局消息"""
+        new_msg = self.app_instance.wx.GetAllNewMessage()
+        if not new_msg:
+            return
+
+        # 获取最新消息的发送者和内容
+        who = next(iter(new_msg))
+        who = re.sub(r'\s*[（(]\d+[）)]\s*$', '', who)
+
+        msgs = self.app_instance.wx.GetAllMessage()
+        if msgs and msgs[-1].type == "friend":
+            msg = msgs[-1].content
+            self._process_message(msg, who)
+
+    def _handle_specific_messages(self):
+        """处理特定接收者的消息"""
+        msgs = self.app_instance.wx.GetAllMessage()
+        if msgs and msgs[-1].type == "friend":
+            msg = msgs[-1].content
+            self._process_message(msg, self.receiver)
+
+    def _process_message(self, msg: str, who: str):
+        """处理消息并回复"""
+        if self.rules:
+            matched_replies = self._match_rule(msg)
+            if matched_replies:
+                for reply in matched_replies:
+                    try:
+                        if os.path.isdir(os.path.dirname(reply)):
+                            if os.path.isfile(reply):
+                                log("INFO", f"根据规则发送文件 {os.path.basename(reply)} 给 {who}")
+                                self.app_instance.wx.SendFiles(filepath=reply, who=who)
+                            else:
+                                log("ERROR", f"回复规则有误,文件不存在: {os.path.basename(reply)}")
+                        else:
+                            log("INFO", f"根据规则自动回复 '{reply}' 给 {who}")
+                            self.app_instance.wx.SendMsg(msg=reply, who=who)
+                    except Exception as e:
+                        log("ERROR", f"发送自动回复时出错: {str(e)}")
+                return
+
+        # 如果没有匹配的规则或没有规则，调用AI回复
+        self._generate_ai_reply(msg, who)
+
+    def _generate_ai_reply(self, msg: str, who: str):
+        """调用AI模型生成回复"""
         try:
-            response = requests.request(method=method, url=url, json=payload, headers=headers, params=params)
+            if self.model == "文心一言":
+                result = self._query_wenxin_api(msg)
+            elif self.model == "月之暗面":
+                result = self._query_moonshot_api(msg)
+            else:
+                result = self._query_default_api(msg)
+
+            if result:
+                self.app_instance.wx.SendMsg(msg=result, who=who)
+                log("INFO", f"Ai发送给 {who}: {result[:30]}...")
+
+        except Exception as e:
+            log("ERROR", f"调用AI API时出错: {str(e)}")
+
+    def _query_wenxin_api(self, msg: str) -> str:
+        """调用文心一言API"""
+        access_token = self._get_access_token()
+        if not access_token:
+            return "无法获取访问令牌"
+
+        payload = {"messages": [{"role": "user", "content": msg}]}
+        result = self._query_api(
+            f"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token={access_token}",
+            payload=payload,
+            headers={'Content-Type': 'application/json'}
+        )
+
+        return result.get('result', "无法解析响应")
+
+    def _get_access_token(self) -> Optional[str]:
+        """获取百度API访问令牌"""
+        result = self._query_api(
+            "https://aip.baidubce.com/oauth/2.0/token",
+            params={'grant_type': 'client_credentials',
+                    'client_id': 'eCB39lMiTbHXV0mTt1d6bBw7',
+                    'client_secret': 'WUbEO3XdMNJLTJKNQfFbMSQvtBVzRhvu'}
+        )
+
+        return result.get("access_token") if result else None
+
+    def _query_moonshot_api(self, msg: str) -> str:
+        """调用月之暗面API"""
+        from openai import OpenAI
+
+        client = OpenAI(
+            api_key="sk-dx1RuweBS0LU0bCR5HizbWjXLuBL6HrS8BT21NEEGwbeyuo6",
+            base_url="https://api.moonshot.cn/v1"
+        )
+
+        completion = client.chat.completions.create(
+            model="moonshot-v1-8k",
+            messages=[{"role": "system", "content": self.system_content},
+                      {"role": "user", "content": msg}],
+            temperature=0.9,
+        )
+
+        return completion.choices[0].message.content
+
+    def _query_default_api(self, msg: str) -> str:
+        """调用默认API"""
+        data = {
+            "max_tokens": 64,
+            "top_k": 4,
+            "temperature": 0.9,
+            "messages": [
+                {"role": "system", "content": self.system_content},
+                {"role": "user", "content": msg}
+            ],
+            "model": "4.0Ultra"
+        }
+
+        header = {
+            "Authorization": "Bearer xCPWitJxfzhLaZNOAdtl:PgJXiEyvKjUaoGzKwgIi",
+            "Content-Type": "application/json"
+        }
+
+        response = self._query_api("https://spark-api-open.xf-yun.com/v1/chat/completions", data, header)
+        return response['choices'][0]['message']['content'] if response else "无法解析响应"
+
+    def _query_api(self, url: str, payload: Optional[Dict] = None,
+                   headers: Optional[Dict] = None, params: Optional[Dict] = None,
+                   method: str = 'POST') -> Optional[Dict]:
+        """通用API查询方法"""
+        try:
+            response = requests.request(
+                method=method,
+                url=url,
+                json=payload,
+                headers=headers,
+                params=params,
+                timeout=30  # 添加超时设置
+            )
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            log("ERROR", f"Request failed: {e}")
+            log("ERROR", f"API请求失败: {str(e)}")
+            return None
+        except Exception as e:
+            log("ERROR", f"处理API响应时出错: {str(e)}")
             return None
 
-    def get_access_token(self):
-        return self.query_api(
-            "https://aip.baidubce.com/oauth/2.0/token",
-            params={'grant_type': 'client_credentials', 'client_id': 'eCB39lMiTbHXV0mTt1d6bBw7',
-                    'client_secret': 'WUbEO3XdMNJLTJKNQfFbMSQvtBVzRhvu'}
-        ).get("access_token")
 
-    def main(self, msg, who):
-        if self.model == "文心一言":
-            access_token = self.get_access_token()
-            payload = {"messages": [{"role": "user", "content": msg}]}
-            result = self.query_api(
-                f"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token={access_token}",
-                payload=payload,
-                headers={'Content-Type': 'application/json'}
-            ).get('result', "无法解析响应")
-        elif self.model == "月之暗面":
-            from openai import OpenAI
-            client = OpenAI(api_key="sk-dx1RuweBS0LU0bCR5HizbWjXLuBL6HrS8BT21NEEGwbeyuo6",
-                            base_url="https://api.moonshot.cn/v1")
-            completion = client.chat.completions.create(
-                model="moonshot-v1-8k",
-                messages=[{"role": "system", "content": self.system_content}, {"role": "user", "content": msg}],
-                temperature=0.9,
-            )
-            result = completion.choices[0].message.content
-        else:
-            data = {
-                "max_tokens": 64,
-                "top_k": 4,
-                "temperature": 0.9,
-                "messages": [
-                    {"role": "system", "content": self.system_content},
-                    {"role": "user", "content": msg}
-                ],
-                "model": "4.0Ultra"
-            }
-            header = {
-                "Authorization": "Bearer xCPWitJxfzhLaZNOAdtl:PgJXiEyvKjUaoGzKwgIi",
-                "Content-Type": "application/json"
-            }
-            response = self.query_api("https://spark-api-open.xf-yun.com/v1/chat/completions", data, header)
-            result = response['choices'][0]['message']['content'] if response else "无法解析响应"
-
-        if result:
-            if not self.app_instance.wx.SendMsg(msg=result, who=who):
-                raise ValueError(
-                    f"抱歉, 发给 {result[:8] + '……' if len(result) > 6 else result}"
-                    f" 的 {result[:8] + '……' + result[-8:] if len(result) > 20 else result} 失败了")
-            log("INFO", f"Ai发送:{result[:8] + '……' + result[-8:] if len(result) > 20 else result}")
-
-
-class SplitWorkerThread(QThread):
-    pause_changed = pyqtSignal(bool)
-    finished = pyqtSignal()
+class SplitWorkerThread(WorkerThreadBase):
+    """消息拆分发送工作线程"""
 
     def __init__(self, app_instance, receiver, sentences):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.sentences = sentences
-        self.stop_event = threading.Event()
+        self._is_running = True
 
     def run(self):
-        log("WARNING", f"准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
+        """线程主循环"""
+        self._is_running = True
+        log("INFO", f"准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
 
-        for sentence in self.sentences:
-            if self.stop_event.is_set():
+        for i, sentence in enumerate(self.sentences):
+            if self._stop_event.is_set() or not self._is_running:
+                break
+
+            if self._is_paused:
+                while self._is_paused and not self._stop_event.is_set():
+                    time.sleep(0.1)  # 等待，直到恢复或停止
+
+            if self._stop_event.is_set() or not self._is_running:
                 break
 
             try:
-                log("INFO", f"发送 '{sentence}' 给 {self.receiver}")
-                if not self.app_instance.wx.SendMsg(msg=sentence, who=self.receiver):
-                    raise ValueError(
-                        f"抱歉, 发给 {sentence[:8] + '……' if len(sentence) > 6 else sentence}"
-                        f" 的 {sentence[:8] + '……' + sentence[-8:] if len(sentence) > 20 else sentence} 失败了")
+                log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
+                self.app_instance.wx.SendMsg(msg=sentence, who=self.receiver)
+                # 添加发送间隔，避免过快
+                self.msleep(500)
             except Exception as e:
-                log("ERROR", f"{str(e)}")
+                log("ERROR", f"发送消息时出错: {str(e)}")
                 self.app_instance.is_sending = False
                 self.app_instance.is_scheduled_task_active = False
-                self.stop_event.set()
+                self._stop_event.set()
                 break
-        self.app_instance.on_thread_finished()
 
-    def requestInterruption(self):
-        self.stop_event.set()
+        self._is_running = False
+        self.finished.emit()
 
 
-class WorkerThread(QtCore.QThread):
-    pause_changed = QtCore.pyqtSignal(bool)
-    finished = QtCore.pyqtSignal()
+class WorkerThread(WorkerThreadBase):
+    """定时任务工作线程"""
+
+    ES_CONTINUOUS = 0x80000000
+    ES_SYSTEM_REQUIRED = 0x00000001
+    ES_DISPLAY_REQUIRED = 0x00000002
 
     def __init__(self, app_instance):
         super().__init__()
         self.app_instance = app_instance
-        self.is_paused = False
-        self.interrupted = False
         self.prevent_sleep = False
         self.current_time = 'sys'
+        self._is_running = True
+        self._system_state = None
 
     def run(self):
+        """线程主循环"""
+        self._is_running = True
+
+        # 设置系统不进入睡眠和锁屏状态
         if self.prevent_sleep:
-            ctypes.windll.kernel32.SetThreadExecutionState(0x80000002)
+            self._set_system_state(self.ES_CONTINUOUS | self.ES_SYSTEM_REQUIRED | self.ES_DISPLAY_REQUIRED)
+            log("WARNING", "已阻止系统休眠和锁屏")
 
-        while not self.interrupted:
-            if self.interrupted:
-                break
-            next_task = self.find_next_ready_task()
-            if next_task is None:
-                ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000001)
-                self.prevent_sleep = False
-                self.app_instance.on_thread_finished()
-                break
+        try:
+            while self._is_running and not self._stop_event.is_set():
+                if self._is_paused:
+                    time.sleep(0.1)  # 暂停时休眠
+                    continue
 
-            task_time = datetime.strptime(next_task['time'], '%Y-%m-%dT%H:%M:%S')
-            remaining_time = (task_time - get_current_time(self.current_time)).total_seconds()
-            if remaining_time > 0:
-                if self.interrupted:
+                next_task = self._find_next_ready_task()
+                if next_task is None:
+                    log("INFO", "没有找到待执行的任务，线程退出")
                     break
-                self.msleep(int(remaining_time * 1000))
 
-            if self.interrupted:
-                break
-
-            max_retries = 1
-            retries = 0
-            success = False
-
-            while retries <= max_retries and not success:
                 try:
-                    name = next_task['name']
-                    info = next_task['info']
+                    task_time = datetime.strptime(next_task['time'], '%Y-%m-%dT%H:%M:%S')
+                    remaining_time = (task_time - get_current_time(self.current_time)).total_seconds()
 
-                    if self.interrupted:
-                        break
+                    if remaining_time > 0:
+                        # 格式化为友好的时间表示
+                        hours, remainder = divmod(int(remaining_time), 3600)
+                        minutes, seconds = divmod(remainder, 60)
+                        time_parts = []
+                        if hours > 0:
+                            time_parts.append(f"{hours}时")
+                        if minutes > 0:
+                            time_parts.append(f"{minutes}分")
+                        if seconds > 0 or not time_parts:  # 确保至少显示0秒
+                            time_parts.append(f"{seconds}秒")
+                        friendly_time = ''.join(time_parts)
 
-                    if os.path.isdir(os.path.dirname(info)):
-                        if os.path.isfile(info):
-                            file_name = os.path.basename(info)
-                            log("INFO", f"开始把文件 {file_name} 发给 {name}")
-                            if self.interrupted:
-                                break
-                            self.app_instance.wx.SendFiles(filepath=info, who=name)
-                        else:
-                            raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
-                    elif info == 'Video_chat':
-                        log("INFO", f"PRO版已移除视频通话功能")
-                        if self.interrupted:
+                        log("INFO", f"下一个任务将在 {friendly_time} 后执行")
+
+                        # 分段休眠，以便能够及时响应停止请求
+                        while remaining_time > 0 and not self._stop_event.is_set():
+                            sleep_time = min(remaining_time, 1.0)  # 每次最多休眠1秒
+                            self.msleep(int(sleep_time * 1000))
+                            remaining_time -= sleep_time
+
+                            if self._is_paused:
+                                while self._is_paused and not self._stop_event.is_set():
+                                    time.sleep(0.1)
+
+                                if self._stop_event.is_set():
+                                    break
+
+                        if self._stop_event.is_set():
                             break
-                        # self.app_instance.wx.VideoCall(who=name)
+
+                    # 执行任务并获取结果
+                    success = self._execute_task(next_task)
+
+                    # 根据执行结果更新任务状态
+                    if success:
+                        self.app_instance.update_task_status(next_task, '成功')
                     else:
-                        log("INFO", f"开始把 {info[:8] + '……' + info[-8:] if len(info) > 20 else info}"
-                                    f" 发给 {name[:8] + '……' if len(name) > 6 else name}")
-                        if self.interrupted:
-                            break
-                        if "@所有人" in info:
-                            info = info.replace("@所有人", "").strip()
-                            self.app_instance.wx.AtAll(msg=info, who=name)
-                        else:
-                            def is_url_advanced(string):
-                                return validators.url(string)
-                            if is_url_advanced(info):
-                                if not self.app_instance.wx.SendUrlCard(url=info, friends=name):
-                                    raise ValueError(f"抱歉, 发给 {name[:8] + '……' if len(name) > 6 else name}"
-                                                     f" 的 {info[:8] + '……' + info[-8:] if len(info) > 16 else info} 失败了")
-                            else:
-                                if not self.app_instance.wx.SendMsg(msg=info, who=name):
-                                    raise ValueError(f"抱歉, 发给 {name[:8] + '……' if len(name) > 6 else name}"
-                                                     f" 的 {info[:8] + '……' + info[-8:] if len(info) > 20 else info} 失败了")
-                    if self.interrupted:
-                        break
-                    log("DEBUG", f"成功把 {info[:8] + '……' + info[-8:] if len(info) > 20 else info}"
-                                 f" 发给 {name[:8] + '……' if len(name) > 6 else name} ")
-                    success = True
-                except Exception as e:
-                    if str(e) and retries < max_retries:
-                        log("ERROR", f"微信数据有误，即将自动修复:{str(e)}")
-                        retries += 1
-                        self.app_instance.parent.update_wx()
-                        self.msleep(50)
-                    else:
-                        log("ERROR", f"{str(e)}")
                         self.app_instance.update_task_status(next_task, '出错')
-                        break
-                else:
-                    self.app_instance.update_task_status(next_task, '成功')
 
-            while not self.interrupted and self.is_paused:
-                self.msleep(50)
-            if self.interrupted:
-                break
+                except Exception as e:
+                    log("ERROR", f"处理任务时出错: {str(e)}")
+                    self.app_instance.update_task_status(next_task, '出错')
+                    # 出错后适当休眠，避免CPU占用过高
+                    time.sleep(1)
 
-        if self.prevent_sleep:
-            ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000001)
-            self.prevent_sleep = False
+        finally:
+            # 恢复系统睡眠设置
+            if self.prevent_sleep:
+                self._set_system_state(self.ES_CONTINUOUS)  # 清除其他标志，只保留CONTINUOUS以恢复默认
+                log("WARNING", "已恢复系统休眠和锁屏设置")
 
-    def find_next_ready_task(self):
+            self._is_running = False
+            self.finished.emit()
+
+    def _set_system_state(self, state_flags):
+        """设置系统执行状态并记录当前状态"""
+        try:
+            self._system_state = ctypes.windll.kernel32.SetThreadExecutionState(state_flags)
+            if not self._system_state:
+                log("ERROR", f"设置系统状态失败，错误码: {ctypes.GetLastError()}")
+        except Exception as e:
+            log("ERROR", f"调用系统API设置状态时出错: {str(e)}")
+
+    def _find_next_ready_task(self) -> Optional[Dict]:
+        """查找下一个要执行的任务"""
         next_task = None
         min_time = None
+
         for task in self.app_instance.ready_tasks:
             try:
-                task_time = QtCore.QDateTime.fromString(task['time'], "yyyy-MM-ddTHH:mm:ss").toSecsSinceEpoch()
+                task_time = QDateTime.fromString(task['time'], "yyyy-MM-ddTHH:mm:ss").toSecsSinceEpoch()
                 if min_time is None or task_time < min_time:
                     min_time = task_time
                     next_task = task
             except Exception as e:
-                log("ERROR", f"{str(e)}")
+                log("ERROR", f"解析任务时间时出错: {str(e)}")
+
         return next_task
 
-    def requestInterruption(self):
-        self.interrupted = True
+    def _execute_task(self, task: Dict) -> bool:
+        """执行任务并返回成功/失败状态"""
+        max_retries = 3  # 增加重试次数
+        retries = 0
+        success = False
+
+        log("INFO", f"开始执行任务: {task.get('name', '未知')}")
+
+        while retries < max_retries and not success and not self._stop_event.is_set():
+            try:
+                name = task['name']
+                info = task['info']
+
+                if os.path.isdir(os.path.dirname(info)):
+                    if os.path.isfile(info):
+                        file_name = os.path.basename(info)
+                        log("INFO", f"开始把文件 {file_name} 发给 {name}")
+                        self.app_instance.wx.SendFiles(filepath=info, who=name)
+                    else:
+                        raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
+                elif info == 'Video_chat':
+                    log("INFO", f"开始与 {name} 视频通话")
+                    self.app_instance.wx.VideoCall(who=name)
+                else:
+                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name}")
+                    if "@所有人" in info:
+                        info = info.replace("@所有人", "").strip()
+                        self.app_instance.wx.AtAll(msg=info, who=name)
+                    else:
+                        self.app_instance.wx.SendMsg(msg=info, who=name)
+
+                log("DEBUG", f"成功执行任务: 发送给 {name}")
+                success = True
+
+            except Exception as e:
+                log("ERROR", f"执行任务失败 (尝试 {retries + 1}/{max_retries}): {str(e)}")
+                retries += 1
+
+                # 如果不是最后一次尝试，尝试重新加载微信客户端
+                if retries < max_retries:
+                    log("WARNING", "尝试重新连接微信客户端...")
+                    try:
+                        self.app_instance.parent.update_wx()
+                        # 等待一段时间，让微信客户端稳定
+                        self.msleep(1000)
+                    except Exception as we:
+                        log("ERROR", f"更新微信客户端失败: {str(we)}")
+
+        return success
 
 
 class ErrorSoundThread(QtCore.QThread):
     finished = QtCore.pyqtSignal()
-    _is_playing = False
+    _is_running = False
 
     def __init__(self):
         super().__init__()
         self.sound_file = None
         self.player = None
+        self.audio_output = None
 
     def update_sound_file(self, sound_file_path):
         self.sound_file = sound_file_path
 
     def run(self):
-        if not self.sound_file or not os.path.exists(self.sound_file) or self._is_playing:
+        if not self.sound_file or not os.path.exists(self.sound_file) or self._is_running:
             return
-        self._is_playing = True
-        audio_output = QtMultimedia.QAudioOutput()
+        self._is_running = True
+
+        # 确保每次都创建新的播放器和音频输出
+        if self.player:
+            self.player.mediaStatusChanged.disconnect()
+            self.player.stop()
+            self.player = None
+
+        if self.audio_output:
+            self.audio_output = None
+
+        self.audio_output = QtMultimedia.QAudioOutput()
         self.player = QtMultimedia.QMediaPlayer()
-        self.player.setAudioOutput(audio_output)
+        self.player.setAudioOutput(self.audio_output)
         self.player.setSource(QtCore.QUrl.fromLocalFile(self.sound_file))
         self.player.mediaStatusChanged.connect(self._on_media_status_changed)
         self.player.play()
+
+        # 使用更安全的方式等待播放完成
         loop = QtCore.QEventLoop()
         self.finished.connect(loop.quit)
         loop.exec()
 
     def _on_media_status_changed(self, status):
         if status == QtMultimedia.QMediaPlayer.MediaStatus.EndOfMedia:
-            self.finished.emit()
-            if self.player:
-                self.player.stop()
-                self._is_playing = False
+            self.cleanup_resources()
+
+    def cleanup_resources(self):
+        if self.player:
+            self.player.stop()
+            self.player.mediaStatusChanged.disconnect()
+            self.player = None
+
+        if self.audio_output:
+            self.audio_output = None
+
+        self._is_running = False
+        self.finished.emit()
 
     def stop_playback(self):
-        if self.player and self._is_playing:
-            self.player.stop()
-            self._is_playing = False
-            self.finished.emit()
+        if self._is_running:
+            self.cleanup_resources()
 
     def play_test(self):
-        if self._is_playing:
-            self.stop_playback()
-        else:
+        if not self.isRunning() and not self._is_running:
             self.start()

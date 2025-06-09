@@ -1,12 +1,12 @@
 import json
 import os
-import subprocess
 import sys
+import winreg
 from datetime import datetime, timedelta
 
 from PyQt6 import QtWidgets, QtCore, QtGui
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QAction
+from PyQt6.QtCore import Qt, QUrl
+from PyQt6.QtGui import QAction, QDesktopServices
 from PyQt6.QtWidgets import QCompleter, QListView
 from wxautox import WeChat
 
@@ -39,7 +39,7 @@ def reload_wx():
             log("ERROR", f"程序初始化出错, 错误原因:{e}")
             return '初始化错误'
     else:
-        log("DEBUG", f"自动重载,{wx.nickname} 登录成功")
+        log("DEBUG", f"重新连接，{wx.nickname} 登录成功")
         return wx.nickname
 
 
@@ -101,7 +101,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if common.str_to_bool(read_key_value('auto_update')):
             check_update()
         if common.str_to_bool(read_key_value('serve_lock')):
-            self.serve_lock()
+            self.disable_rdp_lock()
         self.load_tasks_from_json()
         try:
             wx.GetSessionList()
@@ -112,8 +112,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             if isinstance(popup, QListView):
                 popup.setStyleSheet(common.load_stylesheet("completer_QListView.css"))
             self.receiver_lineEdit.setCompleter(completer)
-        except Exception:
-            pass
+        except Exception as e:
+            print(e)
+
+    def centerOnScreen(self):
+        frameGeometry = self.frameGeometry()
+        centerPoint = QtWidgets.QApplication.primaryScreen().availableGeometry().center()
+        frameGeometry.moveCenter(centerPoint)
+        self.move(frameGeometry.topLeft())
 
     def update_wx(self):
         global wx
@@ -170,10 +176,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.ready_tasks = []
 
     def on_vip_frame_clicked(self, event):
-        if self.Membership != 'VIP':
+        expiration_format = "%Y-%m-%d %H:%M:%S"
+        try:
+            expiration_datetime = datetime.strptime(
+                self.expiration_time,
+                expiration_format
+            )
+        except ValueError:
+            expiration_datetime = datetime.now()
+        current_datetime = datetime.now()
+        remaining_days = (expiration_datetime - current_datetime).days
+        if self.Membership != 'VIP' or remaining_days <= 7:
             self.open_activities_window()
         else:
-            common.author()
+            self.feedback()
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -194,7 +210,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     log('ERROR', '暂不支持发送文件夹，您可压缩后发送')
                     return
 
-                if file_name.endswith('.csv'):
+                if file_name.endswith('.xlsx'):
                     self.auto_info.load_configuration(filepath=file_name)
                 else:
                     self.auto_info.openFileNameDialog(filepath=file_name)
@@ -356,7 +372,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.activities_window = ActivitiesWindow()
         self.key_reply = ReplyDialog()
         self.file_pushButton.clicked.connect(self.auto_info.openFileNameDialog)
-        self.video_pushButton_.clicked.connect(self.auto_info.video_chat)
         self.pushButton_save.clicked.connect(self.auto_info.save_configuration)
         self.pushButton_import.clicked.connect(self.auto_info.load_configuration)
         self.add_pushButton.clicked.connect(self.auto_info.add_list_item)
@@ -367,7 +382,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.maximize_pushButton.clicked.connect(self.toggle_maximize_restore)
         self.minimize_pushButton.clicked.connect(self.minimize_window)
         self.setup_pushButton.clicked.connect(self.open_setting_window)
-        self.feedback_pushButton.clicked.connect(common.author)
+        self.feedback_pushButton.clicked.connect(self.feedback)
 
         self.Free_pushButton.clicked.connect(common.author)
         self.base_pushButton.clicked.connect(self.open_activities_window)
@@ -387,6 +402,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             checkbox.clicked.connect(lambda checked, c=checkbox: self.handle_checkbox_click(c))
 
         self.vip_frame.mouseReleaseEvent = self.on_vip_frame_clicked
+
+    def feedback(self):
+        QDesktopServices.openUrl(QUrl('https://qun.qq.com/universal-share/share?ac=1&authKey=wjyQkU9iG7wc'
+                                      '%2BsIEOWFE6cA0ayLLBdYwpMsKYveyufXSOE5FBe7bb9xxvuNYVsEn&busi_data'
+                                      '=eyJncm91cENvZGUiOiIxMDIxNDcxODEzIiwidG9rZW4iOiJDaFYxYVpySU9FUVJr'
+                                      'RzkwdUZ2QlFVUTQzZzV2VS83TE9mY0NNREluaUZCR05YcnNjWmpKU2V5Q2FYTllFVlJ'
+                                      'MIiwidWluIjoiMzU1NTg0NDY3OSJ9&data=M7fVC3YlI68T2S2VpmsR20t9s_xJj6HNpF'
+                                      '0GGk2ImSQ9iCE8fZomQgrn_ADRZF0Ee4OSY0x6k2tI5P47NlkWug&svctype=4&tempid'
+                                      '=h5_group_info'))
 
     def open_setting_window(self):
         try:
@@ -475,10 +499,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                      '年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。</h2'
                                      '></center>')
 
-    def serve_lock(self):
+    def disable_rdp_lock(self):
         try:
-            for i in range(10):
-                cmd = r'%windir%\System32\tscon.exe {} /dest:console'.format(str(i))
-                subprocess.run(cmd, shell=True, capture_output=True, text=True)
+            if sys.getwindowsversion().major >= 6:
+                import ctypes
+                if ctypes.windll.shell32.IsUserAnAdmin() == 0:
+                    ctypes.windll.shell32.ShellExecuteW(
+                        None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+                    return False
+
+            key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE,
+                                   r"SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services")
+            winreg.SetValueEx(key, "NoLockScreen", 0, winreg.REG_DWORD, 1)
+            winreg.CloseKey(key)
+
+            log("INFO", "已成功禁用远程桌面断开连接后锁屏")
         except Exception as e:
-            log("ERROR", f"阻止服务器锁屏失败: {str(e)}")
+            log("ERROR", f"禁用锁屏失败: {str(e)}")

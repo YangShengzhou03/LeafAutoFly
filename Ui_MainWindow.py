@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.main_Frame = QtWidgets.QFrame(parent=self.centralwidget)
         self.main_Frame.setStyleSheet("QFrame#main_Frame{\n"
-"background:qradialgradient(cx:0.3,cy:0.3,radius:1.2,fx:0.15,fy:0.15,stop:0 rgba(162,129,247,0.95),stop:0.3 rgba(130,180,255,0.9),stop:0.5 rgba(119,111,252,0.95),stop:0.7 rgba(200,120,250,0.9),stop:0.9 rgba(119,111,252,0.85),stop:1 rgba(80,50,200,0.8));\n"
+"background:qradialgradient(cx:0.3,cy:0.3,radius:1.2,fx:0.15,fy:0.15,stop:0 rgb(162,129,247),stop:0.3 rgb(130,180,255),stop:0.5 rgb(119,111,252),stop:0.7 rgb(200,120,250),stop:0.9 rgb(119,111,252),stop:1 rgb(80,50,200));\n"
 "border:0px solid red;\n"
 "border-radius:30px\n"
 "}")
@@ -1386,16 +1386,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_20.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout_20.setSpacing(2)
         self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.label_wxid = QtWidgets.QLabel(parent=self.frame_37)
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑 Light")
-        font.setPointSize(11)
-        self.label_wxid.setFont(font)
-        self.label_wxid.setStyleSheet("QLabel {\n"
-"    color: rgb(0, 0, 0);\n"
-"}")
-        self.label_wxid.setObjectName("label_wxid")
-        self.horizontalLayout_20.addWidget(self.label_wxid)
         self.comboBox_wxName = QtWidgets.QComboBox(parent=self.frame_37)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1444,7 +1434,7 @@ class Ui_MainWindow(object):
         self.comboBox_wxName.setObjectName("comboBox_wxName")
         self.comboBox_wxName.addItem("")
         self.horizontalLayout_20.addWidget(self.comboBox_wxName)
-        self.horizontalLayout_20.setStretch(1, 1)
+        self.horizontalLayout_20.setStretch(0, 1)
         self.horizontalLayout_5.addWidget(self.frame_37)
         self.frame_45 = QtWidgets.QFrame(parent=self.DataInput)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
@@ -2692,7 +2682,6 @@ class Ui_MainWindow(object):
         self.message_lineEdit.setPlaceholderText(_translate("MainWindow", "段落内容可粘贴"))
         self.label.setText(_translate("MainWindow", "接收者"))
         self.receiver_lineEdit.setPlaceholderText(_translate("MainWindow", "联系人备注优先"))
-        self.label_wxid.setText(_translate("MainWindow", "微信"))
         self.comboBox_wxName.setItemText(0, _translate("MainWindow", "未登录"))
         self.time_label_2.setText(_translate("MainWindow", "定时"))
         self.dateTimeEdit.setDisplayFormat(_translate("MainWindow", "yyyy/M/d H:mm:ss"))

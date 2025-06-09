@@ -37,7 +37,7 @@
      <widget class="QFrame" name="main_Frame">
       <property name="styleSheet">
        <string notr="true">QFrame#main_Frame{
-background:qradialgradient(cx:0.3,cy:0.3,radius:1.2,fx:0.15,fy:0.15,stop:0 rgba(162,129,247,0.95),stop:0.3 rgba(130,180,255,0.9),stop:0.5 rgba(119,111,252,0.95),stop:0.7 rgba(200,120,250,0.9),stop:0.9 rgba(119,111,252,0.85),stop:1 rgba(80,50,200,0.8));
+background:qradialgradient(cx:0.3,cy:0.3,radius:1.2,fx:0.15,fy:0.15,stop:0 rgb(162,129,247),stop:0.3 rgb(130,180,255),stop:0.5 rgb(119,111,252),stop:0.7 rgb(200,120,250),stop:0.9 rgb(119,111,252),stop:1 rgb(80,50,200));
 border:0px solid red;
 border-radius:30px
 }</string>
@@ -2977,7 +2977,7 @@ border-radius:12px</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="0,1">
+                      <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="1">
                        <property name="spacing">
                         <number>2</number>
                        </property>
@@ -2993,24 +2993,6 @@ border-radius:12px</string>
                        <property name="bottomMargin">
                         <number>0</number>
                        </property>
-                       <item>
-                        <widget class="QLabel" name="label_wxid">
-                         <property name="font">
-                          <font>
-                           <family>微软雅黑 Light</family>
-                           <pointsize>11</pointsize>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QLabel {
-    color: rgb(0, 0, 0);
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>微信</string>
-                         </property>
-                        </widget>
-                       </item>
                        <item>
                         <widget class="QComboBox" name="comboBox_wxName">
                          <property name="sizePolicy">

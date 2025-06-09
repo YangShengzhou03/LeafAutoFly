@@ -53,7 +53,8 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
     def clean_date(self):
         file1 = '_internal/AutoReply_Rules.json'
         file2 = '_internal/tasks.json'
-        files_to_clean = [file1, file2]
+        file3 = '_internal/log.txt'
+        files_to_clean = [file1, file2, file3]
         cleaned_any = False
         for file in files_to_clean:
             if os.path.exists(file):
@@ -94,7 +95,6 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
 
     def toggle_audio(self):
         if not hasattr(self, 'selected_audio_file'):
-            log('ERROR', '未选择音频文件')
             return
         self.error_sound_thread.update_sound_file(self.selected_audio_file)
         self.error_sound_thread.play_test()
@@ -145,7 +145,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
 
     def save_close(self):
         try:
-            if self.error_sound_thread._is_playing:
+            if self.error_sound_thread._is_running:
                 self.error_sound_thread.stop_playback()
             for key, checkbox in [
                 ('error_email', self.ui.checkBox_Email),
@@ -172,6 +172,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         if index < 0 or index >= len(self.audio_files):
             log('ERROR', f'报错音频索引无效: {index}')
             return
-        if self.error_sound_thread._is_playing:
+        if self.error_sound_thread._is_running:
             self.error_sound_thread.stop_playback()
+        self.toggle_audio()
         self.selected_audio_file = self.audio_files[index]
