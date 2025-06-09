@@ -20,7 +20,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='LeafAuto_Pro',
+    name='LeafAuto Pro',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

@@ -195,7 +195,7 @@ border-radius:8px;
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
                <property name="currentRow">
-                <number>-1</number>
+                <number>0</number>
                </property>
                <item>
                 <property name="text">
@@ -2162,7 +2162,7 @@ QPushButton:pressed {
                       <string notr="true">color:rgb(160, 160, 160)</string>
                      </property>
                      <property name="text">
-                      <string>LeafAuto © 2025 Yangshengzhou All Rights Reserved</string>
+                      <string>LeafAuto Pro © 2025 Yangshengzhou All Rights Reserved</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>

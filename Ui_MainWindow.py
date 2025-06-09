@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from common import get_resource_path
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -24,7 +22,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.main_Frame = QtWidgets.QFrame(parent=self.centralwidget)
         self.main_Frame.setStyleSheet("QFrame#main_Frame{\n"
-"background-color: qlineargradient(x0:0, y0:1, x1:1, y1:1,stop:0.4  rgb(107, 128, 210), stop:1 rgb(180, 140, 255));\n"
+"background:qradialgradient(cx:0.3,cy:0.3,radius:1.2,fx:0.15,fy:0.15,stop:0 rgba(162,129,247,0.95),stop:0.3 rgba(130,180,255,0.9),stop:0.5 rgba(119,111,252,0.95),stop:0.7 rgba(200,120,250,0.9),stop:0.9 rgba(119,111,252,0.85),stop:1 rgba(80,50,200,0.8));\n"
 "border:0px solid red;\n"
 "border-radius:30px\n"
 "}")
@@ -69,7 +67,7 @@ class Ui_MainWindow(object):
         self.userAvatar_frame = QtWidgets.QFrame(parent=self.userAvatar_widget)
         self.userAvatar_frame.setMinimumSize(QtCore.QSize(64, 64))
         self.userAvatar_frame.setMaximumSize(QtCore.QSize(64, 64))
-        self.userAvatar_frame.setStyleSheet(f"image: url(\"{get_resource_path('resources/img/List/List_头像.svg')}\");\n"
+        self.userAvatar_frame.setStyleSheet("image: url(\"resources/img/List/List_头像.svg\");\n"
 "border:3px solid rgb(255, 255, 255);\n"
 "border-radius:32px")
         self.userAvatar_frame.setObjectName("userAvatar_frame")
@@ -104,43 +102,43 @@ class Ui_MainWindow(object):
         self.left_listWidget.setFont(font)
         self.left_listWidget.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.left_listWidget.setStyleSheet("QListView {\n"
+"}\n"
 "\n"
-"}\n"
-"QListView::item{\n"
-"background-color: transparent;\n"
+"QListView::item {\n"
+"    background-color: transparent;\n"
 "    color: rgba(255, 255, 255, 199);\n"
-"padding:12px;\n"
-"padding-left:18px;\n"
+"    padding: 12px;\n"
+"    padding-left: 18px;\n"
 "}\n"
+"\n"
 "QListView::item:hover {\n"
 "    background-color: rgba(175, 139, 255, 59);\n"
+"}\n"
 "\n"
-"}\n"
 "QListView::item:selected {\n"
-"background-color: rgba(175, 139, 255, 159);\n"
+"    background-color: rgba(125, 118, 251, 159);\n"
 "    color: rgb(255, 255, 255);\n"
-"border-left:5px solid rgb(172, 154, 233)\n"
-"}\n"
-"")
+"    border-left: 5px solid rgb(125, 118, 251);\n"
+"}")
         self.left_listWidget.setObjectName("left_listWidget")
         item = QtWidgets.QListWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/List/List_0.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("resources/img/List/List_0.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon)
         self.left_listWidget.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/List/List_1.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("resources/img/List/List_1.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon1)
         self.left_listWidget.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/List/List_2.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(QtGui.QPixmap("resources/img/List/List_2.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon2)
         self.left_listWidget.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/List/List_3.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon3.addPixmap(QtGui.QPixmap("resources/img/List/List_3.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon3)
         self.left_listWidget.addItem(item)
         self.verticalLayout_2.addWidget(self.left_listWidget)
@@ -157,7 +155,7 @@ class Ui_MainWindow(object):
         self.right.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.right.setObjectName("right")
         self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.right)
-        self.verticalLayout_30.setContentsMargins(48, 24, 48, 24)
+        self.verticalLayout_30.setContentsMargins(28, 24, 28, 24)
         self.verticalLayout_30.setSpacing(4)
         self.verticalLayout_30.setObjectName("verticalLayout_30")
         self.rightHead_frame = QtWidgets.QFrame(parent=self.right)
@@ -174,7 +172,7 @@ class Ui_MainWindow(object):
         self.vip_frame.setMinimumSize(QtCore.QSize(98, 52))
         self.vip_frame.setMaximumSize(QtCore.QSize(98, 52))
         self.vip_frame.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        self.vip_frame.setStyleSheet(f"image: url({get_resource_path('resources/img/头标/头标-荣耀超级会员.svg')}\");\n"
+        self.vip_frame.setStyleSheet("image: url(\"resources/img/头标/头标-荣耀超级会员.svg\");\n"
 "background: transparent;\n"
 "border-radius:26px")
         self.vip_frame.setObjectName("vip_frame")
@@ -196,7 +194,7 @@ class Ui_MainWindow(object):
 "")
         self.feedback_pushButton.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/窗口控制/窗口控制-联系作者.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon4.addPixmap(QtGui.QPixmap("resources/img/窗口控制/窗口控制-联系作者.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.feedback_pushButton.setIcon(icon4)
         self.feedback_pushButton.setObjectName("feedback_pushButton")
         self.horizontalLayout_33.addWidget(self.feedback_pushButton)
@@ -217,7 +215,7 @@ class Ui_MainWindow(object):
 "")
         self.setup_pushButton.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/窗口控制/窗口控制-设置.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon5.addPixmap(QtGui.QPixmap("resources/img/窗口控制/窗口控制-设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.setup_pushButton.setIcon(icon5)
         self.setup_pushButton.setObjectName("setup_pushButton")
         self.horizontalLayout_33.addWidget(self.setup_pushButton)
@@ -238,7 +236,7 @@ class Ui_MainWindow(object):
 "")
         self.minimize_pushButton.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/窗口控制/窗口控制-最小化.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon6.addPixmap(QtGui.QPixmap("resources/img/窗口控制/窗口控制-最小化.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.minimize_pushButton.setIcon(icon6)
         self.minimize_pushButton.setObjectName("minimize_pushButton")
         self.horizontalLayout_33.addWidget(self.minimize_pushButton)
@@ -259,7 +257,7 @@ class Ui_MainWindow(object):
 "")
         self.maximize_pushButton.setText("")
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/窗口控制/窗口控制-最大化.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon7.addPixmap(QtGui.QPixmap("resources/img/窗口控制/窗口控制-最大化.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.maximize_pushButton.setIcon(icon7)
         self.maximize_pushButton.setObjectName("maximize_pushButton")
         self.horizontalLayout_33.addWidget(self.maximize_pushButton)
@@ -280,7 +278,7 @@ class Ui_MainWindow(object):
 "")
         self.close_pushButton.setText("")
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/窗口控制/窗口控制-关闭.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon8.addPixmap(QtGui.QPixmap("resources/img/窗口控制/窗口控制-关闭.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.close_pushButton.setIcon(icon8)
         self.close_pushButton.setObjectName("close_pushButton")
         self.horizontalLayout_33.addWidget(self.close_pushButton)
@@ -335,8 +333,7 @@ class Ui_MainWindow(object):
         self.frame_top1.setSizePolicy(sizePolicy)
         self.frame_top1.setMinimumSize(QtCore.QSize(216, 133))
         self.frame_top1.setMaximumSize(QtCore.QSize(16777215, 150))
-        self.frame_top1.setStyleSheet("\n"
-"QFrame#frame_top1{\n"
+        self.frame_top1.setStyleSheet("QFrame#frame_top1{\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 10px;\n"
 "background-color: qradialgradient(cx:0, cy:0, radius:1, fx:0.1, fy:0.1, stop:0 rgb(162, 129, 247),  stop:1 rgb(119, 111, 252));\n"
@@ -385,7 +382,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/小标/小标-免费试用版本.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon9.addPixmap(QtGui.QPixmap("resources/img/小标/小标-免费试用版本.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.Free_pushButton.setIcon(icon9)
         self.Free_pushButton.setObjectName("Free_pushButton")
         self.horizontalLayout_6.addWidget(self.Free_pushButton)
@@ -486,7 +483,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/小标/小标-标准会员版本.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon10.addPixmap(QtGui.QPixmap("resources/img/小标/小标-标准会员版本.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.base_pushButton.setIcon(icon10)
         self.base_pushButton.setObjectName("base_pushButton")
         self.horizontalLayout_9.addWidget(self.base_pushButton)
@@ -589,7 +586,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/小标/小标-高级会员版本.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon11.addPixmap(QtGui.QPixmap("resources/img/小标/小标-高级会员版本.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.Ai_pushButton.setIcon(icon11)
         self.Ai_pushButton.setObjectName("Ai_pushButton")
         self.horizontalLayout_10.addWidget(self.Ai_pushButton)
@@ -691,7 +688,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/小标/小标-超级会员版本.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon12.addPixmap(QtGui.QPixmap("resources/img/小标/小标-超级会员版本.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.vip_pushButton.setIcon(icon12)
         self.vip_pushButton.setObjectName("vip_pushButton")
         self.horizontalLayout_11.addWidget(self.vip_pushButton)
@@ -832,7 +829,7 @@ class Ui_MainWindow(object):
         self.pushButton_28.setStyleSheet("border:none;\n"
 "color: rgb(255, 255, 255);")
         icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page0/page0_允许白钩.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon13.addPixmap(QtGui.QPixmap("resources/img/page0/page0_允许白钩.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_28.setIcon(icon13)
         self.pushButton_28.setIconSize(QtCore.QSize(24, 24))
         self.pushButton_28.setObjectName("pushButton_28")
@@ -872,7 +869,7 @@ class Ui_MainWindow(object):
         self.pushButton_30.setStyleSheet("border:none;\n"
 "color: rgb(255, 255, 255);")
         icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page0/page0_禁止白叉.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon14.addPixmap(QtGui.QPixmap("resources/img/page0/page0_禁止白叉.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_30.setIcon(icon14)
         self.pushButton_30.setIconSize(QtCore.QSize(24, 24))
         self.pushButton_30.setObjectName("pushButton_30")
@@ -945,7 +942,7 @@ class Ui_MainWindow(object):
         self.version_frame.setMaximumSize(QtCore.QSize(60, 60))
         self.version_frame.setStyleSheet("QFrame {\n"
 "    padding: 8px;\n"
-f"    image: url({get_resource_path('resources/img/小标/小标-超级会员版本.svg')});\n"
+"    image: url(\"resources/img/小标/小标-超级会员版本.svg\");\n"
 "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
 "                                stop:0 rgba(155, 81, 45, 255),\n"
 "                                stop:1 rgba(175, 91, 55, 255));\n"
@@ -1006,7 +1003,7 @@ f"    image: url({get_resource_path('resources/img/小标/小标-超级会员版
         self.frame_100.setGeometry(QtCore.QRect(19, 4, 40, 41))
         self.frame_100.setStyleSheet("QFrame{\n"
 "padding:8px;\n"
-f"image: url({get_resource_path('resources/img/page0/page0_累计发送.svg')});\n"
+"image: url(\"resources/img/page0/page0_累计发送.svg\");\n"
 "    background-color: rgb(255, 81, 45);\n"
 "border:0px solid red;\n"
 "border-radius:10px\n"
@@ -1058,7 +1055,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_累计发送.svg')});
         self.frame_103.setGeometry(QtCore.QRect(19, 4, 40, 41))
         self.frame_103.setStyleSheet("QFrame{\n"
 "padding:8px;\n"
-f"image: url({get_resource_path('resources/img/page0/page0_提示音.svg')});\n"
+"image: url(\"resources/img/page0/page0_提示音.svg\");\n"
 "    background-color: rgb(255, 81, 45);\n"
 "border:0px solid red;\n"
 "border-radius:10px\n"
@@ -1111,7 +1108,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_提示音.svg')});\n"
         self.frame_106.setGeometry(QtCore.QRect(19, 4, 40, 41))
         self.frame_106.setStyleSheet("QFrame{\n"
 "padding:8px;\n"
-f"image: url({get_resource_path('resources/img/page0/page0_微信语言.svg')});\n"
+"image: url(\"resources/img/page0/page0_微信语言.svg\");\n"
 "background-color: rgb(255, 81, 45);\n"
 "border:0px solid red;\n"
 "border-radius:10px\n"
@@ -1163,7 +1160,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_微信语言.svg')});
         self.frame_109.setGeometry(QtCore.QRect(19, 4, 40, 41))
         self.frame_109.setStyleSheet("QFrame{\n"
 "padding:8px;\n"
-f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});\n"
+"image: url(\"resources/img/page0/page0_枫叶版本.svg\");\n"
 "background-color: rgb(255, 81, 45);\n"
 "border:0px solid red;\n"
 "border-radius:10px\n"
@@ -1246,8 +1243,8 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.DataInput.setObjectName("DataInput")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.DataInput)
         self.horizontalLayout_5.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.horizontalLayout_5.setContentsMargins(6, 6, 6, 6)
-        self.horizontalLayout_5.setSpacing(9)
+        self.horizontalLayout_5.setContentsMargins(0, 6, 6, 6)
+        self.horizontalLayout_5.setSpacing(6)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.frame_36 = QtWidgets.QFrame(parent=self.DataInput)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
@@ -1255,7 +1252,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame_36.sizePolicy().hasHeightForWidth())
         self.frame_36.setSizePolicy(sizePolicy)
-        self.frame_36.setMinimumSize(QtCore.QSize(299, 54))
+        self.frame_36.setMinimumSize(QtCore.QSize(266, 54))
         self.frame_36.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.frame_36.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius:12px")
@@ -1264,7 +1261,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.frame_36.setObjectName("frame_36")
         self.horizontalLayout_22 = QtWidgets.QHBoxLayout(self.frame_36)
         self.horizontalLayout_22.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.horizontalLayout_22.setContentsMargins(9, 0, 6, 0)
+        self.horizontalLayout_22.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout_22.setSpacing(6)
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
         self.label_3 = QtWidgets.QLabel(parent=self.frame_36)
@@ -1316,32 +1313,11 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
 "")
         self.file_pushButton.setText("")
         icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page1/page1_打开文件.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon15.addPixmap(QtGui.QPixmap("resources/img/page1/page1_打开文件.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.file_pushButton.setIcon(icon15)
         self.file_pushButton.setIconSize(QtCore.QSize(24, 24))
         self.file_pushButton.setObjectName("file_pushButton")
         self.horizontalLayout_22.addWidget(self.file_pushButton)
-        self.video_pushButton_ = QtWidgets.QPushButton(parent=self.frame_36)
-        self.video_pushButton_.setMinimumSize(QtCore.QSize(32, 32))
-        self.video_pushButton_.setStyleSheet("QPushButton{\n"
-"    background-color: rgba(255, 255, 255, 0);\n"
-"border: none;\n"
-"border-radius:20px;\n"
-"}\n"
-"QPushButton:hover {\n"
-"\n"
-"}\n"
-"QPushButton:pressed {\n"
-"\n"
-"}\n"
-"")
-        self.video_pushButton_.setText("")
-        icon16 = QtGui.QIcon()
-        icon16.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page1/page1_视频通话.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.video_pushButton_.setIcon(icon16)
-        self.video_pushButton_.setIconSize(QtCore.QSize(24, 24))
-        self.video_pushButton_.setObjectName("video_pushButton_")
-        self.horizontalLayout_22.addWidget(self.video_pushButton_)
         self.horizontalLayout_5.addWidget(self.frame_36)
         self.frame_33 = QtWidgets.QFrame(parent=self.DataInput)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
@@ -1357,7 +1333,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.frame_33.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_33.setObjectName("frame_33")
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout(self.frame_33)
-        self.horizontalLayout_12.setContentsMargins(9, 0, 6, 0)
+        self.horizontalLayout_12.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout_12.setSpacing(6)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.label = QtWidgets.QLabel(parent=self.frame_33)
@@ -1393,6 +1369,83 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.receiver_lineEdit.setObjectName("receiver_lineEdit")
         self.horizontalLayout_12.addWidget(self.receiver_lineEdit)
         self.horizontalLayout_5.addWidget(self.frame_33)
+        self.frame_37 = QtWidgets.QFrame(parent=self.DataInput)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_37.sizePolicy().hasHeightForWidth())
+        self.frame_37.setSizePolicy(sizePolicy)
+        self.frame_37.setMinimumSize(QtCore.QSize(124, 54))
+        self.frame_37.setMaximumSize(QtCore.QSize(226, 16777215))
+        self.frame_37.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-radius:12px")
+        self.frame_37.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.frame_37.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.frame_37.setObjectName("frame_37")
+        self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.frame_37)
+        self.horizontalLayout_20.setContentsMargins(6, 0, 6, 0)
+        self.horizontalLayout_20.setSpacing(2)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.label_wxid = QtWidgets.QLabel(parent=self.frame_37)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑 Light")
+        font.setPointSize(11)
+        self.label_wxid.setFont(font)
+        self.label_wxid.setStyleSheet("QLabel {\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.label_wxid.setObjectName("label_wxid")
+        self.horizontalLayout_20.addWidget(self.label_wxid)
+        self.comboBox_wxName = QtWidgets.QComboBox(parent=self.frame_37)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboBox_wxName.sizePolicy().hasHeightForWidth())
+        self.comboBox_wxName.setSizePolicy(sizePolicy)
+        self.comboBox_wxName.setMinimumSize(QtCore.QSize(56, 0))
+        self.comboBox_wxName.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.comboBox_wxName.setStyleSheet("QComboBox {\n"
+"    background-color: #FFFFFF;\n"
+"    border: 0px solid rgb(87, 78, 209);\n"
+"    border-radius: 0px;\n"
+"    color: rgb(105, 27, 253);\n"
+"    font-size: 18px;\n"
+"    padding-right: 0;\n"
+"    text-align: center;\n"
+"    padding-left: 2px;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgba(229, 228, 253, 0.2);\n"
+"}\n"
+"\n"
+"QComboBox:focus {\n"
+"    border-color: rgb(35, 26, 132);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"    width: 0px;\n"
+"}\n"
+"\n"
+"QComboBox::down-arrow {\n"
+"    image: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: #FFFFFF;\n"
+"    border: 0px;\n"
+"    border-radius: 4px;\n"
+"    color: rgb(0, 0, 0);\n"
+"    font-size: 15px;\n"
+"    padding: 0px;\n"
+"    selection-background-color: rgb(229, 228, 253);\n"
+"    selection-color: rgb(0, 0, 0);\n"
+"}")
+        self.comboBox_wxName.setObjectName("comboBox_wxName")
+        self.comboBox_wxName.addItem("")
+        self.horizontalLayout_20.addWidget(self.comboBox_wxName)
+        self.horizontalLayout_20.setStretch(1, 1)
+        self.horizontalLayout_5.addWidget(self.frame_37)
         self.frame_45 = QtWidgets.QFrame(parent=self.DataInput)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -1407,7 +1460,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.frame_45.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_45.setObjectName("frame_45")
         self.horizontalLayout_96 = QtWidgets.QHBoxLayout(self.frame_45)
-        self.horizontalLayout_96.setContentsMargins(9, 0, 6, 0)
+        self.horizontalLayout_96.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout_96.setSpacing(6)
         self.horizontalLayout_96.setObjectName("horizontalLayout_96")
         self.time_label_2 = QtWidgets.QLabel(parent=self.frame_45)
@@ -1532,14 +1585,14 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
 "    background-color: rgb(90, 22, 230);\n"
 "}")
         self.add_pushButton.setText("")
-        icon17 = QtGui.QIcon()
-        icon17.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page1/page1_添加任务.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.add_pushButton.setIcon(icon17)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("resources/img/page1/page1_添加任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.add_pushButton.setIcon(icon16)
         self.add_pushButton.setObjectName("add_pushButton")
         self.horizontalLayout_5.addWidget(self.add_pushButton)
         self.verticalLayout_9.addWidget(self.DataInput)
         self.horizontalLayout_71 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_71.setContentsMargins(9, 6, 9, 6)
+        self.horizontalLayout_71.setContentsMargins(0, 6, 0, 6)
         self.horizontalLayout_71.setSpacing(7)
         self.horizontalLayout_71.setObjectName("horizontalLayout_71")
         self.scrollArea_3 = QtWidgets.QScrollArea(parent=self.verticalWidget_2)
@@ -1590,7 +1643,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.scrollArea_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.scrollArea_3.setObjectName("scrollArea_3")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 368, 482))
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 368, 488))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.formLayout_3 = QtWidgets.QFormLayout(self.scrollAreaWidgetContents_3)
         self.formLayout_3.setLabelAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
@@ -1650,9 +1703,9 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.pushButton_save.setStyleSheet("QPushButton {  \n"
 "    color: rgb(0, 0, 0);  \n"
 "}")
-        icon18 = QtGui.QIcon()
-        icon18.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page1/page1_保存任务.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pushButton_save.setIcon(icon18)
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(QtGui.QPixmap("resources/img/page1/page1_保存任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton_save.setIcon(icon17)
         self.pushButton_save.setObjectName("pushButton_save")
         self.horizontalLayout_26.addWidget(self.pushButton_save)
         self.pushButton_import = QtWidgets.QPushButton(parent=self.widget_64)
@@ -1664,9 +1717,9 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.pushButton_import.setStyleSheet("QPushButton {  \n"
 "    color: rgb(0, 0, 0);  \n"
 "}")
-        icon19 = QtGui.QIcon()
-        icon19.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page1/page1_导入任务.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pushButton_import.setIcon(icon19)
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("resources/img/page1/page1_导入任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton_import.setIcon(icon18)
         self.pushButton_import.setObjectName("pushButton_import")
         self.horizontalLayout_26.addWidget(self.pushButton_import)
         self.checkBox_stopSleep = QtWidgets.QCheckBox(parent=self.widget_64)
@@ -1952,9 +2005,9 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.checkBox_Ai.setStyleSheet("QCheckBox {\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page2/page2_智慧拆句.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.checkBox_Ai.setIcon(icon20)
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("resources/img/page2/page2_智慧拆句.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.checkBox_Ai.setIcon(icon19)
         self.checkBox_Ai.setObjectName("checkBox_Ai")
         self.horizontalLayout_16.addWidget(self.checkBox_Ai)
         self.checkBox_period = QtWidgets.QCheckBox(parent=self.verticalWidget_3)
@@ -2408,7 +2461,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.takeOver_widget.setMinimumSize(QtCore.QSize(28, 28))
         self.takeOver_widget.setMaximumSize(QtCore.QSize(28, 28))
         self.takeOver_widget.setSizeIncrement(QtCore.QSize(28, 0))
-        self.takeOver_widget.setStyleSheet(f"image: url({get_resource_path('resources/img/page3/page3_AI标志图标.svg')});")
+        self.takeOver_widget.setStyleSheet("image: url(\"resources/img/page3/page3_AI标志图标.svg\");")
         self.takeOver_widget.setObjectName("takeOver_widget")
         self.horizontalLayout_19.addWidget(self.takeOver_widget)
         self.horizontalLayout_124.addWidget(self.Ai_move)
@@ -2502,11 +2555,11 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.takeOverTime_label.setMinimumSize(QtCore.QSize(521, 162))
         self.takeOverTime_label.setMaximumSize(QtCore.QSize(1677, 162))
         font = QtGui.QFont()
+        font.setPointSize(88)
         self.takeOverTime_label.setFont(font)
         self.takeOverTime_label.setStyleSheet("QLabel {\n"
 "    color: rgb(0, 0, 0);\n"
 "    padding: 4px;\n"
-"    font-size:88pt;\n"
 "    qproperty-alignment: AlignCenter;\n"
 "}")
         self.takeOverTime_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -2538,9 +2591,9 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
 "    background-color: rgb(90, 22, 230);\n"
 "}")
         self.pushButton_takeover.setText("")
-        icon21 = QtGui.QIcon()
-        icon21.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page3/page3_开始接管.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pushButton_takeover.setIcon(icon21)
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap("resources/img/page3/page3_开始接管.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton_takeover.setIcon(icon20)
         self.pushButton_takeover.setIconSize(QtCore.QSize(38, 38))
         self.pushButton_takeover.setObjectName("pushButton_takeover")
         self.horizontalLayout_150.addWidget(self.pushButton_takeover)
@@ -2588,9 +2641,9 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         item = self.left_listWidget.item(3)
         item.setText(_translate("MainWindow", "Ai接管"))
         self.left_listWidget.setSortingEnabled(__sortingEnabled)
-        self.leafAuto_Title.setText(_translate("MainWindow", "LeafAUTO PRO"))
-        self.Free_pushButton.setText(_translate("MainWindow", "正在使用免费试用版"))
-        self.label_5.setText(_translate("MainWindow", "2024年12月12日"))
+        self.leafAuto_Title.setText(_translate("MainWindow", "LeafAUTO Pro"))
+        self.Free_pushButton.setText(_translate("MainWindow", "正在使用专业试用版"))
+        self.label_5.setText(_translate("MainWindow", "2025年6月6日"))
         self.label_6.setText(_translate("MainWindow", "当前版本过期日期"))
         self.base_pushButton.setText(_translate("MainWindow", "标准会员版"))
         self.label_8.setText(_translate("MainWindow", "限时特惠：￥9.9/月"))
@@ -2619,27 +2672,29 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:\'微软雅黑 Light\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Microsoft YaHei UI\'; font-size:14pt; font-weight:700; color:#ffffff;\">欢迎使用枫叶信息自动化</span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Microsoft YaHei UI\'; font-size:14pt; font-weight:700; color:#ffffff;\">欢迎使用LeafAuto Pro</span></p>\n"
 "<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Microsoft YaHei UI\'; color:#ffffff;\"><br /></p>\n"
-"<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Microsoft YaHei UI\'; font-size:12pt; color:#ffffff;\">      </span><span style=\" font-family:\'Microsoft YaHei\',\'sans-serif\'; font-size:16px; color:#ffffff;\">LeafAuto 是我在2024年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。 </span></p>\n"
+"<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Microsoft YaHei UI\'; font-size:12pt; color:#ffffff;\">      </span><span style=\" font-family:\'Microsoft YaHei\',\'sans-serif\'; font-size:16px; color:#ffffff;\">LeafAuto Pro 是我在2024年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。 </span></p>\n"
 "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Microsoft YaHei\',\'sans-serif\'; font-size:16px; color:#ffffff;\">       如果您觉得好用，可以推荐给更多人，这样能让她变得更好！ </span></p></body></html>"))
-        self.welcome_label.setText(_translate("MainWindow", "欢迎使用LeafAuto"))
-        self.label_12.setText(_translate("MainWindow", "欢迎使用枫叶信息专业版（LeafAuto PRO）"))
-        self.label_11.setText(_translate("MainWindow", "LeafAuto © 2025 Yangshengzhou All Rights Reserved"))
+        self.welcome_label.setText(_translate("MainWindow", "欢迎使用LeafAuto PRO"))
+        self.label_12.setText(_translate("MainWindow", "欢迎使用枫叶信息专业版（LeafAuto Pro）"))
+        self.label_11.setText(_translate("MainWindow", "LeafAuto Pro © 2025 Yangshengzhou All Rights Reserved"))
         self.label_75.setText(_translate("MainWindow", "会员等级"))
         self.label_76.setText(_translate("MainWindow", "Null"))
         self.label_77.setText(_translate("MainWindow", "提示音"))
         self.label_78.setText(_translate("MainWindow", "OFF"))
         self.label_79.setText(_translate("MainWindow", "微信语言"))
         self.label_80.setText(_translate("MainWindow", "CN"))
-        self.label_81.setText(_translate("MainWindow", "枫叶版本"))
+        self.label_81.setText(_translate("MainWindow", "Pro版本"))
         self.label_82.setText(_translate("MainWindow", "V4.39"))
-        self.AUTO_Title.setText(_translate("MainWindow", "AUTO PRO"))
+        self.AUTO_Title.setText(_translate("MainWindow", "AUTO Pro"))
         self.label_3.setText(_translate("MainWindow", "消息内容"))
         self.message_lineEdit.setPlaceholderText(_translate("MainWindow", "段落内容可粘贴"))
         self.label.setText(_translate("MainWindow", "接收者"))
         self.receiver_lineEdit.setPlaceholderText(_translate("MainWindow", "联系人备注优先"))
-        self.time_label_2.setText(_translate("MainWindow", "发送时间"))
+        self.label_wxid.setText(_translate("MainWindow", "微信"))
+        self.comboBox_wxName.setItemText(0, _translate("MainWindow", "未登录"))
+        self.time_label_2.setText(_translate("MainWindow", "定时"))
         self.dateTimeEdit.setDisplayFormat(_translate("MainWindow", "yyyy/M/d H:mm:ss"))
         self.comboBox_Frequency.setItemText(0, _translate("MainWindow", "仅一次"))
         self.comboBox_Frequency.setItemText(1, _translate("MainWindow", "每天"))
@@ -2660,7 +2715,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.label_119.setText(_translate("MainWindow", "LeafAuto © 2025 Yangshengzhou.All Rights Reserved"))
         self.start_pushButton.setText(_translate("MainWindow", "开始执行"))
-        self.Split_Title.setText(_translate("MainWindow", "Smart Split PRO"))
+        self.Split_Title.setText(_translate("MainWindow", "Smart Split Pro"))
         self.label_4.setText(_translate("MainWindow", "句子接收人"))
         self.SplitReceiver_lineEdit.setPlaceholderText(_translate("MainWindow", "输入联系人（备注）"))
         self.label_10.setText(_translate("MainWindow", "段落拆句规则"))
@@ -2671,7 +2726,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.label_145.setText(_translate("MainWindow", "在粘贴段落后，首先点击“开始拆句”，然后再点击“开始发送”"))
         self.pushButton_split.setText(_translate("MainWindow", "开始拆句"))
         self.pushButton_startSplit.setText(_translate("MainWindow", "发送句子"))
-        self.LeafAi_Title.setText(_translate("MainWindow", "Leaf Ai PRO"))
+        self.LeafAi_Title.setText(_translate("MainWindow", "Leaf Ai Pro"))
         self.label_9.setText(_translate("MainWindow", "接管对象"))
         self.takeOverReceiver_lineEdit.setPlaceholderText(_translate("MainWindow", "输入联系人备注"))
         self.label_16.setText(_translate("MainWindow", "全局接管"))

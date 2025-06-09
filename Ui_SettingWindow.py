@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from common import get_resource_path
-
 
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
@@ -54,7 +52,7 @@ class Ui_SettingWindow(object):
         self.widget_SettingLogo = QtWidgets.QWidget(parent=self.frame_left_head)
         self.widget_SettingLogo.setMinimumSize(QtCore.QSize(0, 36))
         self.widget_SettingLogo.setMaximumSize(QtCore.QSize(16777215, 36))
-        self.widget_SettingLogo.setStyleSheet(f"image: url({get_resource_path('')});")
+        self.widget_SettingLogo.setStyleSheet("image: url(:/svg/Morikawa/01_Data/img/logo/443px.png);")
         self.widget_SettingLogo.setObjectName("widget_SettingLogo")
         self.horizontalLayout_17.addWidget(self.widget_SettingLogo)
         self.verticalLayout_12.addWidget(self.frame_left_head)
@@ -97,22 +95,22 @@ class Ui_SettingWindow(object):
         self.listWidget_setting.setObjectName("listWidget_setting")
         item = QtWidgets.QListWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/setting/基本设置.svg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("resources/img/setting/基本设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/高级设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("resources/img/setting/高级设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon1)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/其他设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(QtGui.QPixmap("resources/img/setting/其他设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon2)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/关于枫叶.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon3.addPixmap(QtGui.QPixmap("resources/img/setting/关于枫叶.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon3)
         self.listWidget_setting.addItem(item)
         self.horizontalLayout_15.addWidget(self.listWidget_setting)
@@ -144,7 +142,7 @@ class Ui_SettingWindow(object):
 "color: rgb(0, 0, 0);\n"
 "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/完成设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon4.addPixmap(QtGui.QPixmap("resources/img/setting/完成设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_exit_setting.setIcon(icon4)
         self.pushButton_exit_setting.setObjectName("pushButton_exit_setting")
         self.horizontalLayout_16.addWidget(self.pushButton_exit_setting, 0, QtCore.Qt.AlignmentFlag.AlignBottom)
@@ -327,7 +325,7 @@ class Ui_SettingWindow(object):
 "border:none;")
         self.pushButton_test_sound.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/播放测试.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon5.addPixmap(QtGui.QPixmap("resources/img/setting/播放测试.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_test_sound.setIcon(icon5)
         self.pushButton_test_sound.setIconSize(QtCore.QSize(28, 28))
         self.pushButton_test_sound.setObjectName("pushButton_test_sound")
@@ -899,7 +897,7 @@ class Ui_SettingWindow(object):
 "border:none;")
         self.pushButton_logo.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/logo.png")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon6.addPixmap(QtGui.QPixmap("resources/img/setting/logo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_logo.setIcon(icon6)
         self.pushButton_logo.setIconSize(QtCore.QSize(80, 80))
         self.pushButton_logo.setObjectName("pushButton_logo")
@@ -1072,7 +1070,7 @@ class Ui_SettingWindow(object):
         SettingWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(SettingWindow)
-        self.listWidget_setting.setCurrentRow(-1)
+        self.listWidget_setting.setCurrentRow(0)
         self.stackedWidget.setCurrentIndex(0)
         self.listWidget_setting.currentRowChanged['int'].connect(self.stackedWidget.setCurrentIndex) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
@@ -1120,4 +1118,4 @@ class Ui_SettingWindow(object):
         self.pushButton_check_updata.setText(_translate("SettingWindow", "检查更新"))
         self.label_4.setText(_translate("SettingWindow", "枫叶帮助"))
         self.pushButton_help.setText(_translate("SettingWindow", "查看帮助"))
-        self.label_copy_right.setText(_translate("SettingWindow", "LeafAuto © 2025 Yangshengzhou All Rights Reserved"))
+        self.label_copy_right.setText(_translate("SettingWindow", "LeafAuto Pro © 2025 Yangshengzhou All Rights Reserved"))
