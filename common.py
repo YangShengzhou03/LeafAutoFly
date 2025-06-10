@@ -11,8 +11,10 @@ from bs4 import BeautifulSoup
 
 main_window = None
 
+
 def str_to_bool(value):
     return value.lower() == 'true' if isinstance(value, str) else bool(value)
+
 
 def get_current_time(mode='sys'):
     url = 'https://www.beijing-time.org/t/time.asp'
@@ -54,6 +56,7 @@ def get_current_time(mode='sys'):
     else:
         raise ValueError("Invalid mode specified")
 
+
 def log(level, message):
     timestamp = get_current_time('mix').strftime("%m-%d %H:%M:%S")
     colors = {
@@ -65,6 +68,8 @@ def log(level, message):
     color = colors.get(level, "#00CC33")
     formatted_message = f'<span style="color:{color}">[{timestamp}]: {message}</span>'
     main_window.log_textEdit.append(formatted_message)
+    main_window.log_textEdit.ensureCursorVisible()
+
 
 def load_stylesheet(filename):
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -76,12 +81,14 @@ def load_stylesheet(filename):
     except FileNotFoundError:
         return f"文件 {filename} 未找到。"
 
+
 def get_resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path).replace(os.sep, '/')
+
 
 def author():
     dialog = QDialog()
@@ -117,6 +124,7 @@ def author():
     close_button.setStyleSheet(load_stylesheet("close_button.setStyleSheet.css"))
 
     dialog.exec()
+
 
 def get_url():
     url = 'https://www.cnblogs.com/YangShengzhou/p/18611081'

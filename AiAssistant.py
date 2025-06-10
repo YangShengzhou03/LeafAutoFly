@@ -30,7 +30,6 @@ class AiAssistant(QtWidgets.QWidget):
         self.current_wx = self.wx_instances.get(selected_nickname)
 
         if not self.current_wx:
-            log("WARNING", f"[AiAssistant] 所选微信账号 {selected_nickname} 未初始化")
             return False
         return True
 
@@ -107,6 +106,10 @@ class AiAssistant(QtWidgets.QWidget):
             self.is_taking_over = False
             self.timer.stop()
             print("[AiAssistant] 接管已停止")
+            log("DEBUG", "Ai 接管已停止")
+            self.update_button_icon('resources/img/page3/page3_开始接管.svg')
+            self.parent.label_7.setText(
+                self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
 
         except Exception as e:
             print(f"[AiAssistant] 停止接管失败: {str(e)}")

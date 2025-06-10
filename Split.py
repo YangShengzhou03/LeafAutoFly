@@ -25,7 +25,6 @@ class Split(QtWidgets.QWidget):
             self.current_wx = self.wx_instances[selected_nickname]
             return True
         else:
-            log("WARNING", f"[Split] 所选微信账号 {selected_nickname} 未初始化")
             return False
 
     def on_start_split_clicked(self) -> None:

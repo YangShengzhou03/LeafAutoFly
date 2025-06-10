@@ -367,14 +367,15 @@ class AutoInfo(QtWidgets.QWidget):
                     if item and item.widget():
                         widget_item = item.widget()
                         if hasattr(widget_item, 'task') and all(
-                                widget_item.task[key] == task[key] for key in
-                                ['time', 'name', 'info', 'frequency', 'wx_nickname']):
-                            widget_image = widget_item.findChild(QtWidgets.QWidget, "widget_54")
-                            if widget_image:
+                                widget_item.task[key] == task[key] for key in ['time', 'name', 'info', 'frequency']):
+                            # 修改：使用正确的方式查找图标部件
+                            widget_image = widget_item.findChild(QtWidgets.QWidget, None)
+                            if widget_image and widget_image.minimumSize() == QtCore.QSize(36, 36):
                                 if status == '成功':
                                     icon_path_key = 'page1_发送成功.svg'
                                 else:
                                     icon_path_key = 'page1_发送失败.svg'
+                                    # 仅在首次失败时播放声音和发送邮件
                                     if 'error_count' not in task:
                                         task['error_count'] = 1
                                         self.play_error_sound()
@@ -386,20 +387,29 @@ class AutoInfo(QtWidgets.QWidget):
                                 new_icon_path = get_resource_path(f'resources/img/page1/{icon_path_key}')
                                 widget_image.setStyleSheet(f"image: url({new_icon_path});")
 
+                                # 强制重绘部件，确保视觉更新
+                                widget_image.update()
+                                widget_item.update()
+
+                            # 处理重复任务
+                            next_time = datetime.fromisoformat(task['time'])
+
                             if task['frequency'] == '每天':
-                                next_time = datetime.fromisoformat(task['time']) + timedelta(days=1)
+                                next_time += timedelta(days=1)
+                                # 修复：添加 wx_nickname 参数
                                 self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
                                                    task['wx_nickname'])
                             elif task['frequency'] == '每周':
-                                next_time = datetime.fromisoformat(task['time']) + timedelta(days=7)
+                                next_time += timedelta(days=7)
+                                # 修复：添加 wx_nickname 参数
                                 self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
                                                    task['wx_nickname'])
                             elif task['frequency'] == '工作日':
-                                next_time = datetime.fromisoformat(task['time'])
                                 while True:
                                     next_time += timedelta(days=1)
-                                    if next_time.weekday() < 5:
+                                    if next_time.weekday() < 5:  # 0-4 为周一至周五
                                         break
+                                # 修复：添加 wx_nickname 参数
                                 self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
                                                    task['wx_nickname'])
 
