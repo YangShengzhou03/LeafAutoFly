@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "time": "2024-06-10T19:44:17",
+        "name": "文件传输助手",
+        "info": "生成",
+        "frequency": "仅一次",
+        "wx_nickname": "小羊"
+    },
+    {
+        "time": "2024-06-10T19:40:37",
+        "name": "文件传输助手",
+        "info": "收到vv",
+        "frequency": "仅一次",
+        "wx_nickname": "小羊"
+    },
+    {
+        "time": "2024-06-10T19:50:37",
+        "name": "文件传输助手",
+        "info": "收到vv",
+        "frequency": "仅一次",
+        "wx_nickname": "小羊"
+    },
+    {
+        "time": "2024-06-10T19:42:04",
+        "name": "文件传输助手",
+        "info": "都是错的",
+        "frequency": "仅一次",
+        "wx_nickname": "杨圣洲"
+    }
+]

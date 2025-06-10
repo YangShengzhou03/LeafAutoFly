@@ -9,44 +9,41 @@ from typing import Optional, Dict, List, Any
 
 import requests
 from PyQt6 import QtCore, QtMultimedia
-from PyQt6.QtCore import QDateTime
+from PyQt6.QtCore import QDateTime, pyqtSignal
 
 from common import log, get_current_time
 
 
 class WorkerThreadBase(QtCore.QThread):
-    """线程基类，提供暂停、恢复和中断功能"""
-    pause_changed = QtCore.pyqtSignal(bool)
+    """线程基类，提供终止功能"""
     finished = QtCore.pyqtSignal()
 
     def __init__(self):
         super().__init__()
-        self._is_paused = False
         self._is_running = False
         self._stop_event = threading.Event()
+        self._stop_lock = threading.Lock()  # 添加锁确保线程安全
 
     def run(self) -> None:
         raise NotImplementedError("子类必须实现run方法")
 
-    def pause(self) -> None:
-        self._is_paused = True
-        self.pause_changed.emit(True)
-
-    def resume(self) -> None:
-        self._is_paused = False
-        self.pause_changed.emit(False)
-
     def request_interruption(self) -> None:
         """请求线程中断并设置运行状态"""
-        self._stop_event.set()
-        self._is_running = False
-        log("INFO", f"{self.__class__.__name__} 收到中断请求")
-
-    def is_paused(self) -> bool:
-        return self._is_paused
+        with self._stop_lock:
+            self._stop_event.set()
+            self._is_running = False
+        log("WARNING", f"{self.__class__.__name__} 收到用户的终止请求")
 
     def is_running(self) -> bool:
-        return self._is_running
+        with self._stop_lock:
+            return self._is_running
+
+    def check_interruption(self) -> bool:
+        """检查是否请求中断"""
+        with self._stop_lock:
+            if self._stop_event.is_set():
+                return True
+        return False
 
 
 class AiWorkerThread(WorkerThreadBase):
@@ -119,11 +116,6 @@ class AiWorkerThread(WorkerThreadBase):
         # 主消息循环
         while self._is_running and not self._stop_event.is_set():
             try:
-                if self._is_paused:
-                    log("DEBUG", "线程已暂停，等待恢复...")
-                    time.sleep(0.1)  # 暂停时休眠
-                    continue
-
                 if self.receiver == "全局Ai接管":
                     self._handle_global_messages()
                 else:
@@ -347,15 +339,6 @@ class SplitWorkerThread(WorkerThreadBase):
                 log("INFO", f"收到停止信号，终止发送任务，当前进度: {i + 1}/{len(self.sentences)}")
                 break
 
-            if self._is_paused:
-                log("DEBUG", "线程已暂停，等待恢复...")
-                while self._is_paused and not self._stop_event.is_set():
-                    time.sleep(0.1)  # 等待，直到恢复或停止
-
-            if self._stop_event.is_set() or not self._is_running:
-                log("INFO", f"收到停止信号，终止发送任务，当前进度: {i + 1}/{len(self.sentences)}")
-                break
-
             try:
                 log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
                 if self.wx:
@@ -392,18 +375,18 @@ class WorkerThread(WorkerThreadBase):
     ES_SYSTEM_REQUIRED = 0x00000001
     ES_DISPLAY_REQUIRED = 0x00000002
 
+    finished = pyqtSignal()
+
     def __init__(self, app_instance):
         super().__init__()
         self.app_instance = app_instance
         self.prevent_sleep = False
         self.current_time = 'sys'
-        self._is_running = True
         self._system_state = None
 
     def run(self) -> None:
         """线程主循环"""
         self._is_running = True
-        log("INFO", "WorkerThread 已启动")
 
         # 设置系统不进入睡眠和锁屏状态
         if self.prevent_sleep:
@@ -412,10 +395,8 @@ class WorkerThread(WorkerThreadBase):
 
         try:
             while self._is_running and not self._stop_event.is_set():
-                if self._is_paused:
-                    log("DEBUG", "线程已暂停，等待恢复...")
-                    time.sleep(0.1)  # 暂停时休眠
-                    continue
+                if self.check_interruption():
+                    break
 
                 next_task = self._find_next_ready_task()
                 if next_task is None:
@@ -442,26 +423,26 @@ class WorkerThread(WorkerThreadBase):
                         log("INFO", f"下一个任务将在 {friendly_time} 后执行")
 
                         # 分段休眠，以便能够及时响应停止请求
-                        while remaining_time > 0 and not self._stop_event.is_set():
-                            sleep_time = min(remaining_time, 1.0)  # 每次最多休眠1秒
+                        while remaining_time > 0 and not self.check_interruption():
+                            sleep_time = min(remaining_time, 0.5)  # 每次最多休眠0.5秒
                             self.msleep(int(sleep_time * 1000))
                             remaining_time -= sleep_time
 
-                            if self._is_paused:
-                                log("DEBUG", "线程已暂停，等待恢复...")
-                                while self._is_paused and not self._stop_event.is_set():
-                                    time.sleep(0.1)
+                            if self.check_interruption():
+                                break
 
-                                if self._stop_event.is_set():
-                                    break
-
-                        if self._stop_event.is_set():
+                        if self.check_interruption():
                             break
 
-                    # 执行任务并获取结果
+                    if self.check_interruption():
+                        break
+
                     success = self._execute_task(next_task)
 
-                    # 根据执行结果更新任务状态
+                    if self.check_interruption():
+                        log("WARNING", "任务执行过程中被用户终止")
+                        break
+
                     if success:
                         self.app_instance.update_task_status(next_task, '成功')
                     else:
@@ -476,10 +457,8 @@ class WorkerThread(WorkerThreadBase):
         finally:
             # 恢复系统睡眠设置
             if self.prevent_sleep:
-                self._set_system_state(self.ES_CONTINUOUS)  # 清除其他标志，只保留CONTINUOUS以恢复默认
+                self._set_system_state(self.ES_CONTINUOUS)
                 log("WARNING", "已恢复系统休眠和锁屏设置")
-
-            log("INFO", "WorkerThread 已停止")
             self._is_running = False
             self.finished.emit()
 
@@ -510,17 +489,21 @@ class WorkerThread(WorkerThreadBase):
 
     def _execute_task(self, task: Dict) -> bool:
         """执行任务并返回成功/失败状态"""
-        max_retries = 3  # 增加重试次数
+        max_retries = 3
         retries = 0
         success = False
 
         log("INFO", f"开始执行任务: {task.get('name', '未知')}")
 
-        while retries < max_retries and not success and not self._stop_event.is_set():
+        while retries < max_retries and not success and not self.check_interruption():
             try:
                 name = task['name']
                 info = task['info']
-                wx_nickname = task['wx_nickname']  # 获取任务指定的微信昵称
+                wx_nickname = task['wx_nickname']
+
+                # 执行任务前检查是否终止
+                if self.check_interruption():
+                    return False
 
                 # 获取对应的微信实例
                 wx_instance = self._get_wx_instance(wx_nickname)
@@ -528,36 +511,43 @@ class WorkerThread(WorkerThreadBase):
                     log("ERROR", f"找不到微信实例 '{wx_nickname}'，无法执行任务")
                     raise ValueError(f"找不到微信实例 '{wx_nickname}'")
 
+                # 执行任务前检查是否终止
+                if self.check_interruption():
+                    return False
+
                 if os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
                         log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname})")
-                        wx_instance.SendFiles(filepath=info, who=name)
+                        # 使用可中断的发送方法
+                        success = self._send_with_interruption(lambda: wx_instance.SendFiles(filepath=info, who=name))
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                 else:
                     log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {wx_nickname})")
                     if "@所有人" in info:
                         info = info.replace("@所有人", "").strip()
-                        wx_instance.AtAll(msg=info, who=name)
+                        # 使用可中断的发送方法
+                        success = self._send_with_interruption(lambda: wx_instance.AtAll(msg=info, who=name))
                     else:
-                        wx_instance.SendMsg(msg=info, who=name)
+                        # 使用可中断的发送方法
+                        success = self._send_with_interruption(lambda: wx_instance.SendMsg(msg=info, who=name))
 
-                log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname})")
-                success = True
+                if success:
+                    log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname})")
 
             except Exception as e:
                 log("ERROR", f"执行任务失败 (尝试 {retries + 1}/{max_retries}): {str(e)}")
                 retries += 1
 
                 # 如果不是最后一次尝试，尝试重新加载微信客户端
-                if retries < max_retries and not self._stop_event.is_set():
+                if retries < max_retries and not self.check_interruption():
                     log("WARNING", "尝试重新连接微信客户端...")
                     try:
                         self.app_instance.parent.update_wx()
                         # 等待一段时间，让微信客户端稳定
                         for _ in range(10):
-                            if self._stop_event.is_set():
+                            if self.check_interruption():
                                 break
                             self.msleep(100)
                     except Exception as we:
@@ -568,14 +558,11 @@ class WorkerThread(WorkerThreadBase):
     def _get_wx_instance(self, wx_nickname: str) -> Any:
         """根据微信昵称获取对应的微信实例"""
         try:
-            # 从app_instance中获取微信实例字典
             wx_dict = self.app_instance.wx_dict
 
-            # 如果字典中存在该微信昵称对应的实例，返回它
             if wx_nickname in wx_dict:
                 return wx_dict[wx_nickname]
 
-            # 如果找不到指定的微信实例，尝试使用默认实例
             log("WARNING", f"找不到微信实例 '{wx_nickname}'，将使用默认实例")
             if wx_dict:
                 return next(iter(wx_dict.values()))
@@ -585,6 +572,31 @@ class WorkerThread(WorkerThreadBase):
         except Exception as e:
             log("ERROR", f"获取微信实例失败: {str(e)}")
             return None
+
+    def _send_with_interruption(self, send_func):
+        """包装发送方法，使其可以被中断"""
+        # 检查是否有停止请求
+        if self.check_interruption():
+            return False
+
+        try:
+            # 创建一个线程执行发送操作
+            send_thread = threading.Thread(target=send_func)
+            send_thread.daemon = True
+            send_thread.start()
+
+            # 等待发送线程完成或被中断
+            while send_thread.is_alive():
+                if self.check_interruption():
+                    send_thread.join(timeout=0.5)
+                    return False
+                self.msleep(100)
+
+            return True
+
+        except Exception as e:
+            log("ERROR", f"发送过程中出错: {str(e)}")
+            return False
 
 
 class ErrorSoundThread(QtCore.QThread):

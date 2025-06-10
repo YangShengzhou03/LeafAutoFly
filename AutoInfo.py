@@ -278,7 +278,7 @@ class AutoInfo(QtWidgets.QWidget):
                 self.is_executing = False
                 self.parent.start_pushButton.setText("开始执行")
                 if self.worker_thread is not None:
-                    self.worker_thread.requestInterruption()
+                    self.worker_thread.request_interruption()
                     self.worker_thread = None
                     print("[AutoInfo] 已停止工作线程")
 
@@ -322,7 +322,7 @@ class AutoInfo(QtWidgets.QWidget):
                 self.is_executing = False
                 self.parent.start_pushButton.setText("开始执行")
                 if self.worker_thread is not None:
-                    self.worker_thread.requestInterruption()
+                    self.worker_thread.request_interruption()
                     self.worker_thread = None
                     print("[AutoInfo] 已停止工作线程")
                 if self.error_sound_thread._is_running:
