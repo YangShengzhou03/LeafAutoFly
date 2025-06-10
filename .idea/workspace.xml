@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LeafAuto封装脚本.iss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/_internal/system_info.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/_internal/tasks.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI_Reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Reply.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_SettingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_SettingWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +100,7 @@
       <workItem from="1749516797143" duration="19910000" />
       <workItem from="1749556436764" duration="37000" />
       <workItem from="1749556744659" duration="19000" />
+      <workItem from="1749556885534" duration="583000" />
     </task>
     <task id="LOCAL-00001" summary="LeafAuto PRO">
       <option name="closed" value="true" />
@@ -245,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749556230850</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1749556919730</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1749556919730</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
