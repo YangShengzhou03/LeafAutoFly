@@ -171,7 +171,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         selected_nickname = self.comboBox_nickName.currentText()
         if selected_nickname in wx_instances:
             MainWindow.wx = wx_instances[selected_nickname]
-            log("DEBUG", f"已切换到微信账号: {selected_nickname}")
+            log("INFO", f"已切换到微信账号: {selected_nickname}")
         else:
             log("WARNING", f"所选微信账号 {selected_nickname} 未初始化")
 

@@ -81,30 +81,30 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 6, 0, 6)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(70, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem1)
         self.comboBox_nickName = QtWidgets.QComboBox(parent=self.userName_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.comboBox_nickName.sizePolicy().hasHeightForWidth())
         self.comboBox_nickName.setSizePolicy(sizePolicy)
-        self.comboBox_nickName.setMinimumSize(QtCore.QSize(15, 0))
+        self.comboBox_nickName.setMinimumSize(QtCore.QSize(99, 0))
         self.comboBox_nickName.setMaximumSize(QtCore.QSize(190, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.comboBox_nickName.setFont(font)
         self.comboBox_nickName.setStyleSheet("QComboBox {\n"
 "    background-color: rgba(0, 0, 0, 0);\n"
 "    border: 0px;\n"
 "    color: white;\n"
-"    font-size: 16px;\n"
-"    padding-right: 0px;\n"
-"    padding-left: 9px;\n"
 "    text-align: center;\n"
 "    text-align-last: center;\n"
 "    qproperty-alignment: AlignCenter;\n"
 "}\n"
 "\n"
 "QComboBox:hover {\n"
-"    background-color: rgba(255, 255, 255, 0.1);\n"
+"    border: 0px;\n"
 "}\n"
 "\n"
 "QComboBox:focus {\n"
@@ -130,10 +130,9 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox::down-arrow {\n"
 "    image: url(\"resources/img/List/下拉.svg\");\n"
-"    width: 28px;\n"
-"    height: 28px;\n"
-"    right: 2px;\n"
-"    top: 2px;\n"
+"    width: 32px;\n"
+"    height: 32px;\n"
+"    top: 1px;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
@@ -141,17 +140,15 @@ class Ui_MainWindow(object):
 "    border: 1px solid #CCCCCC;\n"
 "    border-radius: 0;\n"
 "    color: black;\n"
-"    font-size: 16px;\n"
-"    padding: 4px;\n"
 "    selection-background-color: #4A67FF;\n"
 "    selection-color: white;\n"
 "    text-align: center;\n"
 "    outline: 0;\n"
-"}")
+"}    ")
         self.comboBox_nickName.setObjectName("comboBox_nickName")
         self.comboBox_nickName.addItem("")
         self.horizontalLayout_4.addWidget(self.comboBox_nickName)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(70, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem2)
         self.horizontalLayout_4.setStretch(1, 1)
         self.verticalLayout.addWidget(self.userName_frame)

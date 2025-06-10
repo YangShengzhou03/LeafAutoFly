@@ -215,9 +215,12 @@ border-radius:32px</string>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Preferred</enum>
+                  </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>70</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -226,14 +229,14 @@ border-radius:32px</string>
                 <item>
                  <widget class="QComboBox" name="comboBox_nickName">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>15</width>
+                    <width>99</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -243,21 +246,23 @@ border-radius:32px</string>
                     <height>16777215</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QComboBox {
     background-color: rgba(0, 0, 0, 0);
     border: 0px;
     color: white;
-    font-size: 16px;
-    padding-right: 0px;
-    padding-left: 9px;
     text-align: center;
     text-align-last: center;
     qproperty-alignment: AlignCenter;
 }
 
 QComboBox:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    border: 0px;
 }
 
 QComboBox:focus {
@@ -283,10 +288,9 @@ QComboBox::drop-down:pressed {
 
 QComboBox::down-arrow {
     image: url(&quot;resources/img/List/下拉.svg&quot;);
-    width: 28px;
-    height: 28px;
-    right: 2px;
-    top: 2px;
+    width: 32px;
+    height: 32px;
+    top: 1px;
 }
 
 QComboBox QAbstractItemView {
@@ -294,13 +298,11 @@ QComboBox QAbstractItemView {
     border: 1px solid #CCCCCC;
     border-radius: 0;
     color: black;
-    font-size: 16px;
-    padding: 4px;
     selection-background-color: #4A67FF;
     selection-color: white;
     text-align: center;
     outline: 0;
-}</string>
+}    </string>
                   </property>
                   <item>
                    <property name="text">
@@ -314,9 +316,12 @@ QComboBox QAbstractItemView {
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Preferred</enum>
+                  </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>70</width>
                     <height>20</height>
                    </size>
                   </property>
