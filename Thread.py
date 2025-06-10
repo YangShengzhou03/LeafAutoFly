@@ -15,7 +15,6 @@ from common import log, get_current_time
 
 
 class WorkerThreadBase(QtCore.QThread):
-    """工作线程基类，提供通用功能"""
     pause_changed = QtCore.pyqtSignal(bool)
     finished = QtCore.pyqtSignal()
 
@@ -26,47 +25,39 @@ class WorkerThreadBase(QtCore.QThread):
         self._stop_event = threading.Event()
 
     def run(self):
-        """线程运行方法，由子类实现"""
         raise NotImplementedError("子类必须实现run方法")
 
     def pause(self):
-        """暂停线程执行"""
         self._is_paused = True
         self.pause_changed.emit(True)
 
     def resume(self):
-        """恢复线程执行"""
         self._is_paused = False
         self.pause_changed.emit(False)
 
     def requestInterruption(self):
-        """请求中断线程执行"""
         self._stop_event.set()
         self._is_running = False
 
     def isPaused(self) -> bool:
-        """检查线程是否暂停"""
         return self._is_paused
 
     def isRunning(self) -> bool:
-        """检查线程是否正在运行"""
         return self._is_running
 
 
 class AiWorkerThread(WorkerThreadBase):
-    """AI自动回复工作线程"""
-
-    def __init__(self, app_instance, receiver, model="月之暗面", role="你很温馨,回复简单明了。"):
+    def __init__(self, app_instance, receiver, wx, model="月之暗面", role="你很温馨,回复简单明了。"):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
+        self.wx = wx  # 直接接收当前选中的微信实例
         self.model = model
         self.system_content = role
         self.rules = self._load_rules()
         self._is_running = True
 
     def _load_rules(self) -> Optional[List[Dict]]:
-        """加载自动回复规则"""
         try:
             if os.path.exists('_internal/AutoReply_Rules.json'):
                 with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as f:
@@ -82,7 +73,6 @@ class AiWorkerThread(WorkerThreadBase):
             return []
 
     def _match_rule(self, msg: str) -> List[str]:
-        """匹配回复规则"""
         if not self.rules:
             return []
 
@@ -101,13 +91,17 @@ class AiWorkerThread(WorkerThreadBase):
         return matched_replies
 
     def run(self):
-        """线程主循环"""
         self._is_running = True
 
         # 尝试向接收者发送消息，确认连接
         if self.receiver != "全局Ai接管" and self._is_running:
             try:
-                self.app_instance.wx.SendMsg(msg=" ", who=self.receiver)
+                # 使用传入的微信实例
+                if self.wx:
+                    self.wx.SendMsg(msg=" ", who=self.receiver)
+                else:
+                    log("ERROR", f"找不到微信实例，无法初始化与 {self.receiver} 的连接")
+                    self._is_running = False
             except Exception as e:
                 log("ERROR", f"初始化与 {self.receiver} 的连接失败: {str(e)}")
                 self._is_running = False
@@ -134,9 +128,17 @@ class AiWorkerThread(WorkerThreadBase):
 
         self.finished.emit()
 
+    def _get_wx_instance(self):
+        """获取对应的微信实例"""
+        return self.wx  # 直接返回传入的微信实例
+
     def _handle_global_messages(self):
         """处理全局消息"""
-        new_msg = self.app_instance.wx.GetAllNewMessage()
+        wx_instance = self._get_wx_instance()
+        if not wx_instance:
+            return
+
+        new_msg = wx_instance.GetAllNewMessage()
         if not new_msg:
             return
 
@@ -144,14 +146,18 @@ class AiWorkerThread(WorkerThreadBase):
         who = next(iter(new_msg))
         who = re.sub(r'\s*[（(]\d+[）)]\s*$', '', who)
 
-        msgs = self.app_instance.wx.GetAllMessage()
+        msgs = wx_instance.GetAllMessage()
         if msgs and msgs[-1].type == "friend":
             msg = msgs[-1].content
             self._process_message(msg, who)
 
     def _handle_specific_messages(self):
         """处理特定接收者的消息"""
-        msgs = self.app_instance.wx.GetAllMessage()
+        wx_instance = self._get_wx_instance()
+        if not wx_instance:
+            return
+
+        msgs = wx_instance.GetAllMessage()
         if msgs and msgs[-1].type == "friend":
             msg = msgs[-1].content
             self._process_message(msg, self.receiver)
@@ -161,17 +167,21 @@ class AiWorkerThread(WorkerThreadBase):
         if self.rules:
             matched_replies = self._match_rule(msg)
             if matched_replies:
+                wx_instance = self._get_wx_instance()
+                if not wx_instance:
+                    return
+
                 for reply in matched_replies:
                     try:
                         if os.path.isdir(os.path.dirname(reply)):
                             if os.path.isfile(reply):
                                 log("INFO", f"根据规则发送文件 {os.path.basename(reply)} 给 {who}")
-                                self.app_instance.wx.SendFiles(filepath=reply, who=who)
+                                wx_instance.SendFiles(filepath=reply, who=who)
                             else:
                                 log("ERROR", f"回复规则有误,文件不存在: {os.path.basename(reply)}")
                         else:
                             log("INFO", f"根据规则自动回复 '{reply}' 给 {who}")
-                            self.app_instance.wx.SendMsg(msg=reply, who=who)
+                            wx_instance.SendMsg(msg=reply, who=who)
                     except Exception as e:
                         log("ERROR", f"发送自动回复时出错: {str(e)}")
                 return
@@ -190,8 +200,10 @@ class AiWorkerThread(WorkerThreadBase):
                 result = self._query_default_api(msg)
 
             if result:
-                self.app_instance.wx.SendMsg(msg=result, who=who)
-                log("INFO", f"Ai发送给 {who}: {result[:30]}...")
+                wx_instance = self._get_wx_instance()
+                if wx_instance:
+                    wx_instance.SendMsg(msg=result, who=who)
+                    log("INFO", f"Ai发送给 {who}: {result[:30]}...")
 
         except Exception as e:
             log("ERROR", f"调用AI API时出错: {str(e)}")
@@ -287,11 +299,12 @@ class AiWorkerThread(WorkerThreadBase):
 class SplitWorkerThread(WorkerThreadBase):
     """消息拆分发送工作线程"""
 
-    def __init__(self, app_instance, receiver, sentences):
+    def __init__(self, app_instance, receiver, sentences, wx):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.sentences = sentences
+        self.wx = wx  # 接收当前选中的微信实例
         self._is_running = True
 
     def run(self):
@@ -312,7 +325,14 @@ class SplitWorkerThread(WorkerThreadBase):
 
             try:
                 log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
-                self.app_instance.wx.SendMsg(msg=sentence, who=self.receiver)
+                # 使用传入的微信实例
+                if self.wx:
+                    self.wx.SendMsg(msg=sentence, who=self.receiver)
+                else:
+                    log("ERROR", f"找不到微信实例，无法发送消息给 {self.receiver}")
+                    self._stop_event.set()
+                    break
+
                 # 添加发送间隔，避免过快
                 self.msleep(500)
             except Exception as e:
@@ -457,26 +477,33 @@ class WorkerThread(WorkerThreadBase):
             try:
                 name = task['name']
                 info = task['info']
+                wx_nickname = task['wx_nickname']  # 获取任务指定的微信昵称
+
+                # 获取对应的微信实例
+                wx_instance = self._get_wx_instance(wx_nickname)
+                if not wx_instance:
+                    log("ERROR", f"找不到微信实例 '{wx_nickname}'，无法执行任务")
+                    raise ValueError(f"找不到微信实例 '{wx_nickname}'")
 
                 if os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
-                        log("INFO", f"开始把文件 {file_name} 发给 {name}")
-                        self.app_instance.wx.SendFiles(filepath=info, who=name)
+                        log("INFO", f"开始把文件 {file_name} 发给 {name} (使用微信: {wx_nickname})")
+                        wx_instance.SendFiles(filepath=info, who=name)
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                 elif info == 'Video_chat':
-                    log("INFO", f"开始与 {name} 视频通话")
-                    self.app_instance.wx.VideoCall(who=name)
+                    log("INFO", f"开始与 {name} 视频通话 (使用微信: {wx_nickname})")
+                    wx_instance.VideoCall(who=name)
                 else:
-                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name}")
+                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (使用微信: {wx_nickname})")
                     if "@所有人" in info:
                         info = info.replace("@所有人", "").strip()
-                        self.app_instance.wx.AtAll(msg=info, who=name)
+                        wx_instance.AtAll(msg=info, who=name)
                     else:
-                        self.app_instance.wx.SendMsg(msg=info, who=name)
+                        wx_instance.SendMsg(msg=info, who=name)
 
-                log("DEBUG", f"成功执行任务: 发送给 {name}")
+                log("DEBUG", f"成功执行任务: 发送给 {name} (使用微信: {wx_nickname})")
                 success = True
 
             except Exception as e:
@@ -494,6 +521,27 @@ class WorkerThread(WorkerThreadBase):
                         log("ERROR", f"更新微信客户端失败: {str(we)}")
 
         return success
+
+    def _get_wx_instance(self, wx_nickname: str):
+        """根据微信昵称获取对应的微信实例"""
+        try:
+            # 从app_instance中获取微信实例字典
+            wx_dict = self.app_instance.wx_dict
+
+            # 如果字典中存在该微信昵称对应的实例，返回它
+            if wx_nickname in wx_dict:
+                return wx_dict[wx_nickname]
+
+            # 如果找不到指定的微信实例，尝试使用默认实例
+            log("WARNING", f"找不到微信实例 '{wx_nickname}'，将使用默认实例")
+            if wx_dict:
+                return next(iter(wx_dict.values()))
+
+            log("ERROR", "没有可用的微信实例")
+            return None
+        except Exception as e:
+            log("ERROR", f"获取微信实例失败: {str(e)}")
+            return None
 
 
 class ErrorSoundThread(QtCore.QThread):

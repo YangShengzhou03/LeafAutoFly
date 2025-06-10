@@ -7,16 +7,35 @@ from common import log
 
 
 class Split(QtWidgets.QWidget):
-    def __init__(self, wx, membership, parent=None):
+    def __init__(self, wx_instances, membership, parent=None):
         super().__init__(parent)
         self.parent = parent
-        self.wx = wx
+        self.wx_instances = wx_instances  # 接收微信实例字典
+        self.current_wx = None  # 当前选中的微信实例
         self.Membership = membership
         self.prepared_sentences = []
         self.is_sending = False
         self.split_thread = None
 
+        # 初始化时设置当前微信实例
+        self.update_current_wx()
+
+    def update_current_wx(self):
+        """更新当前选中的微信实例"""
+        selected_nickname = self.parent.comboBox_nickName.currentText()
+        if selected_nickname in self.wx_instances:
+            self.current_wx = self.wx_instances[selected_nickname]
+            return True
+        else:
+            log("WARNING", f"[Split] 所选微信账号 {selected_nickname} 未初始化")
+            return False
+
     def on_start_split_clicked(self):
+        # 每次操作前先更新当前微信实例
+        if not self.update_current_wx() or self.current_wx is None:
+            log("ERROR", "未选择有效的微信账号，请先选择微信账号")
+            return
+
         if not any([
             self.parent.checkBox_Ai.isChecked(),
             self.parent.checkBox_period.isChecked(),
@@ -50,6 +69,11 @@ class Split(QtWidgets.QWidget):
         self.prepared_sentences = self.split_message(message, delimiters)
 
     def on_start_send_clicked(self):
+        # 每次操作前先更新当前微信实例
+        if not self.update_current_wx() or self.current_wx is None:
+            log("ERROR", "未选择有效的微信账号，请先选择微信账号")
+            return
+
         if self.is_sending:
             self.is_sending = False
             self.parent.pushButton_startSplit.setText("发送句子")
@@ -68,7 +92,13 @@ class Split(QtWidgets.QWidget):
 
             self.parent.pushButton_startSplit.setText("停止发送")
 
-            self.split_thread = SplitWorkerThread(self, receiver, sentences)
+            # 将当前选中的微信实例传递给工作线程
+            self.split_thread = SplitWorkerThread(
+                self,
+                receiver,
+                sentences,
+                wx=self.current_wx  # 传递当前选中的微信实例
+            )
             self.split_thread.finished.connect(self.on_thread_finished)
             self.split_thread.start()
 

@@ -81,19 +81,82 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 6, 0, 6)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.userName_label = QtWidgets.QLabel(parent=self.userName_frame)
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑 Light")
-        font.setPointSize(10)
-        self.userName_label.setFont(font)
-        self.userName_label.setStyleSheet("color: #ffffff;\n"
-"font-size: 10pt;\n"
-"qproperty-alignment: AlignCenter;")
-        self.userName_label.setObjectName("userName_label")
-        self.horizontalLayout_4.addWidget(self.userName_label)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem1)
+        self.comboBox_nickName = QtWidgets.QComboBox(parent=self.userName_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboBox_nickName.sizePolicy().hasHeightForWidth())
+        self.comboBox_nickName.setSizePolicy(sizePolicy)
+        self.comboBox_nickName.setMinimumSize(QtCore.QSize(15, 0))
+        self.comboBox_nickName.setMaximumSize(QtCore.QSize(190, 16777215))
+        self.comboBox_nickName.setStyleSheet("QComboBox {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"    border: 0px;\n"
+"    color: white;\n"
+"    font-size: 16px;\n"
+"    padding-right: 0px;\n"
+"    padding-left: 9px;\n"
+"    text-align: center;\n"
+"    text-align-last: center;\n"
+"    qproperty-alignment: AlignCenter;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgba(255, 255, 255, 0.1);\n"
+"}\n"
+"\n"
+"QComboBox:focus {\n"
+"    border: 0px;\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: top right;\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"    border: none;\n"
+"    background-color: rgba(255, 255, 255, 0);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down:hover {\n"
+"    background-color: rgba(255, 255, 255, 0.2);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down:pressed {\n"
+"    background-color: rgba(255, 255, 255, 0.3);\n"
+"}\n"
+"\n"
+"QComboBox::down-arrow {\n"
+"    image: url(\"resources/img/List/下拉.svg\");\n"
+"    width: 28px;\n"
+"    height: 28px;\n"
+"    right: 2px;\n"
+"    top: 2px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: white;\n"
+"    border: 1px solid #CCCCCC;\n"
+"    border-radius: 0;\n"
+"    color: black;\n"
+"    font-size: 16px;\n"
+"    padding: 4px;\n"
+"    selection-background-color: #4A67FF;\n"
+"    selection-color: white;\n"
+"    text-align: center;\n"
+"    outline: 0;\n"
+"}")
+        self.comboBox_nickName.setObjectName("comboBox_nickName")
+        self.comboBox_nickName.addItem("")
+        self.horizontalLayout_4.addWidget(self.comboBox_nickName)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem2)
+        self.horizontalLayout_4.setStretch(1, 1)
         self.verticalLayout.addWidget(self.userName_frame)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout.addItem(spacerItem1)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout.addItem(spacerItem3)
         self.verticalLayout_2.addWidget(self.leafHead_frame)
         self.left_listWidget = QtWidgets.QListWidget(parent=self.left)
         self.left_listWidget.setMinimumSize(QtCore.QSize(180, 0))
@@ -166,8 +229,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_33.setContentsMargins(9, 0, 0, 0)
         self.horizontalLayout_33.setSpacing(9)
         self.horizontalLayout_33.setObjectName("horizontalLayout_33")
-        spacerItem2 = QtWidgets.QSpacerItem(761, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_33.addItem(spacerItem2)
+        spacerItem4 = QtWidgets.QSpacerItem(761, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_33.addItem(spacerItem4)
         self.vip_frame = QtWidgets.QFrame(parent=self.rightHead_frame)
         self.vip_frame.setMinimumSize(QtCore.QSize(98, 52))
         self.vip_frame.setMaximumSize(QtCore.QSize(98, 52))
@@ -883,7 +946,7 @@ class Ui_MainWindow(object):
         self.ad_frame = QtWidgets.QFrame(parent=self.leafAuto_Widget)
         self.ad_frame.setMinimumSize(QtCore.QSize(688, 0))
         self.ad_frame.setStyleSheet("QFrame{\n"
-"background-color: qradialgradient(cx:0, cy:0, radius:1,fx:0.1, fy:0.1,stop:0 rgb(94, 85, 217),stop:1 rgb(56, 47, 173));\n"
+"background-color: qradialgradient(cx:0, cy:0, radius:1, fx:0.1, fy:0.1, stop:0 rgb(162, 129, 247),  stop:1 rgb(119, 111, 252));\n"
 "border:0px solid red;\n"
 "color: rgb(255, 254, 255);\n"
 "border-radius:14px\n"
@@ -935,8 +998,8 @@ class Ui_MainWindow(object):
         self.Version_Layout.setContentsMargins(0, 6, 0, 6)
         self.Version_Layout.setSpacing(12)
         self.Version_Layout.setObjectName("Version_Layout")
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.Version_Layout.addItem(spacerItem3)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.Version_Layout.addItem(spacerItem5)
         self.version_frame = QtWidgets.QFrame(parent=self.inBottom_frame)
         self.version_frame.setMinimumSize(QtCore.QSize(60, 60))
         self.version_frame.setMaximumSize(QtCore.QSize(60, 60))
@@ -966,8 +1029,8 @@ class Ui_MainWindow(object):
 "}")
         self.welcome_label.setObjectName("welcome_label")
         self.Version_Layout.addWidget(self.welcome_label)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.Version_Layout.addItem(spacerItem4)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.Version_Layout.addItem(spacerItem6)
         self.bottom_Layout.addLayout(self.Version_Layout)
         self.label_12 = QtWidgets.QLabel(parent=self.inBottom_frame)
         font = QtGui.QFont()
@@ -1243,8 +1306,8 @@ class Ui_MainWindow(object):
         self.DataInput.setObjectName("DataInput")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.DataInput)
         self.horizontalLayout_5.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.horizontalLayout_5.setContentsMargins(0, 6, 6, 6)
-        self.horizontalLayout_5.setSpacing(6)
+        self.horizontalLayout_5.setContentsMargins(9, 6, 9, 6)
+        self.horizontalLayout_5.setSpacing(9)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.frame_36 = QtWidgets.QFrame(parent=self.DataInput)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
@@ -1262,7 +1325,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_22 = QtWidgets.QHBoxLayout(self.frame_36)
         self.horizontalLayout_22.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
         self.horizontalLayout_22.setContentsMargins(6, 0, 6, 0)
-        self.horizontalLayout_22.setSpacing(6)
+        self.horizontalLayout_22.setSpacing(9)
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
         self.label_3 = QtWidgets.QLabel(parent=self.frame_36)
         font = QtGui.QFont()
@@ -1326,15 +1389,15 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.frame_33.sizePolicy().hasHeightForWidth())
         self.frame_33.setSizePolicy(sizePolicy)
         self.frame_33.setMinimumSize(QtCore.QSize(200, 54))
-        self.frame_33.setMaximumSize(QtCore.QSize(226, 16777215))
+        self.frame_33.setMaximumSize(QtCore.QSize(230, 16777215))
         self.frame_33.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius:12px")
         self.frame_33.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_33.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_33.setObjectName("frame_33")
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout(self.frame_33)
-        self.horizontalLayout_12.setContentsMargins(6, 0, 6, 0)
-        self.horizontalLayout_12.setSpacing(6)
+        self.horizontalLayout_12.setContentsMargins(9, 0, 9, 0)
+        self.horizontalLayout_12.setSpacing(9)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.label = QtWidgets.QLabel(parent=self.frame_33)
         font = QtGui.QFont()
@@ -1369,80 +1432,13 @@ class Ui_MainWindow(object):
         self.receiver_lineEdit.setObjectName("receiver_lineEdit")
         self.horizontalLayout_12.addWidget(self.receiver_lineEdit)
         self.horizontalLayout_5.addWidget(self.frame_33)
-        self.frame_37 = QtWidgets.QFrame(parent=self.DataInput)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_37.sizePolicy().hasHeightForWidth())
-        self.frame_37.setSizePolicy(sizePolicy)
-        self.frame_37.setMinimumSize(QtCore.QSize(124, 54))
-        self.frame_37.setMaximumSize(QtCore.QSize(226, 16777215))
-        self.frame_37.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-radius:12px")
-        self.frame_37.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.frame_37.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.frame_37.setObjectName("frame_37")
-        self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.frame_37)
-        self.horizontalLayout_20.setContentsMargins(6, 0, 6, 0)
-        self.horizontalLayout_20.setSpacing(2)
-        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.comboBox_wxName = QtWidgets.QComboBox(parent=self.frame_37)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.comboBox_wxName.sizePolicy().hasHeightForWidth())
-        self.comboBox_wxName.setSizePolicy(sizePolicy)
-        self.comboBox_wxName.setMinimumSize(QtCore.QSize(56, 0))
-        self.comboBox_wxName.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.comboBox_wxName.setStyleSheet("QComboBox {\n"
-"    background-color: #FFFFFF;\n"
-"    border: 0px solid rgb(87, 78, 209);\n"
-"    border-radius: 0px;\n"
-"    color: rgb(105, 27, 253);\n"
-"    font-size: 18px;\n"
-"    padding-right: 0;\n"
-"    text-align: center;\n"
-"    padding-left: 2px;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgba(229, 228, 253, 0.2);\n"
-"}\n"
-"\n"
-"QComboBox:focus {\n"
-"    border-color: rgb(35, 26, 132);\n"
-"}\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    width: 0px;\n"
-"}\n"
-"\n"
-"QComboBox::down-arrow {\n"
-"    image: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView {\n"
-"    background-color: #FFFFFF;\n"
-"    border: 0px;\n"
-"    border-radius: 4px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    font-size: 15px;\n"
-"    padding: 0px;\n"
-"    selection-background-color: rgb(229, 228, 253);\n"
-"    selection-color: rgb(0, 0, 0);\n"
-"}")
-        self.comboBox_wxName.setObjectName("comboBox_wxName")
-        self.comboBox_wxName.addItem("")
-        self.horizontalLayout_20.addWidget(self.comboBox_wxName)
-        self.horizontalLayout_20.setStretch(0, 1)
-        self.horizontalLayout_5.addWidget(self.frame_37)
         self.frame_45 = QtWidgets.QFrame(parent=self.DataInput)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame_45.sizePolicy().hasHeightForWidth())
         self.frame_45.setSizePolicy(sizePolicy)
-        self.frame_45.setMinimumSize(QtCore.QSize(272, 54))
+        self.frame_45.setMinimumSize(QtCore.QSize(278, 54))
         self.frame_45.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.frame_45.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius:12px")
@@ -1450,8 +1446,8 @@ class Ui_MainWindow(object):
         self.frame_45.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_45.setObjectName("frame_45")
         self.horizontalLayout_96 = QtWidgets.QHBoxLayout(self.frame_45)
-        self.horizontalLayout_96.setContentsMargins(6, 0, 6, 0)
-        self.horizontalLayout_96.setSpacing(6)
+        self.horizontalLayout_96.setContentsMargins(9, 0, 9, 0)
+        self.horizontalLayout_96.setSpacing(9)
         self.horizontalLayout_96.setObjectName("horizontalLayout_96")
         self.time_label_2 = QtWidgets.QLabel(parent=self.frame_45)
         font = QtGui.QFont()
@@ -1469,8 +1465,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.dateTimeEdit.sizePolicy().hasHeightForWidth())
         self.dateTimeEdit.setSizePolicy(sizePolicy)
-        self.dateTimeEdit.setMinimumSize(QtCore.QSize(152, 0))
-        self.dateTimeEdit.setMaximumSize(QtCore.QSize(156, 16777215))
+        self.dateTimeEdit.setMinimumSize(QtCore.QSize(158, 0))
+        self.dateTimeEdit.setMaximumSize(QtCore.QSize(158, 16777215))
         self.dateTimeEdit.setStyleSheet("QDateTimeEdit {\n"
 "    background-color: #FFFFFF;\n"
 "    border: 1px solid rgb(87, 78, 209);\n"
@@ -1502,7 +1498,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.comboBox_Frequency.sizePolicy().hasHeightForWidth())
         self.comboBox_Frequency.setSizePolicy(sizePolicy)
-        self.comboBox_Frequency.setMinimumSize(QtCore.QSize(58, 0))
+        self.comboBox_Frequency.setMinimumSize(QtCore.QSize(64, 0))
         self.comboBox_Frequency.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.comboBox_Frequency.setStyleSheet("QComboBox {\n"
 "    background-color: #FFFFFF;\n"
@@ -1633,7 +1629,7 @@ class Ui_MainWindow(object):
         self.scrollArea_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.scrollArea_3.setObjectName("scrollArea_3")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 368, 488))
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 368, 482))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.formLayout_3 = QtWidgets.QFormLayout(self.scrollAreaWidgetContents_3)
         self.formLayout_3.setLabelAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
@@ -1666,8 +1662,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_73 = QtWidgets.QVBoxLayout()
         self.verticalLayout_73.setSpacing(12)
         self.verticalLayout_73.setObjectName("verticalLayout_73")
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_73.addItem(spacerItem5)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_73.addItem(spacerItem7)
         self.label_113 = QtWidgets.QLabel(parent=self.widget_64)
         font = QtGui.QFont()
         font.setFamily("微软雅黑 Light")
@@ -1735,8 +1731,8 @@ class Ui_MainWindow(object):
         self.checkBox_Shutdown.setObjectName("checkBox_Shutdown")
         self.horizontalLayout_26.addWidget(self.checkBox_Shutdown, 0, QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.verticalLayout_73.addLayout(self.horizontalLayout_26)
-        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_73.addItem(spacerItem6)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_73.addItem(spacerItem8)
         self.horizontalLayout_84.addLayout(self.verticalLayout_73)
         self.verticalLayout_72.addWidget(self.widget_64)
         self.frame_35 = QtWidgets.QFrame(parent=self.frame_34)
@@ -1805,8 +1801,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_78.setObjectName("verticalLayout_78")
         self.horizontalLayout_89 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_89.setObjectName("horizontalLayout_89")
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_89.addItem(spacerItem7)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_89.addItem(spacerItem9)
         self.frame_41 = QtWidgets.QFrame(parent=self.log)
         self.frame_41.setStyleSheet("background-color: rgb(105, 27, 253);\n"
 "color: rgb(255, 255, 255);\n"
@@ -1836,8 +1832,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_95 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_95.setSpacing(12)
         self.horizontalLayout_95.setObjectName("horizontalLayout_95")
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_95.addItem(spacerItem8)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_95.addItem(spacerItem10)
         self.start_pushButton = QtWidgets.QPushButton(parent=self.frame_35)
         self.start_pushButton.setMinimumSize(QtCore.QSize(132, 38))
         font = QtGui.QFont()
@@ -2174,8 +2170,8 @@ class Ui_MainWindow(object):
 "}")
         self.pushButton_split.setObjectName("pushButton_split")
         self.horizontalLayout_122.addWidget(self.pushButton_split)
-        spacerItem9 = QtWidgets.QSpacerItem(34, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_122.addItem(spacerItem9)
+        spacerItem11 = QtWidgets.QSpacerItem(34, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_122.addItem(spacerItem11)
         self.pushButton_startSplit = QtWidgets.QPushButton(parent=self.frame_58)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -2558,8 +2554,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_150 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_150.setSpacing(12)
         self.horizontalLayout_150.setObjectName("horizontalLayout_150")
-        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_150.addItem(spacerItem10)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_150.addItem(spacerItem12)
         self.pushButton_takeover = QtWidgets.QPushButton(parent=self.widget_110)
         self.pushButton_takeover.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_takeover.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
@@ -2587,14 +2583,14 @@ class Ui_MainWindow(object):
         self.pushButton_takeover.setIconSize(QtCore.QSize(38, 38))
         self.pushButton_takeover.setObjectName("pushButton_takeover")
         self.horizontalLayout_150.addWidget(self.pushButton_takeover)
-        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_150.addItem(spacerItem11)
+        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_150.addItem(spacerItem13)
         self.verticalLayout_4.addLayout(self.horizontalLayout_150)
         self.verticalLayout_121.addWidget(self.widget_110)
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem12)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem14)
         self.verticalLayout_121.addLayout(self.verticalLayout_8)
         self.verticalLayout_121.setStretch(0, 1)
         self.verticalLayout_121.setStretch(1, 5)
@@ -2619,7 +2615,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.userName_label.setText(_translate("MainWindow", "微信未启动"))
+        self.comboBox_nickName.setItemText(0, _translate("MainWindow", "微信未登录"))
         __sortingEnabled = self.left_listWidget.isSortingEnabled()
         self.left_listWidget.setSortingEnabled(False)
         item = self.left_listWidget.item(0)
@@ -2682,8 +2678,7 @@ class Ui_MainWindow(object):
         self.message_lineEdit.setPlaceholderText(_translate("MainWindow", "段落内容可粘贴"))
         self.label.setText(_translate("MainWindow", "接收者"))
         self.receiver_lineEdit.setPlaceholderText(_translate("MainWindow", "联系人备注优先"))
-        self.comboBox_wxName.setItemText(0, _translate("MainWindow", "未登录"))
-        self.time_label_2.setText(_translate("MainWindow", "定时"))
+        self.time_label_2.setText(_translate("MainWindow", "发送时间"))
         self.dateTimeEdit.setDisplayFormat(_translate("MainWindow", "yyyy/M/d H:mm:ss"))
         self.comboBox_Frequency.setItemText(0, _translate("MainWindow", "仅一次"))
         self.comboBox_Frequency.setItemText(1, _translate("MainWindow", "每天"))

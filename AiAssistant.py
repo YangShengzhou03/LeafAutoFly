@@ -5,17 +5,31 @@ from common import log, get_resource_path
 
 
 class AiAssistant(QtWidgets.QWidget):
-    def __init__(self, wx, membership, parent=None):
+    def __init__(self, wx_instances, membership, parent=None):
         super().__init__(parent)
         self.parent = parent
-        self.wx = wx
+        self.wx_instances = wx_instances  # 存储所有微信实例的字典
+        self.current_wx = None  # 当前选中的微信实例
         self.Membership = membership
         self.ai_thread = None
         self.is_taking_over = False
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_timer)
         self.elapsed_time = 0
+
+        # 初始化时设置当前微信实例
+        self.update_current_wx()
         print(f"[AiAssistant] 初始化完成，会员类型: {self.Membership}")
+
+    def update_current_wx(self):
+        """更新当前选中的微信实例"""
+        selected_nickname = self.parent.comboBox_nickName.currentText()
+        if selected_nickname in self.wx_instances:
+            self.current_wx = self.wx_instances[selected_nickname]
+            return True
+        else:
+            log("WARNING", f"[AiAssistant] 所选微信账号 {selected_nickname} 未初始化")
+            return False
 
     def updateAiEditStatus(self):
         try:
@@ -33,6 +47,11 @@ class AiAssistant(QtWidgets.QWidget):
 
     def start_takeover(self):
         print("[AiAssistant] 尝试启动接管...")
+        # 每次启动接管前先更新当前微信实例
+        if not self.update_current_wx() or self.current_wx is None:
+            QtWidgets.QMessageBox.warning(self, "微信实例错误", "未选择有效的微信账号，请先选择微信账号")
+            return
+
         if self.is_taking_over:
             print("[AiAssistant] 已在接管中，停止当前接管")
             try:
@@ -59,8 +78,14 @@ class AiAssistant(QtWidgets.QWidget):
                 print(
                     f"[AiAssistant] 开始接管，接收者: {self.parent.takeOverReceiver_lineEdit.text()}, 模型: {model}, 角色: {role}")
 
-                self.ai_thread = AiWorkerThread(self, self.parent.takeOverReceiver_lineEdit.text(),
-                                                model=model, role=role)
+                # 将当前选中的微信实例传递给工作线程
+                self.ai_thread = AiWorkerThread(
+                    self,
+                    self.parent.takeOverReceiver_lineEdit.text(),
+                    wx=self.current_wx,  # 传递当前选中的微信实例
+                    model=model,
+                    role=role
+                )
                 self.ai_thread.finished.connect(self.on_thread_finished)
                 self.ai_thread.start()
                 self.timer.start(1000)

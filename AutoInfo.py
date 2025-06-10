@@ -18,10 +18,10 @@ from common import get_resource_path, log, str_to_bool
 
 
 class AutoInfo(QtWidgets.QWidget):
-    def __init__(self, wx, membership, parent=None):
+    def __init__(self, wx_dict, membership, parent=None):
         super().__init__(parent)
         self.parent = parent
-        self.wx = wx
+        self.wx_dict = wx_dict  # 接收微信实例字典
         self.Membership = membership
         self.ready_tasks = []
         self.completed_tasks = []
@@ -97,6 +97,7 @@ class AutoInfo(QtWidgets.QWidget):
         print("[AutoInfo] 尝试添加任务...")
         try:
             time_text, name_text, info_text, frequency = self.get_input_values()
+            wx_nickname = self.parent.comboBox_nickName.currentText()  # 获取当前选择的微信昵称
 
             if not all([time_text, name_text, info_text]):
                 print("[AutoInfo] 添加任务失败：输入不完整")
@@ -114,12 +115,18 @@ class AutoInfo(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.warning(self, "标准版限制", "标准版最多添加30个任务，请升级版本")
                 return
 
-            widget_item = self.create_widget(time_text, name_text, info_text, frequency)
+            widget_item = self.create_widget(time_text, name_text, info_text, frequency, wx_nickname)
             self.parent.formLayout_3.addRow(widget_item)
-            self.ready_tasks.append({'time': time_text, 'name': name_text, 'info': info_text, 'frequency': frequency})
+            self.ready_tasks.append({
+                'time': time_text,
+                'name': name_text,
+                'info': info_text,
+                'frequency': frequency,
+                'wx_nickname': wx_nickname  # 存储任务使用的微信实例
+            })
             log('INFO',
-                f'已添加 {time_text[-8:]} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} ')
-            print(f"[AutoInfo] 任务添加成功：{name_text} - {info_text[:20]}...")
+                f'已添加 {time_text[-8:]} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (使用微信: {wx_nickname})')
+            print(f"[AutoInfo] 任务添加成功：{name_text} - {info_text[:20]}... (使用微信: {wx_nickname})")
 
             self.parent.dateTimeEdit.setDateTime(
                 datetime.fromisoformat(time_text) + timedelta(minutes=int(read_key_value('add_timestep'))))
@@ -128,7 +135,7 @@ class AutoInfo(QtWidgets.QWidget):
         except Exception as e:
             print(f"[AutoInfo] 添加任务异常: {str(e)}")
 
-    def create_widget(self, time_text, name_text, info_text, frequency):
+    def create_widget(self, time_text, name_text, info_text, frequency, wx_nickname):
         try:
             widget_item = QtWidgets.QWidget(parent=self.parent.scrollAreaWidgetContents_3)
             widget_item.setMinimumSize(QtCore.QSize(360, 70))
@@ -153,11 +160,13 @@ class AutoInfo(QtWidgets.QWidget):
             verticalLayout_64.setSpacing(0)
             verticalLayout_64.setObjectName("verticalLayout_64")
 
+            # 第一行布局（修改部分）
             horizontalLayout_77 = QtWidgets.QHBoxLayout()
             horizontalLayout_77.setContentsMargins(0, 0, 0, 0)
             horizontalLayout_77.setSpacing(4)
             horizontalLayout_77.setObjectName("horizontalLayout_77")
 
+            # 接收人标签
             receiver_label = QtWidgets.QLabel(name_text, parent=widget_item)
             font = QtGui.QFont()
             font.setFamily("微软雅黑 Light")
@@ -167,6 +176,13 @@ class AutoInfo(QtWidgets.QWidget):
             receiver_label.setObjectName("receiver_label")
             horizontalLayout_77.addWidget(receiver_label)
 
+            # 新增：微信昵称标签（移到第一行）
+            wx_label = QtWidgets.QLabel(wx_nickname, parent=widget_item)
+            wx_label.setStyleSheet("color: rgb(105, 27, 253); padding-left: 8px;")
+            wx_label.setObjectName("wx_label")
+            horizontalLayout_77.addWidget(wx_label)
+
+            # 时间标签
             time_label = QtWidgets.QLabel(time_text, parent=widget_item)
             font = QtGui.QFont()
             font.setPointSize(10)
@@ -177,14 +193,10 @@ class AutoInfo(QtWidgets.QWidget):
             time_label.setObjectName("time_label")
             horizontalLayout_77.addWidget(time_label)
 
-            label_2 = QtWidgets.QLabel(frequency, parent=widget_item)
-            label_2.setStyleSheet("color:rgb(105, 27, 253);\ntext-align: center;\nbackground:rgba(0, 0, 0, 0);")
-            label_2.setObjectName("label_2")
-            horizontalLayout_77.addWidget(label_2)
-
-            horizontalLayout_77.setStretch(0, 1)
+            horizontalLayout_77.setStretch(0, 1)  # 让接收人标签占据剩余空间
             verticalLayout_64.addLayout(horizontalLayout_77)
 
+            # 第二行布局（只保留消息内容和删除按钮）
             horizontalLayout_7 = QtWidgets.QHBoxLayout()
             horizontalLayout_7.setContentsMargins(0, 6, 12, 3)
             horizontalLayout_7.setObjectName("horizontalLayout_7")
@@ -196,13 +208,14 @@ class AutoInfo(QtWidgets.QWidget):
             message_label.setStyleSheet("color: rgb(169, 169, 169);")
             message_label.setObjectName("message_label")
             horizontalLayout_7.addWidget(message_label)
+
             delete_button = QtWidgets.QPushButton("删除", parent=widget_item)
             delete_button.setFixedSize(50, 25)
             delete_button.setStyleSheet(
                 "QPushButton { background-color: transparent; color: red; } QPushButton:hover { background-color: rgba(255, 0, 0, 0.1); }"
             )
             delete_button.clicked.connect(
-                lambda checked, t=time_text, n=name_text, i=info_text: self.remove_task(t, n, i))
+                lambda checked, t=time_text, n=name_text, i=info_text, wx=wx_nickname: self.remove_task(t, n, i, wx))
             delete_button.setVisible(False)
 
             horizontalLayout_7.addWidget(delete_button)
@@ -212,14 +225,20 @@ class AutoInfo(QtWidgets.QWidget):
 
             verticalLayout_64.addLayout(horizontalLayout_7)
             horizontalLayout_76.addLayout(verticalLayout_64)
-            widget_item.task = {'time': time_text, 'name': name_text, 'info': info_text, 'frequency': frequency}
-            print(f"[AutoInfo] 创建任务控件成功：{name_text} - {info_text[:20]}...")
+            widget_item.task = {
+                'time': time_text,
+                'name': name_text,
+                'info': info_text,
+                'frequency': frequency,
+                'wx_nickname': wx_nickname
+            }
+            print(f"[AutoInfo] 创建任务控件成功：{name_text} - {info_text[:20]}... (使用微信: {wx_nickname})")
             return widget_item
         except Exception as e:
             print(f"[AutoInfo] 创建任务控件失败: {str(e)}")
             return None
 
-    def remove_task(self, time_text, name_text, info_text):
+    def remove_task(self, time_text, name_text, info_text, wx_nickname):
         print(f"[AutoInfo] 尝试删除任务：{name_text} - {info_text[:20]}...")
         try:
             if self.error_sound_thread._is_running:
@@ -227,7 +246,10 @@ class AutoInfo(QtWidgets.QWidget):
                 print("[AutoInfo] 已停止错误声音")
 
             for task in self.ready_tasks:
-                if task['time'] == time_text and task['name'] == name_text and task['info'] == info_text:
+                if (task['time'] == time_text and
+                        task['name'] == name_text and
+                        task['info'] == info_text and
+                        task['wx_nickname'] == wx_nickname):
                     self.ready_tasks.remove(task)
                     log('WARNING', f'已删除任务 {info_text[:35] + "……" if len(info_text) > 30 else info_text}')
                     print(f"[AutoInfo] 任务删除成功")
@@ -251,7 +273,13 @@ class AutoInfo(QtWidgets.QWidget):
         try:
             self.clear_layout(self.parent.formLayout_3)
             for task in self.ready_tasks:
-                widget = self.create_widget(task['time'], task['name'], task['info'], task['frequency'])
+                widget = self.create_widget(
+                    task['time'],
+                    task['name'],
+                    task['info'],
+                    task['frequency'],
+                    task['wx_nickname']
+                )
                 self.parent.formLayout_3.addRow(widget)
             print(f"[AutoInfo] UI更新完成，显示 {len(self.ready_tasks)} 个任务")
         except Exception as e:
@@ -320,7 +348,8 @@ class AutoInfo(QtWidgets.QWidget):
                     if item and item.widget():
                         widget_item = item.widget()
                         if hasattr(widget_item, 'task') and all(
-                                widget_item.task[key] == task[key] for key in ['time', 'name', 'info', 'frequency']):
+                                widget_item.task[key] == task[key] for key in
+                                ['time', 'name', 'info', 'frequency', 'wx_nickname']):
                             widget_image = widget_item.findChild(QtWidgets.QWidget, "widget_54")
                             if widget_image:
                                 if status == '成功':
@@ -344,16 +373,19 @@ class AutoInfo(QtWidgets.QWidget):
 
                             if task['frequency'] == '每天':
                                 next_time += timedelta(days=1)
-                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'])
+                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
+                                                   task['wx_nickname'])
                             elif task['frequency'] == '每周':
                                 next_time += timedelta(days=7)
-                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'])
+                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
+                                                   task['wx_nickname'])
                             elif task['frequency'] == '工作日':
                                 while True:
                                     next_time += timedelta(days=1)
                                     if next_time.weekday() < 5:  # 0-4 为周一至周五
                                         break
-                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'])
+                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
+                                                   task['wx_nickname'])
 
                             self.save_tasks_to_json()
                             print(f"[AutoInfo] 任务状态更新完成: {task['name']} - {status}")
@@ -361,14 +393,20 @@ class AutoInfo(QtWidgets.QWidget):
         except Exception as e:
             print(f"[AutoInfo] 更新任务状态失败: {str(e)}")
 
-    def add_next_task(self, time_text, name_text, info_text, frequency):
-        print(f"[AutoInfo] 添加下一次重复任务: {name_text} @ {time_text}")
+    def add_next_task(self, time_text, name_text, info_text, frequency, wx_nickname):
+        print(f"[AutoInfo] 添加下一次重复任务: {name_text} @ {time_text} (使用微信: {wx_nickname})")
         try:
-            widget_item = self.create_widget(time_text, name_text, info_text, frequency)
+            widget_item = self.create_widget(time_text, name_text, info_text, frequency, wx_nickname)
             self.parent.formLayout_3.addRow(widget_item)
-            self.ready_tasks.append({'time': time_text, 'name': name_text, 'info': info_text, 'frequency': frequency})
+            self.ready_tasks.append({
+                'time': time_text,
+                'name': name_text,
+                'info': info_text,
+                'frequency': frequency,
+                'wx_nickname': wx_nickname
+            })
             log('INFO',
-                f'自动添加 {time_text} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]}')
+                f'自动添加 {time_text} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (使用微信: {wx_nickname})')
             self.save_tasks_to_json()
         except Exception as e:
             print(f"[AutoInfo] 添加重复任务失败: {str(e)}")
@@ -415,10 +453,10 @@ class AutoInfo(QtWidgets.QWidget):
 
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
-                sheet.append(['Time', 'Name', 'Info', 'Frequency'])
+                sheet.append(['Time', 'Name', 'Info', 'Frequency', 'WxNickname'])
 
                 for task in self.ready_tasks:
-                    sheet.append([task['time'], task['name'], task['info'], task['frequency']])
+                    sheet.append([task['time'], task['name'], task['info'], task['frequency'], task['wx_nickname']])
 
                 workbook.save(file_name)
                 log("DEBUG", f"任务文件已保存至{file_name}")
@@ -443,8 +481,12 @@ class AutoInfo(QtWidgets.QWidget):
             headers = [cell.value for cell in sheet[1]]
 
             # 验证表头
-            if not all(h in headers for h in ['Time', 'Name', 'Info', 'Frequency']):
-                raise ValueError("文件格式不正确，缺少必要的列")
+            required_headers = ['Time', 'Name', 'Info', 'Frequency']
+            missing_headers = [h for h in required_headers if h not in headers]
+            if missing_headers:
+                raise ValueError(f"文件格式不正确，缺少必要的列: {', '.join(missing_headers)}")
+
+            wx_nickname_idx = headers.index('WxNickname') if 'WxNickname' in headers else None
 
             tasks = []
             for row_idx, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
@@ -458,6 +500,12 @@ class AutoInfo(QtWidgets.QWidget):
                 # 频率为空时设置默认值
                 if not task.get('Frequency'):
                     task['Frequency'] = "仅一次"
+                # 设置微信账号
+                if wx_nickname_idx is not None and row[wx_nickname_idx]:
+                    task['wx_nickname'] = row[wx_nickname_idx]
+                else:
+                    # 如果文件中没有指定微信账号，使用当前默认的微信账号
+                    task['wx_nickname'] = self.parent.comboBox_nickName.currentText()
                 tasks.append(task)
 
             workbook.close()
@@ -494,15 +542,22 @@ class AutoInfo(QtWidgets.QWidget):
         # 创建任务控件
         for task in tasks:
             try:
-                widget = self.create_widget(task['Time'], task['Name'], task['Info'], task['Frequency'])
+                widget = self.create_widget(
+                    task['Time'],
+                    task['Name'],
+                    task['Info'],
+                    task['Frequency'],
+                    task['wx_nickname']
+                )
                 self.parent.formLayout_3.addRow(widget)
                 self.ready_tasks.append({
                     'time': task['Time'],
                     'name': task['Name'],
                     'info': task['Info'],
-                    'frequency': task['Frequency']
+                    'frequency': task['Frequency'],
+                    'wx_nickname': task['wx_nickname']
                 })
-                print(f"[AutoInfo] 成功导入任务: {task['Name']}")
+                print(f"[AutoInfo] 成功导入任务: {task['Name']} (使用微信: {task['wx_nickname']})")
             except Exception as e:
                 log("ERROR", f"创建任务失败: {task['Name']}")
                 print(f"[AutoInfo] 创建任务失败: {task['Name']}, 错误: {str(e)}")
@@ -572,7 +627,7 @@ class AutoInfo(QtWidgets.QWidget):
             subject = f"{task['time']}未把信息发给{task['name']}"
             body = (
                 f"尊敬的用户：\n"
-                f"我们遗憾地通知您，在【{task['time']}】尝试发送【{task['info']}】给【{task['name']}】时因故障未能成功。\n"
+                f"我们遗憾地通知您，在【{task['time']}】尝试使用微信账号【{task['wx_nickname']}】发送【{task['info']}】给【{task['name']}】时因故障未能成功。\n"
                 "\n对此造成的不便，深表歉意。请检查提供的信息是否准确，并确认填写的接收者应与备注完全一致。\n"
                 "\n若问题依旧，请联系客户服务团队获取帮助：\n"
                 "- 发送电子邮件至支持邮箱 3555844679@qq.com；\n"

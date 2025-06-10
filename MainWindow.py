@@ -20,17 +20,37 @@ from Split import Split
 from System_info import read_key_value, ensure_config_file_exists, write_key_value
 from Ui_MainWindow import Ui_MainWindow
 from UpdateDialog import check_update
-from common import get_resource_path, log, get_current_time, get_url
+from common import get_resource_path, log, get_current_time
 
-wx = None
+# 用于存储多个微信实例的字典
+wx_instances = {}
 current_version = 4.39
 
 
 def reload_wx():
-    global wx
+    global wx_instances
     try:
-        wx = WeChat(language=read_key_value('language'))
-        MainWindow.wx = wx
+        # 尝试创建一个临时实例来获取所有微信昵称
+        temp_wx = WeChat(language=read_key_value('language'))
+        nicknames = temp_wx.get_wx_nicknames()
+        if not nicknames:
+            return '未找到微信窗口'
+
+        # 为每个昵称创建对应的微信实例
+        wx_instances.clear()
+        for nickname in nicknames:
+            wx = WeChat(nickname=nickname, language=read_key_value('language'))
+            wx_instances[nickname] = wx
+            log("DEBUG", f"成功初始化微信实例: {nickname}")
+
+        # 如果有实例，默认使用第一个
+        if wx_instances:
+            default_nickname = next(iter(wx_instances))
+            MainWindow.wx = wx_instances[default_nickname]
+            return f"已初始化 {len(wx_instances)} 个微信实例"
+        else:
+            return '初始化失败，未创建任何实例'
+
     except Exception as e:
         if str(e) == "(1400, 'SetWindowPos', '无效的窗口句柄。')":
             log("ERROR", "微信未登录, 请登录微信后重启枫叶")
@@ -38,15 +58,12 @@ def reload_wx():
         else:
             log("ERROR", f"程序初始化出错, 错误原因:{e}")
             return '初始化错误'
-    else:
-        log("DEBUG", f"重新连接，{wx.nickname} 登录成功")
-        return wx.nickname
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        global wx
+        global wx_instances
         self.setupUi(self)
         self.ui = Ui_MainWindow()
         self.setWindowTitle("枫叶信息自动化系统")
@@ -67,24 +84,37 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             sys.exit()
 
         try:
-            if self.language not in ['cn', 'cn_t', 'en']:
-                self.language = 'cn'
-            wx = WeChat(language=self.language)
-        except Exception as e:
-            if str(e) == "(1400, 'SetWindowPos', '无效的窗口句柄。')":
-                log("ERROR", "微信未登录, 请登录微信后重启枫叶")
-                self.userName_label.setText('微信未登录')
-            else:
-                log("ERROR", f"程序初始化出错, 错误原因:{e}")
-                self.userName_label.setText('初始化错误')
-        else:
-            if wx and hasattr(wx, 'nickname'):
-                log("DEBUG", f"初始化完成，{wx.nickname} 已登录，欢迎您!")
-                self.userName_label.setText(wx.nickname)
+            # 重新加载微信实例
+            result = reload_wx()
+            self.comboBox_nickName.clear()  # 先清空下拉框
 
-        self.auto_info = AutoInfo(wx, self.Membership, self)
-        self.split = Split(wx, self.Membership, self)
-        self.ai_assistant = AiAssistant(wx, self.Membership, self)
+            if '已初始化' in result:
+                # 更新昵称选择框
+                for nickname in wx_instances.keys():
+                    self.comboBox_nickName.addItem(nickname)
+                # 选择第一个昵称
+                if wx_instances:
+                    default_nickname = next(iter(wx_instances))
+                    self.comboBox_nickName.setCurrentText(default_nickname)  # 使用setCurrentText
+
+                    # 连接下拉框的信号，当选择变化时切换微信实例
+                    self.comboBox_nickName.currentTextChanged.connect(self.change_current_wx)
+            else:
+                # 初始化失败时只添加一个错误提示项
+                self.comboBox_nickName.addItem(result)
+                self.comboBox_nickName.setCurrentText(result)  # 使用setCurrentText
+
+        except Exception as e:
+            log("ERROR", f"初始化微信实例时出错: {e}")
+            # 异常情况下只添加一个错误提示项
+            self.comboBox_nickName.clear()
+            self.comboBox_nickName.addItem('初始化错误')
+            self.comboBox_nickName.setCurrentText('初始化错误')  # 使用setCurrentText
+
+        # 传递微信实例字典
+        self.auto_info = AutoInfo(wx_instances, self.Membership, self)
+        self.split = Split(wx_instances, self.Membership, self)
+        self.ai_assistant = AiAssistant(wx_instances, self.Membership, self)
 
         self.create_tray()
 
@@ -104,30 +134,48 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.disable_rdp_lock()
         self.load_tasks_from_json()
         try:
-            wx.GetSessionList()
-            completer = QCompleter(wx.predict, self)
-            completer.setFilterMode(Qt.MatchFlag.MatchContains)
-            completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
-            popup = completer.popup()
-            if isinstance(popup, QListView):
-                popup.setStyleSheet(common.load_stylesheet("completer_QListView.css"))
-            self.receiver_lineEdit.setCompleter(completer)
+            if wx_instances:
+                default_wx = next(iter(wx_instances.values()))
+                default_wx.GetSessionList()
+                completer = QCompleter(default_wx.predict, self)
+                completer.setFilterMode(Qt.MatchFlag.MatchContains)
+                completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
+                popup = completer.popup()
+                if isinstance(popup, QListView):
+                    popup.setStyleSheet(common.load_stylesheet("completer_QListView.css"))
+                self.receiver_lineEdit.setCompleter(completer)
         except Exception as e:
             print(e)
 
-    def centerOnScreen(self):
-        frameGeometry = self.frameGeometry()
-        centerPoint = QtWidgets.QApplication.primaryScreen().availableGeometry().center()
-        frameGeometry.moveCenter(centerPoint)
-        self.move(frameGeometry.topLeft())
-
     def update_wx(self):
-        global wx
-        nick_name = reload_wx()
-        self.userName_label.setText(nick_name)
-        self.auto_info.wx = wx
-        self.split.wx = wx
-        self.ai_assistant.wx = wx
+        global wx_instances
+        result = reload_wx()
+
+        self.comboBox_nickName.clear()  # 先清空下拉框
+
+        if '已初始化' in result:
+            for nickname in wx_instances.keys():
+                self.comboBox_nickName.addItem(nickname)
+            if wx_instances:
+                default_nickname = next(iter(wx_instances))
+                self.comboBox_nickName.setCurrentText(default_nickname)  # 使用setCurrentText
+        else:
+            self.comboBox_nickName.addItem(result)
+            self.comboBox_nickName.setCurrentText(result)  # 使用setCurrentText
+
+        # 更新所有模块使用的微信实例字典
+        self.auto_info.wx_instances = wx_instances
+        self.split.wx_instances = wx_instances
+        self.ai_assistant.wx_instances = wx_instances
+
+    def change_current_wx(self):
+        # 当用户从下拉框选择不同昵称时调用此方法
+        selected_nickname = self.comboBox_nickName.currentText()
+        if selected_nickname in wx_instances:
+            MainWindow.wx = wx_instances[selected_nickname]
+            log("DEBUG", f"已切换到微信账号: {selected_nickname}")
+        else:
+            log("WARNING", f"所选微信账号 {selected_nickname} 未初始化")
 
     def load_tasks_from_json(self):
         json_file_path = '_internal/tasks.json'
@@ -142,7 +190,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     remaining_slots = membership_limit - len(self.auto_info.ready_tasks)
 
                     for task in loaded_tasks:
-                        if (all(key in task for key in ['time', 'name', 'info', 'frequency']) and
+                        # 添加对wx_nickname字段的检查
+                        if (all(key in task for key in ['time', 'name', 'info', 'frequency', 'wx_nickname']) and
                                 remaining_slots > 0):
                             task_time = datetime.fromisoformat(task['time'])
 
@@ -153,13 +202,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                         task_time += timedelta(days=1)
 
                             widget_item = self.auto_info.create_widget(task_time.isoformat(), task['name'],
-                                                                       task['info'], task['frequency'])
+                                                                       task['info'], task['frequency'],
+                                                                       task['wx_nickname'])
                             self.formLayout_3.addRow(widget_item)
                             self.auto_info.ready_tasks.append({
                                 'time': task_time.isoformat(),
                                 'name': task['name'],
                                 'info': task['info'],
-                                'frequency': task['frequency']
+                                'frequency': task['frequency'],
+                                'wx_nickname': task['wx_nickname']  # 添加wx_nickname字段
                             })
                             remaining_slots -= 1
 
@@ -491,9 +542,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def get_notice(self):
         try:
-            Key, notice_content = get_url()
-            if notice_content:
-                self.textBrowser.setHtml(notice_content)
+            pass
+            # Key, notice_content = get_url()
+            # if notice_content:
+            #     self.textBrowser.setHtml(notice_content)
         except Exception:
             self.textBrowser.setHtml('<center><h2>欢迎使用LeafAuto</h2><h2>LeafAuto是我在2024'
                                      '年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。</h2'
