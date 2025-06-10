@@ -484,6 +484,10 @@ class AutoInfo(QtWidgets.QWidget):
                 for task in self.ready_tasks:
                     sheet.append([task['time'], task['name'], task['info'], task['frequency'], task['wx_nickname']])
 
+                workbook.properties.creator = "LeafAutoPRO"
+                workbook.properties.title = "枫叶信息自动化系统任务计划"
+                workbook.properties.description = "LeafAutoPRO的定时任务计划，仅供专业版使用。"
+                workbook.properties.lastModifiedBy = "LeafAutoPRO"
                 workbook.save(file_name)
                 log("DEBUG", f"任务文件已保存至{file_name}")
                 print(f"[AutoInfo] 配置已保存至: {file_name}")

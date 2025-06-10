@@ -137,39 +137,39 @@ QPushButton:pressed {
 
     def super_vip(self):
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp18.9.jpg')), QtGui.QIcon.Mode.Normal,
+        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp36.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
         self.ui.pushButton_Wechat.setIcon(icon)
         self.update_button_style(self.ui.pushButton_VIP)
-        self.ui.label_prices.setText("18.90")
-        self.ui.label_prices_2.setText("18.9")
+        self.ui.label_prices.setText("36.90")
+        self.ui.label_prices_2.setText("36.9")
 
     def year_vip(self):
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp99.jpg')), QtGui.QIcon.Mode.Normal,
+        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp199.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
         self.ui.pushButton_Wechat.setIcon(icon)
         self.update_button_style(self.ui.pushButton_year)
-        self.ui.label_prices.setText("99.00")
-        self.ui.label_prices_2.setText("99")
+        self.ui.label_prices.setText("199.00")
+        self.ui.label_prices_2.setText("199")
 
     def ai_vip(self):
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp17.9.jpg')), QtGui.QIcon.Mode.Normal,
+        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp29.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
         self.ui.pushButton_Wechat.setIcon(icon)
         self.update_button_style(self.ui.pushButton_AiVIP)
-        self.ui.label_prices.setText("17.90")
-        self.ui.label_prices_2.setText("17.9")
+        self.ui.label_prices.setText("29.90")
+        self.ui.label_prices_2.setText("29.9")
 
     def base_vip(self):
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp9.9.jpg')), QtGui.QIcon.Mode.Normal,
+        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp14.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
         self.ui.pushButton_Wechat.setIcon(icon)
         self.update_button_style(self.ui.pushButton_Base)
-        self.ui.label_prices.setText("9.90")
-        self.ui.label_prices_2.setText("9.9")
+        self.ui.label_prices.setText("14.90")
+        self.ui.label_prices_2.setText("14.9")
 
     def validate_activation(self):
         try:

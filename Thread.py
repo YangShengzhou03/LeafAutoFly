@@ -37,8 +37,10 @@ class WorkerThreadBase(QtCore.QThread):
         self.pause_changed.emit(False)
 
     def request_interruption(self) -> None:
+        """请求线程中断并设置运行状态"""
         self._stop_event.set()
         self._is_running = False
+        log("INFO", f"{self.__class__.__name__} 收到中断请求")
 
     def is_paused(self) -> bool:
         return self._is_paused
@@ -49,7 +51,9 @@ class WorkerThreadBase(QtCore.QThread):
 
 class AiWorkerThread(WorkerThreadBase):
     """AI自动回复工作线程"""
-    def __init__(self, app_instance, receiver: str, wx: Any, model: str = "月之暗面", role: str = "你很温馨,回复简单明了。"):
+
+    def __init__(self, app_instance, receiver: str, wx: Any, model: str = "月之暗面",
+                 role: str = "你很温馨,回复简单明了。"):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
@@ -97,12 +101,14 @@ class AiWorkerThread(WorkerThreadBase):
     def run(self) -> None:
         """线程主循环"""
         self._is_running = True
+        log("INFO", f"AiWorkerThread 已启动，接收者: {self.receiver}")
 
         # 初始化连接检查
         if self.receiver != "全局Ai接管" and self._is_running:
             try:
                 if self.wx:
                     self.wx.SendMsg(msg=" ", who=self.receiver)
+                    log("INFO", f"与 {self.receiver} 的连接初始化成功")
                 else:
                     log("ERROR", f"找不到微信实例，无法初始化与 {self.receiver} 的连接")
                     self._is_running = False
@@ -114,6 +120,7 @@ class AiWorkerThread(WorkerThreadBase):
         while self._is_running and not self._stop_event.is_set():
             try:
                 if self._is_paused:
+                    log("DEBUG", "线程已暂停，等待恢复...")
                     time.sleep(0.1)  # 暂停时休眠
                     continue
 
@@ -126,8 +133,13 @@ class AiWorkerThread(WorkerThreadBase):
                 log("ERROR", f"处理消息时出错: {str(e)}")
                 time.sleep(1)  # 出错后休眠，避免CPU占用过高
             finally:
-                self.msleep(100)  # 短暂休眠，避免CPU占用过高
+                # 短暂休眠，避免CPU占用过高，同时检查中断请求
+                for _ in range(5):
+                    if self._stop_event.is_set():
+                        break
+                    self.msleep(20)
 
+        log("INFO", f"AiWorkerThread 已停止，接收者: {self.receiver}")
         self.finished.emit()
 
     def _get_wx_instance(self) -> Any:
@@ -136,6 +148,9 @@ class AiWorkerThread(WorkerThreadBase):
 
     def _handle_global_messages(self) -> None:
         """处理全局消息"""
+        if self._stop_event.is_set():
+            return
+
         wx_instance = self._get_wx_instance()
         if not wx_instance:
             return
@@ -155,6 +170,9 @@ class AiWorkerThread(WorkerThreadBase):
 
     def _handle_specific_messages(self) -> None:
         """处理特定接收者的消息"""
+        if self._stop_event.is_set():
+            return
+
         wx_instance = self._get_wx_instance()
         if not wx_instance:
             return
@@ -166,6 +184,9 @@ class AiWorkerThread(WorkerThreadBase):
 
     def _process_message(self, msg: str, who: str) -> None:
         """处理消息并决定是否回复"""
+        if self._stop_event.is_set():
+            return
+
         if self.rules:
             matched_replies = self._match_rule(msg)
             if matched_replies:
@@ -174,6 +195,9 @@ class AiWorkerThread(WorkerThreadBase):
                     return
 
                 for reply in matched_replies:
+                    if self._stop_event.is_set():
+                        return
+
                     try:
                         if os.path.isdir(os.path.dirname(reply)):
                             if os.path.isfile(reply):
@@ -193,6 +217,9 @@ class AiWorkerThread(WorkerThreadBase):
 
     def _generate_ai_reply(self, msg: str, who: str) -> None:
         """调用AI模型生成回复"""
+        if self._stop_event.is_set():
+            return
+
         try:
             if self.model == "文心一言":
                 result = self._query_wenxin_api(msg)
@@ -201,7 +228,7 @@ class AiWorkerThread(WorkerThreadBase):
             else:
                 result = self._query_default_api(msg)
 
-            if result:
+            if result and not self._stop_event.is_set():
                 wx_instance = self._get_wx_instance()
                 if wx_instance:
                     wx_instance.SendMsg(msg=result, who=who)
@@ -313,17 +340,20 @@ class SplitWorkerThread(WorkerThreadBase):
     def run(self) -> None:
         """线程主循环"""
         self._is_running = True
-        log("INFO", f"准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
+        log("INFO", f"SplitWorkerThread 已启动，准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
 
         for i, sentence in enumerate(self.sentences):
             if self._stop_event.is_set() or not self._is_running:
+                log("INFO", f"收到停止信号，终止发送任务，当前进度: {i + 1}/{len(self.sentences)}")
                 break
 
             if self._is_paused:
+                log("DEBUG", "线程已暂停，等待恢复...")
                 while self._is_paused and not self._stop_event.is_set():
                     time.sleep(0.1)  # 等待，直到恢复或停止
 
             if self._stop_event.is_set() or not self._is_running:
+                log("INFO", f"收到停止信号，终止发送任务，当前进度: {i + 1}/{len(self.sentences)}")
                 break
 
             try:
@@ -338,7 +368,11 @@ class SplitWorkerThread(WorkerThreadBase):
                     break
 
                 # 添加发送间隔，避免过快
-                self.msleep(500)
+                for _ in range(5):
+                    if self._stop_event.is_set():
+                        break
+                    self.msleep(100)
+
             except Exception as e:
                 log("ERROR", f"发送消息时出错: {str(e)}")
                 self.sent_signal.emit(sentence, False)  # 发送失败信号
@@ -346,6 +380,7 @@ class SplitWorkerThread(WorkerThreadBase):
                 self._stop_event.set()
                 break
 
+        log("INFO", f"SplitWorkerThread 已完成，共发送 {len(self.sentences)} 条消息")
         self._is_running = False
         self.finished.emit()
 
@@ -368,6 +403,7 @@ class WorkerThread(WorkerThreadBase):
     def run(self) -> None:
         """线程主循环"""
         self._is_running = True
+        log("INFO", "WorkerThread 已启动")
 
         # 设置系统不进入睡眠和锁屏状态
         if self.prevent_sleep:
@@ -377,6 +413,7 @@ class WorkerThread(WorkerThreadBase):
         try:
             while self._is_running and not self._stop_event.is_set():
                 if self._is_paused:
+                    log("DEBUG", "线程已暂停，等待恢复...")
                     time.sleep(0.1)  # 暂停时休眠
                     continue
 
@@ -411,6 +448,7 @@ class WorkerThread(WorkerThreadBase):
                             remaining_time -= sleep_time
 
                             if self._is_paused:
+                                log("DEBUG", "线程已暂停，等待恢复...")
                                 while self._is_paused and not self._stop_event.is_set():
                                     time.sleep(0.1)
 
@@ -441,6 +479,7 @@ class WorkerThread(WorkerThreadBase):
                 self._set_system_state(self.ES_CONTINUOUS)  # 清除其他标志，只保留CONTINUOUS以恢复默认
                 log("WARNING", "已恢复系统休眠和锁屏设置")
 
+            log("INFO", "WorkerThread 已停止")
             self._is_running = False
             self.finished.emit()
 
@@ -512,12 +551,15 @@ class WorkerThread(WorkerThreadBase):
                 retries += 1
 
                 # 如果不是最后一次尝试，尝试重新加载微信客户端
-                if retries < max_retries:
+                if retries < max_retries and not self._stop_event.is_set():
                     log("WARNING", "尝试重新连接微信客户端...")
                     try:
                         self.app_instance.parent.update_wx()
                         # 等待一段时间，让微信客户端稳定
-                        self.msleep(1000)
+                        for _ in range(10):
+                            if self._stop_event.is_set():
+                                break
+                            self.msleep(100)
                     except Exception as we:
                         log("ERROR", f"更新微信客户端失败: {str(we)}")
 
@@ -563,6 +605,7 @@ class ErrorSoundThread(QtCore.QThread):
         if not self.sound_file or not os.path.exists(self.sound_file) or self._is_running:
             return
         self._is_running = True
+        log("INFO", "ErrorSoundThread 已启动")
 
         # 确保每次都创建新的播放器和音频输出
         if self.player:
@@ -599,12 +642,15 @@ class ErrorSoundThread(QtCore.QThread):
             self.audio_output = None
 
         self._is_running = False
+        log("INFO", "ErrorSoundThread 已停止")
         self.finished.emit()
 
     def stop_playback(self) -> None:
         if self._is_running:
+            log("INFO", "ErrorSoundThread 收到停止请求")
             self.cleanup_resources()
 
     def play_test(self) -> None:
         if not self.isRunning() and not self._is_running:
+            log("INFO", "ErrorSoundThread 开始测试播放")
             self.start()

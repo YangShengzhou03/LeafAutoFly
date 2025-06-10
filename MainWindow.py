@@ -55,7 +55,7 @@ def reload_wx():
             return '微信未登录'
         else:
             log("ERROR", f"程序初始化出错, 错误原因:{e}")
-            return '初始化错误'
+            return '微信错误'
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -106,8 +106,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             log("ERROR", f"初始化微信实例时出错: {e}")
             # 异常情况下只添加一个错误提示项
             self.comboBox_nickName.clear()
-            self.comboBox_nickName.addItem('初始化错误')
-            self.comboBox_nickName.setCurrentText('初始化错误')  # 使用setCurrentText
+            self.comboBox_nickName.addItem('微信错误')
+            self.comboBox_nickName.setCurrentText('微信错误')  # 使用setCurrentText
 
         # 传递微信实例字典
         self.auto_info = AutoInfo(wx_instances, self.Membership, self)
