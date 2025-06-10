@@ -1,4 +1,5 @@
 import random
+import traceback
 from datetime import timedelta
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtCore import QRegularExpression, QUrl
@@ -14,103 +15,56 @@ class ActivitiesWindow(QtWidgets.QMainWindow, Ui_ActivitiesWindow):
         super().__init__()
         self.ui = Ui_ActivitiesWindow()
         self.ui.setupUi(self)
-        self._setup_window()
-        self._setup_validator()
-        self._setup_buttons()
-        self._setup_connections()
-        self._init_membership_data()
-
-    def _setup_window(self):
-        """设置窗口基本属性"""
         self.setWindowTitle("激活枫叶")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/tray.ico')))
         self.setWindowFlags(
-            self.windowFlags() |
-            QtCore.Qt.WindowType.FramelessWindowHint |
-            QtCore.Qt.WindowType.WindowStaysOnTopHint
-        )
+            self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.center_on_screen()
-
-    def center_on_screen(self):
-        """将窗口居中显示在屏幕上"""
-        frame_geometry = self.frameGeometry()
-        center_point = QtWidgets.QApplication.primaryScreen().availableGeometry().center()
-        frame_geometry.moveCenter(center_point)
-        self.move(frame_geometry.topLeft())
-
-    def _setup_validator(self):
-        """设置激活码输入验证"""
-        reg_exp = QRegularExpression(r'^[A-Za-z0-9]{0,12}$')
-        validator = QRegularExpressionValidator(reg_exp, self.ui.lineEdit_code)
-        self.ui.lineEdit_code.setValidator(validator)
-        self.ui.lineEdit_code.textChanged.connect(lambda text: self.ui.lineEdit_code.setText(text.upper()))
-
-    def _setup_buttons(self):
-        """初始化按钮样式和数据"""
         self.identify = random.randint(100000, 999999)
-        self.ui.label_identify.setText(str(self.identify))
         self.current_selected_button = None
+        self.connect_signals()
+        self.year_vip()
+        print(f"[ActivitiesWindow] 初始化完成，随机码: {self.identify}")
 
-        # 会员类型数据
-        self.membership_data = {
-            'base': {
-                'button': self.ui.pushButton_Base,
-                'price': '9.90',
-                'image': 'resources/img/activity/wp9.9.jpg',
-                'days': 30,
-                'level': 'Base'
-            },
-            'ai': {
-                'button': self.ui.pushButton_AiVIP,
-                'price': '17.90',
-                'image': 'resources/img/activity/wp17.9.jpg',
-                'days': 30,
-                'level': 'AiVIP'
-            },
-            'vip': {
-                'button': self.ui.pushButton_VIP,
-                'price': '18.90',
-                'image': 'resources/img/activity/wp18.9.jpg',
-                'days': 30,
-                'level': 'VIP'
-            },
-            'year': {
-                'button': self.ui.pushButton_year,
-                'price': '99.00',
-                'image': 'resources/img/activity/wp99.jpg',
-                'days': 365,
-                'level': 'VIP'
-            }
-        }
+    def connect_signals(self):
+        try:
+            self.ui.pushButton_close.clicked.connect(self.close)
+            self.ui.pushButton_year.clicked.connect(self.year_vip)
+            self.ui.pushButton_VIP.clicked.connect(self.super_vip)
+            self.ui.pushButton_AiVIP.clicked.connect(self.ai_vip)
+            self.ui.pushButton_Base.clicked.connect(self.base_vip)
+            reg_exp = QRegularExpression(r'^[A-Za-z0-9]{0,12}$')
+            validator = QRegularExpressionValidator(reg_exp, self.ui.lineEdit_code)
+            self.ui.lineEdit_code.setValidator(validator)
+            self.ui.lineEdit_code.returnPressed.connect(self.validate_activation)
+            self.ui.pushButton_OK.clicked.connect(self.validate_activation)
+            self.ui.lineEdit_code.textChanged.connect(lambda text: self.ui.lineEdit_code.setText(text.upper()))
+            self.ui.label_identify.setText(str(self.identify))
+            self.ui.pushButton_exchange.clicked.connect(self.QQ_code)
+            self.ui.pushButton_check.clicked.connect(self.QQ_code)
+            self.ui.pushButton_feedback.clicked.connect(self.QQ_code)
+            self.ui.pushButton_privilege.clicked.connect(self.help)
+            self.apply_default_styles()
+            print("[ActivitiesWindow] 信号连接完成")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 信号连接失败: {str(e)}")
+            traceback.print_exc()
 
-        self.apply_default_styles()
-
-    def _setup_connections(self):
-        """连接信号与槽"""
-        self.ui.pushButton_close.clicked.connect(self.close)
-        self.ui.pushButton_OK.clicked.connect(self.validate_activation)
-        self.ui.lineEdit_code.returnPressed.connect(self.validate_activation)
-
-        # 会员按钮连接
-        self.ui.pushButton_Base.clicked.connect(lambda: self.select_membership('base'))
-        self.ui.pushButton_AiVIP.clicked.connect(lambda: self.select_membership('ai'))
-        self.ui.pushButton_VIP.clicked.connect(lambda: self.select_membership('vip'))
-        self.ui.pushButton_year.clicked.connect(lambda: self.select_membership('year'))
-
-        # 辅助按钮连接
-        self.ui.pushButton_exchange.clicked.connect(self.QQ_code)
-        self.ui.pushButton_check.clicked.connect(self.QQ_code)
-        self.ui.pushButton_feedback.clicked.connect(self.QQ_code)
-        self.ui.pushButton_privilege.clicked.connect(self.help)
-
-    def _init_membership_data(self):
-        """初始化选择第一个会员类型"""
-        self.select_membership('year')
+    def QQ_code(self):
+        try:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/QQ_Act.png')), QtGui.QIcon.Mode.Normal,
+                           QtGui.QIcon.State.Off)
+            self.ui.pushButton_Wechat.setIcon(icon)
+            self.apply_default_styles()
+            print("[ActivitiesWindow] QQ二维码加载成功")
+        except Exception as e:
+            print(f"[ActivitiesWindow] QQ二维码加载失败: {str(e)}")
+            traceback.print_exc()
 
     def apply_default_styles(self):
-        """应用默认按钮样式"""
-        default_style = """
+        try:
+            default_style = """
 QPushButton {
     margin-right: 3px;
     margin-bottom: 0px;
@@ -144,12 +98,17 @@ QPushButton:pressed {
     transition: background 0.1s ease-in-out;
 }
 """
-        for data in self.membership_data.values():
-            data['button'].setStyleSheet(default_style)
+            for button in [self.ui.pushButton_VIP, self.ui.pushButton_year, self.ui.pushButton_AiVIP,
+                           self.ui.pushButton_Base]:
+                button.setStyleSheet(default_style)
+            print("[ActivitiesWindow] 默认样式应用成功")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 默认样式应用失败: {str(e)}")
+            traceback.print_exc()
 
     def update_button_style(self, button):
-        """更新选中按钮样式"""
-        active_style = """
+        try:
+            active_style = """
 QPushButton {
     margin-right: 3px;
     margin-bottom: 0px;
@@ -188,88 +147,160 @@ QPushButton:pressed {
     transition: background 0.1s ease-in-out;
 }
 """
-        self.apply_default_styles()
-        button.setStyleSheet(active_style)
-        self.current_selected_button = button
 
-    def select_membership(self, membership_type):
-        """选择会员类型"""
-        data = self.membership_data[membership_type]
+            self.apply_default_styles()
+            button.setStyleSheet(active_style)
+            self.current_selected_button = button
+            print(f"[ActivitiesWindow] 按钮样式更新成功: {button.objectName()}")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 按钮样式更新失败: {str(e)}")
+            traceback.print_exc()
 
-        # 更新按钮样式
-        self.update_button_style(data['button'])
+    def super_vip(self):
+        try:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp18.9.jpg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+            self.ui.pushButton_Wechat.setIcon(icon)
+            self.update_button_style(self.ui.pushButton_VIP)
+            self.ui.label_prices.setText("18.90")
+            self.ui.label_prices_2.setText("18.9")
+            print("[ActivitiesWindow] 超级VIP选项加载成功")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 超级VIP选项加载失败: {str(e)}")
+            traceback.print_exc()
 
-        # 更新价格标签
-        self.ui.label_prices.setText(data['price'])
-        self.ui.label_prices_2.setText(data['price'].rstrip('0').rstrip('.'))
+    def year_vip(self):
+        try:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp99.jpg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+            self.ui.pushButton_Wechat.setIcon(icon)
+            self.update_button_style(self.ui.pushButton_year)
+            self.ui.label_prices.setText("99.00")
+            self.ui.label_prices_2.setText("99")
+            print("[ActivitiesWindow] 年VIP选项加载成功")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 年VIP选项加载失败: {str(e)}")
+            traceback.print_exc()
 
-        # 更新支付二维码图片
-        icon = QtGui.QIcon()
-        icon.addPixmap(
-            QtGui.QPixmap(get_resource_path(data['image'])),
-            QtGui.QIcon.Mode.Normal,
-            QtGui.QIcon.State.Off
-        )
-        self.ui.pushButton_Wechat.setIcon(icon)
+    def ai_vip(self):
+        try:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp17.9.jpg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+            self.ui.pushButton_Wechat.setIcon(icon)
+            self.update_button_style(self.ui.pushButton_AiVIP)
+            self.ui.label_prices.setText("17.90")
+            self.ui.label_prices_2.setText("17.9")
+            print("[ActivitiesWindow] AI VIP选项加载成功")
+        except Exception as e:
+            print(f"[ActivitiesWindow] AI VIP选项加载失败: {str(e)}")
+            traceback.print_exc()
 
-    def QQ_code(self):
-        """显示QQ二维码"""
-        icon = QtGui.QIcon()
-        icon.addPixmap(
-            QtGui.QPixmap(get_resource_path('resources/img/activity/QQ_Act.png')),
-            QtGui.QIcon.Mode.Normal,
-            QtGui.QIcon.State.Off
-        )
-        self.ui.pushButton_Wechat.setIcon(icon)
-        self.apply_default_styles()
+    def base_vip(self):
+        try:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp9.9.jpg')), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+            self.ui.pushButton_Wechat.setIcon(icon)
+            self.update_button_style(self.ui.pushButton_Base)
+            self.ui.label_prices.setText("9.90")
+            self.ui.label_prices_2.setText("9.9")
+            print("[ActivitiesWindow] 基础VIP选项加载成功")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 基础VIP选项加载失败: {str(e)}")
+            traceback.print_exc()
 
     def validate_activation(self):
-        """验证激活码"""
+        print("[ActivitiesWindow] 开始激活验证...")
         try:
-            key_value, _ = get_url()
-        except Exception:
-            key_value = None
+            Key_value, _ = get_url()
+            print(f"[ActivitiesWindow] 获取URL密钥成功: {Key_value[:4]}***")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 获取URL密钥失败: {str(e)}")
+            traceback.print_exc()
+            Key_value = None
 
         input_password = self.ui.lineEdit_code.text()
         random_number = self.identify
+        print(f"[ActivitiesWindow] 输入的密钥: {input_password}, 随机码: {random_number}")
 
-        # 生成预设激活码
-        activation_codes = {
-            hex(random_number + 1)[2:].upper(): ('Base', 30),
-            hex(random_number + 2)[2:].upper(): ('AiVIP', 30),
-            hex(random_number + 3)[2:].upper(): ('VIP', 30),
-            hex(random_number + 4)[2:].upper(): ('VIP', 365)
-        }
+        hex_base = hex(random_number + 1)[2:].upper()
+        hex_ai_vip = hex(random_number + 2)[2:].upper()
+        hex_vip = hex(random_number + 3)[2:].upper()
+        hex_year_vip = hex(random_number + 4)[2:].upper()
+        print(f"[ActivitiesWindow] 生成的密钥: 基础={hex_base}, AI={hex_ai_vip}, VIP={hex_vip}, 年={hex_year_vip}")
 
-        last_time = get_current_time('net')
+        try:
+            last_time = get_current_time('net')
+            print(f"[ActivitiesWindow] 获取网络时间成功: {last_time}")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 获取网络时间失败，使用本地时间: {str(e)}")
+            last_time = get_current_time('local')
 
-        # 检查预设激活码
-        if input_password in activation_codes:
-            membership, days = activation_codes[input_password]
-            expiration_time = (last_time + timedelta(days=days)).strftime('%Y-%m-%d %H:%M:%S')
-        # 检查网络密钥
-        elif key_value is not None and input_password == key_value:
+        if input_password == hex_base:
+            membership = 'Base'
+            expiration_time = (last_time + timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"[ActivitiesWindow] 激活成功: 基础会员，有效期至 {expiration_time}")
+        elif input_password == hex_ai_vip:
+            membership = 'AiVIP'
+            expiration_time = (last_time + timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"[ActivitiesWindow] 激活成功: AI会员，有效期至 {expiration_time}")
+        elif input_password == hex_vip:
             membership = 'VIP'
             expiration_time = (last_time + timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"[ActivitiesWindow] 激活成功: VIP会员，有效期至 {expiration_time}")
+        elif input_password == hex_year_vip:
+            membership = 'VIP'
+            expiration_time = (last_time + timedelta(days=365)).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"[ActivitiesWindow] 激活成功: 年VIP会员，有效期至 {expiration_time}")
+        elif Key_value is not None:
+            if input_password == Key_value:
+                membership = 'VIP'
+                expiration_time = (last_time + timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
+                print(f"[ActivitiesWindow] 激活成功: URL密钥VIP会员，有效期至 {expiration_time}")
+            else:
+                print(f"[ActivitiesWindow] 激活失败: 无效的URL密钥")
+                QtWidgets.QMessageBox.warning(self, "无效秘钥", "请输入正确的秘钥，如已购买请QQ扫码获取")
+                return
         else:
-            QtWidgets.QMessageBox.warning(self, "无效秘钥", "请输入正确的秘钥，如已购买请QQ扫码获取")
+            print(f"[ActivitiesWindow] 激活失败: 无效的随机码密钥")
+            QtWidgets.QMessageBox.warning(self, "错误秘钥", "请输入正确的秘钥，如已购买请QQ扫获取")
             return
 
-        # 保存激活信息
-        motherboard_sn = get_motherboard_serial_number()
-        write_key_value('membership', membership)
-        write_key_value('expiration_time', expiration_time)
-        write_key_value('motherboardsn', motherboard_sn)
+        try:
+            motherboard_sn = get_motherboard_serial_number()
+            print(f"[ActivitiesWindow] 获取主板序列号成功: {motherboard_sn[:4]}***")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 获取主板序列号失败: {str(e)}")
+            traceback.print_exc()
+            motherboard_sn = "UNKNOWN"
 
-        # 验证保存结果
-        if (read_key_value('membership') != membership or
-                read_key_value('expiration_time') != expiration_time or
-                read_key_value('motherboardsn') != motherboard_sn):
+        try:
+            write_key_value('membership', membership)
+            write_key_value('expiration_time', expiration_time)
+            write_key_value('motherboardsn', motherboard_sn)
+            print(f"[ActivitiesWindow] 会员信息写入成功: {membership}, {expiration_time}")
+        except Exception as e:
+            print(f"[ActivitiesWindow] 会员信息写入失败: {str(e)}")
+            traceback.print_exc()
+
+        try:
+            if read_key_value('membership') != membership or \
+                    read_key_value('expiration_time') != expiration_time or \
+                    read_key_value('motherboardsn') != motherboard_sn:
+                print(f"[ActivitiesWindow] 验证写入信息失败: 读取值与写入值不匹配")
+                QtWidgets.QMessageBox.critical(self, "激活失败", "激活出错,请以管理员身份运行软件")
+            else:
+                print(f"[ActivitiesWindow] 激活验证通过，退出应用程序")
+                QtWidgets.QMessageBox.information(self, "激活成功", f"会员激活成功,有效期至{expiration_time}")
+                QtWidgets.QApplication.quit()
+        except Exception as e:
+            print(f"[ActivitiesWindow] 验证写入信息时发生异常: {str(e)}")
+            traceback.print_exc()
             QtWidgets.QMessageBox.critical(self, "激活失败", "激活出错,请以管理员身份运行软件")
-        else:
-            QtWidgets.QMessageBox.information(self, "激活成功", f"会员激活成功,有效期至{expiration_time}")
-            QtWidgets.QApplication.quit()
 
     def help(self):
-        """打开帮助链接"""
-        QDesktopServices.openUrl(QUrl('https://blog.csdn.net/Yang_shengzhou/article/details/143782041'))
+        try:
+            print("[ActivitiesWindow] 打开帮助文档")
+            QDesktopServices.openUrl(QUrl('https://blog.csdn.net/Yang_shengzhou/article/details/143782041'))
+        except Exception as e:
+            print(f"[ActivitiesWindow] 打开帮助文档失败: {str(e)}")
+            traceback.print_exc()
