@@ -492,19 +492,19 @@ class WorkerThread(WorkerThreadBase):
                 if os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
-                        log("INFO", f"开始把文件 {file_name} 发给 {name} (使用微信: {wx_nickname})")
+                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname})")
                         wx_instance.SendFiles(filepath=info, who=name)
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                 else:
-                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (使用微信: {wx_nickname})")
+                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {wx_nickname})")
                     if "@所有人" in info:
                         info = info.replace("@所有人", "").strip()
                         wx_instance.AtAll(msg=info, who=name)
                     else:
                         wx_instance.SendMsg(msg=info, who=name)
 
-                log("DEBUG", f"成功执行任务: 发送给 {name} (使用微信: {wx_nickname})")
+                log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname})")
                 success = True
 
             except Exception as e:

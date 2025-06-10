@@ -22,7 +22,6 @@ from Ui_MainWindow import Ui_MainWindow
 from UpdateDialog import check_update
 from common import get_resource_path, log, get_current_time
 
-# 用于存储多个微信实例的字典
 wx_instances = {}
 current_version = 4.39
 
@@ -30,7 +29,6 @@ current_version = 4.39
 def reload_wx():
     global wx_instances
     try:
-        # 尝试创建一个临时实例来获取所有微信昵称
         temp_wx = WeChat(language=read_key_value('language'))
         nicknames = temp_wx.get_wx_nicknames()
         if not nicknames:
@@ -41,7 +39,7 @@ def reload_wx():
         for nickname in nicknames:
             wx = WeChat(nickname=nickname, language=read_key_value('language'))
             wx_instances[nickname] = wx
-            log("DEBUG", f"成功初始化微信实例: {nickname}")
+            log("DEBUG", f"微信初始化完成, {nickname} 欢迎您！")
 
         # 如果有实例，默认使用第一个
         if wx_instances:

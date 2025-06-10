@@ -125,8 +125,8 @@ class AutoInfo(QtWidgets.QWidget):
                 'wx_nickname': wx_nickname
             })
             log('INFO',
-                f'已添加 {time_text[-8:]} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (使用微信: {wx_nickname})')
-            print(f"[AutoInfo] 任务添加成功：{name_text} - {info_text[:20]}... (使用微信: {wx_nickname})")
+                f'已添加 {time_text[-8:]} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (发送方: {wx_nickname})')
+            print(f"[AutoInfo] 任务添加成功：{name_text} - {info_text[:20]}... (发送方: {wx_nickname})")
 
             self.parent.dateTimeEdit.setDateTime(
                 datetime.fromisoformat(time_text) + timedelta(minutes=int(read_key_value('add_timestep'))))
@@ -236,7 +236,7 @@ class AutoInfo(QtWidgets.QWidget):
                 'wx_nickname': wx_nickname
             }
 
-            print(f"[AutoInfo] 创建任务控件成功：{name_text} - {info_text[:20]}... (使用微信: {wx_nickname})")
+            print(f"[AutoInfo] 创建任务控件成功：{name_text} - {info_text[:20]}... (发送方: {wx_nickname})")
             return widget_item
 
         except Exception as e:
@@ -420,7 +420,7 @@ class AutoInfo(QtWidgets.QWidget):
             print(f"[AutoInfo] 更新任务状态失败: {str(e)}")
 
     def add_next_task(self, time_text, name_text, info_text, frequency, wx_nickname):
-        print(f"[AutoInfo] 添加下一次重复任务: {name_text} @ {time_text} (使用微信: {wx_nickname})")
+        print(f"[AutoInfo] 添加下一次重复任务: {name_text} @ {time_text} (发送方: {wx_nickname})")
         try:
             widget_item = self.create_widget(time_text, name_text, info_text, frequency, wx_nickname)
             self.parent.formLayout_3.addRow(widget_item)
@@ -432,7 +432,7 @@ class AutoInfo(QtWidgets.QWidget):
                 'wx_nickname': wx_nickname
             })
             log('INFO',
-                f'自动添加 {time_text} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (使用微信: {wx_nickname})')
+                f'自动添加 {time_text} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (发送方: {wx_nickname})')
             self.save_tasks_to_json()
         except Exception as e:
             print(f"[AutoInfo] 添加重复任务失败: {str(e)}")
@@ -575,7 +575,7 @@ class AutoInfo(QtWidgets.QWidget):
                     'frequency': task['Frequency'],
                     'wx_nickname': task['wx_nickname']
                 })
-                print(f"[AutoInfo] 成功导入任务: {task['Name']} (使用微信: {task['wx_nickname']})")
+                print(f"[AutoInfo] 成功导入任务: {task['Name']} (发送方: {task['wx_nickname']})")
             except Exception as e:
                 log("ERROR", f"创建任务失败: {task['Name']}")
                 print(f"[AutoInfo] 创建任务失败: {task['Name']}, 错误: {str(e)}")
@@ -643,7 +643,7 @@ class AutoInfo(QtWidgets.QWidget):
             subject = f"{task['time']}未把信息发给{task['name']}"
             body = (
                 f"尊敬的用户：\n"
-                f"我们遗憾地通知您，在【{task['time']}】尝试使用微信账号【{task['wx_nickname']}】发送【{task['info']}】给【{task['name']}】时因故障未能成功。\n"
+                f"我们遗憾地通知您，在【{task['time']}】尝试发送方账号【{task['wx_nickname']}】发送【{task['info']}】给【{task['name']}】时因故障未能成功。\n"
                 "\n对此造成的不便，深表歉意。请检查提供的信息是否准确，并确认填写的接收者应与备注完全一致。\n"
                 "\n若问题依旧，请联系客户服务团队获取帮助：\n"
                 "- 发送电子邮件至支持邮箱 3555844679@qq.com；\n"
