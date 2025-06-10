@@ -11,17 +11,18 @@ from threading import Thread
 
 import openpyxl
 from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QSizePolicy
 
 from System_info import read_key_value
 from Thread import WorkerThread, ErrorSoundThread
 from common import get_resource_path, log, str_to_bool
 
-
 class AutoInfo(QtWidgets.QWidget):
     def __init__(self, wx_dict, membership, parent=None):
         super().__init__(parent)
         self.parent = parent
-        self.wx_dict = wx_dict  # 接收微信实例字典
+        self.wx_dict = wx_dict
         self.Membership = membership
         self.ready_tasks = []
         self.completed_tasks = []
@@ -36,12 +37,11 @@ class AutoInfo(QtWidgets.QWidget):
             4: get_resource_path('resources/sound/error_sound_5.mp3')
         }
 
-        # 邮件队列和线程
         self.email_queue = Queue()
         self.email_thread = Thread(target=self._process_email_queue, daemon=True)
         self.email_thread.start()
-        self.last_email_time = 0  # 上次发送邮件的时间戳
-        self.email_cooldown = 60  # 邮件冷却时间（秒）
+        self.last_email_time = 0
+        self.email_cooldown = 60
         print(f"[AutoInfo] 初始化完成，会员类型: {self.Membership}")
 
     def openFileNameDialog(self, filepath=None):
@@ -97,7 +97,7 @@ class AutoInfo(QtWidgets.QWidget):
         print("[AutoInfo] 尝试添加任务...")
         try:
             time_text, name_text, info_text, frequency = self.get_input_values()
-            wx_nickname = self.parent.comboBox_nickName.currentText()  # 获取当前选择的微信昵称
+            wx_nickname = self.parent.comboBox_nickName.currentText()
 
             if not all([time_text, name_text, info_text]):
                 print("[AutoInfo] 添加任务失败：输入不完整")
@@ -122,7 +122,7 @@ class AutoInfo(QtWidgets.QWidget):
                 'name': name_text,
                 'info': info_text,
                 'frequency': frequency,
-                'wx_nickname': wx_nickname  # 存储任务使用的微信实例
+                'wx_nickname': wx_nickname
             })
             log('INFO',
                 f'已添加 {time_text[-8:]} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (使用微信: {wx_nickname})')
@@ -146,85 +146,88 @@ class AutoInfo(QtWidgets.QWidget):
             horizontalLayout_76 = QtWidgets.QHBoxLayout(widget_item)
             horizontalLayout_76.setContentsMargins(12, 2, 12, 2)
             horizontalLayout_76.setSpacing(6)
-            horizontalLayout_76.setObjectName("horizontalLayout_76")
 
-            widget_54 = QtWidgets.QWidget(parent=widget_item)
+            widget_54 = QtWidgets.QWidget()
             widget_54.setMinimumSize(QtCore.QSize(36, 36))
             widget_54.setMaximumSize(QtCore.QSize(36, 36))
             widget_54.setStyleSheet(f"image: url({get_resource_path('resources/img/page1/page1_发送就绪.svg')});")
-            widget_54.setObjectName("widget_54")
             horizontalLayout_76.addWidget(widget_54)
 
             verticalLayout_64 = QtWidgets.QVBoxLayout()
             verticalLayout_64.setContentsMargins(6, 6, 6, 6)
             verticalLayout_64.setSpacing(0)
-            verticalLayout_64.setObjectName("verticalLayout_64")
+            horizontalLayout_76.addLayout(verticalLayout_64)
 
-            # 第一行布局（修改部分）
-            horizontalLayout_77 = QtWidgets.QHBoxLayout()
-            horizontalLayout_77.setContentsMargins(0, 0, 0, 0)
-            horizontalLayout_77.setSpacing(4)
-            horizontalLayout_77.setObjectName("horizontalLayout_77")
+            top_layout = QtWidgets.QHBoxLayout()
+            top_layout.setContentsMargins(0, 0, 0, 0)
+            top_layout.setSpacing(4)
 
-            # 接收人标签
-            receiver_label = QtWidgets.QLabel(name_text, parent=widget_item)
-            font = QtGui.QFont()
-            font.setFamily("微软雅黑 Light")
-            font.setPointSize(12)
-            receiver_label.setFont(font)
+            receiver_label = QtWidgets.QLabel(name_text)
             receiver_label.setStyleSheet("color:rgb(0, 0, 0);")
-            receiver_label.setObjectName("receiver_label")
-            horizontalLayout_77.addWidget(receiver_label)
+            receiver_label.setFont(QtGui.QFont("微软雅黑 Light", 12))
+            receiver_label.setWordWrap(False)
+            receiver_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+            receiver_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+            receiver_label.setMinimumWidth(1)
+            receiver_label.installEventFilter(self)
+            top_layout.addWidget(receiver_label)
 
-            # 新增：微信昵称标签（移到第一行）
-            wx_label = QtWidgets.QLabel(wx_nickname, parent=widget_item)
+            wx_label = QtWidgets.QLabel(wx_nickname)
             wx_label.setStyleSheet("color: rgb(105, 27, 253); padding-left: 8px;")
-            wx_label.setObjectName("wx_label")
-            horizontalLayout_77.addWidget(wx_label)
+            wx_label.setFont(QtGui.QFont("微软雅黑 Light", 10))
+            wx_label.setWordWrap(False)
+            wx_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+            wx_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+            wx_label.setMinimumWidth(1)
+            wx_label.installEventFilter(self)
+            top_layout.addWidget(wx_label)
 
-            # 时间标签
-            time_label = QtWidgets.QLabel(time_text, parent=widget_item)
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            time_label.setFont(font)
+            time_label = QtWidgets.QLabel(time_text)
             time_label.setStyleSheet("color: rgb(169, 169, 169);")
+            time_label.setFont(QtGui.QFont("微软雅黑", 10))
             time_label.setAlignment(
-                QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTrailing | QtCore.Qt.AlignmentFlag.AlignVCenter)
-            time_label.setObjectName("time_label")
-            horizontalLayout_77.addWidget(time_label)
+                Qt.AlignmentFlag.AlignRight |
+                Qt.AlignmentFlag.AlignTrailing |
+                Qt.AlignmentFlag.AlignVCenter
+            )
+            time_label.setFixedWidth(140)
+            time_label.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+            top_layout.addWidget(time_label)
 
-            horizontalLayout_77.setStretch(0, 1)  # 让接收人标签占据剩余空间
-            verticalLayout_64.addLayout(horizontalLayout_77)
+            top_layout.setStretch(0, 1)
+            verticalLayout_64.addLayout(top_layout)
 
-            # 第二行布局（只保留消息内容和删除按钮）
-            horizontalLayout_7 = QtWidgets.QHBoxLayout()
-            horizontalLayout_7.setContentsMargins(0, 6, 12, 3)
-            horizontalLayout_7.setObjectName("horizontalLayout_7")
+            bottom_layout = QtWidgets.QHBoxLayout()
+            bottom_layout.setContentsMargins(0, 6, 12, 3)
+            bottom_layout.setSpacing(4)
 
-            message_label = QtWidgets.QLabel(info_text, parent=widget_item)
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            message_label.setFont(font)
+            message_label = QtWidgets.QLabel(info_text)
             message_label.setStyleSheet("color: rgb(169, 169, 169);")
-            message_label.setObjectName("message_label")
-            horizontalLayout_7.addWidget(message_label)
+            message_label.setFont(QtGui.QFont("微软雅黑", 10))
+            message_label.setWordWrap(False)
+            message_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+            message_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+            message_label.setMinimumWidth(1)
+            message_label.installEventFilter(self)
+            bottom_layout.addWidget(message_label)
 
-            delete_button = QtWidgets.QPushButton("删除", parent=widget_item)
+            delete_button = QtWidgets.QPushButton("删除")
             delete_button.setFixedSize(50, 25)
             delete_button.setStyleSheet(
-                "QPushButton { background-color: transparent; color: red; } QPushButton:hover { background-color: rgba(255, 0, 0, 0.1); }"
+                "QPushButton { background-color: transparent; color: red; } "
+                "QPushButton:hover { background-color: rgba(255, 0, 0, 0.1); }"
             )
             delete_button.clicked.connect(
-                lambda checked, t=time_text, n=name_text, i=info_text, wx=wx_nickname: self.remove_task(t, n, i, wx))
+                lambda _, t=time_text, n=name_text, i=info_text, wx=wx_nickname: self.remove_task(t, n, i, wx)
+            )
             delete_button.setVisible(False)
+            bottom_layout.addWidget(delete_button)
 
-            horizontalLayout_7.addWidget(delete_button)
+            verticalLayout_64.addLayout(bottom_layout)
 
-            widget_item.enterEvent = lambda event, btn=delete_button: btn.setVisible(True)
-            widget_item.leaveEvent = lambda event, btn=delete_button: btn.setVisible(False)
+            widget_item.enterEvent = lambda e, btn=delete_button: btn.setVisible(True)
+            widget_item.leaveEvent = lambda e, btn=delete_button: btn.setVisible(False)
 
-            verticalLayout_64.addLayout(horizontalLayout_7)
-            horizontalLayout_76.addLayout(verticalLayout_64)
             widget_item.task = {
                 'time': time_text,
                 'name': name_text,
@@ -232,11 +235,27 @@ class AutoInfo(QtWidgets.QWidget):
                 'frequency': frequency,
                 'wx_nickname': wx_nickname
             }
+
             print(f"[AutoInfo] 创建任务控件成功：{name_text} - {info_text[:20]}... (使用微信: {wx_nickname})")
             return widget_item
+
         except Exception as e:
             print(f"[AutoInfo] 创建任务控件失败: {str(e)}")
             return None
+
+    def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.Type.Resize and isinstance(obj, QtWidgets.QLabel):
+            width = obj.width() - 2
+            original_text = obj.property("originalText")
+            if not original_text:
+                original_text = obj.text()
+                obj.setProperty("originalText", original_text)
+
+            font_metrics = obj.fontMetrics()
+            elided_text = font_metrics.elidedText(original_text, Qt.TextElideMode.ElideRight, width)
+            obj.setText(elided_text)
+
+        return super().eventFilter(obj, event)
 
     def remove_task(self, time_text, name_text, info_text, wx_nickname):
         print(f"[AutoInfo] 尝试删除任务：{name_text} - {info_text[:20]}...")
@@ -356,7 +375,6 @@ class AutoInfo(QtWidgets.QWidget):
                                     icon_path_key = 'page1_发送成功.svg'
                                 else:
                                     icon_path_key = 'page1_发送失败.svg'
-                                    # 仅在首次失败时播放声音和发送邮件
                                     if 'error_count' not in task:
                                         task['error_count'] = 1
                                         self.play_error_sound()
@@ -368,21 +386,19 @@ class AutoInfo(QtWidgets.QWidget):
                                 new_icon_path = get_resource_path(f'resources/img/page1/{icon_path_key}')
                                 widget_image.setStyleSheet(f"image: url({new_icon_path});")
 
-                            # 处理重复任务
-                            next_time = datetime.fromisoformat(task['time'])
-
                             if task['frequency'] == '每天':
-                                next_time += timedelta(days=1)
+                                next_time = datetime.fromisoformat(task['time']) + timedelta(days=1)
                                 self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
                                                    task['wx_nickname'])
                             elif task['frequency'] == '每周':
-                                next_time += timedelta(days=7)
+                                next_time = datetime.fromisoformat(task['time']) + timedelta(days=7)
                                 self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
                                                    task['wx_nickname'])
                             elif task['frequency'] == '工作日':
+                                next_time = datetime.fromisoformat(task['time'])
                                 while True:
                                     next_time += timedelta(days=1)
-                                    if next_time.weekday() < 5:  # 0-4 为周一至周五
+                                    if next_time.weekday() < 5:
                                         break
                                 self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
                                                    task['wx_nickname'])
@@ -480,7 +496,6 @@ class AutoInfo(QtWidgets.QWidget):
             sheet = workbook.active
             headers = [cell.value for cell in sheet[1]]
 
-            # 验证表头
             required_headers = ['Time', 'Name', 'Info', 'Frequency']
             missing_headers = [h for h in required_headers if h not in headers]
             if missing_headers:
@@ -491,20 +506,15 @@ class AutoInfo(QtWidgets.QWidget):
             tasks = []
             for row_idx, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
                 task = dict(zip(headers, row))
-                # 跳过不完整的行
                 if not (task.get('Time') and task.get('Name') and task.get('Info')):
                     continue
-                # 验证时间格式
                 if not re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$", task['Time']):
                     continue
-                # 频率为空时设置默认值
                 if not task.get('Frequency'):
                     task['Frequency'] = "仅一次"
-                # 设置微信账号
                 if wx_nickname_idx is not None and row[wx_nickname_idx]:
                     task['wx_nickname'] = row[wx_nickname_idx]
                 else:
-                    # 如果文件中没有指定微信账号，使用当前默认的微信账号
                     task['wx_nickname'] = self.parent.comboBox_nickName.currentText()
                 tasks.append(task)
 
@@ -520,7 +530,6 @@ class AutoInfo(QtWidgets.QWidget):
             print("[AutoInfo] 未找到有效任务数据")
             return
 
-        # 会员限制检查
         MEMBERSHIP_LIMITS = {
             'Free': 5,
             'Base': 30,
@@ -539,7 +548,6 @@ class AutoInfo(QtWidgets.QWidget):
             log("WARNING", f"由于会员限制，只导入前{remaining}个任务")
             print(f"[AutoInfo] 由于会员限制，只导入前{remaining}个任务")
 
-        # 创建任务控件
         for task in tasks:
             try:
                 widget = self.create_widget(
@@ -570,7 +578,6 @@ class AutoInfo(QtWidgets.QWidget):
         print("[AutoInfo] 尝试播放错误声音...")
         try:
             if str_to_bool(read_key_value('error_sound')):
-                # 检查之前的音频线程是否在运行
                 if self.error_sound_thread._is_running:
                     print("[AutoInfo] 已有错误音频在播放，跳过本次")
                     return
@@ -602,14 +609,13 @@ class AutoInfo(QtWidgets.QWidget):
         print("[AutoInfo] 邮件处理线程已启动")
         while True:
             task = self.email_queue.get()
-            if task is None:  # 退出信号
+            if task is None:
                 break
             self._send_email_safely(task)
             self.email_queue.task_done()
 
     def _send_email_safely(self, task):
         try:
-            # 检查冷却时间
             current_time = time.time()
             if current_time - self.last_email_time < self.email_cooldown:
                 print(
@@ -643,7 +649,6 @@ class AutoInfo(QtWidgets.QWidget):
             message['To'] = f"{Header(receiver_name, 'utf-8')} <{receiver_email}>"
             message['Subject'] = Header(subject, 'utf-8')
 
-            # 使用with语句自动管理连接
             with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
                 server.login(username, password)
                 server.sendmail(sender_email, [receiver_email], message.as_string())

@@ -5,7 +5,7 @@ import re
 import threading
 import time
 from datetime import datetime
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Any
 
 import requests
 from PyQt6 import QtCore, QtMultimedia
@@ -15,6 +15,7 @@ from common import log, get_current_time
 
 
 class WorkerThreadBase(QtCore.QThread):
+    """线程基类，提供暂停、恢复和中断功能"""
     pause_changed = QtCore.pyqtSignal(bool)
     finished = QtCore.pyqtSignal()
 
@@ -24,40 +25,42 @@ class WorkerThreadBase(QtCore.QThread):
         self._is_running = False
         self._stop_event = threading.Event()
 
-    def run(self):
+    def run(self) -> None:
         raise NotImplementedError("子类必须实现run方法")
 
-    def pause(self):
+    def pause(self) -> None:
         self._is_paused = True
         self.pause_changed.emit(True)
 
-    def resume(self):
+    def resume(self) -> None:
         self._is_paused = False
         self.pause_changed.emit(False)
 
-    def requestInterruption(self):
+    def request_interruption(self) -> None:
         self._stop_event.set()
         self._is_running = False
 
-    def isPaused(self) -> bool:
+    def is_paused(self) -> bool:
         return self._is_paused
 
-    def isRunning(self) -> bool:
+    def is_running(self) -> bool:
         return self._is_running
 
 
 class AiWorkerThread(WorkerThreadBase):
-    def __init__(self, app_instance, receiver, wx, model="月之暗面", role="你很温馨,回复简单明了。"):
+    """AI自动回复工作线程"""
+    def __init__(self, app_instance, receiver: str, wx: Any, model: str = "月之暗面", role: str = "你很温馨,回复简单明了。"):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
-        self.wx = wx  # 直接接收当前选中的微信实例
+        self.wx = wx
         self.model = model
         self.system_content = role
         self.rules = self._load_rules()
         self._is_running = True
 
     def _load_rules(self) -> Optional[List[Dict]]:
+        """加载自动回复规则"""
         try:
             if os.path.exists('_internal/AutoReply_Rules.json'):
                 with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as f:
@@ -65,14 +68,15 @@ class AiWorkerThread(WorkerThreadBase):
             else:
                 log("WARNING", "回复规则文件不存在,您可新建规则")
                 return None
-        except json.JSONDecodeError:
-            log("ERROR", "接管规则文件格式错误")
+        except json.JSONDecodeError as e:
+            log("ERROR", f"JSON解析错误: {str(e)}")
             return []
         except Exception as e:
             log("ERROR", f"加载回复规则时出错: {str(e)}")
             return []
 
     def _match_rule(self, msg: str) -> List[str]:
+        """匹配自动回复规则"""
         if not self.rules:
             return []
 
@@ -85,18 +89,18 @@ class AiWorkerThread(WorkerThreadBase):
                 elif rule['match_type'] == '半匹配':
                     if rule['keyword'].strip() in msg.strip():
                         matched_replies.append(rule['reply_content'])
-            except KeyError:
-                log("ERROR", f"规则格式错误: {rule}")
+            except KeyError as e:
+                log("ERROR", f"规则格式错误，缺少键: {str(e)}")
 
         return matched_replies
 
-    def run(self):
+    def run(self) -> None:
+        """线程主循环"""
         self._is_running = True
 
-        # 尝试向接收者发送消息，确认连接
+        # 初始化连接检查
         if self.receiver != "全局Ai接管" and self._is_running:
             try:
-                # 使用传入的微信实例
                 if self.wx:
                     self.wx.SendMsg(msg=" ", who=self.receiver)
                 else:
@@ -106,7 +110,7 @@ class AiWorkerThread(WorkerThreadBase):
                 log("ERROR", f"初始化与 {self.receiver} 的连接失败: {str(e)}")
                 self._is_running = False
 
-        # 主循环
+        # 主消息循环
         while self._is_running and not self._stop_event.is_set():
             try:
                 if self._is_paused:
@@ -120,19 +124,17 @@ class AiWorkerThread(WorkerThreadBase):
 
             except Exception as e:
                 log("ERROR", f"处理消息时出错: {str(e)}")
-                # 出错后适当休眠，避免CPU占用过高
-                time.sleep(1)
+                time.sleep(1)  # 出错后休眠，避免CPU占用过高
             finally:
-                # 短暂休眠，避免CPU占用过高
-                self.msleep(100)
+                self.msleep(100)  # 短暂休眠，避免CPU占用过高
 
         self.finished.emit()
 
-    def _get_wx_instance(self):
-        """获取对应的微信实例"""
-        return self.wx  # 直接返回传入的微信实例
+    def _get_wx_instance(self) -> Any:
+        """获取微信实例"""
+        return self.wx
 
-    def _handle_global_messages(self):
+    def _handle_global_messages(self) -> None:
         """处理全局消息"""
         wx_instance = self._get_wx_instance()
         if not wx_instance:
@@ -151,7 +153,7 @@ class AiWorkerThread(WorkerThreadBase):
             msg = msgs[-1].content
             self._process_message(msg, who)
 
-    def _handle_specific_messages(self):
+    def _handle_specific_messages(self) -> None:
         """处理特定接收者的消息"""
         wx_instance = self._get_wx_instance()
         if not wx_instance:
@@ -162,8 +164,8 @@ class AiWorkerThread(WorkerThreadBase):
             msg = msgs[-1].content
             self._process_message(msg, self.receiver)
 
-    def _process_message(self, msg: str, who: str):
-        """处理消息并回复"""
+    def _process_message(self, msg: str, who: str) -> None:
+        """处理消息并决定是否回复"""
         if self.rules:
             matched_replies = self._match_rule(msg)
             if matched_replies:
@@ -186,10 +188,10 @@ class AiWorkerThread(WorkerThreadBase):
                         log("ERROR", f"发送自动回复时出错: {str(e)}")
                 return
 
-        # 如果没有匹配的规则或没有规则，调用AI回复
+        # 如果没有匹配的规则，调用AI回复
         self._generate_ai_reply(msg, who)
 
-    def _generate_ai_reply(self, msg: str, who: str):
+    def _generate_ai_reply(self, msg: str, who: str) -> None:
         """调用AI模型生成回复"""
         try:
             if self.model == "文心一言":
@@ -298,16 +300,17 @@ class AiWorkerThread(WorkerThreadBase):
 
 class SplitWorkerThread(WorkerThreadBase):
     """消息拆分发送工作线程"""
+    sent_signal = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, app_instance, receiver, sentences, wx):
+    def __init__(self, app_instance, receiver: str, sentences: List[str], wx: Any):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.sentences = sentences
-        self.wx = wx  # 接收当前选中的微信实例
+        self.wx = wx
         self._is_running = True
 
-    def run(self):
+    def run(self) -> None:
         """线程主循环"""
         self._is_running = True
         log("INFO", f"准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
@@ -325,11 +328,12 @@ class SplitWorkerThread(WorkerThreadBase):
 
             try:
                 log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
-                # 使用传入的微信实例
                 if self.wx:
                     self.wx.SendMsg(msg=sentence, who=self.receiver)
+                    self.sent_signal.emit(sentence, True)  # 发送成功信号
                 else:
                     log("ERROR", f"找不到微信实例，无法发送消息给 {self.receiver}")
+                    self.sent_signal.emit(sentence, False)  # 发送失败信号
                     self._stop_event.set()
                     break
 
@@ -337,8 +341,8 @@ class SplitWorkerThread(WorkerThreadBase):
                 self.msleep(500)
             except Exception as e:
                 log("ERROR", f"发送消息时出错: {str(e)}")
+                self.sent_signal.emit(sentence, False)  # 发送失败信号
                 self.app_instance.is_sending = False
-                self.app_instance.is_scheduled_task_active = False
                 self._stop_event.set()
                 break
 
@@ -361,7 +365,7 @@ class WorkerThread(WorkerThreadBase):
         self._is_running = True
         self._system_state = None
 
-    def run(self):
+    def run(self) -> None:
         """线程主循环"""
         self._is_running = True
 
@@ -440,7 +444,7 @@ class WorkerThread(WorkerThreadBase):
             self._is_running = False
             self.finished.emit()
 
-    def _set_system_state(self, state_flags):
+    def _set_system_state(self, state_flags: int) -> None:
         """设置系统执行状态并记录当前状态"""
         try:
             self._system_state = ctypes.windll.kernel32.SetThreadExecutionState(state_flags)
@@ -492,9 +496,6 @@ class WorkerThread(WorkerThreadBase):
                         wx_instance.SendFiles(filepath=info, who=name)
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
-                elif info == 'Video_chat':
-                    log("INFO", f"开始与 {name} 视频通话 (使用微信: {wx_nickname})")
-                    wx_instance.VideoCall(who=name)
                 else:
                     log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (使用微信: {wx_nickname})")
                     if "@所有人" in info:
@@ -522,7 +523,7 @@ class WorkerThread(WorkerThreadBase):
 
         return success
 
-    def _get_wx_instance(self, wx_nickname: str):
+    def _get_wx_instance(self, wx_nickname: str) -> Any:
         """根据微信昵称获取对应的微信实例"""
         try:
             # 从app_instance中获取微信实例字典
@@ -545,6 +546,7 @@ class WorkerThread(WorkerThreadBase):
 
 
 class ErrorSoundThread(QtCore.QThread):
+    """错误提示音播放线程"""
     finished = QtCore.pyqtSignal()
     _is_running = False
 
@@ -554,10 +556,10 @@ class ErrorSoundThread(QtCore.QThread):
         self.player = None
         self.audio_output = None
 
-    def update_sound_file(self, sound_file_path):
+    def update_sound_file(self, sound_file_path: str) -> None:
         self.sound_file = sound_file_path
 
-    def run(self):
+    def run(self) -> None:
         if not self.sound_file or not os.path.exists(self.sound_file) or self._is_running:
             return
         self._is_running = True
@@ -583,11 +585,11 @@ class ErrorSoundThread(QtCore.QThread):
         self.finished.connect(loop.quit)
         loop.exec()
 
-    def _on_media_status_changed(self, status):
+    def _on_media_status_changed(self, status: QtMultimedia.QMediaPlayer.MediaStatus) -> None:
         if status == QtMultimedia.QMediaPlayer.MediaStatus.EndOfMedia:
             self.cleanup_resources()
 
-    def cleanup_resources(self):
+    def cleanup_resources(self) -> None:
         if self.player:
             self.player.stop()
             self.player.mediaStatusChanged.disconnect()
@@ -599,10 +601,10 @@ class ErrorSoundThread(QtCore.QThread):
         self._is_running = False
         self.finished.emit()
 
-    def stop_playback(self):
+    def stop_playback(self) -> None:
         if self._is_running:
             self.cleanup_resources()
 
-    def play_test(self):
+    def play_test(self) -> None:
         if not self.isRunning() and not self._is_running:
             self.start()
