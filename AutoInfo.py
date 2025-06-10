@@ -470,7 +470,7 @@ class AutoInfo(QtWidgets.QWidget):
 
             documents_dir = os.path.expanduser("~/Documents")
             file_name, _ = QtWidgets.QFileDialog.getSaveFileName(self, "保存任务计划",
-                                                                 os.path.join(documents_dir, "LeafAuto自动计划"),
+                                                                 os.path.join(documents_dir, "LeafAuto专业版计划"),
                                                                  "枫叶任务文件(*.xlsx);;所有文件(*)")
 
             if file_name:
@@ -495,7 +495,7 @@ class AutoInfo(QtWidgets.QWidget):
         try:
             documents_dir = os.path.expanduser("~/Documents")
             file_name = filepath or QtWidgets.QFileDialog.getOpenFileName(
-                self, "导入任务计划", documents_dir, "枫叶任务文件(*.xlsx);;所有文件(*)"
+                self, "导入任务计划", documents_dir, "枫叶专业版任务文件(*.xlsx);;所有文件(*)"
             )[0]
 
             if not file_name:
