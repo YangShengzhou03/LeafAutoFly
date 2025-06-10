@@ -363,7 +363,7 @@ class SplitWorkerThread(WorkerThreadBase):
                 self._stop_event.set()
                 break
 
-        log("INFO", f"SplitWorkerThread 已完成，共发送 {len(self.sentences)} 条消息")
+        log("INFO", f"拆句发送已完成，共发送 {len(self.sentences)} 条消息")
         self._is_running = False
         self.finished.emit()
 
@@ -617,7 +617,6 @@ class ErrorSoundThread(QtCore.QThread):
         if not self.sound_file or not os.path.exists(self.sound_file) or self._is_running:
             return
         self._is_running = True
-        log("INFO", "ErrorSoundThread 已启动")
 
         # 确保每次都创建新的播放器和音频输出
         if self.player:
@@ -654,15 +653,12 @@ class ErrorSoundThread(QtCore.QThread):
             self.audio_output = None
 
         self._is_running = False
-        log("INFO", "ErrorSoundThread 已停止")
         self.finished.emit()
 
     def stop_playback(self) -> None:
         if self._is_running:
-            log("INFO", "ErrorSoundThread 收到停止请求")
             self.cleanup_resources()
 
     def play_test(self) -> None:
         if not self.isRunning() and not self._is_running:
-            log("INFO", "ErrorSoundThread 开始测试播放")
             self.start()

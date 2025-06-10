@@ -662,7 +662,7 @@ f"image: url({get_resource_path('resources/img/activity/bottom.png')});\n"
         self.label_head_title.setText(_translate("ActivitiesWindow", "Hi，"))
         self.label_identify.setText(_translate("ActivitiesWindow", "123456"))
         self.pushButton_exchange.setText(_translate("ActivitiesWindow", "激活码兑换"))
-        self.label_privilege.setText(_translate("ActivitiesWindow", "VIP尊享，开启您的至尊之旅，感受非凡体验"))
+        self.label_privilege.setText(_translate("ActivitiesWindow", "专业版 VIP 尊享以「Pro」级内核重构体验边界"))
         self.pushButton_privilege.setText(_translate("ActivitiesWindow", "查看特权对比 >"))
         self.label_5.setText(_translate("ActivitiesWindow", "支付金额："))
         self.label_prices.setText(_translate("ActivitiesWindow", "99.00"))
