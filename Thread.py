@@ -5,11 +5,11 @@ import re
 import threading
 import time
 from datetime import datetime
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Any
 
 import requests
 from PyQt6 import QtCore, QtMultimedia
-from PyQt6.QtCore import QDateTime
+from PyQt6.QtCore import QDateTime, pyqtSignal
 
 from common import log, get_current_time, log_print
 
@@ -23,11 +23,17 @@ class WorkerThreadBase(QtCore.QThread):
         self._is_paused = False
         self._is_running = False
         self._stop_event = threading.Event()
+        self._stop_lock = threading.Lock()
         log_print("[WORKER_BASE] Thread initialized")
 
     def run(self):
         log_print("[WORKER_BASE] Error: Subclass must implement run() method")
         raise NotImplementedError("Subclasses must implement the run method")
+
+    def request_interruption(self) -> None:
+        with self._stop_lock:
+            self._stop_event.set()
+            self._is_running = False
 
     def pause(self):
         self._is_paused = True
@@ -49,6 +55,13 @@ class WorkerThreadBase(QtCore.QThread):
 
     def isRunning(self) -> bool:
         return self._is_running
+
+    def check_interruption(self) -> bool:
+        """检查是否请求中断"""
+        with self._stop_lock:
+            if self._stop_event.is_set():
+                return True
+        return False
 
 
 class AiWorkerThread(WorkerThreadBase):
@@ -349,35 +362,32 @@ class WorkerThread(WorkerThreadBase):
     ES_SYSTEM_REQUIRED = 0x00000001
     ES_DISPLAY_REQUIRED = 0x00000002
 
+    finished = pyqtSignal()
+
     def __init__(self, app_instance):
         super().__init__()
         self.app_instance = app_instance
         self.prevent_sleep = False
         self.current_time = 'sys'
-        self._is_running = True
         self._system_state = None
-        log_print("[WORKER_THREAD] Thread initialized")
 
-    def run(self):
+    def run(self) -> None:
+        """线程主循环"""
         self._is_running = True
-        log_print("[WORKER_THREAD] Thread started")
 
+        # 设置系统不进入睡眠和锁屏状态
         if self.prevent_sleep:
             self._set_system_state(self.ES_CONTINUOUS | self.ES_SYSTEM_REQUIRED | self.ES_DISPLAY_REQUIRED)
             log("WARNING", "已阻止系统休眠和锁屏")
-            log_print("[WORKER_THREAD] System sleep prevention enabled")
 
         try:
             while self._is_running and not self._stop_event.is_set():
-                if self._is_paused:
-                    log_print("[WORKER_THREAD] Thread paused, sleeping...")
-                    time.sleep(0.1)
-                    continue
+                if self.check_interruption():
+                    break
 
                 next_task = self._find_next_ready_task()
                 if next_task is None:
                     log("INFO", "没有找到待执行的任务，线程退出")
-                    log_print("[WORKER_THREAD] No ready tasks found, exiting")
                     break
 
                 try:
@@ -397,35 +407,34 @@ class WorkerThread(WorkerThreadBase):
                         friendly_time = ''.join(time_parts)
 
                         log("INFO", f"下一个任务将在 {friendly_time} 后执行")
-                        log_print(f"[WORKER_THREAD] Next task in {friendly_time}: {next_task.get('name', 'Unknown')}")
 
-                        while remaining_time > 0 and not self._stop_event.is_set():
-                            sleep_time = min(remaining_time, 1.0)
+                        while remaining_time > 0 and not self.check_interruption():
+                            sleep_time = min(remaining_time, 0.5)  # 每次最多休眠0.5秒
                             self.msleep(int(sleep_time * 1000))
                             remaining_time -= sleep_time
 
-                            if self._is_paused:
-                                while self._is_paused and not self._stop_event.is_set():
-                                    time.sleep(0.1)
+                            if self.check_interruption():
+                                break
 
-                                if self._stop_event.is_set():
-                                    break
-
-                        if self._stop_event.is_set():
+                        if self.check_interruption():
                             break
+
+                    if self.check_interruption():
+                        break
 
                     success = self._execute_task(next_task)
 
+                    if self.check_interruption():
+                        log("WARNING", "任务执行过程中被用户终止")
+                        break
+
                     if success:
                         self.app_instance.update_task_status(next_task, '成功')
-                        log_print(f"[WORKER_THREAD] Task executed successfully: {next_task.get('name', 'Unknown')}")
                     else:
                         self.app_instance.update_task_status(next_task, '出错')
-                        log_print(f"[WORKER_THREAD] Task execution failed: {next_task.get('name', 'Unknown')}")
 
                 except Exception as e:
                     log("ERROR", f"处理任务时出错: {str(e)}")
-                    log_print(f"[WORKER_THREAD] Critical error processing task: {str(e)}")
                     self.app_instance.update_task_status(next_task, '出错')
                     time.sleep(1)
 
@@ -433,25 +442,18 @@ class WorkerThread(WorkerThreadBase):
             if self.prevent_sleep:
                 self._set_system_state(self.ES_CONTINUOUS)
                 log("WARNING", "已恢复系统休眠和锁屏设置")
-                log_print("[WORKER_THREAD] System sleep prevention disabled")
-
             self._is_running = False
-            log_print("[WORKER_THREAD] Thread finished")
             self.finished.emit()
 
-    def _set_system_state(self, state_flags):
-        log_print(f"[WORKER_THREAD] Setting system execution state: 0x{state_flags:X}")
+    def _set_system_state(self, state_flags: int) -> None:
         try:
             self._system_state = ctypes.windll.kernel32.SetThreadExecutionState(state_flags)
             if not self._system_state:
                 log("ERROR", f"设置系统状态失败，错误码: {ctypes.GetLastError()}")
-                log_print(f"[WORKER_THREAD] Failed to set system state, error code: {ctypes.GetLastError()}")
         except Exception as e:
             log("ERROR", f"调用系统API设置状态时出错: {str(e)}")
-            log_print(f"[WORKER_THREAD] Error calling system API: {str(e)}")
 
     def _find_next_ready_task(self) -> Optional[Dict]:
-        log_print("[WORKER_THREAD] Searching for next ready task")
         next_task = None
         min_time = None
 
@@ -463,12 +465,6 @@ class WorkerThread(WorkerThreadBase):
                     next_task = task
             except Exception as e:
                 log("ERROR", f"解析任务时间时出错: {str(e)}")
-                log_print(f"[WORKER_THREAD] Error parsing task time: {str(e)}")
-
-        if next_task:
-            log_print(f"[WORKER_THREAD] Next task found: {next_task.get('name', 'Unknown')}")
-        else:
-            log_print("[WORKER_THREAD] No ready tasks found")
 
         return next_task
 
@@ -478,54 +474,96 @@ class WorkerThread(WorkerThreadBase):
         success = False
 
         log("INFO", f"开始执行任务: {task.get('name', '未知')}")
-        log_print(f"[WORKER_THREAD] Executing task: {task.get('name', 'Unknown')}")
 
-        while retries < max_retries and not success and not self._stop_event.is_set():
+        while retries < max_retries and not success and not self.check_interruption():
             try:
                 name = task['name']
                 info = task['info']
+                wx_nickname = task['wx_nickname']
+
+                if self.check_interruption():
+                    return False
+
+                wx_instance = self._get_wx_instance(wx_nickname)
+                if not wx_instance:
+                    log("ERROR", f"找不到微信实例 '{wx_nickname}'，无法执行任务")
+                    raise ValueError(f"找不到微信实例 '{wx_nickname}'")
+
+                if self.check_interruption():
+                    return False
 
                 if os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
-                        log("INFO", f"开始把文件 {file_name} 发给 {name}")
-                        log_print(f"[WORKER_THREAD] Sending file: {file_name} to {name}")
-                        self.app_instance.wx.SendFiles(filepath=info, who=name)
+                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname})")
+                        success = self._send_with_interruption(lambda: wx_instance.SendFiles(filepath=info, who=name))
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
-                elif info == 'Video_chat':
-                    log("INFO", f"开始与 {name} 视频通话")
-                    log_print(f"[WORKER_THREAD] Initiating video call with {name}")
-                    self.app_instance.wx.VideoCall(who=name)
                 else:
-                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name}")
-                    log_print(f"[WORKER_THREAD] Sending message: '{info[:30]}...' to {name}")
+                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {wx_nickname})")
                     if "@所有人" in info:
                         info = info.replace("@所有人", "").strip()
-                        self.app_instance.wx.AtAll(msg=info, who=name)
+                        success = self._send_with_interruption(lambda: wx_instance.AtAll(msg=info, who=name))
                     else:
-                        self.app_instance.wx.SendMsg(msg=info, who=name)
+                        success = self._send_with_interruption(lambda: wx_instance.SendMsg(msg=info, who=name))
 
-                log("调试", f"成功执行任务: 发送给 {name}")
-                log_print(f"[WORKER_THREAD] Task executed successfully: {name}")
-                success = True
+                if success:
+                    log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname})")
 
             except Exception as e:
                 log("ERROR", f"执行任务失败 (尝试 {retries + 1}/{max_retries}): {str(e)}")
-                log_print(f"[WORKER_THREAD] Task execution failed (attempt {retries + 1}/{max_retries}): {str(e)}")
                 retries += 1
 
-                if retries < max_retries:
+                if retries < max_retries and not self.check_interruption():
                     log("WARNING", "尝试重新连接微信客户端...")
-                    log_print("[WORKER_THREAD] Attempting to reconnect WeChat client...")
                     try:
                         self.app_instance.parent.update_wx()
-                        self.msleep(1000)
+                        for _ in range(10):
+                            if self.check_interruption():
+                                break
+                            self.msleep(100)
                     except Exception as we:
                         log("ERROR", f"更新微信客户端失败: {str(we)}")
-                        log_print(f"[WORKER_THREAD] Failed to update WeChat client: {str(we)}")
 
         return success
+
+    def _get_wx_instance(self, wx_nickname: str) -> Any:
+        try:
+            wx_dict = self.app_instance.wx_dict
+
+            if wx_nickname in wx_dict:
+                return wx_dict[wx_nickname]
+
+            log("WARNING", f"找不到微信实例 '{wx_nickname}'，将使用默认实例")
+            if wx_dict:
+                return next(iter(wx_dict.values()))
+
+            log("ERROR", "没有可用的微信实例")
+            return None
+        except Exception as e:
+            log("ERROR", f"获取微信实例失败: {str(e)}")
+            return None
+
+    def _send_with_interruption(self, send_func):
+        if self.check_interruption():
+            return False
+
+        try:
+            send_thread = threading.Thread(target=send_func)
+            send_thread.daemon = True
+            send_thread.start()
+
+            while send_thread.is_alive():
+                if self.check_interruption():
+                    send_thread.join(timeout=0.5)
+                    return False
+                self.msleep(100)
+
+            return True
+
+        except Exception as e:
+            log("ERROR", f"发送过程中出错: {str(e)}")
+            return False
 
 
 class ErrorSoundThread(QtCore.QThread):
