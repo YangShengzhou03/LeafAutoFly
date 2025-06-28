@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SettingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/SettingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/Split.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thread.py" beforeDir="false" afterPath="$PROJECT_DIR$/Thread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/AutoInfo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +28,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.Application.executor": "Debug",
+    "Python.Application.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
@@ -103,7 +101,7 @@
       <workItem from="1749556885534" duration="705000" />
       <workItem from="1749558150948" duration="210000" />
       <workItem from="1751094744253" duration="1512000" />
-      <workItem from="1751120307077" duration="13893000" />
+      <workItem from="1751120307077" duration="15241000" />
     </task>
     <task id="LOCAL-00001" summary="LeafAuto PRO">
       <option name="closed" value="true" />
@@ -289,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751135409635</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751135986483</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1751135986483</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,6 +307,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="LeafAuto PRO更新" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1751135927230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1751136557495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
