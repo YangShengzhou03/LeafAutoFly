@@ -198,7 +198,7 @@ color: rgb(255, 255, 255);
     background-color: rgba(250, 250, 250, 100);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-family: 'Microsoft YaHei';
     font-size: 12px;
 }
@@ -235,7 +235,7 @@ QPushButton:pressed {
     background-color: rgba(105, 27, 253, 180);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-family: 'Microsoft YaHei';
     font-size: 12px;
 }

@@ -171,7 +171,7 @@ QPushButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string>激活码兑换</string>
+            <string>Pro 激活码兑换</string>
            </property>
            <property name="icon">
             <iconset>
@@ -289,7 +289,7 @@ border-radius:12px;
 }</string>
                 </property>
                 <property name="text">
-                 <string>专业版 VIP 尊享以「Pro」级内核重构体验边界</string>
+                 <string>LeafAuto 专业版 尊享「Pro」重构体验</string>
                 </property>
                </widget>
               </item>
@@ -1243,7 +1243,7 @@ QPushButton:pressed {
 }</string>
               </property>
               <property name="text">
-               <string>问题反馈 &gt;</string>
+               <string>专业版问题反馈 &gt;</string>
               </property>
              </widget>
             </item>

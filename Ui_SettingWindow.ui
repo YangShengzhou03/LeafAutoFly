@@ -124,7 +124,7 @@ border-radius:30px
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/svg/Morikawa/01_Data/img/logo/443px.png);</string>
+                <string notr="true">image: url('设置LOGO.svg');</string>
                </property>
               </widget>
              </item>
@@ -523,7 +523,22 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
     background-color: white;
     left: 24px;
-}</string>
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
                      </property>
                      <property name="text">
                       <string/>
@@ -623,7 +638,22 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
     background-color: white;
     left: 24px;
-}</string>
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
                      </property>
                      <property name="text">
                       <string/>
@@ -765,7 +795,22 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
     background-color: white;
     left: 24px;
-}</string>
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
                      </property>
                      <property name="text">
                       <string/>
@@ -862,7 +907,22 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
     background-color: white;
     left: 24px;
-}</string>
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
                      </property>
                      <property name="text">
                       <string/>
@@ -953,7 +1013,22 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
     background-color: white;
     left: 24px;
-}</string>
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
                      </property>
                      <property name="text">
                       <string/>
@@ -1017,7 +1092,7 @@ QCheckBox::indicator:checked {
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1,1,1,1,1,0">
+                <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1,1,0,1,1,0">
                  <property name="spacing">
                   <number>22</number>
                  </property>
@@ -1220,97 +1295,6 @@ QSpinBox:focus {
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="1,0">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>188</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>188</number>
-                   </property>
-                   <item>
-                    <widget class="QLabel" name="label_openmore">
-                     <property name="font">
-                      <font>
-                       <pointsize>12</pointsize>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">QLabel {
-    color: rgb(0, 0, 0);
-}</string>
-                     </property>
-                     <property name="text">
-                      <string>阻止服务器断连自动锁屏</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="checkBox_sever">
-                     <property name="minimumSize">
-                      <size>
-                       <width>52</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>52</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>12</pointsize>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">QCheckBox {
-    width: 18px;
-    height: 14px;
-    margin: 1px;
-    border-radius: 14px;
-    padding: 0;
-    border: 1px solid #8a8a8a;
-}
-
-QCheckBox::indicator {
-    width: 24px;
-    height: 24px;
-    border-radius: 12px;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: 1px;
-}
-
-QCheckBox:unchecked {
-    background-color: white;
-}
-
-QCheckBox:checked {
-    background-color: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));
-}
-
-QCheckBox::indicator:unchecked {
-    background: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));
-    left: 1px;
-}
-
-QCheckBox::indicator:checked {
-    background-color: white;
-    left: 24px;
-}</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,1">
                    <property name="spacing">
                     <number>0</number>
@@ -1406,6 +1390,112 @@ QComboBox QAbstractItemView {
                   </layout>
                  </item>
                  <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="1,0">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>188</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>188</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_openmore">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel {
+    color: rgb(0, 0, 0);
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>阻止服务器断连自动锁屏</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="checkBox_sever">
+                     <property name="minimumSize">
+                      <size>
+                       <width>52</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>52</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QCheckBox {
+    width: 18px;
+    height: 14px;
+    margin: 1px;
+    border-radius: 14px;
+    padding: 0;
+    border: 1px solid #8a8a8a;
+}
+
+QCheckBox::indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 1px;
+}
+
+QCheckBox:unchecked {
+    background-color: white;
+}
+
+QCheckBox:checked {
+    background-color: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));
+}
+
+QCheckBox::indicator:unchecked {
+    background: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));
+    left: 1px;
+}
+
+QCheckBox::indicator:checked {
+    background-color: white;
+    left: 24px;
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,0">
                    <property name="spacing">
                     <number>0</number>
@@ -1429,7 +1519,7 @@ QComboBox QAbstractItemView {
 }</string>
                      </property>
                      <property name="text">
-                      <string>清理缓存数据</string>
+                      <string>清除软件缓存数据</string>
                      </property>
                     </widget>
                    </item>

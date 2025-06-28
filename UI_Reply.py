@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from common import get_resource_path
-
 
 class Ui_ReplyDialog(object):
     def setupUi(self, ReplyDialog):
@@ -22,7 +20,7 @@ class Ui_ReplyDialog(object):
         self.frame = QtWidgets.QFrame(parent=ReplyDialog)
         self.frame.setStyleSheet("QFrame#frame{\n"
 "background-color: rgba(170, 0, 255, 15);\n"
-"border-radius:32px;\n"
+"border-radius:26px;\n"
 "}")
         self.frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -42,7 +40,7 @@ class Ui_ReplyDialog(object):
 "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
 "                                  stop:0 rgb(105, 27, 253), \n"
 "                                  stop:1 rgb(200, 160, 240));\n"
-"border-radius:20px;\n"
+"border-radius:12px;\n"
 "color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
@@ -70,40 +68,20 @@ class Ui_ReplyDialog(object):
         self.mainframe.setObjectName("mainframe")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.mainframe)
         self.verticalLayout_2.setContentsMargins(6, 6, 6, 4)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalFrame_12 = QtWidgets.QFrame(parent=self.mainframe)
         self.horizontalFrame_12.setMaximumSize(QtCore.QSize(16777215, 52))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.horizontalFrame_12.setFont(font)
-        self.horizontalFrame_12.setStyleSheet("border-radius: 6px;\n"
+        self.horizontalFrame_12.setStyleSheet("border-radius: 4px;\n"
 "background:rgb(255, 255, 255);")
         self.horizontalFrame_12.setObjectName("horizontalFrame_12")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.horizontalFrame_12)
         self.horizontalLayout_17.setContentsMargins(9, 6, 9, 6)
-        self.horizontalLayout_17.setSpacing(4)
+        self.horizontalLayout_17.setSpacing(6)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.label_16 = QtWidgets.QLabel(parent=self.horizontalFrame_12)
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑 Light")
-        font.setPointSize(12)
-        self.label_16.setFont(font)
-        self.label_16.setStyleSheet("color:rgb(0, 0, 0);\n"
-"background:rgba(0, 0, 0, 0);")
-        self.label_16.setObjectName("label_16")
-        self.horizontalLayout_17.addWidget(self.label_16)
-        self.RuleName_lineEdit = QtWidgets.QLineEdit(parent=self.horizontalFrame_12)
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑 Light")
-        font.setPointSize(12)
-        self.RuleName_lineEdit.setFont(font)
-        self.RuleName_lineEdit.setStyleSheet("color:rgb(0, 0, 0);\n"
-"background:rgb(255, 255, 255);\n"
-"border-radius: 0px;")
-        self.RuleName_lineEdit.setMaxLength(5)
-        self.RuleName_lineEdit.setObjectName("RuleName_lineEdit")
-        self.horizontalLayout_17.addWidget(self.RuleName_lineEdit)
         self.label_17 = QtWidgets.QLabel(parent=self.horizontalFrame_12)
         font = QtGui.QFont()
         font.setFamily("微软雅黑 Light")
@@ -113,8 +91,19 @@ class Ui_ReplyDialog(object):
 "background:rgba(0, 0, 0, 0);")
         self.label_17.setObjectName("label_17")
         self.horizontalLayout_17.addWidget(self.label_17)
+        self.KeyWord_lineEdit = QtWidgets.QLineEdit(parent=self.horizontalFrame_12)
+        self.KeyWord_lineEdit.setMinimumSize(QtCore.QSize(145, 0))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑 Light")
+        font.setPointSize(12)
+        self.KeyWord_lineEdit.setFont(font)
+        self.KeyWord_lineEdit.setStyleSheet("color:rgb(0, 0, 0);\n"
+"background:rgb(255, 255, 255);\n"
+"border-radius: 0px;")
+        self.KeyWord_lineEdit.setObjectName("KeyWord_lineEdit")
+        self.horizontalLayout_17.addWidget(self.KeyWord_lineEdit)
         self.Rule_comboBox = QtWidgets.QComboBox(parent=self.horizontalFrame_12)
-        self.Rule_comboBox.setMinimumSize(QtCore.QSize(58, 0))
+        self.Rule_comboBox.setMinimumSize(QtCore.QSize(48, 0))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(12)
@@ -123,10 +112,10 @@ class Ui_ReplyDialog(object):
         self.Rule_comboBox.setStyleSheet("QComboBox {\n"
 "    color: rgb(0, 0, 0);\n"
 "    background: rgb(255, 255, 255);\n"
-"    border-radius: 0px;\n"
+"    border-radius: 9px;\n"
 "    border: 1px solid rgba(105, 27, 253, 180);\n"
-"    padding-right: 0px;\n"
-"    padding-left: 3px;\n"
+"    padding: 2px 6px;\n"
+"    text-align: center;\n"
 "}\n"
 "\n"
 "QComboBox::drop-down {\n"
@@ -142,7 +131,7 @@ class Ui_ReplyDialog(object):
 "\n"
 "QComboBox QAbstractItemView {\n"
 "    border: 1px solid rgba(105, 27, 253, 180);\n"
-"    border-radius: 0px;\n"
+"    border-radius: 2px;\n"
 "    background: white;\n"
 "}")
         self.Rule_comboBox.setIconSize(QtCore.QSize(0, 0))
@@ -150,17 +139,6 @@ class Ui_ReplyDialog(object):
         self.Rule_comboBox.addItem("")
         self.Rule_comboBox.addItem("")
         self.horizontalLayout_17.addWidget(self.Rule_comboBox)
-        self.KeyWord_lineEdit = QtWidgets.QLineEdit(parent=self.horizontalFrame_12)
-        self.KeyWord_lineEdit.setMinimumSize(QtCore.QSize(145, 0))
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑 Light")
-        font.setPointSize(12)
-        self.KeyWord_lineEdit.setFont(font)
-        self.KeyWord_lineEdit.setStyleSheet("color:rgb(0, 0, 0);\n"
-"background:rgb(255, 255, 255);\n"
-"border-radius: 0px;")
-        self.KeyWord_lineEdit.setObjectName("KeyWord_lineEdit")
-        self.horizontalLayout_17.addWidget(self.KeyWord_lineEdit)
         self.label_18 = QtWidgets.QLabel(parent=self.horizontalFrame_12)
         font = QtGui.QFont()
         font.setFamily("微软雅黑 Light")
@@ -197,14 +175,14 @@ class Ui_ReplyDialog(object):
 "")
         self.file_pushButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/page1/page1_打开文件.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("resources/img/page1/page1_打开文件.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.file_pushButton.setIcon(icon)
         self.file_pushButton.setIconSize(QtCore.QSize(24, 24))
         self.file_pushButton.setObjectName("file_pushButton")
         self.horizontalLayout_17.addWidget(self.file_pushButton)
         self.pushButton_add = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
-        self.pushButton_add.setMinimumSize(QtCore.QSize(42, 24))
-        self.pushButton_add.setMaximumSize(QtCore.QSize(42, 24))
+        self.pushButton_add.setMinimumSize(QtCore.QSize(42, 28))
+        self.pushButton_add.setMaximumSize(QtCore.QSize(16777215, 28))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(-1)
@@ -216,7 +194,7 @@ class Ui_ReplyDialog(object):
 "    border-radius: 4px;\n"
 "    color: white;\n"
 "    font-size: 12px;\n"
-"    padding: 2px;\n"
+"    padding: 6px;\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
@@ -228,7 +206,32 @@ class Ui_ReplyDialog(object):
 "}")
         self.pushButton_add.setObjectName("pushButton_add")
         self.horizontalLayout_17.addWidget(self.pushButton_add)
-        self.horizontalLayout_17.setStretch(1, 1)
+        self.pushButton_load = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
+        self.pushButton_load.setMinimumSize(QtCore.QSize(42, 28))
+        self.pushButton_load.setMaximumSize(QtCore.QSize(16777215, 28))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        self.pushButton_load.setFont(font)
+        self.pushButton_load.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_load.setStyleSheet("QPushButton {\n"
+"    background-color: rgba(105, 27, 253, 180);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    color: white;\n"
+"    font-size: 12px;\n"
+"    padding: 6px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgba(105, 27, 253, 0.75);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(105, 27, 253, 0.85);\n"
+"}")
+        self.pushButton_load.setObjectName("pushButton_load")
+        self.horizontalLayout_17.addWidget(self.pushButton_load)
         self.verticalLayout_2.addWidget(self.horizontalFrame_12)
         self.scrollArea = QtWidgets.QScrollArea(parent=self.mainframe)
         self.scrollArea.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
@@ -268,7 +271,7 @@ class Ui_ReplyDialog(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 774, 299))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 774, 287))
         self.scrollAreaWidgetContents.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.formLayout = QtWidgets.QFormLayout(self.scrollAreaWidgetContents)
@@ -349,14 +352,13 @@ class Ui_ReplyDialog(object):
         _translate = QtCore.QCoreApplication.translate
         ReplyDialog.setWindowTitle(_translate("ReplyDialog", "Dialog"))
         self.label_title.setText(_translate("ReplyDialog", "自动回复规则"))
-        self.label_16.setText(_translate("ReplyDialog", "规则名称"))
-        self.RuleName_lineEdit.setPlaceholderText(_translate("ReplyDialog", "输入名称"))
         self.label_17.setText(_translate("ReplyDialog", "关键词"))
-        self.Rule_comboBox.setItemText(0, _translate("ReplyDialog", "半匹配"))
-        self.Rule_comboBox.setItemText(1, _translate("ReplyDialog", "全匹配"))
         self.KeyWord_lineEdit.setPlaceholderText(_translate("ReplyDialog", "输入关键词"))
+        self.Rule_comboBox.setItemText(0, _translate("ReplyDialog", "包含"))
+        self.Rule_comboBox.setItemText(1, _translate("ReplyDialog", "等于"))
         self.label_18.setText(_translate("ReplyDialog", "回复内容"))
-        self.Reply_lineEdit.setPlaceholderText(_translate("ReplyDialog", "输入文字或文件路径"))
-        self.pushButton_add.setText(_translate("ReplyDialog", "添加"))
+        self.Reply_lineEdit.setPlaceholderText(_translate("ReplyDialog", "文字信息或文件"))
+        self.pushButton_add.setText(_translate("ReplyDialog", "添加规则"))
+        self.pushButton_load.setText(_translate("ReplyDialog", "导入规则"))
         self.pushButton_cancel.setText(_translate("ReplyDialog", "取消"))
         self.pushButton_save.setText(_translate("ReplyDialog", "保存"))
