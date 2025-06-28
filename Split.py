@@ -79,9 +79,9 @@ class Split(QtWidgets.QWidget):
             return
 
         log("INFO", f"成功拆分为 {result_count} 个句子")
-        self.parent.textEdit_3.clear()
+        self.parent.textEdit_2.clear()
         for i, sentence in enumerate(self.prepared_sentences, 1):
-            self.parent.textEdit_3.append(f"{i}. {sentence}")
+            self.parent.textEdit_2.append(f"{i}. {sentence}")
 
     def on_start_send_clicked(self) -> None:
         if not self.update_current_wx() or self.current_wx is None:

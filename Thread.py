@@ -315,45 +315,53 @@ class AiWorkerThread(WorkerThreadBase):
 
 
 class SplitWorkerThread(WorkerThreadBase):
-    def __init__(self, app_instance, receiver, sentences):
+    """消息拆分发送工作线程"""
+    sent_signal = QtCore.pyqtSignal(str, bool)
+
+    def __init__(self, app_instance, receiver: str, sentences: List[str], wx: Any):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.sentences = sentences
+        self.wx = wx
         self._is_running = True
-        log_print(f"[SPLIT_WORKER] Thread initialized for receiver: {receiver}, {len(sentences)} sentences")
 
-    def run(self):
+    def run(self) -> None:
+        """线程主循环"""
         self._is_running = True
-        log_print(f"[SPLIT_WORKER] Thread started, sending {len(self.sentences)} messages to {self.receiver}")
+        log("INFO", f"SplitWorkerThread 已启动，准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
 
         for i, sentence in enumerate(self.sentences):
             if self._stop_event.is_set() or not self._is_running:
-                break
-
-            if self._is_paused:
-                while self._is_paused and not self._stop_event.is_set():
-                    time.sleep(0.1)
-
-            if self._stop_event.is_set() or not self._is_running:
+                log("INFO", f"收到停止信号，终止发送任务，当前进度: {i + 1}/{len(self.sentences)}")
                 break
 
             try:
                 log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
-                log_print(
-                    f"[SPLIT_WORKER] Sending message {i + 1}/{len(self.sentences)}: '{sentence[:30]}...' to {self.receiver}")
-                self.app_instance.wx.SendMsg(msg=sentence, who=self.receiver)
-                self.msleep(500)
+                if self.wx:
+                    self.wx.SendMsg(msg=sentence, who=self.receiver)
+                    self.sent_signal.emit(sentence, True)  # 发送成功信号
+                else:
+                    log("ERROR", f"找不到微信实例，无法发送消息给 {self.receiver}")
+                    self.sent_signal.emit(sentence, False)  # 发送失败信号
+                    self._stop_event.set()
+                    break
+
+                # 添加发送间隔，避免过快
+                for _ in range(5):
+                    if self._stop_event.is_set():
+                        break
+                    self.msleep(100)
+
             except Exception as e:
                 log("ERROR", f"发送消息时出错: {str(e)}")
-                log_print(f"[SPLIT_WORKER] Error sending message: {str(e)}")
+                self.sent_signal.emit(sentence, False)  # 发送失败信号
                 self.app_instance.is_sending = False
-                self.app_instance.is_scheduled_task_active = False
                 self._stop_event.set()
                 break
 
+        log("INFO", f"拆句发送已完成，共发送 {len(self.sentences)} 条消息")
         self._is_running = False
-        log_print(f"[SPLIT_WORKER] Thread finished, all messages sent to {self.receiver}")
         self.finished.emit()
 
 
