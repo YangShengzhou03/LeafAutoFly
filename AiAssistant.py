@@ -119,8 +119,6 @@ class AiAssistant(QtWidgets.QWidget):
                 html = f"<html><head/><body><p align=\"center\"><span style=\" font-size:72pt;\">{time_str}</span></p></body></html>"
                 self.parent.takeOverTime_label.setText(html)
 
-                log_print(f"[AiAssistant] Checking membership time limits for type: {self.Membership}")
-
                 # Determine time limits based on membership
                 if self.Membership == 'Free':
                     max_time = 60  # 1 minute
@@ -141,7 +139,7 @@ class AiAssistant(QtWidgets.QWidget):
                     self.update_button_icon('resources/img/page3/page3_开始接管.svg')
                     self.parent.label_7.setText(
                         self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
-                    QtWidgets.QMessageBox.warning(self, "版本限制", "版本限制,接管终止,超级会员尊享无限接管")
+                    QtWidgets.QMessageBox.warning(self, "版本限制", "版本限制 接管终止，超级会员尊享无限接管")
             else:
                 # Update timer display even when not taking over
                 minutes, seconds = divmod(self.elapsed_time, 60)

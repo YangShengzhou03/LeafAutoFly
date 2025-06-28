@@ -155,7 +155,6 @@ class AiWorkerThread(WorkerThreadBase):
             self._process_message(msg, who)
 
     def _handle_specific_messages(self):
-        log_print(f"[AI_WORKER] Checking for new messages from {self.receiver}")
         msgs = self.wx.GetAllMessage()
         if msgs and msgs[-1].type == "friend":
             msg = msgs[-1].content
