@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
-      <change beforePath="$PROJECT_DIR$/_internal/log" beforeDir="false" afterPath="$PROJECT_DIR$/_internal/log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thread.py" beforeDir="false" afterPath="$PROJECT_DIR$/Thread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +102,7 @@
       <workItem from="1749558150948" duration="210000" />
       <workItem from="1751094744253" duration="1512000" />
       <workItem from="1751120307077" duration="15402000" />
-      <workItem from="1751178517646" duration="9399000" />
+      <workItem from="1751178517646" duration="10000000" />
     </task>
     <task id="LOCAL-00001" summary="LeafAuto PRO">
       <option name="closed" value="true" />
@@ -343,7 +344,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751187520478</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751188028130</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1751188028130</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +364,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="LeafAuto PRO更新" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1751187723109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1751188409155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

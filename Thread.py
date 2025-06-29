@@ -223,9 +223,9 @@ class AiWorkerThread(WorkerThreadBase):
             return
 
         log_print(f"[AI_WORKER] No rule matches, generating AI reply for: '{processed_msg[:30]}...'")
-        self._generate_ai_reply(processed_msg if self.only_at_mode else msg, who, at_info, who_name)
+        self._generate_ai_reply(processed_msg if self.only_at_mode else msg, who, who_name)
 
-    def _generate_ai_reply(self, msg: str, who: str, at_info: Optional[str], who_name: str):
+    def _generate_ai_reply(self, msg: str, who: str, who_name: str):
         log_print(f"[AI_WORKER] Generating AI reply using {self.model} model")
         try:
             if self.model == "文心一言":
@@ -236,14 +236,9 @@ class AiWorkerThread(WorkerThreadBase):
                 result = self._query_default_api(msg)
 
             if result:
-                # 在仅被@模式下，自动在AI回复前添加@信息
-                if self.only_at_mode and at_info:
-                    result = f"{at_info} {result}"
-
                 log("INFO", f"AI回复发送给 {who}: {result[:30]}...")
                 log_print(f"[AI_WORKER] AI reply sent to {who}: {result[:30]}...")
 
-                # 根据only_at_mode决定是否带at参数
                 if self.only_at_mode:
                     self.wx.SendMsg(msg=result, who=who, at=who_name)
                 else:

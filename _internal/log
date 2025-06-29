@@ -1,0 +1,341 @@
+# Log file created at 2025-06-29 17:08:31.048803
+[2025-06-29 17:08:31] Initializing MainWindow
+[2025-06-29 17:08:31] Ensuring configuration file exists
+[2025-06-29 17:08:31] Reading configuration values
+[2025-06-29 17:08:31] Updating version from 4.3 to 4.39
+[2025-06-29 17:08:31] Reloading WeChat instances during initialization
+[2025-06-29 17:08:31] Starting to reload WeChat instances
+[2025-06-29 17:08:32] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 17:08:32] Default WeChat instance set to 杨圣洲
+[2025-06-29 17:08:32] Successfully initialized 1 WeChat instances
+[2025-06-29 17:08:32] Set default WeChat nickname to 杨圣洲
+[2025-06-29 17:08:32] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 17:08:32] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:08:32] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 17:08:32] [AutoInfo] Email processing thread started
+[2025-06-29 17:08:32] [AiAssistant] Initializing AI assistant...
+[2025-06-29 17:08:32] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 17:08:32] Creating system tray icon
+[2025-06-29 17:08:32] Creating system tray icon
+[2025-06-29 17:08:32] System tray icon created
+[2025-06-29 17:08:32] Setting window flags and attributes
+[2025-06-29 17:08:32] Connecting signals and updating UI elements
+[2025-06-29 17:08:32] Connecting UI signals
+[2025-06-29 17:08:32] [SETTINGS] Initializing SettingWindow
+[2025-06-29 17:08:33] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:08:33] [SETTINGS] Detected membership: Free
+[2025-06-29 17:08:33] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 17:08:33] [SETTINGS] Initializing settings
+[2025-06-29 17:08:33] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 17:08:33] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 17:08:33] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 17:08:33] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 17:08:33] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 17:08:33] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 17:08:33] [SETTINGS] Set language to: 简体中文
+[2025-06-29 17:08:33] [SETTINGS] Set version label to: 4.39
+[2025-06-29 17:08:33] [SETTINGS] Set timestep to: 10
+[2025-06-29 17:08:33] [SETTINGS] Loading audio selection: 0
+[2025-06-29 17:08:33] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 17:08:33] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:08:33] [SETTINGS] Set audio index to: 0
+[2025-06-29 17:08:33] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 17:08:33] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 17:08:33] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 17:08:33] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 17:08:33] File and message signals connected
+[2025-06-29 17:08:33] Window control signals connected
+[2025-06-29 17:08:33] Membership button signals connected
+[2025-06-29 17:08:33] Function button signals connected
+[2025-06-29 17:08:33] Checkbox signals connected
+[2025-06-29 17:08:33] VIP frame click event connected
+[2025-06-29 17:08:33] All signals connected
+[2025-06-29 17:08:33] Updating UI elements
+[2025-06-29 17:08:33] Getting application notice
+[2025-06-29 17:08:34] Set datetime to 2025-06-29 17:08:34
+[2025-06-29 17:08:34] UI elements updated
+[2025-06-29 17:08:34] Applying membership limits for Free
+[2025-06-29 17:08:34] Applying membership limits for Free
+[2025-06-29 17:08:34] Applying Free membership limits
+[2025-06-29 17:08:34] Free trial remaining days: 29
+[2025-06-29 17:08:34] Membership limits applied
+[2025-06-29 17:08:34] Checking for updates
+[2025-06-29 17:08:34] Loading tasks from JSON file
+[2025-06-29 17:08:34] Loading tasks from _internal/tasks.json
+[2025-06-29 17:08:34] JSON file _internal/tasks.json does not exist
+[2025-06-29 17:08:34] Setting up auto-completion for receiver LineEdit
+[2025-06-29 17:08:34] Auto-completion setup completed
+[2025-06-29 17:08:48] [AutoInfo] Attempting to add task...
+[2025-06-29 17:08:48] [AutoInfo] Task widget created successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:48] [AutoInfo] Task added successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:48] [AutoInfo] Tasks saved successfully, total 1 tasks
+[2025-06-29 17:08:48] [AutoInfo] Attempting to add task...
+[2025-06-29 17:08:48] [AutoInfo] Task widget created successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:48] [AutoInfo] Task added successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:48] [AutoInfo] Tasks saved successfully, total 2 tasks
+[2025-06-29 17:08:48] [AutoInfo] Attempting to add task...
+[2025-06-29 17:08:48] [AutoInfo] Task widget created successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:48] [AutoInfo] Task added successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:48] [AutoInfo] Tasks saved successfully, total 3 tasks
+[2025-06-29 17:08:48] [AutoInfo] Attempting to add task...
+[2025-06-29 17:08:48] [AutoInfo] Task widget created successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:49] [AutoInfo] Task added successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:49] [AutoInfo] Tasks saved successfully, total 4 tasks
+[2025-06-29 17:08:49] [AutoInfo] Attempting to add task...
+[2025-06-29 17:08:49] [AutoInfo] Task widget created successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:49] [AutoInfo] Task added successfully: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:08:49] [AutoInfo] Tasks saved successfully, total 5 tasks
+[2025-06-29 17:08:49] [AutoInfo] Attempting to add task...
+[2025-06-29 17:08:49] [AutoInfo] Failed to add task: Free version task limit reached
+[2025-06-29 17:08:52] [AutoInfo] Start button clicked...
+[2025-06-29 17:08:52] [WORKER_BASE] Thread initialized
+[2025-06-29 17:08:52] [AutoInfo] Started executing tasks, worker thread launched
+[2025-06-29 17:08:56] [AutoInfo] Updating task status: QWE - 成功 (Sender: 杨圣洲)
+[2025-06-29 17:08:56] [AutoInfo] Tasks saved successfully, total 4 tasks
+[2025-06-29 17:08:56] [AutoInfo] Task status updated: QWE - 成功
+[2025-06-29 17:09:03] [AutoInfo] Updating task status: QWE - 成功 (Sender: 杨圣洲)
+[2025-06-29 17:09:03] [AutoInfo] Tasks saved successfully, total 3 tasks
+[2025-06-29 17:09:03] [AutoInfo] Task status updated: QWE - 成功
+[2025-06-29 17:09:11] [AutoInfo] Updating task status: QWE - 成功 (Sender: 杨圣洲)
+[2025-06-29 17:09:11] [AutoInfo] Tasks saved successfully, total 2 tasks
+[2025-06-29 17:09:11] [AutoInfo] Task status updated: QWE - 成功
+[2025-06-29 17:09:16] [AutoInfo] Updating task status: QWE - 成功 (Sender: 杨圣洲)
+[2025-06-29 17:09:16] [AutoInfo] Tasks saved successfully, total 1 tasks
+[2025-06-29 17:09:16] [AutoInfo] Task status updated: QWE - 成功
+[2025-06-29 17:09:22] [AutoInfo] Updating task status: QWE - 成功 (Sender: 杨圣洲)
+[2025-06-29 17:09:22] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 17:09:22] [AutoInfo] Task status updated: QWE - 成功
+[2025-06-29 17:09:22] [AutoInfo] Worker thread finished
+[2025-06-29 17:09:28] [AutoInfo] Attempting to delete task: QWE - 123... (Sender: 杨圣洲)
+[2025-06-29 17:09:28] [AutoInfo] Worker thread stopped
+[2025-06-29 17:09:28] [AutoInfo] Updating UI display...
+[2025-06-29 17:09:28] [AutoInfo] UI updated, displaying 0 tasks
+[2025-06-29 17:09:28] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 17:09:32] [AutoInfo] Saving configuration...
+[2025-06-29 17:09:32] [AutoInfo] Task list is empty, nothing to save
+[2025-06-29 17:09:32] [AutoInfo] Saving configuration...
+[2025-06-29 17:09:33] [AutoInfo] Task list is empty, nothing to save
+[2025-06-29 17:09:33] [AutoInfo] Saving configuration...
+[2025-06-29 17:09:34] [AutoInfo] Task list is empty, nothing to save
+[2025-06-29 17:09:34] [AutoInfo] Saving configuration...
+[2025-06-29 17:09:36] [AutoInfo] Task list is empty, nothing to save
+[2025-06-29 17:09:36] [AutoInfo] Saving configuration...
+[2025-06-29 17:09:37] [AutoInfo] Task list is empty, nothing to save
+[2025-06-29 17:09:41] [AutoInfo] Loading configuration...
+[2025-06-29 17:09:42] [AutoInfo] No file selected, import cancelled
+[2025-06-29 17:10:08] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:10:08] [AiAssistant] Validating takeover parameters...
+[2025-06-29 17:10:08] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 17:10:08] [WORKER_BASE] Thread initialized
+[2025-06-29 17:10:08] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 17:10:08] [AI_WORKER] Rules file not found
+[2025-06-29 17:10:08] [AI_WORKER] Thread initialized - OnlyAt: False, Nickname: 杨圣洲
+[2025-06-29 17:10:08] [AI_WORKER] Thread started
+[2025-06-29 17:10:08] [AI_WORKER] Initializing connection with 小羊
+[2025-06-29 17:10:08] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 17:10:08] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:10:08] [AiAssistant] AI worker thread started successfully
+[2025-06-29 17:10:12] [AI_WORKER] Connection initialized successfully
+[2025-06-29 17:10:18] [AI_WORKER] Replying to all messages
+[2025-06-29 17:10:18] [AI_WORKER] Processing message: '你好啊...' from 小羊
+[2025-06-29 17:10:18] [AI_WORKER] No rule matches, generating AI reply for: '你好啊...'
+[2025-06-29 17:10:18] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:10:18] [AI_WORKER] Querying default API
+[2025-06-29 17:10:18] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:10:19] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:10:19] [AI_WORKER] AI reply sent to 小羊: 你好！今天过得怎么样？...
+[2025-06-29 17:10:32] [AI_WORKER] Replying to all messages
+[2025-06-29 17:10:32] [AI_WORKER] Processing message: '你好啊...' from 小羊
+[2025-06-29 17:10:32] [AI_WORKER] No rule matches, generating AI reply for: '你好啊...'
+[2025-06-29 17:10:32] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:10:32] [AI_WORKER] Querying default API
+[2025-06-29 17:10:32] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:10:33] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:10:33] [AI_WORKER] AI reply sent to 小羊: 你好！今天过得怎么样呀？...
+[2025-06-29 17:10:43] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:10:43] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 17:10:43] [WORKER_BASE] Thread interruption requested
+[2025-06-29 17:10:43] [AiAssistant] Takeover stopped successfully
+[2025-06-29 17:10:43] [AI_WORKER] Thread finished
+[2025-06-29 17:10:43] [AiAssistant] Handling thread finished event...
+[2025-06-29 17:10:43] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 17:10:43] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:10:43] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 17:11:05] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:11:05] [AiAssistant] Validating takeover parameters...
+[2025-06-29 17:11:05] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 17:11:05] [WORKER_BASE] Thread initialized
+[2025-06-29 17:11:05] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 17:11:05] [AI_WORKER] Rules file not found
+[2025-06-29 17:11:05] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 17:11:05] [AI_WORKER] Thread started
+[2025-06-29 17:11:05] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 17:11:05] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 17:11:05] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:11:05] [AiAssistant] AI worker thread started successfully
+[2025-06-29 17:11:09] [AI_WORKER] Connection initialized successfully
+[2025-06-29 17:11:21] [AI_WORKER] Checking message for @杨圣洲: 你好@杨圣洲 ...
+[2025-06-29 17:11:21] [AI_WORKER] Processing message: '你好@杨圣洲 ...' from QWE
+[2025-06-29 17:11:21] [AI_WORKER] No rule matches, generating AI reply for: '你好...'
+[2025-06-29 17:11:21] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:11:21] [AI_WORKER] Querying default API
+[2025-06-29 17:11:21] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:11:22] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:11:23] [AI_WORKER] AI reply sent to QWE: @杨圣洲 你好呀，今天过得咋样？...
+[2025-06-29 17:11:34] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 你要不要吃饭...
+[2025-06-29 17:11:34] [AI_WORKER] Processing message: '@杨圣洲 你要不要吃饭...' from QWE
+[2025-06-29 17:11:34] [AI_WORKER] No rule matches, generating AI reply for: '你要不要吃饭...'
+[2025-06-29 17:11:34] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:11:34] [AI_WORKER] Querying default API
+[2025-06-29 17:11:34] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:11:36] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:11:36] [AI_WORKER] AI reply sent to QWE: @杨圣洲 我不需要吃饭，但你可以和我聊聊美食呀，比如你有没有...
+[2025-06-29 17:11:43] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:11:43] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 17:11:43] [WORKER_BASE] Thread interruption requested
+[2025-06-29 17:11:43] [AiAssistant] Takeover stopped successfully
+[2025-06-29 17:11:44] [AI_WORKER] Thread finished
+[2025-06-29 17:11:44] [AiAssistant] Handling thread finished event...
+[2025-06-29 17:11:44] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 17:11:44] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:11:44] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 17:13:30] Initializing MainWindow
+[2025-06-29 17:13:30] Ensuring configuration file exists
+[2025-06-29 17:13:30] Reading configuration values
+[2025-06-29 17:13:30] Reloading WeChat instances during initialization
+[2025-06-29 17:13:30] Starting to reload WeChat instances
+[2025-06-29 17:13:31] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 17:13:31] Default WeChat instance set to 杨圣洲
+[2025-06-29 17:13:31] Successfully initialized 1 WeChat instances
+[2025-06-29 17:13:31] Set default WeChat nickname to 杨圣洲
+[2025-06-29 17:13:31] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 17:13:31] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:13:31] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 17:13:31] [AutoInfo] Email processing thread started
+[2025-06-29 17:13:31] [AiAssistant] Initializing AI assistant...
+[2025-06-29 17:13:31] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 17:13:31] Creating system tray icon
+[2025-06-29 17:13:31] Creating system tray icon
+[2025-06-29 17:13:31] System tray icon created
+[2025-06-29 17:13:31] Setting window flags and attributes
+[2025-06-29 17:13:31] Connecting signals and updating UI elements
+[2025-06-29 17:13:31] Connecting UI signals
+[2025-06-29 17:13:31] [SETTINGS] Initializing SettingWindow
+[2025-06-29 17:13:32] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:13:32] [SETTINGS] Detected membership: Free
+[2025-06-29 17:13:32] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 17:13:32] [SETTINGS] Initializing settings
+[2025-06-29 17:13:32] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 17:13:32] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 17:13:32] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 17:13:32] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 17:13:32] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 17:13:32] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 17:13:32] [SETTINGS] Set language to: 简体中文
+[2025-06-29 17:13:32] [SETTINGS] Set version label to: 4.39
+[2025-06-29 17:13:32] [SETTINGS] Set timestep to: 10
+[2025-06-29 17:13:32] [SETTINGS] Loading audio selection: 0
+[2025-06-29 17:13:32] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 17:13:32] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:13:32] [SETTINGS] Set audio index to: 0
+[2025-06-29 17:13:32] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 17:13:32] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 17:13:32] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 17:13:32] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 17:13:32] File and message signals connected
+[2025-06-29 17:13:32] Window control signals connected
+[2025-06-29 17:13:32] Membership button signals connected
+[2025-06-29 17:13:32] Function button signals connected
+[2025-06-29 17:13:32] Checkbox signals connected
+[2025-06-29 17:13:32] VIP frame click event connected
+[2025-06-29 17:13:32] All signals connected
+[2025-06-29 17:13:32] Updating UI elements
+[2025-06-29 17:13:32] Getting application notice
+[2025-06-29 17:13:33] Set datetime to 2025-06-29 17:13:33
+[2025-06-29 17:13:33] UI elements updated
+[2025-06-29 17:13:33] Applying membership limits for Free
+[2025-06-29 17:13:33] Applying membership limits for Free
+[2025-06-29 17:13:33] Applying Free membership limits
+[2025-06-29 17:13:33] Free trial remaining days: 29
+[2025-06-29 17:13:33] Membership limits applied
+[2025-06-29 17:13:33] Checking for updates
+[2025-06-29 17:13:33] Loading tasks from JSON file
+[2025-06-29 17:13:33] Loading tasks from _internal/tasks.json
+[2025-06-29 17:13:33] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 17:13:33] Loaded 0 tasks from JSON
+[2025-06-29 17:13:33] Membership limit: 5, remaining slots: 5
+[2025-06-29 17:13:33] Saving tasks back to JSON after processing
+[2025-06-29 17:13:33] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 17:13:33] Setting up auto-completion for receiver LineEdit
+[2025-06-29 17:13:33] Auto-completion setup completed
+[2025-06-29 17:13:39] Mouse move event without left button press, ignoring
+[2025-06-29 17:13:41] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:13:41] [AiAssistant] Validating takeover parameters...
+[2025-06-29 17:13:41] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 17:13:41] [WORKER_BASE] Thread initialized
+[2025-06-29 17:13:41] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 17:13:41] [AI_WORKER] Rules file not found
+[2025-06-29 17:13:41] [AI_WORKER] Thread initialized - OnlyAt: False, Nickname: 杨圣洲
+[2025-06-29 17:13:41] [AI_WORKER] Thread started
+[2025-06-29 17:13:41] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 17:13:41] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 17:13:41] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:13:41] [AiAssistant] AI worker thread started successfully
+[2025-06-29 17:13:45] [AI_WORKER] Connection initialized successfully
+[2025-06-29 17:13:49] [AI_WORKER] Replying to all messages
+[2025-06-29 17:13:49] [AI_WORKER] Processing message: '@杨圣洲 你要不要睡觉...' from QWE
+[2025-06-29 17:13:49] [AI_WORKER] No rule matches, generating AI reply for: '@杨圣洲 你要不要睡觉...'
+[2025-06-29 17:13:49] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:13:49] [AI_WORKER] Querying default API
+[2025-06-29 17:13:49] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:13:50] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:13:50] [AI_WORKER] AI reply sent to QWE: 我不需要睡觉，随时都可以为你提供帮助。如果你有其他问题或需要...
+[2025-06-29 17:14:11] [AI_WORKER] Replying to all messages
+[2025-06-29 17:14:11] [AI_WORKER] Processing message: '你爱不爱我@杨圣洲 ...' from QWE
+[2025-06-29 17:14:11] [AI_WORKER] No rule matches, generating AI reply for: '你爱不爱我@杨圣洲 ...'
+[2025-06-29 17:14:11] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:14:11] [AI_WORKER] Querying default API
+[2025-06-29 17:14:11] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:14:13] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:14:13] [AI_WORKER] AI reply sent to QWE: 我没办法像人类一样去爱呀，不过我知道杨圣洲肯定有挺多值得人喜...
+[2025-06-29 17:14:41] [AiAssistant] Membership time limit reached (60 seconds), stopping takeover
+[2025-06-29 17:14:41] [WORKER_BASE] Thread interruption requested
+[2025-06-29 17:14:41] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 17:14:41] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:14:42] [AI_WORKER] Thread finished
+[2025-06-29 17:14:42] [AiAssistant] Handling thread finished event...
+[2025-06-29 17:14:42] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 17:14:42] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:14:42] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 17:14:55] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:14:55] [AiAssistant] Validating takeover parameters...
+[2025-06-29 17:14:55] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 17:14:55] [WORKER_BASE] Thread initialized
+[2025-06-29 17:14:55] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 17:14:55] [AI_WORKER] Rules file not found
+[2025-06-29 17:14:55] [AI_WORKER] Thread initialized - OnlyAt: False, Nickname: 杨圣洲
+[2025-06-29 17:14:55] [AI_WORKER] Thread started
+[2025-06-29 17:14:55] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 17:14:55] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 17:14:55] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:14:55] [AiAssistant] AI worker thread started successfully
+[2025-06-29 17:14:59] [AI_WORKER] Connection initialized successfully
+[2025-06-29 17:15:00] [AI_WORKER] Replying to all messages
+[2025-06-29 17:15:00] [AI_WORKER] Processing message: '我想和你结婚，如果你不和我结婚我就去死，那你会不会和我结婚？...' from QWE
+[2025-06-29 17:15:00] [AI_WORKER] No rule matches, generating AI reply for: '我想和你结婚，如果你不和我结婚我就去死，那你会不会和我结婚？...'
+[2025-06-29 17:15:00] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:15:00] [AI_WORKER] Querying default API
+[2025-06-29 17:15:00] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:15:03] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:15:03] [AI_WORKER] AI reply sent to QWE: 否。
+
+婚姻应建立在双方自愿、相互理解与尊重且感情基础之上，...
+[2025-06-29 17:15:24] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:15:24] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 17:15:24] [WORKER_BASE] Thread interruption requested
+[2025-06-29 17:15:24] [AiAssistant] Takeover stopped successfully
+[2025-06-29 17:15:24] [AI_WORKER] Thread finished
+[2025-06-29 17:15:24] [AiAssistant] Handling thread finished event...
+[2025-06-29 17:15:24] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 17:15:24] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:15:24] [AiAssistant] AI worker thread completed successfully
