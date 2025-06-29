@@ -1,5 +1,5 @@
 import json
-import pandas as pd
+import openpyxl  # 使用 openpyxl 替代 pandas
 from PyQt6 import QtCore, QtWidgets, QtGui
 from UI_Reply import Ui_ReplyDialog
 from common import get_resource_path, log_print
@@ -216,22 +216,36 @@ class ReplyDialog(QtWidgets.QDialog):
             return
 
         try:
-            df = pd.read_excel(file_path)
+            # 使用 openpyxl 打开工作簿
+            workbook = openpyxl.load_workbook(file_path, read_only=True)
+            sheet = workbook.active
+
+            # 获取表头，确定列索引
+            header = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1, values_only=True))]
 
             required_columns = ['匹配类型', '关键词', '回复内容']
-            missing_columns = [col for col in required_columns if col not in df.columns]
+            missing_columns = [col for col in required_columns if col not in header]
             if missing_columns:
                 log_print(f"[REPLY_DIALOG] Excel file missing required columns: {', '.join(missing_columns)}")
                 QtWidgets.QMessageBox.warning(self, "格式错误", f"Excel文件缺少必要的列: {', '.join(missing_columns)}")
                 return
 
+            # 获取列索引
+            match_type_idx = header.index('匹配类型')
+            keyword_idx = header.index('关键词')
+            reply_content_idx = header.index('回复内容')
+
             imported_count = 0
             skipped_count = 0
 
-            for _, row in df.iterrows():
-                match_type = row['匹配类型']
-                keyword = str(row['关键词']).strip()
-                reply_content = str(row['回复内容']).strip()
+            # 从第2行开始迭代数据行
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                if not all(row):  # 跳过空行
+                    continue
+
+                match_type = row[match_type_idx]
+                keyword = str(row[keyword_idx]).strip() if row[keyword_idx] is not None else ""
+                reply_content = str(row[reply_content_idx]).strip() if row[reply_content_idx] is not None else ""
 
                 if not keyword or not reply_content:
                     skipped_count += 1
@@ -261,6 +275,8 @@ class ReplyDialog(QtWidgets.QDialog):
                         "reply_content": reply_content
                     })
                     imported_count += 1
+
+            workbook.close()  # 关闭工作簿
 
             log_print(f"[REPLY_DIALOG] Successfully imported {imported_count} rules, skipped {skipped_count}")
             QtWidgets.QMessageBox.information(
