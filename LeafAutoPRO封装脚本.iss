@@ -29,7 +29,7 @@ LicenseFile=D:\code\Python\LeafAuto_Pro\license.txt
 ; 以管理员身份运行
 PrivilegesRequired=admin
 OutputDir=C:\Users\YangShengzhou\Desktop
-OutputBaseFilename=枫叶信息{#MyAppVersion}
+OutputBaseFilename=LeafAuto PRO {#MyAppVersion}
 SetupIconFile=D:\code\Python\LeafAuto_Pro\resources\img\setup.ico
 Compression=lzma2/max
 SolidCompression=yes
