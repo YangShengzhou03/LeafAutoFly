@@ -1,7 +1,6 @@
 import ctypes
 import json
 import os
-import re
 import threading
 import time
 from datetime import datetime
@@ -65,7 +64,8 @@ class WorkerThreadBase(QtCore.QThread):
 
 
 class AiWorkerThread(WorkerThreadBase):
-    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at_mode=False, at_nickname=""):
+    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at_mode=False,
+                 at_nickname=""):
         super().__init__()
         self.wx = wx
         self.receiver = receiver
@@ -161,29 +161,13 @@ class AiWorkerThread(WorkerThreadBase):
         log_print("[AI_WORKER] Thread finished")
         self.finished.emit()
 
-    def _handle_global_messages(self):
-        log_print("[AI_WORKER] Checking for new global messages")
-        new_msg = self.wx.GetAllNewMessage()
-        if not new_msg:
-            log_print("[AI_WORKER] No new global messages found")
-            return
-
-        who = next(iter(new_msg))
-        who = re.sub(r'\s*[（(]\d+[）)]\s*$', '', who)
-        log_print(f"[AI_WORKER] New message from: {who}")
-
-        msgs = self.wx.GetAllMessage()
-        if msgs and msgs[-1].type == "friend":
-            msg = msgs[-1].content
-            if self._should_reply(msg):
-                self._process_message(msg, who)
-
     def _handle_specific_messages(self):
         msgs = self.wx.GetAllMessage()
         if msgs and msgs[-1].type == "friend":
             msg = msgs[-1].content
+            whoName = msgs[-1][0]
             if self._should_reply(msg):
-                self._process_message(msg, self.receiver)
+                self._process_message(msg, self.receiver, whoName)
 
     def _should_reply(self, msg: str) -> bool:
         if self.only_at_mode and self.at_nickname:
@@ -192,10 +176,25 @@ class AiWorkerThread(WorkerThreadBase):
         log_print("[AI_WORKER] Replying to all messages")
         return True
 
-    def _process_message(self, msg: str, who: str):
+    def _process_message(self, msg: str, who: str, who_name: str) -> None:
         log_print(f"[AI_WORKER] Processing message: '{msg[:30]}...' from {who}")
+
+        # 提取@信息（如果有）
+        at_info = None
+        if self.only_at_mode and self.at_nickname:
+            at_prefix = f"@{self.at_nickname}"
+            if at_prefix in msg:
+                # 保存原始消息用于匹配规则
+                original_msg = msg
+                # 处理后的消息用于匹配规则（移除@前缀）
+                processed_msg = original_msg.replace(at_prefix, "").strip()
+                at_info = at_prefix  # 保存@信息用于回复
+        else:
+            processed_msg = msg
+
         if self.rules:
-            matched_replies = self._match_rule(msg)
+            # 使用处理后的消息进行规则匹配
+            matched_replies = self._match_rule(processed_msg if self.only_at_mode else msg)
             if matched_replies:
                 for reply in matched_replies:
                     try:
@@ -210,7 +209,11 @@ class AiWorkerThread(WorkerThreadBase):
                         else:
                             log("INFO", f"根据规则自动回复 '{reply}' 给 {who}")
                             log_print(f"[AI_WORKER] Sending auto-reply: '{reply[:30]}...' to {who}")
-                            self.wx.SendMsg(msg=reply, who=who)
+
+                            if self.only_at_mode:
+                                self.wx.SendMsg(msg=reply, who=who, at=who_name)
+                            else:
+                                self.wx.SendMsg(msg=reply, who=who)
                     except Exception as e:
                         log("ERROR", f"发送自动回复时出错: {str(e)}")
                         log_print(f"[AI_WORKER] Error sending auto-reply: {str(e)}")
@@ -219,10 +222,10 @@ class AiWorkerThread(WorkerThreadBase):
         if self.model == "禁用模型":
             return
 
-        log_print(f"[AI_WORKER] No rule matches, generating AI reply for: '{msg[:30]}...'")
-        self._generate_ai_reply(msg, who)
+        log_print(f"[AI_WORKER] No rule matches, generating AI reply for: '{processed_msg[:30]}...'")
+        self._generate_ai_reply(processed_msg if self.only_at_mode else msg, who, at_info, who_name)
 
-    def _generate_ai_reply(self, msg: str, who: str):
+    def _generate_ai_reply(self, msg: str, who: str, at_info: Optional[str], who_name: str):
         log_print(f"[AI_WORKER] Generating AI reply using {self.model} model")
         try:
             if self.model == "文心一言":
@@ -233,9 +236,18 @@ class AiWorkerThread(WorkerThreadBase):
                 result = self._query_default_api(msg)
 
             if result:
-                self.wx.SendMsg(msg=result, who=who)
+                # 在仅被@模式下，自动在AI回复前添加@信息
+                if self.only_at_mode and at_info:
+                    result = f"{at_info} {result}"
+
                 log("INFO", f"AI回复发送给 {who}: {result[:30]}...")
                 log_print(f"[AI_WORKER] AI reply sent to {who}: {result[:30]}...")
+
+                # 根据only_at_mode决定是否带at参数
+                if self.only_at_mode:
+                    self.wx.SendMsg(msg=result, who=who, at=who_name)
+                else:
+                    self.wx.SendMsg(msg=result, who=who)
 
         except Exception as e:
             log("ERROR", f"调用AI API时出错: {str(e)}")

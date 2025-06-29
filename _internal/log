@@ -1,832 +1,3 @@
-[2025-06-29 02:36:46] Creating system tray icon
-[2025-06-29 02:36:46] Creating system tray icon
-[2025-06-29 02:36:46] System tray icon created
-[2025-06-29 02:36:46] Setting window flags and attributes
-[2025-06-29 02:36:46] Connecting signals and updating UI elements
-[2025-06-29 02:36:46] Connecting UI signals
-[2025-06-29 02:36:46] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:36:46] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:36:46] [SETTINGS] Detected membership: Free
-[2025-06-29 02:36:46] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:36:46] [SETTINGS] Initializing settings
-[2025-06-29 02:36:46] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:36:46] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:36:46] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:36:46] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:36:46] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:36:46] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:36:46] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:36:46] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:36:46] [SETTINGS] Set timestep to: 10
-[2025-06-29 02:36:46] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:36:46] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:36:46] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:36:46] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:36:46] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:36:46] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 02:36:46] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 02:36:46] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:36:46] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:36:46] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:36:46] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:36:46] File and message signals connected
-[2025-06-29 02:36:46] Window control signals connected
-[2025-06-29 02:36:46] Membership button signals connected
-[2025-06-29 02:36:46] Function button signals connected
-[2025-06-29 02:36:46] Checkbox signals connected
-[2025-06-29 02:36:46] VIP frame click event connected
-[2025-06-29 02:36:46] All signals connected
-[2025-06-29 02:36:46] Updating UI elements
-[2025-06-29 02:36:46] Getting application notice
-[2025-06-29 02:36:47] Set datetime to 2025-06-29 02:36:47
-[2025-06-29 02:36:47] UI elements updated
-[2025-06-29 02:36:47] Applying membership limits for Free
-[2025-06-29 02:36:47] Applying membership limits for Free
-[2025-06-29 02:36:47] Applying Free membership limits
-[2025-06-29 02:36:47] Free trial remaining days: 29
-[2025-06-29 02:36:47] Membership limits applied
-[2025-06-29 02:36:47] Checking for updates
-[2025-06-29 02:36:47] Loading tasks from JSON file
-[2025-06-29 02:36:47] Loading tasks from _internal/tasks.json
-[2025-06-29 02:36:47] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:36:47] Loaded 0 tasks from JSON
-[2025-06-29 02:36:47] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:36:47] Saving tasks back to JSON after processing
-[2025-06-29 02:36:47] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:36:47] Auto-completion setup completed
-[2025-06-29 02:37:05] Initializing MainWindow
-[2025-06-29 02:37:05] Ensuring configuration file exists
-[2025-06-29 02:37:05] Reading configuration values
-[2025-06-29 02:37:05] Reloading WeChat instances during initialization
-[2025-06-29 02:37:05] Starting to reload WeChat instances
-[2025-06-29 02:37:07] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 02:37:07] Default WeChat instance set to 杨圣洲
-[2025-06-29 02:37:07] Successfully initialized 1 WeChat instances
-[2025-06-29 02:37:07] Set default WeChat nickname to 杨圣洲
-[2025-06-29 02:37:07] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 02:37:07] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:37:07] [AiAssistant] Initializing AI assistant...
-[2025-06-29 02:37:07] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 02:37:07] Creating system tray icon
-[2025-06-29 02:37:07] Creating system tray icon
-[2025-06-29 02:37:07] System tray icon created
-[2025-06-29 02:37:07] Setting window flags and attributes
-[2025-06-29 02:37:07] Connecting signals and updating UI elements
-[2025-06-29 02:37:07] Connecting UI signals
-[2025-06-29 02:37:07] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:37:07] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:37:07] [SETTINGS] Detected membership: Free
-[2025-06-29 02:37:07] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:37:07] [SETTINGS] Initializing settings
-[2025-06-29 02:37:07] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:37:07] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:37:07] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:37:07] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:37:07] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:37:07] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:37:07] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:37:07] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:37:07] [SETTINGS] Set timestep to: 10
-[2025-06-29 02:37:07] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:37:07] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:37:07] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:37:07] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:37:08] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:37:08] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 16:02:04] [AutoInfo] Email processing thread started
-25-06-29 02:37:08] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:37:08] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:37:08] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:37:08] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:37:08] File and message signals connected
-[2025-06-29 02:37:08] Window control signals connected
-[2025-06-29 02:37:08] Membership button signals connected
-[2025-06-29 02:37:08] Function button signals connected
-[2025-06-29 02:37:08] Checkbox signals connected
-[2025-06-29 02:37:08] VIP frame click event connected
-[2025-06-29 02:37:08] All signals connected
-[2025-06-29 02:37:08] Updating UI elements
-[2025-06-29 02:37:08] Getting application notice
-[2025-06-29 02:37:08] Set datetime to 2025-06-29 02:37:08
-[2025-06-29 02:37:08] UI elements updated
-[2025-06-29 02:37:08] Applying membership limits for Free
-[2025-06-29 02:37:08] Applying membership limits for Free
-[2025-06-29 02:37:08] Applying Free membership limits
-[2025-06-29 02:37:08] Free trial remaining days: 29
-[2025-06-29 02:37:08] Membership limits applied
-[2025-06-29 02:37:08] Checking for updates
-[2025-06-29 02:37:08] Loading tasks from JSON file
-[2025-06-29 02:37:08] Loading tasks from _internal/tasks.json
-[2025-06-29 02:37:08] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:37:08] Loaded 0 tasks from JSON
-[2025-06-29 02:37:08] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:37:08] Saving tasks back to JSON after processing
-[2025-06-29 02:37:08] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:37:08] Auto-completion setup completed
-[2025-06-29 02:37:53] Initializing MainWindow
-[2025-06-29 02:37:53] Ensuring configuration file exists
-[2025-06-29 02:37:53] Reading configuration values
-[2025-06-29 02:37:53] Reloading WeChat instances during initialization
-[2025-06-29 02:37:53] Starting to reload WeChat instances
-[2025-06-29 02:37:55] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 02:37:55] Default WeChat instance set to 杨圣洲
-[2025-06-29 02:37:55] Successfully initialized 1 WeChat instances
-[2025-06-29 02:37:55] Set default WeChat nickname to 杨圣洲
-[2025-06-29 02:37:55] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 02:37:55] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:37:55] [AiAssistant] Initializing AI assistant...
-[2025-06-29 02:37:55] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 02:37:55] Creating system tray icon
-[2025-06-29 02:37:55] Creating system tray icon
-[2025-06-29 02:37:55] System tray icon created
-[2025-06-29 02:37:55] Setting window flags and attributes
-[2025-06-29 02:37:55] Connecting signals and updating UI elements
-[2025-06-29 02:37:55] Connecting UI signals
-[2025-06-29 02:37:55] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:37:55] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:37:55] [SETTINGS] Detected membership: Free
-[2025-06-29 02:37:55] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:37:55] [SETTINGS] Initializing settings
-[2025-06-29 02:37:55] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:37:55] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:37:55] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:37:55] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:37:55] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:37:55] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:37:55] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:37:55] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:37:55] [SETTINGS] Set timestep to: 10
-[2025-06-29 02:37:55] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:37:55] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:37:55] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:37:55] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:37:55] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:37:55] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 02:37:55] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 02:37:55] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:37:55] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:37:55] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:37:55] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:37:55] File and message signals connected
-[2025-06-29 02:37:55] Window control signals connected
-[2025-06-29 02:37:55] Membership button signals connected
-[2025-06-29 02:37:55] Function button signals connected
-[2025-06-29 02:37:55] Checkbox signals connected
-[2025-06-29 02:37:55] VIP frame click event connected
-[2025-06-29 02:37:55] All signals connected
-[2025-06-29 02:37:55] Updating UI elements
-[2025-06-29 02:37:55] Getting application notice
-[2025-06-29 02:37:56] Set datetime to 2025-06-29 02:37:56
-[2025-06-29 02:37:56] UI elements updated
-[2025-06-29 02:37:56] Applying membership limits for Free
-[2025-06-29 02:37:56] Applying membership limits for Free
-[2025-06-29 02:37:56] Applying Free membership limits
-[2025-06-29 02:37:56] Free trial remaining days: 29
-[2025-06-29 02:37:56] Membership limits applied
-[2025-06-29 02:37:56] Checking for updates
-[2025-06-29 02:37:56] Loading tasks from JSON file
-[2025-06-29 02:37:56] Loading tasks from _internal/tasks.json
-[2025-06-29 02:37:56] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:37:56] Loaded 0 tasks from JSON
-[2025-06-29 02:37:56] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:37:56] Saving tasks back to JSON after processing
-[2025-06-29 02:37:56] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:37:56] Auto-completion setup completed
-[2025-06-29 02:38:29] Initializing MainWindow
-[2025-06-29 02:38:29] Ensuring configuration file exists
-[2025-06-29 02:38:29] Reading configuration values
-[2025-06-29 02:38:29] Reloading WeChat instances during initialization
-[2025-06-29 02:38:29] Starting to reload WeChat instances
-[2025-06-29 02:38:31] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 02:38:31] Default WeChat instance set to 杨圣洲
-[2025-06-29 02:38:31] Successfully initialized 1 WeChat instances
-[2025-06-29 02:38:31] Set default WeChat nickname to 杨圣洲
-[2025-06-29 02:38:31] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 02:38:31] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:38:31] [AiAssistant] Initializing AI assistant...
-[2025-06-29 02:38:31] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 02:38:31] Creating system tray icon
-[2025-06-29 02:38:31] Creating system tray icon
-[2025-06-29 02:38:31] System tray icon created
-[2025-06-29 02:38:31] Setting window flags and attributes
-[2025-06-29 02:38:31] Connecting signals and updating UI elements
-[2025-06-29 02:38:31] Connecting UI signals
-[2025-06-29 02:38:31] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:38:31] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:38:31] [SETTINGS] Detected membership: Free
-[2025-06-29 02:38:31] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:38:31] [SETTINGS] Initializing settings
-[2025-06-29 02:38:31] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:38:31] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:38:31] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:38:31] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:38:31] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:38:31] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:38:31] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:38:31] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:38:31] [SETTINGS] Set timestep to: 10
-[2025-06-29 02:38:31] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:38:31] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:38:31] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:38:31] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:38:31] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:38:31] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 02:38:31] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 02:38:31] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:38:31] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:38:32] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:38:32] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:38:32] File and message signals connected
-[2025-06-29 02:38:32] Window control signals connected
-[2025-06-29 02:38:32] Membership button signals connected
-[2025-06-29 02:38:32] Function button signals connected
-[2025-06-29 02:38:32] Checkbox signals connected
-[2025-06-29 02:38:32] VIP frame click event connected
-[2025-06-29 02:38:32] All signals connected
-[2025-06-29 02:38:32] Updating UI elements
-[2025-06-29 02:38:32] Getting application notice
-[2025-06-29 02:38:32] Set datetime to 2025-06-29 02:38:32
-[2025-06-29 02:38:32] UI elements updated
-[2025-06-29 02:38:32] Applying membership limits for Free
-[2025-06-29 02:38:32] Applying membership limits for Free
-[2025-06-29 02:38:32] Applying Free membership limits
-[2025-06-29 02:38:32] Free trial remaining days: 29
-[2025-06-29 02:38:32] Membership limits applied
-[2025-06-29 02:38:32] Checking for updates
-[2025-06-29 02:38:32] Loading tasks from JSON file
-[2025-06-29 02:38:32] Loading tasks from _internal/tasks.json
-[2025-06-29 02:38:32] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:38:32] Loaded 0 tasks from JSON
-[2025-06-29 02:38:32] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:38:32] Saving tasks back to JSON after processing
-[2025-06-29 02:38:32] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:38:32] Auto-completion setup completed
-[2025-06-29 02:38:49] Initializing MainWindow
-[2025-06-29 02:38:49] Ensuring configuration file exists
-[2025-06-29 02:38:49] Reading configuration values
-[2025-06-29 02:38:49] Reloading WeChat instances during initialization
-[2025-06-29 02:38:49] Starting to reload WeChat instances
-[2025-06-29 02:38:50] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 02:38:50] Default WeChat instance set to 杨圣洲
-[2025-06-29 02:38:50] Successfully initialized 1 WeChat instances
-[2025-06-29 02:38:50] Set default WeChat nickname to 杨圣洲
-[2025-06-29 02:38:50] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 02:38:50] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:38:50] [AiAssistant] Initializing AI assistant...
-[2025-06-29 02:38:50] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 02:38:50] Creating system tray icon
-[2025-06-29 02:38:50] Creating system tray icon
-[2025-06-29 02:38:50] System tray icon created
-[2025-06-29 02:38:51] Setting window flags and attributes
-[2025-06-29 02:38:51] Connecting signals and updating UI elements
-[2025-06-29 02:38:51] Connecting UI signals
-[2025-06-29 02:38:51] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:38:51] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:38:51] [SETTINGS] Detected membership: Free
-[2025-06-29 02:38:51] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:38:51] [SETTINGS] Initializing settings
-[2025-06-29 02:38:51] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:38:51] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:38:51] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:38:51] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:38:51] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:38:51] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:38:51] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:38:51] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:38:51] [SETTINGS] Set timestep to: 10
-[2025-06-29 02:38:51] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:38:51] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:38:51] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:38:51] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:38:51] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:38:51] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 02:38:51] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 02:38:51] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:38:51] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:38:51] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:38:51] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:38:51] File and message signals connected
-[2025-06-29 02:38:51] Window control signals connected
-[2025-06-29 02:38:51] Membership button signals connected
-[2025-06-29 02:38:51] Function button signals connected
-[2025-06-29 02:38:51] Checkbox signals connected
-[2025-06-29 02:38:51] VIP frame click event connected
-[2025-06-29 02:38:51] All signals connected
-[2025-06-29 02:38:51] Updating UI elements
-[2025-06-29 02:38:51] Getting application notice
-[2025-06-29 02:38:52] Set datetime to 2025-06-29 02:38:52
-[2025-06-29 02:38:52] UI elements updated
-[2025-06-29 02:38:52] Applying membership limits for Free
-[2025-06-29 02:38:52] Applying membership limits for Free
-[2025-06-29 02:38:52] Applying Free membership limits
-[2025-06-29 02:38:52] Free trial remaining days: 29
-[2025-06-29 02:38:52] Membership limits applied
-[2025-06-29 02:38:52] Checking for updates
-[2025-06-29 02:38:52] Loading tasks from JSON file
-[2025-06-29 02:38:52] Loading tasks from _internal/tasks.json
-[2025-06-29 02:38:52] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:38:52] Loaded 0 tasks from JSON
-[2025-06-29 02:38:52] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:38:52] Saving tasks back to JSON after processing
-[2025-06-29 02:38:52] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:38:52] Auto-completion setup completed
-[2025-06-29 02:39:06] [WORKER_BASE] Thread initialized
-[2025-06-29 02:42:26] Initializing MainWindow
-[2025-06-29 02:42:26] Ensuring configuration file exists
-[2025-06-29 02:42:26] Reading configuration values
-[2025-06-29 02:42:26] Reloading WeChat instances during initialization
-[2025-06-29 02:42:26] Starting to reload WeChat instances
-[2025-06-29 02:42:27] Successfully initialized WeChat instance for 小羊
-[2025-06-29 02:42:28] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 02:42:28] Default WeChat instance set to 小羊
-[2025-06-29 02:42:28] Successfully initialized 2 WeChat instances
-[2025-06-29 02:42:28] Set default WeChat nickname to 小羊
-[2025-06-29 02:42:28] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 02:42:28] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:42:28] [AiAssistant] Initializing AI assistant...
-[2025-06-29 02:42:28] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 02:42:28] Creating system tray icon
-[2025-06-29 02:42:28] Creating system tray icon
-[2025-06-29 02:42:28] System tray icon created
-[2025-06-29 02:42:28] Setting window flags and attributes
-[2025-06-29 02:42:28] Connecting signals and updating UI elements
-[2025-06-29 02:42:28] Connecting UI signals
-[2025-06-29 02:42:28] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:42:29] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:42:29] [SETTINGS] Detected membership: Free
-[2025-06-29 02:42:29] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:42:29] [SETTINGS] Initializing settings
-[2025-06-29 02:42:29] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:42:29] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:42:29] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:42:29] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:42:29] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:42:29] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:42:29] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:42:29] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:42:29] [SETTINGS] Set timestep to: 10
-[2025-06-29 02:42:29] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:42:29] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:42:29] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:42:29] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:42:29] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:42:29] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 02:42:29] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 02:42:29] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:42:29] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:42:29] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:42:29] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:42:29] File and message signals connected
-[2025-06-29 02:42:29] Window control signals connected
-[2025-06-29 02:42:29] Membership button signals connected
-[2025-06-29 02:42:29] Function button signals connected
-[2025-06-29 02:42:29] Checkbox signals connected
-[2025-06-29 02:42:29] VIP frame click event connected
-[2025-06-29 02:42:29] All signals connected
-[2025-06-29 02:42:29] Updating UI elements
-[2025-06-29 02:42:29] Getting application notice
-[2025-06-29 02:42:30] Set datetime to 2025-06-29 02:42:30
-[2025-06-29 02:42:30] UI elements updated
-[2025-06-29 02:42:30] Applying membership limits for Free
-[2025-06-29 02:42:30] Applying membership limits for Free
-[2025-06-29 02:42:30] Applying Free membership limits
-[2025-06-29 02:42:30] Free trial remaining days: 29
-[2025-06-29 02:42:30] Membership limits applied
-[2025-06-29 02:42:30] Checking for updates
-[2025-06-29 02:42:30] Loading tasks from JSON file
-[2025-06-29 02:42:30] Loading tasks from _internal/tasks.json
-[2025-06-29 02:42:30] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:42:30] Loaded 0 tasks from JSON
-[2025-06-29 02:42:30] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:42:30] Saving tasks back to JSON after processing
-[2025-06-29 02:42:30] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:42:30] Auto-completion setup completed
-[2025-06-29 02:42:40] Mouse move event without left button press, ignoring
-[2025-06-29 02:42:51] Opening setting window
-[2025-06-29 02:42:51] Successfully wrote to admin_log, sufficient permissions
-[2025-06-29 02:42:58] [SETTINGS] Saving settings and closing window
-[2025-06-29 02:42:58] [SETTINGS] Saved error_email as: False
-[2025-06-29 02:42:58] [SETTINGS] Saved error_sound as: True
-[2025-06-29 02:42:58] [SETTINGS] Saved net_time as: False
-[2025-06-29 02:42:58] [SETTINGS] Saved auto_update as: True
-[2025-06-29 02:42:58] [SETTINGS] Saved serve_lock as: False
-[2025-06-29 02:42:58] [SETTINGS] Saved close_option as: True
-[2025-06-29 02:42:58] [SETTINGS] Saved add_timestep as: 0
-[2025-06-29 02:42:58] [SETTINGS] Saved language as: cn
-[2025-06-29 02:42:58] [SETTINGS] Saved selected_audio_index as: 0
-[2025-06-29 02:42:58] [SETTINGS] Settings saved successfully
-[2025-06-29 02:43:05] Changing current WeChat instance to 杨圣洲
-[2025-06-29 02:43:05] Successfully changed current WeChat instance to 杨圣洲
-[2025-06-29 02:43:16] [WORKER_BASE] Thread initialized
-[2025-06-29 02:43:57] Changing current WeChat instance to 小羊
-[2025-06-29 02:43:57] Successfully changed current WeChat instance to 小羊
-[2025-06-29 02:44:02] [WORKER_BASE] Thread initialized
-[2025-06-29 02:49:19] Initializing MainWindow
-[2025-06-29 02:49:19] Ensuring configuration file exists
-[2025-06-29 02:49:19] Reading configuration values
-[2025-06-29 02:49:19] Reloading WeChat instances during initialization
-[2025-06-29 02:49:19] Starting to reload WeChat instances
-[2025-06-29 02:49:21] Successfully initialized WeChat instance for 小羊
-[2025-06-29 02:49:23] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 02:49:23] Default WeChat instance set to 小羊
-[2025-06-29 02:49:23] Successfully initialized 2 WeChat instances
-[2025-06-29 02:49:23] Set default WeChat nickname to 小羊
-[2025-06-29 02:49:23] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 02:49:23] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:49:23] [AiAssistant] Initializing AI assistant...
-[2025-06-29 02:49:23] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 02:49:23] Creating system tray icon
-[2025-06-29 02:49:23] Creating system tray icon
-[2025-06-29 02:49:23] System tray icon created
-[2025-06-29 02:49:23] Setting window flags and attributes
-[2025-06-29 02:49:23] Connecting signals and updating UI elements
-[2025-06-29 02:49:23] Connecting UI signals
-[2025-06-29 02:49:23] [SETTINGS] Initializing SettingWindow
-[2025-06-29 02:49:24] [ERROR_SOUND] Thread initialized
-[2025-06-29 02:49:24] [SETTINGS] Detected membership: Free
-[2025-06-29 02:49:24] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 02:49:24] [SETTINGS] Initializing settings
-[2025-06-29 02:49:24] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 02:49:24] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 02:49:24] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 02:49:24] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 02:49:24] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 02:49:24] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 02:49:24] [SETTINGS] Set language to: 简体中文
-[2025-06-29 02:49:24] [SETTINGS] Set version label to: 4.39
-[2025-06-29 02:49:24] [SETTINGS] Set timestep to: 0
-[2025-06-29 02:49:24] [SETTINGS] Loading audio selection: 0
-[2025-06-29 02:49:24] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 02:49:24] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 02:49:24] [SETTINGS] Set audio index to: 0
-[2025-06-29 02:49:24] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 02:49:24] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 02:49:24] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 02:49:24] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 02:49:24] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 02:49:24] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 02:49:24] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 02:49:24] File and message signals connected
-[2025-06-29 02:49:24] Window control signals connected
-[2025-06-29 02:49:24] Membership button signals connected
-[2025-06-29 02:49:24] Function button signals connected
-[2025-06-29 02:49:24] Checkbox signals connected
-[2025-06-29 02:49:24] VIP frame click event connected
-[2025-06-29 02:49:24] All signals connected
-[2025-06-29 02:49:24] Updating UI elements
-[2025-06-29 02:49:24] Getting application notice
-[2025-06-29 02:49:33] Set datetime to 2025-06-29 02:49:33
-[2025-06-29 02:49:33] UI elements updated
-[2025-06-29 02:49:33] Applying membership limits for Free
-[2025-06-29 02:49:33] Applying membership limits for Free
-[2025-06-29 02:49:33] Applying Free membership limits
-[2025-06-29 02:49:33] Free trial remaining days: 29
-[2025-06-29 02:49:33] Membership limits applied
-[2025-06-29 02:49:33] Checking for updates
-[2025-06-29 02:49:33] Loading tasks from JSON file
-[2025-06-29 02:49:33] Loading tasks from _internal/tasks.json
-[2025-06-29 02:49:33] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 02:49:33] Loaded 0 tasks from JSON
-[2025-06-29 02:49:33] Membership limit: 5, remaining slots: 5
-[2025-06-29 02:49:33] Saving tasks back to JSON after processing
-[2025-06-29 02:49:33] Setting up auto-completion for receiver LineEdit
-[2025-06-29 02:49:33] Auto-completion setup completed
-[2025-06-29 02:49:46] Changing current WeChat instance to 杨圣洲
-[2025-06-29 02:49:51] Successfully changed current WeChat instance to 杨圣洲
-[2025-06-29 02:50:03] [WORKER_BASE] Thread initialized
-[2025-06-29 02:50:21] Changing current WeChat instance to 小羊
-[2025-06-29 02:50:22] Successfully changed current WeChat instance to 小羊
-[2025-06-29 02:50:26] Changing current WeChat instance to 杨圣洲
-[2025-06-29 02:50:26] Successfully changed current WeChat instance to 杨圣洲
-[2025-06-29 03:02:26] Initializing MainWindow
-[2025-06-29 03:02:26] Ensuring configuration file exists
-[2025-06-29 03:02:26] Reading configuration values
-[2025-06-29 03:02:26] Reloading WeChat instances during initialization
-[2025-06-29 03:02:26] Starting to reload WeChat instances
-[2025-06-29 03:02:29] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 03:02:30] Successfully initialized WeChat instance for 小羊
-[2025-06-29 03:02:30] Default WeChat instance set to 杨圣洲
-[2025-06-29 03:02:30] Successfully initialized 2 WeChat instances
-[2025-06-29 03:02:30] Set default WeChat nickname to 杨圣洲
-[2025-06-29 03:02:30] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 03:02:30] [ERROR_SOUND] Thread initialized
-[2025-06-29 03:02:30] [AutoInfo] Initialization completed, membership type: Free
-[2025-06-29 03:02:30] [AiAssistant] Initializing AI assistant...
-[2025-06-29 03:02:30] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 03:02:30] Creating system tray icon
-[2025-06-29 03:02:30] Creating system tray icon
-[2025-06-29 03:02:30] System tray icon created
-[2025-06-29 03:02:30] Setting window flags and attributes
-[2025-06-29 03:02:30] Connecting signals and updating UI elements
-[2025-06-29 03:02:30] Connecting UI signals
-[2025-06-29 03:02:30] [SETTINGS] Initializing SettingWindow
-[2025-06-29 03:02:31] [ERROR_SOUND] Thread initialized
-[2025-06-29 03:02:31] [SETTINGS] Detected membership: Free
-[2025-06-29 03:02:31] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 03:02:31] [SETTINGS] Initializing settings
-[2025-06-29 03:02:31] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 03:02:31] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 03:02:31] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 03:02:31] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 03:02:31] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 03:02:31] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 03:02:31] [SETTINGS] Set language to: 简体中文
-[2025-06-29 03:02:31] [SETTINGS] Set version label to: 4.39
-[2025-06-29 03:02:31] [SETTINGS] Set timestep to: 0
-[2025-06-29 03:02:31] [SETTINGS] Loading audio selection: 0
-[2025-06-29 03:02:31] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 03:02:31] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 03:02:31] [SETTINGS] Set audio index to: 0
-[2025-06-29 03:02:31] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 03:02:31] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 03:02:31] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 03:02:31] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 03:02:31] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 03:02:31] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 03:02:31] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 03:02:31] File and message signals connected
-[2025-06-29 03:02:31] Window control signals connected
-[2025-06-29 03:02:31] Membership button signals connected
-[2025-06-29 03:02:31] Function button signals connected
-[2025-06-29 03:02:31] Checkbox signals connected
-[2025-06-29 03:02:31] VIP frame click event connected
-[2025-06-29 03:02:31] All signals connected
-[2025-06-29 03:02:31] Updating UI elements
-[2025-06-29 03:02:31] Getting application notice
-[2025-06-29 03:02:33] Set datetime to 2025-06-29 03:02:33
-[2025-06-29 03:02:33] UI elements updated
-[2025-06-29 03:02:33] Applying membership limits for Free
-[2025-06-29 03:02:33] Applying membership limits for Free
-[2025-06-29 03:02:33] Applying Free membership limits
-[2025-06-29 03:02:34] Free trial remaining days: 29
-[2025-06-29 03:02:34] Membership limits applied
-[2025-06-29 03:02:34] Checking for updates
-[2025-06-29 03:02:35] Loading tasks from JSON file
-[2025-06-29 03:02:35] Loading tasks from _internal/tasks.json
-[2025-06-29 03:02:35] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 03:02:35] Loaded 0 tasks from JSON
-[2025-06-29 03:02:35] Membership limit: 5, remaining slots: 5
-[2025-06-29 03:02:35] Saving tasks back to JSON after processing
-[2025-06-29 03:02:35] [AutoInfo] Tasks saved successfully, total 0 tasks
-[2025-06-29 03:02:35] Setting up auto-completion for receiver LineEdit
-[2025-06-29 03:02:35] Auto-completion setup completed
-[2025-06-29 03:04:12] Initializing MainWindow
-[2025-06-29 03:04:12] Ensuring configuration file exists
-[2025-06-29 03:04:13] Reading configuration values
-[2025-06-29 03:04:13] Reloading WeChat instances during initialization
-[2025-06-29 03:04:13] Starting to reload WeChat instances
-[2025-06-29 03:04:14] Successfully initialized WeChat instance for 小羊
-[2025-06-29 03:04:15] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 03:04:15] Default WeChat instance set to 小羊
-[2025-06-29 03:04:15] Successfully initialized 2 WeChat instances
-[2025-06-29 03:04:15] Set default WeChat nickname to 小羊
-[2025-06-29 03:04:15] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 03:04:15] [ERROR_SOUND] Thread initialized
-[2025-06-29 03:04:15] [AutoInfo] Initialization completed, membership type: Free
-[2025-06-29 03:04:15] [AutoInfo] Email processing thread started
-[2025-06-29 03:04:15] [AiAssistant] Initializing AI assistant...
-[2025-06-29 03:04:15] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 03:04:15] Creating system tray icon
-[2025-06-29 03:04:15] Creating system tray icon
-[2025-06-29 03:04:15] System tray icon created
-[2025-06-29 03:04:15] Setting window flags and attributes
-[2025-06-29 03:04:15] Connecting signals and updating UI elements
-[2025-06-29 03:04:15] Connecting UI signals
-[2025-06-29 03:04:15] [SETTINGS] Initializing SettingWindow
-[2025-06-29 03:04:15] [ERROR_SOUND] Thread initialized
-[2025-06-29 03:04:15] [SETTINGS] Detected membership: Free
-[2025-06-29 03:04:15] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 03:04:15] [SETTINGS] Initializing settings
-[2025-06-29 03:04:15] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 03:04:15] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 03:04:15] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 03:04:15] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 03:04:15] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 03:04:15] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 03:04:15] [SETTINGS] Set language to: 简体中文
-[2025-06-29 03:04:15] [SETTINGS] Set version label to: 4.39
-[2025-06-29 03:04:15] [SETTINGS] Set timestep to: 0
-[2025-06-29 03:04:15] [SETTINGS] Loading audio selection: 0
-[2025-06-29 03:04:15] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 03:04:15] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 03:04:15] [SETTINGS] Set audio index to: 0
-[2025-06-29 03:04:16] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 03:04:16] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 03:04:16] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 03:04:16] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 03:04:16] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 03:04:16] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 03:04:16] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 03:04:16] File and message signals connected
-[2025-06-29 03:04:16] Window control signals connected
-[2025-06-29 03:04:16] Membership button signals connected
-[2025-06-29 03:04:16] Function button signals connected
-[2025-06-29 03:04:16] Checkbox signals connected
-[2025-06-29 03:04:16] VIP frame click event connected
-[2025-06-29 03:04:16] All signals connected
-[2025-06-29 03:04:16] Updating UI elements
-[2025-06-29 03:04:16] Getting application notice
-[2025-06-29 03:04:16] Set datetime to 2025-06-29 03:04:16
-[2025-06-29 03:04:16] UI elements updated
-[2025-06-29 03:04:16] Applying membership limits for Free
-[2025-06-29 03:04:16] Applying membership limits for Free
-[2025-06-29 03:04:16] Applying Free membership limits
-[2025-06-29 03:04:16] Free trial remaining days: 29
-[2025-06-29 03:04:16] Membership limits applied
-[2025-06-29 03:04:16] Checking for updates
-[2025-06-29 03:04:16] Loading tasks from JSON file
-[2025-06-29 03:04:16] Loading tasks from _internal/tasks.json
-[2025-06-29 03:04:16] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 03:04:16] Loaded 0 tasks from JSON
-[2025-06-29 03:04:16] Membership limit: 5, remaining slots: 5
-[2025-06-29 03:04:16] Saving tasks back to JSON after processing
-[2025-06-29 03:04:16] [AutoInfo] Tasks saved successfully, total 0 tasks
-[2025-06-29 03:04:16] Setting up auto-completion for receiver LineEdit
-[2025-06-29 03:04:17] Auto-completion setup completed
-[2025-06-29 03:04:19] [AiAssistant] Attempting to start takeover...
-[2025-06-29 03:04:19] [AiAssistant] Validating takeover parameters...
-[2025-06-29 03:04:19] [AiAssistant] Takeover receiver is empty, takeover canceled
-[2025-06-29 03:04:31] [AiAssistant] Attempting to start takeover...
-[2025-06-29 03:04:31] [AiAssistant] Validating takeover parameters...
-[2025-06-29 03:04:31] [AiAssistant] Starting takeover - Receiver: 文件传输助手, Model: 禁用模型, Role: 你很温馨,回复简单明了。
-[2025-06-29 03:04:31] [AiAssistant] Creating and starting AI worker thread...
-[2025-06-29 03:04:31] [WORKER_BASE] Thread initialized
-[2025-06-29 03:04:31] [AI_WORKER] Loading auto-reply rules...
-[2025-06-29 03:04:31] [AI_WORKER] Rules loaded successfully
-[2025-06-29 03:04:31] [AI_WORKER] Thread initialized for receiver: 文件传输助手, model: 禁用模型
-[2025-06-29 03:04:31] [AI_WORKER] Thread started
-[2025-06-29 03:04:31] [AI_WORKER] Initializing connection with 文件传输助手
-[2025-06-29 03:04:31] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
-[2025-06-29 03:04:31] [AiAssistant] Button icon updated successfully
-[2025-06-29 03:04:31] [AiAssistant] AI worker thread started successfully
-[2025-06-29 14:28:48] Initializing MainWindow
-[2025-06-29 14:28:48] Ensuring configuration file exists
-[2025-06-29 14:28:48] Reading configuration values
-[2025-06-29 14:28:48] Reloading WeChat instances during initialization
-[2025-06-29 14:28:48] Starting to reload WeChat instances
-[2025-06-29 14:28:51] WeChat not logged in during reload
-[2025-06-29 14:28:54] WeChat initialization failed: 微信未登录
-[2025-06-29 14:28:54] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 14:28:54] [ERROR_SOUND] Thread initialized
-[2025-06-29 14:28:54] [AutoInfo] Initialization completed, membership type: Free
-[2025-06-29 14:28:54] [AutoInfo] Email processing thread started
-[2025-06-29 14:28:54] [AiAssistant] Initializing AI assistant...
-[2025-06-29 14:28:54] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 14:28:54] Creating system tray icon
-[2025-06-29 14:28:54] Creating system tray icon
-[2025-06-29 14:28:54] System tray icon created
-[2025-06-29 14:28:54] Setting window flags and attributes
-[2025-06-29 14:28:54] Connecting signals and updating UI elements
-[2025-06-29 14:28:54] Connecting UI signals
-[2025-06-29 14:28:54] [SETTINGS] Initializing SettingWindow
-[2025-06-29 14:28:55] [ERROR_SOUND] Thread initialized
-[2025-06-29 14:28:55] [SETTINGS] Detected membership: Free
-[2025-06-29 14:28:55] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 14:28:55] [SETTINGS] Initializing settings
-[2025-06-29 14:28:55] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 14:28:55] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 14:28:55] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 14:28:55] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 14:28:55] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 14:28:55] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 14:28:55] [SETTINGS] Set language to: 简体中文
-[2025-06-29 14:28:55] [SETTINGS] Set version label to: 4.39
-[2025-06-29 14:28:55] [SETTINGS] Set timestep to: 0
-[2025-06-29 14:28:55] [SETTINGS] Loading audio selection: 0
-[2025-06-29 14:28:55] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 14:28:55] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 14:28:55] [SETTINGS] Set audio index to: 0
-[2025-06-29 14:28:55] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 14:28:55] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 14:28:55] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 14:28:55] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 14:28:55] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 14:28:55] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 14:28:55] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 14:28:55] File and message signals connected
-[2025-06-29 14:28:55] Window control signals connected
-[2025-06-29 14:28:55] Membership button signals connected
-[2025-06-29 14:28:55] Function button signals connected
-[2025-06-29 14:28:55] Checkbox signals connected
-[2025-06-29 14:28:55] VIP frame click event connected
-[2025-06-29 14:28:55] All signals connected
-[2025-06-29 14:28:55] Updating UI elements
-[2025-06-29 14:28:55] Getting application notice
-[2025-06-29 14:28:55] Set datetime to 2025-06-29 14:28:56
-[2025-06-29 14:28:55] UI elements updated
-[2025-06-29 14:28:55] Applying membership limits for Free
-[2025-06-29 14:28:55] Applying membership limits for Free
-[2025-06-29 14:28:56] Applying Free membership limits
-[2025-06-29 14:28:56] Free trial remaining days: 29
-[2025-06-29 14:28:56] Membership limits applied
-[2025-06-29 14:28:56] Checking for updates
-[2025-06-29 14:28:56] Loading tasks from JSON file
-[2025-06-29 14:28:56] Loading tasks from _internal/tasks.json
-[2025-06-29 14:28:56] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 14:28:56] Loaded 0 tasks from JSON
-[2025-06-29 14:28:56] Membership limit: 5, remaining slots: 5
-[2025-06-29 14:28:56] Saving tasks back to JSON after processing
-[2025-06-29 14:28:56] [AutoInfo] Tasks saved successfully, total 0 tasks
-[2025-06-29 14:29:30] Opening activities window
-[2025-06-29 14:29:30] Successfully wrote to admin_log, sufficient permissions
-[2025-06-29 14:41:06] Initializing MainWindow
-[2025-06-29 14:41:06] Ensuring configuration file exists
-[2025-06-29 14:41:06] Reading configuration values
-[2025-06-29 14:41:06] Reloading WeChat instances during initialization
-[2025-06-29 14:41:06] Starting to reload WeChat instances
-[2025-06-29 14:41:09] WeChat not logged in during reload
-[2025-06-29 14:41:10] WeChat initialization failed: 微信未登录
-[2025-06-29 14:41:10] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 14:41:10] [ERROR_SOUND] Thread initialized
-[2025-06-29 14:41:10] [AutoInfo] Initialization completed, membership type: Free
-[2025-06-29 14:41:10] [AiAssistant] Initializing AI assistant...
-[2025-06-29 14:41:10] [AiAssistant] Initialization completed, membership type: Free
-[2025-06-29 14:41:10] Creating system tray icon
-[2025-06-29 14:41:10] Creating system tray icon
-[2025-06-29 14:41:10] System tray icon created
-[2025-06-29 14:41:10] Setting window flags and attributes
-[2025-06-29 14:41:10] Connecting signals and updating UI elements
-[2025-06-29 14:41:10] Connecting UI signals
-[2025-06-29 14:41:10] [SETTINGS] Initializing SettingWindow
-[2025-06-29 14:41:10] [ERROR_SOUND] Thread initialized
-[2025-06-29 14:41:10] [SETTINGS] Detected membership: Free
-[2025-06-29 14:41:10] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-06-29 14:41:10] [SETTINGS] Initializing settings
-[2025-06-29 14:41:10] [SETTINGS] Set error_email checkbox to: False
-[2025-06-29 14:41:10] [SETTINGS] Set error_sound checkbox to: True
-[2025-06-29 14:41:10] [SETTINGS] Set net_time checkbox to: False
-[2025-06-29 14:41:10] [SETTINGS] Set auto_update checkbox to: True
-[2025-06-29 14:41:10] [SETTINGS] Set serve_lock checkbox to: False
-[2025-06-29 14:41:10] [SETTINGS] Set close_option checkbox to: True
-[2025-06-29 14:41:10] [SETTINGS] Set language to: 简体中文
-[2025-06-29 14:41:10] [SETTINGS] Set version label to: 4.39
-[2025-06-29 14:41:10] [SETTINGS] Set timestep to: 0
-[2025-06-29 14:41:10] [SETTINGS] Loading audio selection: 0
-[2025-06-29 14:41:10] [SETTINGS] Updating selected sound to index: 0
-[2025-06-29 14:41:10] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-06-29 14:41:10] [SETTINGS] Set audio index to: 0
-[2025-06-29 14:41:11] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-06-29 14:41:11] [REPLY_DIALOG] Loading rules from JSON
-[2025-06-29 14:41:11] [REPLY_DIALOG] Loaded 3 rules from JSON
-[2025-06-29 14:41:11] [REPLY_DIALOG] Displaying 3 rules
-[2025-06-29 14:41:11] [REPLY_DIALOG] Creating rule frame: 包含, 吃饭, 我爱吃饭
-[2025-06-29 14:41:11] [REPLY_DIALOG] Creating rule frame: 包含, 喝水, 我爱喝水
-[2025-06-29 14:41:11] [REPLY_DIALOG] Creating rule frame: 等于, 嘻嘻嘻, 不许嘻嘻嘻
-[2025-06-29 14:41:11] File and message signals connected
-[2025-06-29 14:41:11] Window control signals connected
-[2025-06-29 14:41:11] Membership button signals connected
-[2025-06-29 14:41:11] Function button signals connected
-[2025-06-29 14:41:11] Checkbox signals connected
-[2025-06-29 14:41:11] VIP frame click event connected
-[2025-06-29 14:41:11] All signals connected
-[2025-06-29 14:41:11] Updating UI elements
-[2025-06-29 14:41:11] Getting application notice
-[2025-06-29 14:41:12] Set datetime to 2025-06-29 14:41:12
-[2025-06-29 14:41:12] UI elements updated
-[2025-06-29 14:41:12] Applying membership limits for Free
-[2025-06-29 14:41:12] Applying membership limits for Free
-[2025-06-29 14:41:12] Applying Free membership limits
-[2025-06-29 14:41:17] Free trial remaining days: 29
-[2025-06-29 14:41:17] Membership limits applied
-[2025-06-29 14:41:17] Checking for updates
-[2025-06-29 14:41:17] Loading tasks from JSON file
-[2025-06-29 14:41:17] Loading tasks from _internal/tasks.json
-[2025-06-29 14:41:17] JSON file _internal/tasks.json exists, attempting to load
-[2025-06-29 14:41:17] Loaded 0 tasks from JSON
-[2025-06-29 14:41:17] Membership limit: 5, remaining slots: 5
-[2025-06-29 14:41:17] Saving tasks back to JSON after processing
-[2025-06-29 14:41:17] [AutoInfo] Tasks saved successfully, total 0 tasks
-[2025-06-29 14:41:24] [AiAssistant] Attempting to start takeover...
-[2025-06-29 14:41:24] [AiAssistant] Validating takeover parameters...
-[2025-06-29 14:41:24] [AiAssistant] Starting takeover - Receiver: 测试, Model: 禁用模型, Role: 你很温馨,回复简单明了。
-[2025-06-29 14:41:24] [AiAssistant] Creating and starting AI worker thread...
-[2025-06-29 14:41:24] [WORKER_BASE] Thread initialized
-[2025-06-29 14:41:24] [AI_WORKER] Loading auto-reply rules...
-[2025-06-29 14:41:24] [AI_WORKER] Rules loaded successfully
-[2025-06-29 14:41:24] [AI_WORKER] Thread initialized for receiver: 测试, model: 禁用模型
-[2025-06-29 14:41:25] [AI_WORKER] Thread started
-[2025-06-29 14:41:25] [AI_WORKER] Initializing connection with 测试
-[2025-06-29 14:41:25] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
-[2025-06-29 14:41:25] [AiAssistant] Button icon updated successfully
-[2025-06-29 14:41:25] [AiAssistant] AI worker thread started successfully
-[2025-06-29 14:41:26] [AI_WORKER] Connection initialization failed: 'NoneType' object has no attribute 'SendMsg'
-[2025-06-29 14:41:26] [AI_WORKER] Thread finished
-[2025-06-29 14:41:26] [AiAssistant] Handling thread finished event...
-[2025-06-29 14:41:26] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
-[2025-06-29 14:41:26] [AiAssistant] Button icon updated successfully
-[2025-06-29 14:41:26] [AiAssistant] AI worker thread completed successfully
-[2025-06-29 14:42:49] Initializing MainWindow
-[2025-06-29 14:42:50] Ensuring configuration file exists
-[2025-06-29 14:42:50] Reading configuration values
-[2025-06-29 14:42:50] Reloading WeChat instances during initialization
-[2025-06-29 14:42:50] Starting to reload WeChat instances
-[2025-06-29 14:42:52] Successfully initialized WeChat instance for 杨圣洲
-[2025-06-29 14:42:52] Default WeChat instance set to 杨圣洲
-[2025-06-29 14:42:52] Successfully initialized 1 WeChat instances
-[2025-06-29 14:42:52] Set default WeChat nickname to 杨圣洲
-[2025-06-29 14:42:52] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-06-29 14:42:52] [ERROR_SOUND] Thread initialized
-[2025-06-29 14:42:52] [AutoInfo] Initialization completed, membership type: Free
 [2025-06-29 14:42:52] [AutoInfo] Email processing thread started
 [2025-06-29 14:42:52] [AiAssistant] Initializing AI assistant...
 [2025-06-29 14:42:52] [AiAssistant] Initialization completed, membership type: Free
@@ -2999,3 +2170,832 @@
 [2025-06-29 16:27:48] Auto-completion setup completed
 [2025-06-29 16:27:58] Opening activities window
 [2025-06-29 16:27:58] Successfully wrote to admin_log, sufficient permissions
+[2025-06-29 16:39:20] Initializing MainWindow
+[2025-06-29 16:39:20] Ensuring configuration file exists
+[2025-06-29 16:39:20] Reading configuration values
+[2025-06-29 16:39:20] Reloading WeChat instances during initialization
+[2025-06-29 16:39:20] Starting to reload WeChat instances
+[2025-06-29 16:39:27] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 16:39:27] Default WeChat instance set to 杨圣洲
+[2025-06-29 16:39:27] Successfully initialized 1 WeChat instances
+[2025-06-29 16:39:27] Set default WeChat nickname to 杨圣洲
+[2025-06-29 16:39:27] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 16:39:27] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:39:27] [AutoInfo] Email processing thread started
+[2025-06-29 16:39:27] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 16:39:27] [AiAssistant] Initializing AI assistant...
+[2025-06-29 16:39:27] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 16:39:27] Creating system tray icon
+[2025-06-29 16:39:27] Creating system tray icon
+[2025-06-29 16:39:27] System tray icon created
+[2025-06-29 16:39:27] Setting window flags and attributes
+[2025-06-29 16:39:27] Connecting signals and updating UI elements
+[2025-06-29 16:39:27] Connecting UI signals
+[2025-06-29 16:39:27] [SETTINGS] Initializing SettingWindow
+[2025-06-29 16:39:27] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:39:27] [SETTINGS] Detected membership: Free
+[2025-06-29 16:39:27] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 16:39:27] [SETTINGS] Initializing settings
+[2025-06-29 16:39:27] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 16:39:27] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 16:39:27] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 16:39:27] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 16:39:27] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 16:39:27] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 16:39:27] [SETTINGS] Set language to: 简体中文
+[2025-06-29 16:39:27] [SETTINGS] Set version label to: 4.39
+[2025-06-29 16:39:27] [SETTINGS] Set timestep to: 0
+[2025-06-29 16:39:27] [SETTINGS] Loading audio selection: 0
+[2025-06-29 16:39:27] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 16:39:27] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 16:39:27] [SETTINGS] Set audio index to: 0
+[2025-06-29 16:39:28] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 16:39:28] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 16:39:28] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 16:39:28] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 16:39:28] File and message signals connected
+[2025-06-29 16:39:28] Window control signals connected
+[2025-06-29 16:39:28] Membership button signals connected
+[2025-06-29 16:39:28] Function button signals connected
+[2025-06-29 16:39:28] Checkbox signals connected
+[2025-06-29 16:39:28] VIP frame click event connected
+[2025-06-29 16:39:28] All signals connected
+[2025-06-29 16:39:28] Updating UI elements
+[2025-06-29 16:39:28] Getting application notice
+[2025-06-29 16:39:29] Set datetime to 2025-06-29 16:39:29
+[2025-06-29 16:39:29] UI elements updated
+[2025-06-29 16:39:29] Applying membership limits for Free
+[2025-06-29 16:39:29] Applying membership limits for Free
+[2025-06-29 16:39:29] Applying Free membership limits
+[2025-06-29 16:39:29] Free trial remaining days: 29
+[2025-06-29 16:39:29] Membership limits applied
+[2025-06-29 16:39:29] Checking for updates
+[2025-06-29 16:39:29] Loading tasks from JSON file
+[2025-06-29 16:39:29] Loading tasks from _internal/tasks.json
+[2025-06-29 16:39:29] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 16:39:29] Loaded 0 tasks from JSON
+[2025-06-29 16:39:29] Membership limit: 5, remaining slots: 5
+[2025-06-29 16:39:29] Saving tasks back to JSON after processing
+[2025-06-29 16:39:29] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 16:39:29] Setting up auto-completion for receiver LineEdit
+[2025-06-29 16:39:29] Auto-completion setup completed
+[2025-06-29 16:39:35] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:39:35] [AiAssistant] Validating takeover parameters...
+[2025-06-29 16:39:35] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 16:39:35] [WORKER_BASE] Thread initialized
+[2025-06-29 16:39:35] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 16:39:35] [AI_WORKER] Rules file not found
+[2025-06-29 16:39:35] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 16:39:35] [AI_WORKER] Thread started
+[2025-06-29 16:39:35] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 16:39:36] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 16:39:36] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:39:36] [AiAssistant] AI worker thread started successfully
+[2025-06-29 16:39:39] [AI_WORKER] Connection initialized successfully
+[2025-06-29 16:39:48] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:48] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:49] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:49] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:50] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:50] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:50] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:51] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:51] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:52] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:52] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:53] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:53] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:53] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:54] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:54] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:55] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:55] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:56] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:56] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:57] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:57] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:57] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:58] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:58] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:59] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:39:59] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:00] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:00] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:00] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:01] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:01] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:02] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:02] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:03] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:03] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:03] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:04] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:04] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:05] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:05] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:06] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:06] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:06] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:07] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:07] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:08] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:08] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:09] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:09] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:10] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:10] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:10] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:11] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:11] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:12] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:12] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:13] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:13] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:13] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:14] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:14] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:15] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:15] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:16] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:16] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:16] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:17] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:17] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:18] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:18] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:19] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:19] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:19] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:20] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:20] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:21] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:21] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:22] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:22] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:40:22] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:23] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:23] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:24] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:24] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:24] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:25] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:25] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:26] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:26] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:27] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:27] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:27] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:28] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:28] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:29] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:29] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:29] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:30] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:30] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:31] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:31] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:32] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:32] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:32] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:33] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:33] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:34] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:34] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:35] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:40:35] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:41:05] Initializing MainWindow
+[2025-06-29 16:41:05] Ensuring configuration file exists
+[2025-06-29 16:41:05] Reading configuration values
+[2025-06-29 16:41:05] Reloading WeChat instances during initialization
+[2025-06-29 16:41:05] Starting to reload WeChat instances
+[2025-06-29 16:41:11] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 16:41:11] Default WeChat instance set to 杨圣洲
+[2025-06-29 16:41:11] Successfully initialized 1 WeChat instances
+[2025-06-29 16:41:11] Set default WeChat nickname to 杨圣洲
+[2025-06-29 16:41:11] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 16:41:11] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:41:11] [AutoInfo] Email processing thread started
+[2025-06-29 16:41:11] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 16:41:11] [AiAssistant] Initializing AI assistant...
+[2025-06-29 16:41:11] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 16:41:11] Creating system tray icon
+[2025-06-29 16:41:11] Creating system tray icon
+[2025-06-29 16:41:11] System tray icon created
+[2025-06-29 16:41:11] Setting window flags and attributes
+[2025-06-29 16:41:11] Connecting signals and updating UI elements
+[2025-06-29 16:41:11] Connecting UI signals
+[2025-06-29 16:41:11] [SETTINGS] Initializing SettingWindow
+[2025-06-29 16:41:12] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:41:12] [SETTINGS] Detected membership: Free
+[2025-06-29 16:41:12] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 16:41:12] [SETTINGS] Initializing settings
+[2025-06-29 16:41:12] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 16:41:12] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 16:41:12] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 16:41:12] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 16:41:12] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 16:41:12] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 16:41:12] [SETTINGS] Set language to: 简体中文
+[2025-06-29 16:41:12] [SETTINGS] Set version label to: 4.39
+[2025-06-29 16:41:12] [SETTINGS] Set timestep to: 0
+[2025-06-29 16:41:12] [SETTINGS] Loading audio selection: 0
+[2025-06-29 16:41:12] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 16:41:12] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 16:41:12] [SETTINGS] Set audio index to: 0
+[2025-06-29 16:41:12] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 16:41:12] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 16:41:12] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 16:41:12] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 16:41:12] File and message signals connected
+[2025-06-29 16:41:12] Window control signals connected
+[2025-06-29 16:41:12] Membership button signals connected
+[2025-06-29 16:41:12] Function button signals connected
+[2025-06-29 16:41:12] Checkbox signals connected
+[2025-06-29 16:41:12] VIP frame click event connected
+[2025-06-29 16:41:12] All signals connected
+[2025-06-29 16:41:12] Updating UI elements
+[2025-06-29 16:41:12] Getting application notice
+[2025-06-29 16:41:22] Set datetime to 2025-06-29 16:41:22.917551
+[2025-06-29 16:41:22] UI elements updated
+[2025-06-29 16:41:22] Applying membership limits for Free
+[2025-06-29 16:41:22] Applying membership limits for Free
+[2025-06-29 16:41:22] Applying Free membership limits
+[2025-06-29 16:41:23] Free trial remaining days: 29
+[2025-06-29 16:41:23] Membership limits applied
+[2025-06-29 16:41:23] Checking for updates
+[2025-06-29 16:41:23] Loading tasks from JSON file
+[2025-06-29 16:41:23] Loading tasks from _internal/tasks.json
+[2025-06-29 16:41:23] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 16:41:23] Loaded 0 tasks from JSON
+[2025-06-29 16:41:23] Membership limit: 5, remaining slots: 5
+[2025-06-29 16:41:23] Saving tasks back to JSON after processing
+[2025-06-29 16:41:23] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 16:41:23] Setting up auto-completion for receiver LineEdit
+[2025-06-29 16:41:23] Auto-completion setup completed
+[2025-06-29 16:41:31] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:41:31] [AiAssistant] Validating takeover parameters...
+[2025-06-29 16:41:31] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 16:41:31] [WORKER_BASE] Thread initialized
+[2025-06-29 16:41:31] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 16:41:31] [AI_WORKER] Rules file not found
+[2025-06-29 16:41:31] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 16:41:31] [AI_WORKER] Thread started
+[2025-06-29 16:41:31] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 16:41:32] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 16:41:32] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:41:32] [AiAssistant] AI worker thread started successfully
+[2025-06-29 16:41:35] [AI_WORKER] Connection initialized successfully
+[2025-06-29 16:41:36] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦...
+[2025-06-29 16:41:36] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:36] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:37] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:37] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:38] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:38] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:38] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:39] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:39] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:40] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:40] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:41] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:41] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:41] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:42] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:41:42] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 16:41:42] [WORKER_BASE] Thread interruption requested
+[2025-06-29 16:41:42] [AiAssistant] Takeover stopped successfully
+[2025-06-29 16:41:42] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:41:42] [AI_WORKER] Thread finished
+[2025-06-29 16:41:42] [AiAssistant] Handling thread finished event...
+[2025-06-29 16:41:42] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 16:41:42] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:41:42] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 16:42:46] Initializing MainWindow
+[2025-06-29 16:42:46] Ensuring configuration file exists
+[2025-06-29 16:42:46] Reading configuration values
+[2025-06-29 16:42:46] Reloading WeChat instances during initialization
+[2025-06-29 16:42:46] Starting to reload WeChat instances
+[2025-06-29 16:42:53] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 16:42:53] Default WeChat instance set to 杨圣洲
+[2025-06-29 16:42:53] Successfully initialized 1 WeChat instances
+[2025-06-29 16:42:53] Set default WeChat nickname to 杨圣洲
+[2025-06-29 16:42:53] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 16:42:53] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:42:53] [AutoInfo] Email processing thread started
+[2025-06-29 16:42:53] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 16:42:53] [AiAssistant] Initializing AI assistant...
+[2025-06-29 16:42:53] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 16:42:53] Creating system tray icon
+[2025-06-29 16:42:53] Creating system tray icon
+[2025-06-29 16:42:53] System tray icon created
+[2025-06-29 16:42:53] Setting window flags and attributes
+[2025-06-29 16:42:53] Connecting signals and updating UI elements
+[2025-06-29 16:42:53] Connecting UI signals
+[2025-06-29 16:42:53] [SETTINGS] Initializing SettingWindow
+[2025-06-29 16:42:53] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:42:53] [SETTINGS] Detected membership: Free
+[2025-06-29 16:42:53] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 16:42:53] [SETTINGS] Initializing settings
+[2025-06-29 16:42:53] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 16:42:53] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 16:42:53] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 16:42:53] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 16:42:53] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 16:42:53] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 16:42:53] [SETTINGS] Set language to: 简体中文
+[2025-06-29 16:42:53] [SETTINGS] Set version label to: 4.39
+[2025-06-29 16:42:53] [SETTINGS] Set timestep to: 0
+[2025-06-29 16:42:53] [SETTINGS] Loading audio selection: 0
+[2025-06-29 16:42:53] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 16:42:53] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 16:42:53] [SETTINGS] Set audio index to: 0
+[2025-06-29 16:42:53] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 16:42:53] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 16:42:53] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 16:42:53] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 16:42:53] File and message signals connected
+[2025-06-29 16:42:53] Window control signals connected
+[2025-06-29 16:42:53] Membership button signals connected
+[2025-06-29 16:42:53] Function button signals connected
+[2025-06-29 16:42:53] Checkbox signals connected
+[2025-06-29 16:42:53] VIP frame click event connected
+[2025-06-29 16:42:53] All signals connected
+[2025-06-29 16:42:53] Updating UI elements
+[2025-06-29 16:42:53] Getting application notice
+[2025-06-29 16:42:54] Set datetime to 2025-06-29 16:42:54
+[2025-06-29 16:42:54] UI elements updated
+[2025-06-29 16:42:54] Applying membership limits for Free
+[2025-06-29 16:42:54] Applying membership limits for Free
+[2025-06-29 16:42:54] Applying Free membership limits
+[2025-06-29 16:42:59] Free trial remaining days: 29
+[2025-06-29 16:42:59] Membership limits applied
+[2025-06-29 16:42:59] Checking for updates
+[2025-06-29 16:42:59] Loading tasks from JSON file
+[2025-06-29 16:42:59] Loading tasks from _internal/tasks.json
+[2025-06-29 16:42:59] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 16:42:59] Loaded 0 tasks from JSON
+[2025-06-29 16:42:59] Membership limit: 5, remaining slots: 5
+[2025-06-29 16:42:59] Saving tasks back to JSON after processing
+[2025-06-29 16:42:59] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 16:42:59] Setting up auto-completion for receiver LineEdit
+[2025-06-29 16:42:59] Auto-completion setup completed
+[2025-06-29 16:43:06] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:43:06] [AiAssistant] Validating takeover parameters...
+[2025-06-29 16:43:06] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 16:43:06] [WORKER_BASE] Thread initialized
+[2025-06-29 16:43:06] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 16:43:07] [AI_WORKER] Rules file not found
+[2025-06-29 16:43:07] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 16:43:07] [AI_WORKER] Thread started
+[2025-06-29 16:43:07] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 16:43:08] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 16:43:08] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:43:08] [AiAssistant] AI worker thread started successfully
+[2025-06-29 16:43:11] [AI_WORKER] Connection initialized successfully
+[2025-06-29 16:43:11] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:12] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:12] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:13] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:13] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:14] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:14] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:14] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:15] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:15] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:16] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:16] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:17] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:17] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:43:17] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:52:52] Initializing MainWindow
+[2025-06-29 16:52:52] Ensuring configuration file exists
+[2025-06-29 16:52:52] Reading configuration values
+[2025-06-29 16:52:52] Reloading WeChat instances during initialization
+[2025-06-29 16:52:52] Starting to reload WeChat instances
+[2025-06-29 16:52:53] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 16:52:53] Default WeChat instance set to 杨圣洲
+[2025-06-29 16:52:53] Successfully initialized 1 WeChat instances
+[2025-06-29 16:52:53] Set default WeChat nickname to 杨圣洲
+[2025-06-29 16:52:53] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 16:52:53] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:52:53] [AutoInfo] Email processing thread started
+[2025-06-29 16:52:53] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 16:52:53] [AiAssistant] Initializing AI assistant...
+[2025-06-29 16:52:53] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 16:52:53] Creating system tray icon
+[2025-06-29 16:52:53] Creating system tray icon
+[2025-06-29 16:52:53] System tray icon created
+[2025-06-29 16:52:53] Setting window flags and attributes
+[2025-06-29 16:52:53] Connecting signals and updating UI elements
+[2025-06-29 16:52:53] Connecting UI signals
+[2025-06-29 16:52:53] [SETTINGS] Initializing SettingWindow
+[2025-06-29 16:52:54] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:52:54] [SETTINGS] Detected membership: Free
+[2025-06-29 16:52:54] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 16:52:54] [SETTINGS] Initializing settings
+[2025-06-29 16:52:54] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 16:52:54] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 16:52:54] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 16:52:54] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 16:52:54] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 16:52:54] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 16:52:54] [SETTINGS] Set language to: 简体中文
+[2025-06-29 16:52:54] [SETTINGS] Set version label to: 4.39
+[2025-06-29 16:52:54] [SETTINGS] Set timestep to: 0
+[2025-06-29 16:52:54] [SETTINGS] Loading audio selection: 0
+[2025-06-29 16:52:54] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 16:52:54] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 16:52:54] [SETTINGS] Set audio index to: 0
+[2025-06-29 16:52:54] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 16:52:54] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 16:52:54] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 16:52:54] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 16:52:54] File and message signals connected
+[2025-06-29 16:52:54] Window control signals connected
+[2025-06-29 16:52:54] Membership button signals connected
+[2025-06-29 16:52:54] Function button signals connected
+[2025-06-29 16:52:54] Checkbox signals connected
+[2025-06-29 16:52:54] VIP frame click event connected
+[2025-06-29 16:52:54] All signals connected
+[2025-06-29 16:52:54] Updating UI elements
+[2025-06-29 16:52:54] Getting application notice
+[2025-06-29 16:52:58] Set datetime to 2025-06-29 16:52:56
+[2025-06-29 16:52:58] UI elements updated
+[2025-06-29 16:52:58] Applying membership limits for Free
+[2025-06-29 16:52:58] Applying membership limits for Free
+[2025-06-29 16:52:58] Applying Free membership limits
+[2025-06-29 16:52:58] Free trial remaining days: 29
+[2025-06-29 16:52:58] Membership limits applied
+[2025-06-29 16:52:58] Checking for updates
+[2025-06-29 16:52:58] Loading tasks from JSON file
+[2025-06-29 16:52:58] Loading tasks from _internal/tasks.json
+[2025-06-29 16:52:59] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 16:52:59] Loaded 0 tasks from JSON
+[2025-06-29 16:52:59] Membership limit: 5, remaining slots: 5
+[2025-06-29 16:52:59] Saving tasks back to JSON after processing
+[2025-06-29 16:52:59] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 16:52:59] Setting up auto-completion for receiver LineEdit
+[2025-06-29 16:52:59] Auto-completion setup completed
+[2025-06-29 16:53:16] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:53:16] [AiAssistant] Validating takeover parameters...
+[2025-06-29 16:53:16] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 16:53:16] [WORKER_BASE] Thread initialized
+[2025-06-29 16:53:16] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 16:53:16] [AI_WORKER] Rules file not found
+[2025-06-29 16:53:16] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 16:53:16] [AI_WORKER] Thread started
+[2025-06-29 16:53:16] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 16:53:16] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 16:53:16] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:53:16] [AiAssistant] AI worker thread started successfully
+[2025-06-29 16:53:20] [AI_WORKER] Connection initialized successfully
+[2025-06-29 16:53:21] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:21] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:21] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:22] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:22] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:23] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:23] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:24] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:24] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:24] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:25] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:25] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:26] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:26] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:26] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:27] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:27] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:28] [AI_WORKER] Checking message for @杨圣洲: 啦啦啦啦啦啦...
+[2025-06-29 16:53:28] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:29] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:29] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:29] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:30] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:30] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:31] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:31] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:32] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:32] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:32] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:33] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:33] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:34] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:34] [AI_WORKER] Checking message for @杨圣洲: 吃饭...
+[2025-06-29 16:53:35] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:35] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:35] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:35] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:35] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:35] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:36] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:36] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:36] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:36] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:37] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:37] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:37] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:37] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:38] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:38] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:38] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:38] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:39] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:39] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:39] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:39] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:39] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:39] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:40] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:40] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:40] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:40] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:41] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:41] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:41] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:41] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:42] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:42] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:42] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:42] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:42] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:42] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:43] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:43] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:43] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:43] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:44] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:44] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:44] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:44] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:45] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:45] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:45] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:45] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:45] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:45] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:46] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:46] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:46] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:46] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:47] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:47] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:47] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:47] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:48] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:48] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:48] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:48] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:48] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:48] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:49] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:49] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:49] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:49] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:50] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:50] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:50] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:50] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:51] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:51] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:51] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:51] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:51] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:51] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:52] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:52] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:52] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:52] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:53] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:53] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:53] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:53] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:54] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:54] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:54] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:54] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:55] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:55] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:55] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:55] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:56] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:56] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:56] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:56] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:56] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:56] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:57] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:57] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:57] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:57] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:58] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:58] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:58] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:58] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:58] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:53:58] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 16:53:58] [WORKER_BASE] Thread interruption requested
+[2025-06-29 16:53:58] [AiAssistant] Takeover stopped successfully
+[2025-06-29 16:53:59] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:53:59] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:53:59] [AI_WORKER] Thread finished
+[2025-06-29 16:54:01] [AiAssistant] Handling thread finished event...
+[2025-06-29 16:54:01] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 16:54:01] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:54:01] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 16:54:29] [REPLY_DIALOG] Import rules from Excel button clicked
+[2025-06-29 16:54:52] [REPLY_DIALOG] Creating rule frame: 包含, 你好, 你好啊！欢迎使用 LeafAuto 专业版。
+[2025-06-29 16:54:52] [REPLY_DIALOG] Successfully imported 1 rules, skipped 0
+[2025-06-29 16:54:54] [REPLY_DIALOG] Saving rules and closing dialog
+[2025-06-29 16:54:54] [REPLY_DIALOG] Saving rules to JSON
+[2025-06-29 16:54:54] [REPLY_DIALOG] Saved 1 rules to JSON
+[2025-06-29 16:54:58] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:54:58] [AiAssistant] Validating takeover parameters...
+[2025-06-29 16:54:58] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 16:54:58] [WORKER_BASE] Thread initialized
+[2025-06-29 16:54:58] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 16:54:58] [AI_WORKER] Rules loaded successfully
+[2025-06-29 16:54:58] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 16:54:58] [AI_WORKER] Thread started
+[2025-06-29 16:54:58] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 16:55:00] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 16:55:00] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:55:00] [AiAssistant] AI worker thread started successfully
+[2025-06-29 16:55:02] [AI_WORKER] Connection initialized successfully
+[2025-06-29 16:55:03] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:03] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:03] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:03] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:03] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:03] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:04] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:04] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:04] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:04] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:04] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:04] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:05] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:05] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:05] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:05] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:05] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:05] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:05] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:05] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:05] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:06] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 吃饭了没...
+[2025-06-29 16:55:06] [AI_WORKER] Processing message: '@杨圣洲 吃饭了没...' from QWE
+[2025-06-29 16:55:06] [AI_WORKER] Matching message: '吃饭了没...' against rules
+[2025-06-29 16:55:06] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 你好...
+[2025-06-29 16:55:06] [AI_WORKER] Processing message: '@杨圣洲 你好...' from QWE
+[2025-06-29 16:55:06] [AI_WORKER] Matching message: '你好...' against rules
+[2025-06-29 16:55:06] [AI_WORKER] Partial match found for keyword: 你好
+[2025-06-29 16:55:07] [AI_WORKER] Sending auto-reply: '@杨圣洲 你好啊！欢迎使用 LeafAuto 专业版。...' to QWE
+[2025-06-29 16:55:23] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:23] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:24] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:24] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:25] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:25] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:26] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:26] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:26] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:27] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:27] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:28] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:28] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:28] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:29] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:29] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:30] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:30] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:31] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:31] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:31] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:32] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:32] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:33] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:33] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:34] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:34] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:34] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:35] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:35] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:36] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:36] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:36] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:37] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:37] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:38] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:38] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 16:55:39] [AI_WORKER] Checking message for @杨圣洲: 你好@杨圣洲 ...
+[2025-06-29 16:55:39] [AI_WORKER] Processing message: '你好@杨圣洲 ...' from QWE
+[2025-06-29 16:55:39] [AI_WORKER] Matching message: '你好...' against rules
+[2025-06-29 16:55:39] [AI_WORKER] Partial match found for keyword: 你好
+[2025-06-29 16:55:45] [AI_WORKER] Sending auto-reply: '@杨圣洲 你好啊！欢迎使用 LeafAuto 专业版。...' to QWE
+[2025-06-29 16:55:56] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:55:56] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 16:55:56] [WORKER_BASE] Thread interruption requested
+[2025-06-29 16:55:56] [AiAssistant] Takeover stopped successfully
+[2025-06-29 16:55:56] [AI_WORKER] Thread finished
+[2025-06-29 16:55:57] [AiAssistant] Handling thread finished event...
+[2025-06-29 16:55:57] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 16:55:57] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:55:57] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 16:57:30] Initializing MainWindow
+[2025-06-29 16:57:30] Ensuring configuration file exists
+[2025-06-29 16:57:30] Reading configuration values
+[2025-06-29 16:57:30] Reloading WeChat instances during initialization
+[2025-06-29 16:57:30] Starting to reload WeChat instances
+[2025-06-29 16:57:32] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 16:57:32] Default WeChat instance set to 杨圣洲
+[2025-06-29 16:57:32] Successfully initialized 1 WeChat instances
+[2025-06-29 16:57:32] Set default WeChat nickname to 杨圣洲
+[2025-06-29 16:57:32] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 16:57:32] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:57:32] [AutoInfo] Email processing thread started
+[2025-06-29 16:57:32] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 16:57:32] [AiAssistant] Initializing AI assistant...
+[2025-06-29 16:57:32] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 16:57:32] Creating system tray icon
+[2025-06-29 16:57:32] Creating system tray icon
+[2025-06-29 16:57:32] System tray icon created
+[2025-06-29 16:57:32] Setting window flags and attributes
+[2025-06-29 16:57:32] Connecting signals and updating UI elements
+[2025-06-29 16:57:32] Connecting UI signals
+[2025-06-29 16:57:32] [SETTINGS] Initializing SettingWindow
+[2025-06-29 16:57:32] [ERROR_SOUND] Thread initialized
+[2025-06-29 16:57:32] [SETTINGS] Detected membership: Free
+[2025-06-29 16:57:32] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 16:57:32] [SETTINGS] Initializing settings
+[2025-06-29 16:57:32] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 16:57:32] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 16:57:32] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 16:57:32] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 16:57:32] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 16:57:32] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 16:57:32] [SETTINGS] Set language to: 简体中文
+[2025-06-29 16:57:32] [SETTINGS] Set version label to: 4.39
+[2025-06-29 16:57:32] [SETTINGS] Set timestep to: 0
+[2025-06-29 16:57:32] [SETTINGS] Loading audio selection: 0
+[2025-06-29 16:57:32] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 16:57:32] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 16:57:32] [SETTINGS] Set audio index to: 0
+[2025-06-29 16:57:32] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 16:57:32] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 16:57:32] [REPLY_DIALOG] Loaded 1 rules from JSON
+[2025-06-29 16:57:32] [REPLY_DIALOG] Displaying 1 rules
+[2025-06-29 16:57:32] [REPLY_DIALOG] Creating rule frame: 包含, 你好, 你好啊！欢迎使用 LeafAuto 专业版。
+[2025-06-29 16:57:32] File and message signals connected
+[2025-06-29 16:57:33] Window control signals connected
+[2025-06-29 16:57:33] Membership button signals connected
+[2025-06-29 16:57:33] Function button signals connected
+[2025-06-29 16:57:33] Checkbox signals connected
+[2025-06-29 16:57:33] VIP frame click event connected
+[2025-06-29 16:57:33] All signals connected
+[2025-06-29 16:57:33] Updating UI elements
+[2025-06-29 16:57:33] Getting application notice
+[2025-06-29 16:57:35] Set datetime to 2025-06-29 16:57:34
+[2025-06-29 16:57:35] UI elements updated
+[2025-06-29 16:57:35] Applying membership limits for Free
+[2025-06-29 16:57:35] Applying membership limits for Free
+[2025-06-29 16:57:35] Applying Free membership limits
+[2025-06-29 16:57:38] Free trial remaining days: 29
+[2025-06-29 16:57:38] Membership limits applied
+[2025-06-29 16:57:38] Checking for updates
+[2025-06-29 16:57:38] Loading tasks from JSON file
+[2025-06-29 16:57:38] Loading tasks from _internal/tasks.json
+[2025-06-29 16:57:38] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 16:57:38] Loaded 0 tasks from JSON
+[2025-06-29 16:57:38] Membership limit: 5, remaining slots: 5
+[2025-06-29 16:57:38] Saving tasks back to JSON after processing
+[2025-06-29 16:57:38] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 16:57:38] Setting up auto-completion for receiver LineEdit
+[2025-06-29 16:57:38] Auto-completion setup completed
+[2025-06-29 16:57:43] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:57:43] [AiAssistant] Validating takeover parameters...
+[2025-06-29 16:57:43] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 16:57:43] [WORKER_BASE] Thread initialized
+[2025-06-29 16:57:43] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 16:57:43] [AI_WORKER] Rules loaded successfully
+[2025-06-29 16:57:43] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 16:57:43] [AI_WORKER] Thread started
+[2025-06-29 16:57:43] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 16:57:44] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 16:57:44] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:57:44] [AiAssistant] AI worker thread started successfully
+[2025-06-29 16:57:47] [AI_WORKER] Connection initialized successfully
+[2025-06-29 16:57:52] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 你好...
+[2025-06-29 16:57:52] [AI_WORKER] Processing message: '@杨圣洲 你好...' from QWE
+[2025-06-29 16:57:52] [AI_WORKER] Matching message: '你好...' against rules
+[2025-06-29 16:57:52] [AI_WORKER] Partial match found for keyword: 你好
+[2025-06-29 16:57:52] [AI_WORKER] Sending auto-reply: '你好啊！欢迎使用 LeafAuto 专业版。...' to QWE
+[2025-06-29 16:58:12] [AiAssistant] Attempting to start takeover...
+[2025-06-29 16:58:12] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 16:58:12] [WORKER_BASE] Thread interruption requested
+[2025-06-29 16:58:12] [AiAssistant] Takeover stopped successfully
+[2025-06-29 16:58:12] [AI_WORKER] Thread finished
+[2025-06-29 16:58:18] [AiAssistant] Handling thread finished event...
+[2025-06-29 16:58:18] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 16:58:18] [AiAssistant] Button icon updated successfully
+[2025-06-29 16:58:18] [AiAssistant] AI worker thread completed successfully
