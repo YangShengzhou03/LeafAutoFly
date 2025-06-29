@@ -4897,7 +4897,7 @@ border-radius: 2px;</string>
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QCheckBox" name="Global_onlyAt">
+                                 <widget class="QCheckBox" name="checkBox_onlyAt">
                                   <property name="minimumSize">
                                    <size>
                                     <width>48</width>
@@ -5198,7 +5198,7 @@ border-radius:28px</string>
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>88</pointsize>
+                              <pointsize>78</pointsize>
                              </font>
                             </property>
                             <property name="styleSheet">

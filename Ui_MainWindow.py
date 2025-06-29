@@ -2383,10 +2383,10 @@ class Ui_MainWindow(object):
         self.label_18.setStyleSheet("color:rgb(0, 0, 0);")
         self.label_18.setObjectName("label_18")
         self.horizontalLayout_21.addWidget(self.label_18)
-        self.Global_onlyAt = QtWidgets.QCheckBox(parent=self.takeover_rule_3)
-        self.Global_onlyAt.setMinimumSize(QtCore.QSize(48, 28))
-        self.Global_onlyAt.setMaximumSize(QtCore.QSize(48, 28))
-        self.Global_onlyAt.setStyleSheet("QCheckBox {\n"
+        self.checkBox_onlyAt = QtWidgets.QCheckBox(parent=self.takeover_rule_3)
+        self.checkBox_onlyAt.setMinimumSize(QtCore.QSize(48, 28))
+        self.checkBox_onlyAt.setMaximumSize(QtCore.QSize(48, 28))
+        self.checkBox_onlyAt.setStyleSheet("QCheckBox {\n"
 "    width: 16px;\n"
 "    height: 16px;\n"
 "    margin: 1px;\n"
@@ -2436,10 +2436,10 @@ class Ui_MainWindow(object):
 "    background-color: #a0a0a0;\n"
 "    box-shadow: none;\n"
 "}    ")
-        self.Global_onlyAt.setText("")
-        self.Global_onlyAt.setChecked(False)
-        self.Global_onlyAt.setObjectName("Global_onlyAt")
-        self.horizontalLayout_21.addWidget(self.Global_onlyAt)
+        self.checkBox_onlyAt.setText("")
+        self.checkBox_onlyAt.setChecked(False)
+        self.checkBox_onlyAt.setObjectName("checkBox_onlyAt")
+        self.horizontalLayout_21.addWidget(self.checkBox_onlyAt)
         self.horizontalLayout_19.addWidget(self.takeover_rule_3)
         self.label_13 = QtWidgets.QLabel(parent=self.Ai_move)
         font = QtGui.QFont()
@@ -2555,7 +2555,7 @@ class Ui_MainWindow(object):
         self.takeOverTime_label.setMinimumSize(QtCore.QSize(521, 162))
         self.takeOverTime_label.setMaximumSize(QtCore.QSize(1677, 162))
         font = QtGui.QFont()
-        font.setPointSize(88)
+        font.setPointSize(78)
         self.takeOverTime_label.setFont(font)
         self.takeOverTime_label.setStyleSheet("QLabel {\n"
 "    color: rgb(0, 0, 0);\n"

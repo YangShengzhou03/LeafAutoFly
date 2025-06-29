@@ -65,7 +65,7 @@ class WorkerThreadBase(QtCore.QThread):
 
 
 class AiWorkerThread(WorkerThreadBase):
-    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。"):
+    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at_mode=False, at_nickname=""):
         super().__init__()
         self.wx = wx
         self.receiver = receiver
@@ -73,7 +73,9 @@ class AiWorkerThread(WorkerThreadBase):
         self.system_content = role
         self.rules = self._load_rules()
         self._is_running = True
-        log_print(f"[AI_WORKER] Thread initialized for receiver: {receiver}, model: {model}")
+        self.only_at_mode = only_at_mode
+        self.at_nickname = at_nickname
+        log_print(f"[AI_WORKER] Thread initialized - OnlyAt: {only_at_mode}, Nickname: {at_nickname}")
 
     def _load_rules(self) -> Optional[List[Dict]]:
         log_print("[AI_WORKER] Loading auto-reply rules...")
@@ -104,12 +106,20 @@ class AiWorkerThread(WorkerThreadBase):
         matched_replies = []
         for rule in self.rules:
             try:
+                processed_msg = msg
+                # 在仅被@模式下，移除@前缀后再进行匹配
+                if self.only_at_mode and self.at_nickname:
+                    at_prefix = f"@{self.at_nickname}"
+                    if at_prefix in processed_msg:
+                        processed_msg = processed_msg.replace(at_prefix, "").strip()
+                        log_print(f"[AI_WORKER] Processed message in OnlyAt mode: '{processed_msg[:30]}...'")
+
                 if rule['match_type'] == '等于':
-                    if msg.strip() == rule['keyword'].strip():
+                    if processed_msg.strip() == rule['keyword'].strip():
                         log_print(f"[AI_WORKER] Full match found for keyword: {rule['keyword']}")
                         matched_replies.append(rule['reply_content'])
                 elif rule['match_type'] == '包含':
-                    if rule['keyword'].strip() in msg.strip():
+                    if rule['keyword'].strip() in processed_msg.strip():
                         log_print(f"[AI_WORKER] Partial match found for keyword: {rule['keyword']}")
                         matched_replies.append(rule['reply_content'])
             except KeyError as e:
@@ -146,7 +156,7 @@ class AiWorkerThread(WorkerThreadBase):
                 log_print(f"[AI_WORKER] Critical error in main loop: {str(e)}")
                 time.sleep(1)
             finally:
-                self.msleep(100)
+                self.msleep(10)
 
         log_print("[AI_WORKER] Thread finished")
         self.finished.emit()
@@ -165,13 +175,22 @@ class AiWorkerThread(WorkerThreadBase):
         msgs = self.wx.GetAllMessage()
         if msgs and msgs[-1].type == "friend":
             msg = msgs[-1].content
-            self._process_message(msg, who)
+            if self._should_reply(msg):
+                self._process_message(msg, who)
 
     def _handle_specific_messages(self):
         msgs = self.wx.GetAllMessage()
         if msgs and msgs[-1].type == "friend":
             msg = msgs[-1].content
-            self._process_message(msg, self.receiver)
+            if self._should_reply(msg):
+                self._process_message(msg, self.receiver)
+
+    def _should_reply(self, msg: str) -> bool:
+        if self.only_at_mode and self.at_nickname:
+            log_print(f"[AI_WORKER] Checking message for @{self.at_nickname}: {msg[:30]}...")
+            return f"@{self.at_nickname}" in msg
+        log_print("[AI_WORKER] Replying to all messages")
+        return True
 
     def _process_message(self, msg: str, who: str):
         log_print(f"[AI_WORKER] Processing message: '{msg[:30]}...' from {who}")
