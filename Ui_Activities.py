@@ -673,4 +673,4 @@ class Ui_ActivitiesWindow(object):
         self.label_prices_2.setText(_translate("ActivitiesWindow", "99"))
         self.label_3.setText(_translate("ActivitiesWindow", "仅支持微信扫码支付"))
         self.pushButton_check.setText(_translate("ActivitiesWindow", "我已支付"))
-        self.pushButton_feedback.setText(_translate("ActivitiesWindow", "专业版问题反馈 >"))
+        self.pushButton_feedback.setText(_translate("ActivitiesWindow", "为什么专业版价格更高 ？"))

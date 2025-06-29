@@ -1243,7 +1243,7 @@ QPushButton:pressed {
 }</string>
               </property>
               <property name="text">
-               <string>专业版问题反馈 &gt;</string>
+               <string>为什么专业版价格更高 ？</string>
               </property>
              </widget>
             </item>

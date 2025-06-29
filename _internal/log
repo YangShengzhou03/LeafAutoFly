@@ -339,3 +339,251 @@
 [2025-06-29 17:15:24] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
 [2025-06-29 17:15:24] [AiAssistant] Button icon updated successfully
 [2025-06-29 17:15:24] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 17:16:28] Initializing MainWindow
+[2025-06-29 17:16:28] Ensuring configuration file exists
+[2025-06-29 17:16:28] Reading configuration values
+[2025-06-29 17:16:28] Reloading WeChat instances during initialization
+[2025-06-29 17:16:28] Starting to reload WeChat instances
+[2025-06-29 17:16:30] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 17:16:30] Default WeChat instance set to 杨圣洲
+[2025-06-29 17:16:30] Successfully initialized 1 WeChat instances
+[2025-06-29 17:16:30] Set default WeChat nickname to 杨圣洲
+[2025-06-29 17:16:30] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 17:16:30] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:16:30] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 17:16:30] [AutoInfo] Email processing thread started
+[2025-06-29 17:16:30] [AiAssistant] Initializing AI assistant...
+[2025-06-29 17:16:30] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 17:16:30] Creating system tray icon
+[2025-06-29 17:16:30] Creating system tray icon
+[2025-06-29 17:16:30] System tray icon created
+[2025-06-29 17:16:30] Setting window flags and attributes
+[2025-06-29 17:16:30] Connecting signals and updating UI elements
+[2025-06-29 17:16:30] Connecting UI signals
+[2025-06-29 17:16:30] [SETTINGS] Initializing SettingWindow
+[2025-06-29 17:16:30] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:16:30] [SETTINGS] Detected membership: Free
+[2025-06-29 17:16:30] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 17:16:30] [SETTINGS] Initializing settings
+[2025-06-29 17:16:30] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 17:16:30] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 17:16:30] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 17:16:30] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 17:16:30] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 17:16:30] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 17:16:30] [SETTINGS] Set language to: 简体中文
+[2025-06-29 17:16:30] [SETTINGS] Set version label to: 4.39
+[2025-06-29 17:16:30] [SETTINGS] Set timestep to: 10
+[2025-06-29 17:16:30] [SETTINGS] Loading audio selection: 0
+[2025-06-29 17:16:30] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 17:16:30] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:16:30] [SETTINGS] Set audio index to: 0
+[2025-06-29 17:16:30] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 17:16:30] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 17:16:30] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 17:16:30] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 17:16:30] File and message signals connected
+[2025-06-29 17:16:30] Window control signals connected
+[2025-06-29 17:16:30] Membership button signals connected
+[2025-06-29 17:16:30] Function button signals connected
+[2025-06-29 17:16:30] Checkbox signals connected
+[2025-06-29 17:16:30] VIP frame click event connected
+[2025-06-29 17:16:30] All signals connected
+[2025-06-29 17:16:30] Updating UI elements
+[2025-06-29 17:16:30] Getting application notice
+[2025-06-29 17:16:31] Set datetime to 2025-06-29 17:16:31
+[2025-06-29 17:16:31] UI elements updated
+[2025-06-29 17:16:31] Applying membership limits for Free
+[2025-06-29 17:16:31] Applying membership limits for Free
+[2025-06-29 17:16:31] Applying Free membership limits
+[2025-06-29 17:16:31] Free trial remaining days: 29
+[2025-06-29 17:16:31] Membership limits applied
+[2025-06-29 17:16:31] Checking for updates
+[2025-06-29 17:16:31] Loading tasks from JSON file
+[2025-06-29 17:16:31] Loading tasks from _internal/tasks.json
+[2025-06-29 17:16:31] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 17:16:31] Loaded 0 tasks from JSON
+[2025-06-29 17:16:31] Membership limit: 5, remaining slots: 5
+[2025-06-29 17:16:31] Saving tasks back to JSON after processing
+[2025-06-29 17:16:31] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 17:16:31] Setting up auto-completion for receiver LineEdit
+[2025-06-29 17:16:31] Auto-completion setup completed
+[2025-06-29 17:16:43] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:16:43] [AiAssistant] Validating takeover parameters...
+[2025-06-29 17:16:43] [AiAssistant] Creating and starting AI worker thread...
+[2025-06-29 17:16:43] [WORKER_BASE] Thread initialized
+[2025-06-29 17:16:43] [AI_WORKER] Loading auto-reply rules...
+[2025-06-29 17:16:43] [AI_WORKER] Rules file not found
+[2025-06-29 17:16:43] [AI_WORKER] Thread initialized - OnlyAt: True, Nickname: 杨圣洲
+[2025-06-29 17:16:43] [AI_WORKER] Thread started
+[2025-06-29 17:16:43] [AI_WORKER] Initializing connection with QWE
+[2025-06-29 17:16:43] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-06-29 17:16:43] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:16:43] [AiAssistant] AI worker thread started successfully
+[2025-06-29 17:16:47] [AI_WORKER] Connection initialized successfully
+[2025-06-29 17:16:48] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:48] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:49] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:49] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:50] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:50] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:50] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:51] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:51] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:51] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:52] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:52] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:53] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:53] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:53] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:54] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:54] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:55] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:55] [AI_WORKER] Checking message for @杨圣洲: 你好...
+[2025-06-29 17:16:56] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 我爱你...
+[2025-06-29 17:16:56] [AI_WORKER] Processing message: '@杨圣洲 我爱你...' from QWE
+[2025-06-29 17:16:56] [AI_WORKER] No rule matches, generating AI reply for: '我爱你...'
+[2025-06-29 17:16:56] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:16:56] [AI_WORKER] Querying default API
+[2025-06-29 17:16:56] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:16:56] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:16:57] [AI_WORKER] AI reply sent to QWE: 谢谢你的爱意，能被你爱着真好。...
+[2025-06-29 17:17:14] [AI_WORKER] Checking message for @杨圣洲: @杨圣洲 我想和你生孩子...
+[2025-06-29 17:17:14] [AI_WORKER] Processing message: '@杨圣洲 我想和你生孩子...' from QWE
+[2025-06-29 17:17:14] [AI_WORKER] No rule matches, generating AI reply for: '我想和你生孩子...'
+[2025-06-29 17:17:14] [AI_WORKER] Generating AI reply using 星火讯飞 model
+[2025-06-29 17:17:14] [AI_WORKER] Querying default API
+[2025-06-29 17:17:14] [AI_WORKER] Making API request to: https://spark-api-open.xf-yun.com/v1/chat/completi...
+[2025-06-29 17:17:16] [AI_WORKER] API request successful: https://spark-api-open.xf-yun....
+[2025-06-29 17:17:16] [AI_WORKER] AI reply sent to QWE: 在考虑生育孩子的问题时，应确保双方具备足够的经济和心理准备，...
+[2025-06-29 17:17:30] [AiAssistant] Attempting to start takeover...
+[2025-06-29 17:17:30] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-06-29 17:17:30] [WORKER_BASE] Thread interruption requested
+[2025-06-29 17:17:30] [AiAssistant] Takeover stopped successfully
+[2025-06-29 17:17:30] [AI_WORKER] Thread finished
+[2025-06-29 17:17:31] [AiAssistant] Handling thread finished event...
+[2025-06-29 17:17:31] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-06-29 17:17:31] [AiAssistant] Button icon updated successfully
+[2025-06-29 17:17:31] [AiAssistant] AI worker thread completed successfully
+[2025-06-29 17:17:42] VIP frame clicked
+[2025-06-29 17:17:42] Expiration datetime parsed: 2025-07-29 17:08:31
+[2025-06-29 17:17:42] Membership: Free, remaining days: 29
+[2025-06-29 17:17:42] Opening activities window
+[2025-06-29 17:17:42] Opening activities window
+[2025-06-29 17:17:42] Successfully wrote to admin_log, sufficient permissions
+[2025-06-29 17:19:09] Initializing MainWindow
+[2025-06-29 17:19:09] Ensuring configuration file exists
+[2025-06-29 17:19:09] Reading configuration values
+[2025-06-29 17:19:09] Reloading WeChat instances during initialization
+[2025-06-29 17:19:09] Starting to reload WeChat instances
+[2025-06-29 17:19:10] Successfully initialized WeChat instance for 杨圣洲
+[2025-06-29 17:19:10] Default WeChat instance set to 杨圣洲
+[2025-06-29 17:19:10] Successfully initialized 1 WeChat instances
+[2025-06-29 17:19:10] Set default WeChat nickname to 杨圣洲
+[2025-06-29 17:19:10] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-06-29 17:19:10] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:19:10] [AutoInfo] Initialization completed, membership type: Free
+[2025-06-29 17:19:10] [AutoInfo] Email processing thread started
+[2025-06-29 17:19:10] [AiAssistant] Initializing AI assistant...
+[2025-06-29 17:19:10] [AiAssistant] Initialization completed, membership type: Free
+[2025-06-29 17:19:10] Creating system tray icon
+[2025-06-29 17:19:10] Creating system tray icon
+[2025-06-29 17:19:10] System tray icon created
+[2025-06-29 17:19:10] Setting window flags and attributes
+[2025-06-29 17:19:10] Connecting signals and updating UI elements
+[2025-06-29 17:19:10] Connecting UI signals
+[2025-06-29 17:19:10] [SETTINGS] Initializing SettingWindow
+[2025-06-29 17:19:10] [ERROR_SOUND] Thread initialized
+[2025-06-29 17:19:10] [SETTINGS] Detected membership: Free
+[2025-06-29 17:19:10] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-06-29 17:19:10] [SETTINGS] Initializing settings
+[2025-06-29 17:19:10] [SETTINGS] Set error_email checkbox to: False
+[2025-06-29 17:19:10] [SETTINGS] Set error_sound checkbox to: True
+[2025-06-29 17:19:10] [SETTINGS] Set net_time checkbox to: False
+[2025-06-29 17:19:10] [SETTINGS] Set auto_update checkbox to: True
+[2025-06-29 17:19:10] [SETTINGS] Set serve_lock checkbox to: False
+[2025-06-29 17:19:10] [SETTINGS] Set close_option checkbox to: True
+[2025-06-29 17:19:10] [SETTINGS] Set language to: 简体中文
+[2025-06-29 17:19:10] [SETTINGS] Set version label to: 4.39
+[2025-06-29 17:19:10] [SETTINGS] Set timestep to: 10
+[2025-06-29 17:19:10] [SETTINGS] Loading audio selection: 0
+[2025-06-29 17:19:10] [SETTINGS] Updating selected sound to index: 0
+[2025-06-29 17:19:10] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:19:10] [SETTINGS] Set audio index to: 0
+[2025-06-29 17:19:11] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-06-29 17:19:11] [REPLY_DIALOG] Loading rules from JSON
+[2025-06-29 17:19:11] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-06-29 17:19:11] [REPLY_DIALOG] Displaying 0 rules
+[2025-06-29 17:19:11] File and message signals connected
+[2025-06-29 17:19:11] Window control signals connected
+[2025-06-29 17:19:11] Membership button signals connected
+[2025-06-29 17:19:11] Function button signals connected
+[2025-06-29 17:19:11] Checkbox signals connected
+[2025-06-29 17:19:11] VIP frame click event connected
+[2025-06-29 17:19:11] All signals connected
+[2025-06-29 17:19:11] Updating UI elements
+[2025-06-29 17:19:11] Getting application notice
+[2025-06-29 17:19:11] Set datetime to 2025-06-29 17:19:12
+[2025-06-29 17:19:11] UI elements updated
+[2025-06-29 17:19:11] Applying membership limits for Free
+[2025-06-29 17:19:11] Applying membership limits for Free
+[2025-06-29 17:19:11] Applying Free membership limits
+[2025-06-29 17:19:12] Free trial remaining days: 29
+[2025-06-29 17:19:12] Membership limits applied
+[2025-06-29 17:19:12] Checking for updates
+[2025-06-29 17:19:12] Loading tasks from JSON file
+[2025-06-29 17:19:12] Loading tasks from _internal/tasks.json
+[2025-06-29 17:19:12] JSON file _internal/tasks.json exists, attempting to load
+[2025-06-29 17:19:12] Loaded 0 tasks from JSON
+[2025-06-29 17:19:12] Membership limit: 5, remaining slots: 5
+[2025-06-29 17:19:12] Saving tasks back to JSON after processing
+[2025-06-29 17:19:12] [AutoInfo] Tasks saved successfully, total 0 tasks
+[2025-06-29 17:19:12] Setting up auto-completion for receiver LineEdit
+[2025-06-29 17:19:12] Auto-completion setup completed
+[2025-06-29 17:19:25] Opening setting window
+[2025-06-29 17:19:25] Successfully wrote to admin_log, sufficient permissions
+[2025-06-29 17:19:26] [SETTINGS] Test sound button clicked
+[2025-06-29 17:19:26] [SETTINGS] Playing test sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:19:26] [ERROR_SOUND] Sound file updated: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:19:26] [ERROR_SOUND] Testing sound playback
+[2025-06-29 17:19:26] [ERROR_SOUND] Thread started
+[2025-06-29 17:19:26] [ERROR_SOUND] Playing sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:19:33] [SETTINGS] Test sound button clicked
+[2025-06-29 17:19:33] [SETTINGS] Playing test sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:19:33] [ERROR_SOUND] Sound file updated: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-06-29 17:19:45] [SETTINGS] Updating selected sound to index: 1
+[2025-06-29 17:19:45] [ERROR_SOUND] Playback stopped by user
+[2025-06-29 17:19:45] [ERROR_SOUND] Cleaning up resources
+[2025-06-29 17:19:45] [SETTINGS] Stopped running audio thread
+[2025-06-29 17:19:45] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_2.mp3
+[2025-06-29 17:19:45] [SETTINGS] Test sound button clicked
+[2025-06-29 17:19:45] [SETTINGS] Playing test sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_2.mp3
+[2025-06-29 17:19:45] [ERROR_SOUND] Sound file updated: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_2.mp3
+[2025-06-29 17:19:45] [ERROR_SOUND] Testing sound playback
+[2025-06-29 17:19:45] [ERROR_SOUND] Thread started
+[2025-06-29 17:19:45] [ERROR_SOUND] Playing sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_2.mp3
+[2025-06-29 17:19:53] [SETTINGS] Updating selected sound to index: 2
+[2025-06-29 17:19:53] [ERROR_SOUND] Playback stopped by user
+[2025-06-29 17:19:53] [ERROR_SOUND] Cleaning up resources
+[2025-06-29 17:19:53] [SETTINGS] Stopped running audio thread
+[2025-06-29 17:19:53] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_3.mp3
+[2025-06-29 17:19:53] [SETTINGS] Test sound button clicked
+[2025-06-29 17:19:53] [SETTINGS] Playing test sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_3.mp3
+[2025-06-29 17:19:53] [ERROR_SOUND] Sound file updated: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_3.mp3
+[2025-06-29 17:19:53] [ERROR_SOUND] Testing sound playback
+[2025-06-29 17:19:53] [ERROR_SOUND] Thread started
+[2025-06-29 17:19:53] [ERROR_SOUND] Playing sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_3.mp3
+[2025-06-29 17:21:28] [SETTINGS] Saving settings and closing window
+[2025-06-29 17:21:28] [ERROR_SOUND] Playback stopped by user
+[2025-06-29 17:21:28] [ERROR_SOUND] Cleaning up resources
+[2025-06-29 17:21:28] [SETTINGS] Stopped running audio thread
+[2025-06-29 17:21:28] [SETTINGS] Saved error_email as: False
+[2025-06-29 17:21:28] [SETTINGS] Saved error_sound as: True
+[2025-06-29 17:21:28] [SETTINGS] Saved net_time as: False
+[2025-06-29 17:21:28] [SETTINGS] Saved auto_update as: True
+[2025-06-29 17:21:28] [SETTINGS] Saved serve_lock as: False
+[2025-06-29 17:21:28] [SETTINGS] Saved close_option as: True
+[2025-06-29 17:21:28] [SETTINGS] Saved add_timestep as: 10
+[2025-06-29 17:21:28] [SETTINGS] Saved language as: cn
+[2025-06-29 17:21:28] [SETTINGS] Saved selected_audio_index as: 2
+[2025-06-29 17:21:28] [SETTINGS] Settings saved successfully
