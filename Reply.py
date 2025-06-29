@@ -1,5 +1,5 @@
 import json
-import openpyxl  # 使用 openpyxl 替代 pandas
+import openpyxl
 from PyQt6 import QtCore, QtWidgets, QtGui
 from UI_Reply import Ui_ReplyDialog
 from common import get_resource_path, log_print
@@ -216,12 +216,9 @@ class ReplyDialog(QtWidgets.QDialog):
             return
 
         try:
-            # 使用 openpyxl 打开工作簿
             workbook = openpyxl.load_workbook(file_path, read_only=True)
             sheet = workbook.active
-
-            # 获取表头，确定列索引
-            header = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1, values_only=True))]
+            header = list(next(sheet.iter_rows(min_row=1, max_row=1, values_only=True)))
 
             required_columns = ['匹配类型', '关键词', '回复内容']
             missing_columns = [col for col in required_columns if col not in header]
@@ -230,7 +227,6 @@ class ReplyDialog(QtWidgets.QDialog):
                 QtWidgets.QMessageBox.warning(self, "格式错误", f"Excel文件缺少必要的列: {', '.join(missing_columns)}")
                 return
 
-            # 获取列索引
             match_type_idx = header.index('匹配类型')
             keyword_idx = header.index('关键词')
             reply_content_idx = header.index('回复内容')
@@ -238,9 +234,8 @@ class ReplyDialog(QtWidgets.QDialog):
             imported_count = 0
             skipped_count = 0
 
-            # 从第2行开始迭代数据行
             for row in sheet.iter_rows(min_row=2, values_only=True):
-                if not all(row):  # 跳过空行
+                if not all(row):
                     continue
 
                 match_type = row[match_type_idx]
@@ -251,7 +246,6 @@ class ReplyDialog(QtWidgets.QDialog):
                     skipped_count += 1
                     continue
 
-                # 只"包含"和"等于"两种匹配类型
                 valid_match_types = ['包含', '等于']
                 if match_type not in valid_match_types:
                     skipped_count += 1
@@ -276,7 +270,7 @@ class ReplyDialog(QtWidgets.QDialog):
                     })
                     imported_count += 1
 
-            workbook.close()  # 关闭工作簿
+            workbook.close()
 
             log_print(f"[REPLY_DIALOG] Successfully imported {imported_count} rules, skipped {skipped_count}")
             QtWidgets.QMessageBox.information(
