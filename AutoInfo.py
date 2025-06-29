@@ -140,6 +140,11 @@ class AutoInfo(QtWidgets.QWidget):
 
     def create_widget(self, time_text, name_text, info_text, frequency, wx_nickname):
         try:
+            # 确保所有文本参数都是字符串类型
+            name_text = str(name_text)
+            info_text = str(info_text)
+            wx_nickname = str(wx_nickname)
+
             widget_item = QtWidgets.QWidget(parent=self.parent.scrollAreaWidgetContents_3)
             widget_item.setMinimumSize(QtCore.QSize(360, 70))
             widget_item.setMaximumSize(QtCore.QSize(360, 70))
@@ -239,7 +244,8 @@ class AutoInfo(QtWidgets.QWidget):
                 'wx_nickname': wx_nickname
             }
 
-            log_print(f"[AutoInfo] Task widget created successfully: {name_text} - {info_text[:20]}... (Sender: {wx_nickname})")
+            log_print(
+                f"[AutoInfo] Task widget created successfully: {name_text} - {info_text[:20]}... (Sender: {wx_nickname})")
             return widget_item
 
         except Exception as e:
@@ -386,7 +392,8 @@ class AutoInfo(QtWidgets.QWidget):
                                         self.send_error_email(task)
                                     else:
                                         task['error_count'] += 1
-                                        log_print(f"[AutoInfo] Task {task['name']} has failed {task['error_count']} times")
+                                        log_print(
+                                            f"[AutoInfo] Task {task['name']} has failed {task['error_count']} times")
 
                                 new_icon_path = get_resource_path(f'resources/img/page1/{icon_path_key}')
                                 widget_image.setStyleSheet(f"image: url({new_icon_path});")
@@ -534,6 +541,11 @@ class AutoInfo(QtWidgets.QWidget):
                     task['wx_nickname'] = row[wx_nickname_idx]
                 else:
                     task['wx_nickname'] = self.parent.comboBox_nickName.currentText()
+
+                # 确保name和info作为字符串处理
+                task['Name'] = str(task['Name']) if task['Name'] is not None else ""
+                task['Info'] = str(task['Info']) if task['Info'] is not None else ""
+
                 tasks.append(task)
 
             workbook.close()

@@ -20,7 +20,7 @@ from Split import Split
 from System_info import read_key_value, ensure_config_file_exists, write_key_value
 from Ui_MainWindow import Ui_MainWindow
 from UpdateDialog import check_update
-from common import get_resource_path, log, get_current_time, log_print
+from common import get_resource_path, log, get_current_time, log_print, get_url
 
 wx_instances = {}
 current_version = 4.39
@@ -70,7 +70,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         log_print("Initializing MainWindow")
         self.setupUi(self)
         self.ui = Ui_MainWindow()
-        self.setWindowTitle("枫叶信息自动化系统")
+        self.setWindowTitle("LeafAuto Pro")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/icon.ico')))
         common.main_window = self
 
@@ -197,7 +197,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         log_print(f"Changing current WeChat instance to {selected_nickname}")
         if selected_nickname in wx_instances:
             MainWindow.wx = wx_instances[selected_nickname]
-            log("INFO", f"当前微信账号已切换成: {selected_nickname}")
+            log("WARNING", f"当前微信账号已切换成: {selected_nickname}")
             log_print(f"Successfully changed current WeChat instance to {selected_nickname}")
         else:
             log("WARNING", f"所选微信账号 {selected_nickname} 未初始化")
@@ -345,7 +345,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tray_icon.setIcon(QtGui.QIcon(get_resource_path('resources/img/tray.ico')))
 
         menu = QtWidgets.QMenu(self)
-        menu.setTitle("枫叶信息自动")
+        menu.setTitle("LeafAuto Pro")
         menu.setStyleSheet(common.load_stylesheet("menu.setStyleSheet.css"))
 
         show_main_action = QAction("显示面板", self)
@@ -600,7 +600,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         log_print("Hiding application to system tray")
         self.hide()
         self.tray_icon.showMessage(
-            "任务在后台继续执行",
+            "定时任务在后台继续执行",
             "枫叶已最小化到系统托盘",
             QtWidgets.QSystemTrayIcon.MessageIcon.Information,
             2000
@@ -648,13 +648,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def get_notice(self):
         log_print("Getting application notice")
         try:
-            pass
-            # Key, notice_content = get_url()
-            # if notice_content:
-            #     self.textBrowser.setHtml(notice_content)
+            Key, notice_content = get_url()
+            if notice_content:
+                self.textBrowser.setHtml(notice_content)
         except Exception:
             log_print("Failed to get notice content, using default")
-            self.textBrowser.setHtml('<center><h2>欢迎使用LeafAuto</h2><h2>LeafAuto是我在2024'
+            self.textBrowser.setHtml('<center><h2>欢迎使用LeafAuto</h2><h2>LeafAuto Pro是我在2024'
                                      '年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。</h2'
                                      '></center>')
 

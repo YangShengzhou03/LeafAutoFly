@@ -3,6 +3,7 @@ from PyQt6 import QtWidgets, QtCore, QtGui
 from Thread import AiWorkerThread
 from common import log, get_resource_path, log_print
 
+
 class AiAssistant(QtWidgets.QWidget):
     def __init__(self, wx_instances, membership, parent=None):
         super().__init__(parent)
@@ -76,9 +77,6 @@ class AiAssistant(QtWidgets.QWidget):
                 # 获取at模式和昵称
                 only_at_mode = self.parent.checkBox_onlyAt.isChecked()
                 at_nickname = self.parent.comboBox_nickName.currentText()
-
-                log_print(
-                    f"[AiAssistant] Starting takeover - Receiver: {self.parent.takeOverReceiver_lineEdit.text()}, Model: {model}, Role: {role}, OnlyAt: {only_at_mode}, Nickname: {at_nickname}")
 
                 log_print("[AiAssistant] Creating and starting AI worker thread...")
                 # 传递only_at_mode和at_nickname参数
