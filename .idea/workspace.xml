@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新" />
+    <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI_Reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Reply.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_Activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_Activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_SettingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_SettingWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sound/error_sound_2.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sound/error_sound_2.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sound/error_sound_5.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sound/error_sound_5.mp3" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,7 +107,8 @@
       <workItem from="1749558150948" duration="210000" />
       <workItem from="1751094744253" duration="1512000" />
       <workItem from="1751120307077" duration="15402000" />
-      <workItem from="1751178517646" duration="10346000" />
+      <workItem from="1751178517646" duration="10382000" />
+      <workItem from="1751190825565" duration="572000" />
     </task>
     <task id="LOCAL-00001" summary="LeafAuto PRO">
       <option name="closed" value="true" />
@@ -365,7 +374,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751188902924</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751188922707</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1751188922707</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
