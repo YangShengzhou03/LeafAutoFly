@@ -164,12 +164,12 @@ QPushButton:pressed {
 
     def base_vip(self):
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp14.9.png')), QtGui.QIcon.Mode.Normal,
+        icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp19.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
         self.ui.pushButton_Wechat.setIcon(icon)
         self.update_button_style(self.ui.pushButton_Base)
-        self.ui.label_prices.setText("14.90")
-        self.ui.label_prices_2.setText("14.9")
+        self.ui.label_prices.setText("19.90")
+        self.ui.label_prices_2.setText("19.9")
 
     def validate_activation(self):
         try:
