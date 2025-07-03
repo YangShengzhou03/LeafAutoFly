@@ -4751,7 +4751,7 @@ QLineEdit:hover {
 }</string>
                                </property>
                                <property name="placeholderText">
-                                <string>被接管对象备注，多个对象用分号分隔</string>
+                                <string>接管对象备注，多对象分号分隔</string>
                                </property>
                               </widget>
                              </item>
