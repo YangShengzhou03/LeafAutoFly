@@ -2728,7 +2728,7 @@ f"image: url({get_resource_path('resources/img/page0/page0_枫叶版本.svg')});
         self.pushButton_startSplit.setText(_translate("MainWindow", "发送句子"))
         self.LeafAi_Title.setText(_translate("MainWindow", "Leaf Ai Pro"))
         self.label_9.setText(_translate("MainWindow", "接管对象"))
-        self.takeOverReceiver_lineEdit.setPlaceholderText(_translate("MainWindow", "联系人或群聊备注"))
+        self.takeOverReceiver_lineEdit.setPlaceholderText(_translate("MainWindow", "被接管对象备注，多个对象用分号分隔"))
         self.pushButton_addRule.setText(_translate("MainWindow", "回复规则"))
         self.label_18.setText(_translate("MainWindow", "仅被@时回复"))
         self.label_13.setText(_translate("MainWindow", "模型人设"))
