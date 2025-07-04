@@ -10,7 +10,7 @@ import requests
 from PyQt6 import QtCore, QtMultimedia
 from PyQt6.QtCore import QDateTime, pyqtSignal
 
-from common import log, get_current_time, log_print
+from common import log, get_current_time, log_print, get_resource_path
 
 
 class WorkerThreadBase(QtCore.QThread):
@@ -80,8 +80,8 @@ class AiWorkerThread(WorkerThreadBase):
     def _load_rules(self) -> Optional[List[Dict]]:
         log_print("[AI_WORKER] Loading auto-reply rules...")
         try:
-            if os.path.exists('_internal/AutoReply_Rules.json'):
-                with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as f:
+            if os.path.exists(get_resource_path('_internal/AutoReply_Rules.json')):
+                with open(get_resource_path('_internal/AutoReply_Rules.json'), 'r', encoding='utf-8') as f:
                     log_print("[AI_WORKER] Rules loaded successfully")
                     return json.load(f)
             else:
