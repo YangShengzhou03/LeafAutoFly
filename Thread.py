@@ -11,6 +11,7 @@ import requests
 from PyQt6 import QtCore, QtMultimedia
 from PyQt6.QtCore import QDateTime, pyqtSignal
 
+from System_info import read_key_value
 from common import log, get_current_time, log_print, get_resource_path
 
 
@@ -253,6 +254,7 @@ class AiWorkerThread(WorkerThreadBase):
                             log("INFO", f"根据规则自动回复 '{reply}' 给 {chat_name}")
                             log_print(f"[AI_WORKER] Sending auto-reply: '{reply[:30]}...' to {chat_name}")
 
+                            time.sleep(int(read_key_value('reply_delay')))
                             if self.only_at and at_info:
                                 self.wx.SendMsg(msg=reply, who=who, at=at_info)
                             else:

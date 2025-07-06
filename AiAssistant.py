@@ -74,11 +74,10 @@ class AiAssistant(QtWidgets.QWidget):
                 model = self.parent.comboBox_AiLmodel.currentText()
                 role = self.parent.Characters_lineEdit.text()
 
-                # 获取at模式和昵称
                 only_at = self.parent.checkBox_onlyAt.isChecked()
 
                 log_print("[AiAssistant] Creating and starting AI worker thread...")
-                # 传递only_at和at_nickname参数
+
                 self.ai_thread = AiWorkerThread(
                     self.current_wx,
                     self.parent.takeOverReceiver_lineEdit.text(),
@@ -125,7 +124,6 @@ class AiAssistant(QtWidgets.QWidget):
                 html = f"<html><head/><body><p align=\"center\"><span style=\" font-size:72pt;\">{time_str}</span></p></body></html>"
                 self.parent.takeOverTime_label.setText(html)
 
-                # Determine time limits based on membership
                 if self.Membership == 'Free':
                     max_time = 60  # 1 minute
                 elif self.Membership == 'Base':
@@ -147,7 +145,6 @@ class AiAssistant(QtWidgets.QWidget):
                         self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
                     QtWidgets.QMessageBox.warning(self, "版本限制", "版本限制 接管终止，超级会员尊享无限接管")
             else:
-                # Update timer display even when not taking over
                 minutes, seconds = divmod(self.elapsed_time, 60)
                 hours, minutes = divmod(minutes, 60)
                 time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
