@@ -176,7 +176,7 @@ class AutoInfo(QtWidgets.QWidget):
             receiver_label.setWordWrap(True)  # 开启自动换行
             receiver_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             receiver_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-            receiver_label.setMinimumWidth(1)
+            receiver_label.setMinimumWidth(20)
             receiver_label.setMaximumWidth(250)  # 限制最大宽度，防止溢出
             receiver_label.installEventFilter(self)
             top_layout.addWidget(receiver_label)
@@ -187,7 +187,7 @@ class AutoInfo(QtWidgets.QWidget):
             wx_label.setWordWrap(True)  # 开启自动换行
             wx_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             wx_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-            wx_label.setMinimumWidth(1)
+            wx_label.setMinimumWidth(50)
             wx_label.setMaximumWidth(250)  # 限制最大宽度，防止溢出
             wx_label.installEventFilter(self)
             top_layout.addWidget(wx_label)
