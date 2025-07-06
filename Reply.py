@@ -41,7 +41,7 @@ class ReplyDialog(QtWidgets.QDialog):
     def loadRulesFromJson(self):
         log_print("Starting to load rules from JSON")
         try:
-            with open(get_resource_path('_internal/AutoReply_Rules.json'), 'r', encoding='utf-8') as file:
+            with open(get_resource_path('AutoReply_Rules.json'), 'r', encoding='utf-8') as file:
                 self.rules = json.load(file)
                 log_print(f"Successfully loaded {len(self.rules)} rules")
         except FileNotFoundError:
@@ -61,13 +61,13 @@ class ReplyDialog(QtWidgets.QDialog):
                         "reply_content": widget_item.findChild(QtWidgets.QLabel, "label_Reply").text(),
                         "apply_to": widget_item.findChild(QtWidgets.QLabel, "label_ApplyTo").text()
                     })
-            with open(get_resource_path('_internal/AutoReply_Rules.json'), 'w', encoding='utf-8') as file:
+            with open(get_resource_path('AutoReply_Rules.json'), 'w', encoding='utf-8') as file:
                 json.dump(rules, file, ensure_ascii=False, indent=4)
             self.original_rules = rules.copy()
             log_print(f"Successfully saved {len(rules)} rules to JSON")
 
             QtWidgets.QMessageBox.information(
-                self, "保存成功", "更改成功！",
+                self, "保存成功", "自动回复规则更新成功！",
                 QtWidgets.QMessageBox.StandardButton.Ok
             )
 
