@@ -8,9 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reply.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SettingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/SettingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/System_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/System_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ui_SettingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_SettingWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ui_SettingWindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_SettingWindow.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +118,7 @@
       <workItem from="1751464652427" duration="475000" />
       <workItem from="1751555065817" duration="823000" />
       <workItem from="1751641132232" duration="681000" />
-      <workItem from="1751780077524" duration="812000" />
+      <workItem from="1751780077524" duration="1063000" />
     </task>
     <task id="LOCAL-00001" summary="LeafAuto PRO">
       <option name="closed" value="true" />
@@ -491,7 +488,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751780600926</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751780902841</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1751780902841</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

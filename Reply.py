@@ -11,7 +11,7 @@ class ReplyDialog(QtWidgets.QDialog):
         log_print("[REPLY_DIALOG] Initializing ReplyDialog")
         self.ui = Ui_ReplyDialog()
         self.ui.setupUi(self)
-        self.setWindowTitle("编辑Ai接管规则")
+        self.setWindowTitle("Ai接管规则")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/tray.ico')))
         self.setWindowFlags(
             self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)

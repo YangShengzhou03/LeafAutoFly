@@ -29,7 +29,6 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
             self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
 
-        # 添加初始化标记，防止启动时自动播放试音
         self._is_initializing = True
 
         self.error_sound_thread = ErrorSoundThread()
@@ -56,7 +55,6 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.setting_init()
         self.ui.comboBox_errorAudio.currentIndexChanged.connect(self.update_selected_sound)
 
-        # 初始化完成
         self._is_initializing = False
 
     def clean_date(self):
@@ -218,7 +216,6 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
             audio_index = str(self.ui.comboBox_errorAudio.currentIndex())
             write_key_value('selected_audio_index', audio_index)
             log_print(f"[SETTINGS] Saved selected_audio_index as: {audio_index}")
-            # 新增：保存回复延迟设置
             write_key_value('reply_delay', str(self.ui.spinBox_delay.value()))
 
         except Exception as e:
@@ -239,7 +236,6 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
             self.selected_audio_file = self.audio_files[index]
             log_print(f"[SETTINGS] Selected audio file: {self.selected_audio_file}")
 
-            # 只有当用户主动点击试音按钮时才播放，初始化阶段不播放
             if not self._is_initializing:
                 self.toggle_audio()
         else:
