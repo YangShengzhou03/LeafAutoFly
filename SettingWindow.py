@@ -25,8 +25,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.ui.setupUi(self)
         self.setWindowTitle("设置枫叶")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/icon.ico')))
-        self.setWindowFlags(
-            self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
 
         self._is_initializing = True

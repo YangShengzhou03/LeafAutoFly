@@ -7,12 +7,13 @@ from PyQt6.QtGui import QRegularExpressionValidator, QDesktopServices
 
 from System_info import get_motherboard_serial_number, write_key_value, read_key_value
 from Ui_Activities import Ui_ActivitiesWindow
-from common import get_resource_path, get_current_time, get_url
+from common import get_resource_path, get_current_time, get_url, log_print
 
 
 class ActivitiesWindow(QtWidgets.QMainWindow, Ui_ActivitiesWindow):
     def __init__(self):
         super().__init__()
+        log_print("Initializing ActivitiesWindow")
         self.ui = Ui_ActivitiesWindow()
         self.ui.setupUi(self)
         self.setWindowTitle("激活专业版")
@@ -26,6 +27,7 @@ class ActivitiesWindow(QtWidgets.QMainWindow, Ui_ActivitiesWindow):
         self.year_vip()
 
     def connect_signals(self):
+        log_print("Connecting UI signals")
         self.ui.pushButton_close.clicked.connect(self.close)
         self.ui.pushButton_year.clicked.connect(self.year_vip)
         self.ui.pushButton_VIP.clicked.connect(self.super_vip)
@@ -45,6 +47,7 @@ class ActivitiesWindow(QtWidgets.QMainWindow, Ui_ActivitiesWindow):
         self.apply_default_styles()
 
     def QQ_code(self):
+        log_print("Displaying QQ code")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/QQ_Act.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
@@ -52,7 +55,7 @@ class ActivitiesWindow(QtWidgets.QMainWindow, Ui_ActivitiesWindow):
         self.apply_default_styles()
 
     def apply_default_styles(self):
-        default_style = """
+        style = """
 QPushButton {
     margin-right: 3px;
     margin-bottom: 0px;
@@ -63,79 +66,58 @@ QPushButton {
     font-weight: bold;
     padding: 8px;
 }
-
 QPushButton:hover {
     border: 2px solid rgba(254, 81, 111, 120);
-    background: qlineargradient(
-        spread:pad,
-        x1:0.5, y1:1, x2:0.5, y2:0,
-        stop:0 rgba(0, 0, 0, 0),
-        stop:1 rgba(255, 153, 170, 88)
-    );
+    background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0,
+        stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 153, 170, 88));
     transition: background 0.2s ease-in-out;
 }
-
 QPushButton:pressed {
     border: 2px solid rgba(254, 81, 111, 255);
-    background: qlineargradient(
-        spread:pad,
-        x1:0.5, y1:1, x2:0.5, y2:0,
-        stop:0 rgba(0, 0, 0, 0),
-        stop:1 rgba(255, 153, 170, 88)
-    );
+    background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0,
+        stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 153, 170, 88));
     transition: background 0.1s ease-in-out;
 }
 """
         for button in [self.ui.pushButton_VIP, self.ui.pushButton_year, self.ui.pushButton_AiVIP,
                        self.ui.pushButton_Base]:
-            button.setStyleSheet(default_style)
+            button.setStyleSheet(style)
 
     def update_button_style(self, button):
-        active_style = """
+        log_print(f"Updating style for {button.objectName()}")
+        self.apply_default_styles()
+        button.setStyleSheet(self.active_style())
+        self.current_selected_button = button
+
+    def active_style(self):
+        return """
 QPushButton {
     margin-right: 3px;
     margin-bottom: 0px;
     color: rgb(255, 255, 255);
     border: 2px solid rgba(254, 81, 111, 120);
     border-radius: 8px;
-    background: qlineargradient(
-        spread:pad,
-        x1:0.5, y1:1, x2:0.5, y2:0,
-        stop:0 rgba(0, 0, 0, 0),
-        stop:1 rgba(255, 153, 170, 88)
-    );
+    background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0,
+        stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 153, 170, 88));
     font-weight: bold;
     padding: 8px;
 }
-
 QPushButton:hover {
     border: 2px solid rgba(254, 81, 111, 120);
-    background: qlineargradient(
-        spread:pad,
-        x1:0.5, y1:1, x2:0.5, y2:0,
-        stop:0 rgba(0, 0, 0, 0),
-        stop:1 rgba(255, 153, 170, 88)
-    );
+    background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0,
+        stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 153, 170, 88));
     transition: background 0.2s ease-in-out;
 }
-
 QPushButton:pressed {
     border: 2px solid rgba(254, 81, 111, 255);
-    background: qlineargradient(
-        spread:pad,
-        x1:0.5, y1:1, x2:0.5, y2:0,
-        stop:0 rgba(0, 0, 0, 0),
-        stop:1 rgba(255, 153, 170, 88)
-    );
+    background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0,
+        stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 153, 170, 88));
     transition: background 0.1s ease-in-out;
 }
 """
 
-        self.apply_default_styles()
-        button.setStyleSheet(active_style)
-        self.current_selected_button = button
-
     def super_vip(self):
+        log_print("Super VIP selected")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp36.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
@@ -145,6 +127,7 @@ QPushButton:pressed {
         self.ui.label_prices_2.setText("36.9")
 
     def year_vip(self):
+        log_print("Year VIP selected")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp199.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
@@ -154,6 +137,7 @@ QPushButton:pressed {
         self.ui.label_prices_2.setText("199")
 
     def ai_vip(self):
+        log_print("AI VIP selected")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp29.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
@@ -163,6 +147,7 @@ QPushButton:pressed {
         self.ui.label_prices_2.setText("29.9")
 
     def base_vip(self):
+        log_print("Base VIP selected")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/activity/wp19.9.png')), QtGui.QIcon.Mode.Normal,
                        QtGui.QIcon.State.Off)
@@ -172,9 +157,11 @@ QPushButton:pressed {
         self.ui.label_prices_2.setText("19.9")
 
     def validate_activation(self):
+        log_print("Validating activation code")
         try:
             Key_value, _ = get_url()
-        except:
+        except Exception as e:
+            log_print(f"Failed to fetch key value: {e}")
             Key_value = None
 
         input_password = self.ui.lineEdit_code.text()
@@ -202,15 +189,12 @@ QPushButton:pressed {
         elif input_password == hex_year_vip:
             membership = 'VIP'
             expiration_time = (last_time + timedelta(days=365)).strftime('%Y-%m-%d %H:%M:%S')
-        elif Key_value is not None:
-            if input_password == Key_value:
-                membership = 'VIP'
-                expiration_time = (last_time + timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
-            else:
-                QtWidgets.QMessageBox.warning(self, "无效秘钥", "请输入正确的秘钥，如已购买请QQ扫码获取")
-                return
+        elif Key_value is not None and input_password == Key_value:
+            membership = 'VIP'
+            expiration_time = (last_time + timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
         else:
-            QtWidgets.QMessageBox.warning(self, "错误秘钥", "请输入正确的秘钥，如已购买请QQ扫获取")
+            log_print("Invalid activation code")
+            QtWidgets.QMessageBox.warning(self, "无效秘钥", "请输入正确的秘钥，如已购买请QQ扫码获取")
             return
 
         try:
@@ -222,8 +206,8 @@ QPushButton:pressed {
             write_key_value('membership', membership)
             write_key_value('expiration_time', expiration_time)
             write_key_value('motherboardsn', motherboard_sn)
-        except:
-            pass
+        except Exception as e:
+            log_print(f"Failed to write activation info: {e}")
 
         try:
             if read_key_value('membership') != membership or read_key_value(
@@ -232,8 +216,10 @@ QPushButton:pressed {
             else:
                 QtWidgets.QMessageBox.information(self, "激活成功", f"会员激活成功,有效期至{expiration_time}")
                 QtWidgets.QApplication.quit()
-        except:
+        except Exception as e:
+            log_print(f"Activation verification failed: {e}")
             QtWidgets.QMessageBox.critical(self, "激活失败", "激活出错,请以管理员身份运行软件")
 
     def help(self):
+        log_print("Opening help URL")
         QDesktopServices.openUrl(QUrl('https://blog.csdn.net/Yang_shengzhou/article/details/143782041'))

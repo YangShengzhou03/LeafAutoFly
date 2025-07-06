@@ -81,7 +81,6 @@ class ReplyDialog(QtWidgets.QDialog):
         RuleWidget_Item.setMaximumSize(QtCore.QSize(16777215, 50))
         RuleWidget_Item.setObjectName("RuleWidget_Item")
 
-        # 使用样式表创建阴影效果和背景过渡
         RuleWidget_Item.setStyleSheet("""
             QWidget#RuleWidget_Item {
                 border-radius: 8px;
@@ -96,13 +95,11 @@ class ReplyDialog(QtWidgets.QDialog):
             }
         """)
 
-        # 创建主布局
         main_layout = QtWidgets.QHBoxLayout(RuleWidget_Item)
         main_layout.setContentsMargins(12, 6, 12, 6)
         main_layout.setSpacing(12)
         main_layout.setObjectName("main_layout")
 
-        # 关键词区域
         keyword_frame = QtWidgets.QFrame(RuleWidget_Item)
         keyword_frame.setMinimumWidth(160)
         keyword_frame.setMaximumWidth(160)
@@ -116,7 +113,6 @@ class ReplyDialog(QtWidgets.QDialog):
         label_KeyWord.setWordWrap(True)
         label_KeyWord.setMaximumHeight(40)
 
-        # 设置关键词样式
         font = QtGui.QFont()
         font.setPointSize(12)
         label_KeyWord.setFont(font)
@@ -129,7 +125,6 @@ class ReplyDialog(QtWidgets.QDialog):
         keyword_layout.addWidget(label_KeyWord)
         main_layout.addWidget(keyword_frame)
 
-        # 匹配类型区域
         match_frame = QtWidgets.QFrame(RuleWidget_Item)
         match_frame.setMinimumWidth(60)
         match_frame.setMaximumWidth(60)
@@ -141,12 +136,10 @@ class ReplyDialog(QtWidgets.QDialog):
         label_Rule.setObjectName("label_Rule")
         label_Rule.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
-        # 设置匹配类型样式
         font = QtGui.QFont()
         font.setPointSize(12)
         label_Rule.setFont(font)
 
-        # 根据匹配类型设置不同的背景色
         if match_type == "包含":
             bg_color = "rgba(0, 150, 136, 200)"
         elif match_type == "等于":
@@ -166,7 +159,6 @@ class ReplyDialog(QtWidgets.QDialog):
         match_layout.addWidget(label_Rule)
         main_layout.addWidget(match_frame)
 
-        # 回复内容区域
         reply_frame = QtWidgets.QFrame(RuleWidget_Item)
         reply_frame.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Preferred)
         reply_frame.setStyleSheet("background: transparent;")
@@ -200,7 +192,6 @@ class ReplyDialog(QtWidgets.QDialog):
         label_Reply.setMaximumHeight(40)
         label_Reply.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
 
-        # 设置回复内容样式
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(12)
@@ -215,7 +206,6 @@ class ReplyDialog(QtWidgets.QDialog):
         reply_layout.addWidget(reply_label_frame)
         main_layout.addWidget(reply_frame, 1)
 
-        # 应用于区域
         apply_frame = QtWidgets.QFrame(RuleWidget_Item)
         apply_frame.setMinimumWidth(100)
         apply_frame.setMaximumWidth(100)
@@ -229,7 +219,6 @@ class ReplyDialog(QtWidgets.QDialog):
         label_ApplyTo.setWordWrap(True)
         label_ApplyTo.setMaximumHeight(40)
 
-        # 设置应用于样式
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(11)
@@ -244,13 +233,11 @@ class ReplyDialog(QtWidgets.QDialog):
         apply_layout.addWidget(label_ApplyTo)
         main_layout.addWidget(apply_frame)
 
-        # 删除按钮
         delete_button = QtWidgets.QPushButton("×", RuleWidget_Item)
         delete_button.setToolTip("删除该规则")
         delete_button.setObjectName("delete_button")
         delete_button.setFixedSize(24, 24)
 
-        # 设置删除按钮样式
         delete_button.setStyleSheet("""
             QPushButton#delete_button {
                 background-color: rgba(255, 255, 255, 0);
@@ -277,7 +264,6 @@ class ReplyDialog(QtWidgets.QDialog):
         delete_button.hide()
         delete_button.clicked.connect(lambda checked, widget=RuleWidget_Item: self.remove_rule(widget))
 
-        # 鼠标悬停显示删除按钮
         RuleWidget_Item.enterEvent = lambda event: delete_button.show()
         RuleWidget_Item.leaveEvent = lambda event: delete_button.hide()
 
