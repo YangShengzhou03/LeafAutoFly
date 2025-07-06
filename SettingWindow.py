@@ -59,7 +59,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
 
     def clean_date(self):
         log_print("[SETTINGS] Clean data operation requested")
-        files_to_clean = ['_internal/AutoReply_Rules.json', '_internal/tasks.json', '_internal/log.txt']
+        files_to_clean = ['_internal/AutoReply_Rules.json', '_internal/tasks.json', '_internal/log']
         cleaned = False
         for file in files_to_clean:
             if os.path.exists(file):
