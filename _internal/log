@@ -1,0 +1,307 @@
+# Log file created at 2025-07-06 13:46:18.403758
+[2025-07-06 13:46:18] Initializing MainWindow
+[2025-07-06 13:46:18] Ensuring configuration file exists
+[2025-07-06 13:46:18] Ensuring config file exists...
+[2025-07-06 13:46:18] Retry 1/5
+[2025-07-06 13:46:18] Config file _internal/system_info.ini does not exist, creating...
+[2025-07-06 13:46:18] Creating new config file...
+[2025-07-06 13:46:19] Writing config to _internal/system_info.ini
+[2025-07-06 13:46:19] Config file created successfully
+[2025-07-06 13:46:19] Retry 2/5
+[2025-07-06 13:46:19] Reading existing config file...
+[2025-07-06 13:46:19] Reading config from _internal/system_info.ini
+[2025-07-06 13:46:19] Config sections: ['SystemInfo']
+[2025-07-06 13:46:19] Checking for missing keys...
+[2025-07-06 13:46:19] Getting motherboard serial number...
+[2025-07-06 13:46:19] Motherboard SN found: KT17MC05PI
+[2025-07-06 13:46:19] Membership: Free
+[2025-07-06 13:46:19] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 13:46:19] Config Motherboard SN: LEAF AUTO
+[2025-07-06 13:46:19] Current Motherboard SN: KT17MC05PI
+[2025-07-06 13:46:19] Config file is valid
+[2025-07-06 13:46:19] Reading configuration values
+[2025-07-06 13:46:19] Reading key: language
+[2025-07-06 13:46:19] Key language value: cn
+[2025-07-06 13:46:19] Reading key: membership
+[2025-07-06 13:46:19] Key membership value: Free
+[2025-07-06 13:46:19] Reading key: expiration_time
+[2025-07-06 13:46:19] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 13:46:19] Reading key: version
+[2025-07-06 13:46:19] Key version value: 4.3
+[2025-07-06 13:46:19] Updating version from 4.3 to 4.39
+[2025-07-06 13:46:19] Writing key version = 4.39
+[2025-07-06 13:46:19] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:46:19] Key version updated successfully
+[2025-07-06 13:46:19] Reloading WeChat instances during initialization
+[2025-07-06 13:46:19] Starting to reload WeChat instances
+[2025-07-06 13:46:19] Reading key: language
+[2025-07-06 13:46:19] Key language value: cn
+[2025-07-06 13:46:19] WeChat not logged in during reload
+[2025-07-06 13:46:19] WeChat initialization failed: 微信未登录
+[2025-07-06 13:46:19] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 13:46:19] [ERROR_SOUND] Thread initialized
+[2025-07-06 13:46:19] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 13:46:19] [AutoInfo] Email processing thread started
+[2025-07-06 13:46:19] [AiAssistant] Initializing AI assistant...
+[2025-07-06 13:46:19] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 13:46:19] Creating system tray icon
+[2025-07-06 13:46:19] Creating system tray icon
+[2025-07-06 13:46:19] System tray icon created
+[2025-07-06 13:46:19] Setting window flags and attributes
+[2025-07-06 13:46:19] Connecting signals and updating UI elements
+[2025-07-06 13:46:19] Connecting UI signals
+[2025-07-06 13:46:19] [SETTINGS] Initializing SettingWindow
+[2025-07-06 13:46:20] [ERROR_SOUND] Thread initialized
+[2025-07-06 13:46:20] Reading key: membership
+[2025-07-06 13:46:20] Key membership value: Free
+[2025-07-06 13:46:20] [SETTINGS] Detected membership: Free
+[2025-07-06 13:46:20] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 13:46:20] [SETTINGS] Initializing settings
+[2025-07-06 13:46:20] Reading key: error_email
+[2025-07-06 13:46:20] Key error_email value: None
+[2025-07-06 13:46:20] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 13:46:20] Reading key: error_sound
+[2025-07-06 13:46:20] Key error_sound value: True
+[2025-07-06 13:46:20] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 13:46:20] Reading key: net_time
+[2025-07-06 13:46:20] Key net_time value: False
+[2025-07-06 13:46:20] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 13:46:20] Reading key: auto_update
+[2025-07-06 13:46:20] Key auto_update value: True
+[2025-07-06 13:46:20] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 13:46:20] Reading key: serve_lock
+[2025-07-06 13:46:20] Key serve_lock value: False
+[2025-07-06 13:46:20] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 13:46:20] Reading key: close_option
+[2025-07-06 13:46:20] Key close_option value: True
+[2025-07-06 13:46:20] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 13:46:20] Reading key: language
+[2025-07-06 13:46:20] Key language value: cn
+[2025-07-06 13:46:20] [SETTINGS] Set language to: 简体中文
+[2025-07-06 13:46:20] Reading key: version
+[2025-07-06 13:46:20] Key version value: 4.39
+[2025-07-06 13:46:20] [SETTINGS] Set version label to: 4.39
+[2025-07-06 13:46:20] Reading key: add_timestep
+[2025-07-06 13:46:20] Key add_timestep value: 10
+[2025-07-06 13:46:20] [SETTINGS] Set timestep to: 10
+[2025-07-06 13:46:20] Reading key: reply_delay
+[2025-07-06 13:46:20] Key reply_delay value: None
+[2025-07-06 13:46:20] Reading key: selected_audio_index
+[2025-07-06 13:46:20] Key selected_audio_index value: None
+[2025-07-06 13:46:20] [SETTINGS] Loading audio selection: 0
+[2025-07-06 13:46:20] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 13:46:20] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 13:46:20] [SETTINGS] Set audio index to: 0
+[2025-07-06 13:46:20] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-07-06 13:46:20] [REPLY_DIALOG] Loading rules from JSON
+[2025-07-06 13:46:20] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-07-06 13:46:20] [REPLY_DIALOG] Displaying 0 rules
+[2025-07-06 13:46:20] File and message signals connected
+[2025-07-06 13:46:20] Window control signals connected
+[2025-07-06 13:46:20] Membership button signals connected
+[2025-07-06 13:46:20] Function button signals connected
+[2025-07-06 13:46:20] Checkbox signals connected
+[2025-07-06 13:46:20] VIP frame click event connected
+[2025-07-06 13:46:20] All signals connected
+[2025-07-06 13:46:20] Updating UI elements
+[2025-07-06 13:46:20] Getting application notice
+[2025-07-06 13:46:20] Set datetime to 2025-07-06 13:46:20
+[2025-07-06 13:46:20] Reading key: membership_class
+[2025-07-06 13:46:20] Key membership_class value: 0
+[2025-07-06 13:46:20] Reading key: error_sound
+[2025-07-06 13:46:20] Key error_sound value: True
+[2025-07-06 13:46:20] UI elements updated
+[2025-07-06 13:46:20] Applying membership limits for Free
+[2025-07-06 13:46:20] Applying membership limits for Free
+[2025-07-06 13:46:20] Applying Free membership limits
+[2025-07-06 13:46:21] Free trial remaining days: 29
+[2025-07-06 13:46:21] Membership limits applied
+[2025-07-06 13:46:21] Reading key: auto_update
+[2025-07-06 13:46:21] Key auto_update value: True
+[2025-07-06 13:46:21] Checking for updates
+[2025-07-06 13:46:21] Reading key: version
+[2025-07-06 13:46:21] Key version value: 4.39
+[2025-07-06 13:46:21] Reading key: serve_lock
+[2025-07-06 13:46:21] Key serve_lock value: False
+[2025-07-06 13:46:21] Loading tasks from JSON file
+[2025-07-06 13:46:21] Loading tasks from _internal/tasks.json
+[2025-07-06 13:46:21] JSON file _internal/tasks.json does not exist
+[2025-07-06 13:46:22] Opening setting window
+[2025-07-06 13:46:22] Writing key admin_log = Test
+[2025-07-06 13:46:22] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:46:22] Key admin_log updated successfully
+[2025-07-06 13:46:22] Successfully wrote to admin_log, sufficient permissions
+[2025-07-06 13:46:27] Opening activities window
+[2025-07-06 13:46:27] Writing key admin_log = Test
+[2025-07-06 13:46:27] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:46:27] Key admin_log updated successfully
+[2025-07-06 13:46:27] Successfully wrote to admin_log, sufficient permissions
+[2025-07-06 13:47:13] Initializing MainWindow
+[2025-07-06 13:47:13] Ensuring configuration file exists
+[2025-07-06 13:47:13] Ensuring config file exists...
+[2025-07-06 13:47:13] Retry 1/5
+[2025-07-06 13:47:13] Reading existing config file...
+[2025-07-06 13:47:13] Reading config from _internal/system_info.ini
+[2025-07-06 13:47:13] Config sections: ['SystemInfo']
+[2025-07-06 13:47:13] Checking for missing keys...
+[2025-07-06 13:47:13] Getting motherboard serial number...
+[2025-07-06 13:47:13] Motherboard SN found: KT17MC05PI
+[2025-07-06 13:47:13] Membership: Free
+[2025-07-06 13:47:13] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 13:47:13] Config Motherboard SN: LEAF AUTO
+[2025-07-06 13:47:13] Current Motherboard SN: KT17MC05PI
+[2025-07-06 13:47:13] Config file is valid
+[2025-07-06 13:47:13] Reading configuration values
+[2025-07-06 13:47:13] Reading key: language
+[2025-07-06 13:47:13] Key language value: cn
+[2025-07-06 13:47:13] Reading key: membership
+[2025-07-06 13:47:13] Key membership value: Free
+[2025-07-06 13:47:13] Reading key: expiration_time
+[2025-07-06 13:47:13] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 13:47:13] Reading key: version
+[2025-07-06 13:47:13] Key version value: 4.39
+[2025-07-06 13:47:13] Reloading WeChat instances during initialization
+[2025-07-06 13:47:13] Starting to reload WeChat instances
+[2025-07-06 13:47:13] Reading key: language
+[2025-07-06 13:47:13] Key language value: cn
+[2025-07-06 13:47:14] WeChat not logged in during reload
+[2025-07-06 13:47:14] WeChat initialization failed: 微信未登录
+[2025-07-06 13:47:14] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 13:47:14] [ERROR_SOUND] Thread initialized
+[2025-07-06 13:47:14] [AutoInfo] Email processing thread started
+[2025-07-06 13:47:14] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 13:47:14] [AiAssistant] Initializing AI assistant...
+[2025-07-06 13:47:14] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 13:47:14] Creating system tray icon
+[2025-07-06 13:47:14] Creating system tray icon
+[2025-07-06 13:47:14] System tray icon created
+[2025-07-06 13:47:14] Setting window flags and attributes
+[2025-07-06 13:47:14] Connecting signals and updating UI elements
+[2025-07-06 13:47:14] Connecting UI signals
+[2025-07-06 13:47:14] [SETTINGS] Initializing SettingWindow
+[2025-07-06 13:47:14] [ERROR_SOUND] Thread initialized
+[2025-07-06 13:47:14] Reading key: membership
+[2025-07-06 13:47:14] Key membership value: Free
+[2025-07-06 13:47:14] [SETTINGS] Detected membership: Free
+[2025-07-06 13:47:14] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 13:47:14] [SETTINGS] Initializing settings
+[2025-07-06 13:47:14] Reading key: error_email
+[2025-07-06 13:47:14] Key error_email value: None
+[2025-07-06 13:47:14] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 13:47:14] Reading key: error_sound
+[2025-07-06 13:47:14] Key error_sound value: True
+[2025-07-06 13:47:14] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 13:47:14] Reading key: net_time
+[2025-07-06 13:47:14] Key net_time value: False
+[2025-07-06 13:47:14] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 13:47:14] Reading key: auto_update
+[2025-07-06 13:47:14] Key auto_update value: True
+[2025-07-06 13:47:14] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 13:47:14] Reading key: serve_lock
+[2025-07-06 13:47:14] Key serve_lock value: False
+[2025-07-06 13:47:14] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 13:47:14] Reading key: close_option
+[2025-07-06 13:47:14] Key close_option value: True
+[2025-07-06 13:47:14] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 13:47:14] Reading key: language
+[2025-07-06 13:47:14] Key language value: cn
+[2025-07-06 13:47:14] [SETTINGS] Set language to: 简体中文
+[2025-07-06 13:47:15] Reading key: version
+[2025-07-06 13:47:15] Key version value: 4.39
+[2025-07-06 13:47:15] [SETTINGS] Set version label to: 4.39
+[2025-07-06 13:47:15] Reading key: add_timestep
+[2025-07-06 13:47:15] Key add_timestep value: 10
+[2025-07-06 13:47:15] [SETTINGS] Set timestep to: 10
+[2025-07-06 13:47:15] Reading key: reply_delay
+[2025-07-06 13:47:15] Key reply_delay value: None
+[2025-07-06 13:47:15] Reading key: selected_audio_index
+[2025-07-06 13:47:15] Key selected_audio_index value: None
+[2025-07-06 13:47:15] [SETTINGS] Loading audio selection: 0
+[2025-07-06 13:47:15] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 13:47:15] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 13:47:15] [SETTINGS] Set audio index to: 0
+[2025-07-06 13:47:15] [REPLY_DIALOG] Initializing ReplyDialog
+[2025-07-06 13:47:15] [REPLY_DIALOG] Loading rules from JSON
+[2025-07-06 13:47:15] [REPLY_DIALOG] Rules file not found, starting with empty rules
+[2025-07-06 13:47:15] [REPLY_DIALOG] Displaying 0 rules
+[2025-07-06 13:47:15] File and message signals connected
+[2025-07-06 13:47:15] Window control signals connected
+[2025-07-06 13:47:15] Membership button signals connected
+[2025-07-06 13:47:15] Function button signals connected
+[2025-07-06 13:47:15] Checkbox signals connected
+[2025-07-06 13:47:15] VIP frame click event connected
+[2025-07-06 13:47:15] All signals connected
+[2025-07-06 13:47:15] Updating UI elements
+[2025-07-06 13:47:15] Getting application notice
+[2025-07-06 13:47:15] Set datetime to 2025-07-06 13:47:15
+[2025-07-06 13:47:15] Reading key: membership_class
+[2025-07-06 13:47:15] Key membership_class value: 0
+[2025-07-06 13:47:15] Reading key: error_sound
+[2025-07-06 13:47:15] Key error_sound value: True
+[2025-07-06 13:47:15] UI elements updated
+[2025-07-06 13:47:15] Applying membership limits for Free
+[2025-07-06 13:47:15] Applying membership limits for Free
+[2025-07-06 13:47:15] Applying Free membership limits
+[2025-07-06 13:47:16] Free trial remaining days: 29
+[2025-07-06 13:47:16] Membership limits applied
+[2025-07-06 13:47:16] Reading key: auto_update
+[2025-07-06 13:47:16] Key auto_update value: True
+[2025-07-06 13:47:16] Checking for updates
+[2025-07-06 13:47:16] Reading key: version
+[2025-07-06 13:47:16] Key version value: 4.39
+[2025-07-06 13:47:16] Reading key: serve_lock
+[2025-07-06 13:47:16] Key serve_lock value: False
+[2025-07-06 13:47:16] Loading tasks from JSON file
+[2025-07-06 13:47:16] Loading tasks from _internal/tasks.json
+[2025-07-06 13:47:16] JSON file _internal/tasks.json does not exist
+[2025-07-06 13:47:17] Opening setting window
+[2025-07-06 13:47:17] Writing key admin_log = Test
+[2025-07-06 13:47:17] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:17] Key admin_log updated successfully
+[2025-07-06 13:47:17] Successfully wrote to admin_log, sufficient permissions
+[2025-07-06 13:47:19] Opening activities window
+[2025-07-06 13:47:19] Writing key admin_log = Test
+[2025-07-06 13:47:19] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:19] Key admin_log updated successfully
+[2025-07-06 13:47:19] Successfully wrote to admin_log, sufficient permissions
+[2025-07-06 13:47:28] [SETTINGS] Saving settings and closing window
+[2025-07-06 13:47:28] Writing key error_email = False
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key error_email updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved error_email as: False
+[2025-07-06 13:47:28] Writing key error_sound = True
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key error_sound updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved error_sound as: True
+[2025-07-06 13:47:28] Writing key net_time = False
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key net_time updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved net_time as: False
+[2025-07-06 13:47:28] Writing key auto_update = True
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key auto_update updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved auto_update as: True
+[2025-07-06 13:47:28] Writing key serve_lock = False
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key serve_lock updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved serve_lock as: False
+[2025-07-06 13:47:28] Writing key close_option = True
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key close_option updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved close_option as: True
+[2025-07-06 13:47:28] Writing key add_timestep = 10
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key add_timestep updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved add_timestep as: 10
+[2025-07-06 13:47:28] Writing key language = cn
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key language updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved language as: cn
+[2025-07-06 13:47:28] Writing key selected_audio_index = 0
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key selected_audio_index updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Saved selected_audio_index as: 0
+[2025-07-06 13:47:28] Writing key reply_delay = 0
+[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
+[2025-07-06 13:47:28] Key reply_delay updated successfully
+[2025-07-06 13:47:28] [SETTINGS] Settings saved successfully

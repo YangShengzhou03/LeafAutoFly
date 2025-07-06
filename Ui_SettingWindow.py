@@ -720,10 +720,10 @@ class Ui_SettingWindow(object):
 "}")
         self.label_addtime_2.setObjectName("label_addtime_2")
         self.horizontalLayout_31.addWidget(self.label_addtime_2)
-        self.spinBox_timestep_2 = QtWidgets.QSpinBox(parent=self.frame_setting_2)
-        self.spinBox_timestep_2.setMinimumSize(QtCore.QSize(106, 27))
-        self.spinBox_timestep_2.setMaximumSize(QtCore.QSize(106, 27))
-        self.spinBox_timestep_2.setStyleSheet("QSpinBox {\n"
+        self.spinBox_delay = QtWidgets.QSpinBox(parent=self.frame_setting_2)
+        self.spinBox_delay.setMinimumSize(QtCore.QSize(106, 27))
+        self.spinBox_delay.setMaximumSize(QtCore.QSize(106, 27))
+        self.spinBox_delay.setStyleSheet("QSpinBox {\n"
 "    border: 1px solid #ccc;\n"
 "    padding: 4px 20px 4px 8px;\n"
 "    font-family: \'Microsoft YaHei\', sans-serif;\n"
@@ -743,8 +743,8 @@ class Ui_SettingWindow(object):
 "    border-color: #0078d4;\n"
 "    box-shadow: 0 0 3px rgba(0, 120, 212, 0.8);\n"
 "}")
-        self.spinBox_timestep_2.setObjectName("spinBox_timestep_2")
-        self.horizontalLayout_31.addWidget(self.spinBox_timestep_2)
+        self.spinBox_delay.setObjectName("spinBox_delay")
+        self.horizontalLayout_31.addWidget(self.spinBox_delay)
         self.horizontalLayout_31.setStretch(0, 1)
         self.horizontalLayout_31.setStretch(1, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_31)

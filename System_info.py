@@ -21,7 +21,8 @@ DEFAULT_VALUES = {
     'membership_class': '0',
     'language': 'cn',
     'serve_lock': 'False',
-    'add_timestep': 10
+    'add_timestep': 10,
+    'reply_delay': 0
 }
 
 
@@ -121,7 +122,8 @@ def create_config_file():
         'membership_class': '0',
         'language': 'cn',
         'serve_lock': 'False',
-        'add_timestep': '10'
+        'add_timestep': '10',
+        'reply_delay': 0
     }
     os.makedirs(os.path.dirname(CONFIG_PATH), exist_ok=True)
     log_print(f'Writing config to {CONFIG_PATH}')

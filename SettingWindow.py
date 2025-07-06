@@ -25,7 +25,8 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.ui.setupUi(self)
         self.setWindowTitle("设置枫叶")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/icon.ico')))
-        self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
+        self.setWindowFlags(
+            self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
 
         # 添加初始化标记，防止启动时自动播放试音
@@ -153,6 +154,13 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.ui.spinBox_timestep.setValue(timestep)
         log_print(f"[SETTINGS] Set timestep to: {timestep}")
 
+        default_delay = 0  # 默认延迟0毫秒
+        delay_value = read_key_value('reply_delay')
+        if delay_value:
+            self.ui.spinBox_delay.setValue(int(delay_value))
+        else:
+            self.ui.spinBox_delay.setValue(default_delay)
+
         self.audio_files = {
             0: get_resource_path('resources/sound/error_sound_1.mp3'),
             1: get_resource_path('resources/sound/error_sound_2.mp3'),
@@ -210,6 +218,8 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
             audio_index = str(self.ui.comboBox_errorAudio.currentIndex())
             write_key_value('selected_audio_index', audio_index)
             log_print(f"[SETTINGS] Saved selected_audio_index as: {audio_index}")
+            # 新增：保存回复延迟设置
+            write_key_value('reply_delay', str(self.ui.spinBox_delay.value()))
 
         except Exception as e:
             log('ERROR', f'设置保存失败，请用管理员身份运行软件。')

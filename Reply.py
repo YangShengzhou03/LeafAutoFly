@@ -14,9 +14,7 @@ class ReplyDialog(QtWidgets.QDialog):
         self.setWindowTitle("编辑Ai接管规则")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/tray.ico')))
         self.setWindowFlags(
-            QtCore.Qt.WindowType.FramelessWindowHint |
-            QtCore.Qt.WindowType.WindowStaysOnTopHint
-        )
+            self.windowFlags() | QtCore.Qt.WindowType.FramelessWindowHint | QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
         self.ui.pushButton_save.clicked.connect(self.saveRulesToJsonAndClose)
         self.ui.pushButton_add.clicked.connect(self.add_rule)
