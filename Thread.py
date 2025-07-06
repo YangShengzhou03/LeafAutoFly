@@ -60,14 +60,12 @@ class WorkerThreadBase(QtCore.QThread):
     def check_interruption(self) -> bool:
         """检查是否请求中断"""
         with self._stop_lock:
-            if self._stop_event.is_set():
-                return True
-        return False
+            return self._stop_event.is_set()
 
 
 class AiWorkerThread(WorkerThreadBase):
-    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at=False,
-                 at_nickname=""):
+    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。",
+                 only_at=False, at_nickname=""):
         super().__init__()
         self.wx = wx
         self.receiver = receiver
@@ -383,6 +381,7 @@ class AiWorkerThread(WorkerThreadBase):
             log("ERROR", f"处理API响应时出错: {str(e)}")
             log_print(f"[AI_WORKER] Unexpected error processing API response: {str(e)}")
             return None
+
 
 
 class SplitWorkerThread(WorkerThreadBase):
