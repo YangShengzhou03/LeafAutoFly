@@ -173,20 +173,22 @@ class AutoInfo(QtWidgets.QWidget):
             receiver_label = QtWidgets.QLabel(name_text)
             receiver_label.setStyleSheet("color:rgb(0, 0, 0);")
             receiver_label.setFont(QtGui.QFont("微软雅黑 Light", 12))
-            receiver_label.setWordWrap(False)
+            receiver_label.setWordWrap(True)  # 开启自动换行
             receiver_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             receiver_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             receiver_label.setMinimumWidth(1)
+            receiver_label.setMaximumWidth(250)  # 限制最大宽度，防止溢出
             receiver_label.installEventFilter(self)
             top_layout.addWidget(receiver_label)
 
             wx_label = QtWidgets.QLabel(wx_nickname)
             wx_label.setStyleSheet("color: rgb(105, 27, 253); padding-left: 8px;")
             wx_label.setFont(QtGui.QFont("微软雅黑 Light", 10))
-            wx_label.setWordWrap(False)
+            wx_label.setWordWrap(True)  # 开启自动换行
             wx_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             wx_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             wx_label.setMinimumWidth(1)
+            wx_label.setMaximumWidth(280)  # 限制最大宽度，防止溢出
             wx_label.installEventFilter(self)
             top_layout.addWidget(wx_label)
 
@@ -212,10 +214,11 @@ class AutoInfo(QtWidgets.QWidget):
             message_label = QtWidgets.QLabel(info_text)
             message_label.setStyleSheet("color: rgb(169, 169, 169);")
             message_label.setFont(QtGui.QFont("微软雅黑", 10))
-            message_label.setWordWrap(False)
+            message_label.setWordWrap(True)  # 开启自动换行
             message_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             message_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             message_label.setMinimumWidth(1)
+            message_label.setMaximumWidth(400)  # 限制最大宽度，防止溢出
             message_label.installEventFilter(self)
             bottom_layout.addWidget(message_label)
 
