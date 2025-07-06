@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from common import get_resource_path
-
 
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
@@ -97,22 +95,22 @@ class Ui_SettingWindow(object):
         self.listWidget_setting.setObjectName("listWidget_setting")
         item = QtWidgets.QListWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/基本设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("resources/img/setting/基本设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/高级设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("resources/img/setting/高级设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon1)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/其他设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(QtGui.QPixmap("resources/img/setting/其他设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon2)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/关于枫叶.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon3.addPixmap(QtGui.QPixmap("resources/img/setting/关于枫叶.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon3)
         self.listWidget_setting.addItem(item)
         self.horizontalLayout_15.addWidget(self.listWidget_setting)
@@ -144,7 +142,7 @@ class Ui_SettingWindow(object):
 "color: rgb(0, 0, 0);\n"
 "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/完成设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon4.addPixmap(QtGui.QPixmap("resources/img/setting/完成设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_exit_setting.setIcon(icon4)
         self.pushButton_exit_setting.setObjectName("pushButton_exit_setting")
         self.horizontalLayout_16.addWidget(self.pushButton_exit_setting, 0, QtCore.Qt.AlignmentFlag.AlignBottom)
@@ -357,7 +355,7 @@ class Ui_SettingWindow(object):
 "border:none;")
         self.pushButton_test_sound.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/播放测试.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon5.addPixmap(QtGui.QPixmap("resources/img/setting/播放测试.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_test_sound.setIcon(icon5)
         self.pushButton_test_sound.setIconSize(QtCore.QSize(28, 28))
         self.pushButton_test_sound.setObjectName("pushButton_test_sound")
@@ -623,7 +621,7 @@ class Ui_SettingWindow(object):
         self.verticalLayout_4.addWidget(self.label_setting_2)
         self.horizontalLayout_25 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_25.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
-        self.horizontalLayout_25.setContentsMargins(188, -1, 188, -1)
+        self.horizontalLayout_25.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_25.setSpacing(0)
         self.horizontalLayout_25.setObjectName("horizontalLayout_25")
         self.label_language = QtWidgets.QLabel(parent=self.frame_setting_2)
@@ -669,7 +667,7 @@ class Ui_SettingWindow(object):
         self.horizontalLayout_25.setStretch(1, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_25)
         self.horizontalLayout_26 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_26.setContentsMargins(188, -1, 188, -1)
+        self.horizontalLayout_26.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_26.setSpacing(0)
         self.horizontalLayout_26.setObjectName("horizontalLayout_26")
         self.label_addtime = QtWidgets.QLabel(parent=self.frame_setting_2)
@@ -709,8 +707,49 @@ class Ui_SettingWindow(object):
         self.horizontalLayout_26.setStretch(0, 1)
         self.horizontalLayout_26.setStretch(1, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_26)
+        self.horizontalLayout_31 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_31.setContentsMargins(170, -1, 170, -1)
+        self.horizontalLayout_31.setSpacing(0)
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.label_addtime_2 = QtWidgets.QLabel(parent=self.frame_setting_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_addtime_2.setFont(font)
+        self.label_addtime_2.setStyleSheet("QLabel {\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.label_addtime_2.setObjectName("label_addtime_2")
+        self.horizontalLayout_31.addWidget(self.label_addtime_2)
+        self.spinBox_timestep_2 = QtWidgets.QSpinBox(parent=self.frame_setting_2)
+        self.spinBox_timestep_2.setMinimumSize(QtCore.QSize(106, 27))
+        self.spinBox_timestep_2.setMaximumSize(QtCore.QSize(106, 27))
+        self.spinBox_timestep_2.setStyleSheet("QSpinBox {\n"
+"    border: 1px solid #ccc;\n"
+"    padding: 4px 20px 4px 8px;\n"
+"    font-family: \'Microsoft YaHei\', sans-serif;\n"
+"    font-size: 14px;\n"
+"    width: 120px;\n"
+"    background-color: #fff;\n"
+"    border-radius: 4px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QSpinBox:hover {\n"
+"    border-color: #888;\n"
+"    background-color: #f5f5f5;\n"
+"}\n"
+"\n"
+"QSpinBox:focus {\n"
+"    border-color: #0078d4;\n"
+"    box-shadow: 0 0 3px rgba(0, 120, 212, 0.8);\n"
+"}")
+        self.spinBox_timestep_2.setObjectName("spinBox_timestep_2")
+        self.horizontalLayout_31.addWidget(self.spinBox_timestep_2)
+        self.horizontalLayout_31.setStretch(0, 1)
+        self.horizontalLayout_31.setStretch(1, 1)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_31)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_7.setContentsMargins(188, -1, 188, -1)
+        self.horizontalLayout_7.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.label_errorAudio = QtWidgets.QLabel(parent=self.frame_setting_2)
@@ -758,7 +797,7 @@ class Ui_SettingWindow(object):
         self.horizontalLayout_7.setStretch(1, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_7)
         self.horizontalLayout_29 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_29.setContentsMargins(188, -1, 188, -1)
+        self.horizontalLayout_29.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_29.setSpacing(0)
         self.horizontalLayout_29.setObjectName("horizontalLayout_29")
         self.label_openmore = QtWidgets.QLabel(parent=self.frame_setting_2)
@@ -832,7 +871,7 @@ class Ui_SettingWindow(object):
         self.horizontalLayout_29.setStretch(0, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_29)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_8.setContentsMargins(188, -1, 188, -1)
+        self.horizontalLayout_8.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_8.setSpacing(0)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.label_errorAudio_2 = QtWidgets.QLabel(parent=self.frame_setting_2)
@@ -871,8 +910,8 @@ class Ui_SettingWindow(object):
         self.verticalLayout_4.addItem(spacerItem1)
         self.verticalLayout_4.setStretch(1, 1)
         self.verticalLayout_4.setStretch(2, 1)
-        self.verticalLayout_4.setStretch(4, 1)
         self.verticalLayout_4.setStretch(5, 1)
+        self.verticalLayout_4.setStretch(6, 1)
         self.verticalLayout_2.addWidget(self.frame_setting_2)
         self.stackedWidget.addWidget(self.page_2)
         self.page_3 = QtWidgets.QWidget()
@@ -988,7 +1027,7 @@ class Ui_SettingWindow(object):
 "border:none;")
         self.pushButton_logo.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/logo.png")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon6.addPixmap(QtGui.QPixmap("resources/img/setting/logo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_logo.setIcon(icon6)
         self.pushButton_logo.setIconSize(QtCore.QSize(80, 80))
         self.pushButton_logo.setObjectName("pushButton_logo")
@@ -1193,6 +1232,7 @@ class Ui_SettingWindow(object):
         self.comboBox_language.setItemText(1, _translate("SettingWindow", "繁体中文"))
         self.comboBox_language.setItemText(2, _translate("SettingWindow", "English"))
         self.label_addtime.setText(_translate("SettingWindow", "添加任务自增分钟"))
+        self.label_addtime_2.setText(_translate("SettingWindow", "Ai接管回复延时（秒）"))
         self.label_errorAudio.setText(_translate("SettingWindow", "任务出错时提示音"))
         self.comboBox_errorAudio.setItemText(0, _translate("SettingWindow", "提示音1"))
         self.comboBox_errorAudio.setItemText(1, _translate("SettingWindow", "提示音2"))
