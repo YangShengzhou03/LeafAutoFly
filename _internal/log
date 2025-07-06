@@ -1,1639 +1,1824 @@
-# Log file created at 2025-07-06 13:46:18.403758
-[2025-07-06 13:46:18] Initializing MainWindow
-[2025-07-06 13:46:18] Ensuring configuration file exists
-[2025-07-06 13:46:18] Ensuring config file exists...
-[2025-07-06 13:46:18] Retry 1/5
-[2025-07-06 13:46:18] Config file _internal/system_info.ini does not exist, creating...
-[2025-07-06 13:46:18] Creating new config file...
-[2025-07-06 13:46:19] Writing config to _internal/system_info.ini
-[2025-07-06 13:46:19] Config file created successfully
-[2025-07-06 13:46:19] Retry 2/5
-[2025-07-06 13:46:19] Reading existing config file...
-[2025-07-06 13:46:19] Reading config from _internal/system_info.ini
-[2025-07-06 13:46:19] Config sections: ['SystemInfo']
-[2025-07-06 13:46:19] Checking for missing keys...
-[2025-07-06 13:46:19] Getting motherboard serial number...
-[2025-07-06 13:46:19] Motherboard SN found: KT17MC05PI
-[2025-07-06 13:46:19] Membership: Free
-[2025-07-06 13:46:19] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 13:46:19] Config Motherboard SN: LEAF AUTO
-[2025-07-06 13:46:19] Current Motherboard SN: KT17MC05PI
-[2025-07-06 13:46:19] Config file is valid
-[2025-07-06 13:46:19] Reading configuration values
-[2025-07-06 13:46:19] Reading key: language
-[2025-07-06 13:46:19] Key language value: cn
-[2025-07-06 13:46:19] Reading key: membership
-[2025-07-06 13:46:19] Key membership value: Free
-[2025-07-06 13:46:19] Reading key: expiration_time
-[2025-07-06 13:46:19] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 13:46:19] Reading key: version
-[2025-07-06 13:46:19] Key version value: 4.3
-[2025-07-06 13:46:19] Updating version from 4.3 to 4.39
-[2025-07-06 13:46:19] Writing key version = 4.39
-[2025-07-06 13:46:19] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:46:19] Key version updated successfully
-[2025-07-06 13:46:19] Reloading WeChat instances during initialization
-[2025-07-06 13:46:19] Starting to reload WeChat instances
-[2025-07-06 13:46:19] Reading key: language
-[2025-07-06 13:46:19] Key language value: cn
-[2025-07-06 13:46:19] WeChat not logged in during reload
-[2025-07-06 13:46:19] WeChat initialization failed: 微信未登录
-[2025-07-06 13:46:19] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 13:46:19] [ERROR_SOUND] Thread initialized
-[2025-07-06 13:46:19] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 13:46:19] [AutoInfo] Email processing thread started
-[2025-07-06 13:46:19] [AiAssistant] Initializing AI assistant...
-[2025-07-06 13:46:19] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 13:46:19] Creating system tray icon
-[2025-07-06 13:46:19] Creating system tray icon
-[2025-07-06 13:46:19] System tray icon created
-[2025-07-06 13:46:19] Setting window flags and attributes
-[2025-07-06 13:46:19] Connecting signals and updating UI elements
-[2025-07-06 13:46:19] Connecting UI signals
-[2025-07-06 13:46:19] [SETTINGS] Initializing SettingWindow
-[2025-07-06 13:46:20] [ERROR_SOUND] Thread initialized
-[2025-07-06 13:46:20] Reading key: membership
-[2025-07-06 13:46:20] Key membership value: Free
-[2025-07-06 13:46:20] [SETTINGS] Detected membership: Free
-[2025-07-06 13:46:20] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 13:46:20] [SETTINGS] Initializing settings
-[2025-07-06 13:46:20] Reading key: error_email
-[2025-07-06 13:46:20] Key error_email value: None
-[2025-07-06 13:46:20] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 13:46:20] Reading key: error_sound
-[2025-07-06 13:46:20] Key error_sound value: True
-[2025-07-06 13:46:20] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 13:46:20] Reading key: net_time
-[2025-07-06 13:46:20] Key net_time value: False
-[2025-07-06 13:46:20] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 13:46:20] Reading key: auto_update
-[2025-07-06 13:46:20] Key auto_update value: True
-[2025-07-06 13:46:20] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 13:46:20] Reading key: serve_lock
-[2025-07-06 13:46:20] Key serve_lock value: False
-[2025-07-06 13:46:20] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 13:46:20] Reading key: close_option
-[2025-07-06 13:46:20] Key close_option value: True
-[2025-07-06 13:46:20] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 13:46:20] Reading key: language
-[2025-07-06 13:46:20] Key language value: cn
-[2025-07-06 13:46:20] [SETTINGS] Set language to: 简体中文
-[2025-07-06 13:46:20] Reading key: version
-[2025-07-06 13:46:20] Key version value: 4.39
-[2025-07-06 13:46:20] [SETTINGS] Set version label to: 4.39
-[2025-07-06 13:46:20] Reading key: add_timestep
-[2025-07-06 13:46:20] Key add_timestep value: 10
-[2025-07-06 13:46:20] [SETTINGS] Set timestep to: 10
-[2025-07-06 13:46:20] Reading key: reply_delay
-[2025-07-06 13:46:20] Key reply_delay value: None
-[2025-07-06 13:46:20] Reading key: selected_audio_index
-[2025-07-06 13:46:20] Key selected_audio_index value: None
-[2025-07-06 13:46:20] [SETTINGS] Loading audio selection: 0
-[2025-07-06 13:46:20] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 13:46:20] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 13:46:20] [SETTINGS] Set audio index to: 0
-[2025-07-06 13:46:20] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-07-06 13:46:20] [REPLY_DIALOG] Loading rules from JSON
-[2025-07-06 13:46:20] [REPLY_DIALOG] Rules file not found, starting with empty rules
-[2025-07-06 13:46:20] [REPLY_DIALOG] Displaying 0 rules
-[2025-07-06 13:46:20] File and message signals connected
-[2025-07-06 13:46:20] Window control signals connected
-[2025-07-06 13:46:20] Membership button signals connected
-[2025-07-06 13:46:20] Function button signals connected
-[2025-07-06 13:46:20] Checkbox signals connected
-[2025-07-06 13:46:20] VIP frame click event connected
-[2025-07-06 13:46:20] All signals connected
-[2025-07-06 13:46:20] Updating UI elements
-[2025-07-06 13:46:20] Getting application notice
-[2025-07-06 13:46:20] Set datetime to 2025-07-06 13:46:20
-[2025-07-06 13:46:20] Reading key: membership_class
-[2025-07-06 13:46:20] Key membership_class value: 0
-[2025-07-06 13:46:20] Reading key: error_sound
-[2025-07-06 13:46:20] Key error_sound value: True
-[2025-07-06 13:46:20] UI elements updated
-[2025-07-06 13:46:20] Applying membership limits for Free
-[2025-07-06 13:46:20] Applying membership limits for Free
-[2025-07-06 13:46:20] Applying Free membership limits
-[2025-07-06 13:46:21] Free trial remaining days: 29
-[2025-07-06 13:46:21] Membership limits applied
-[2025-07-06 13:46:21] Reading key: auto_update
-[2025-07-06 13:46:21] Key auto_update value: True
-[2025-07-06 13:46:21] Checking for updates
-[2025-07-06 13:46:21] Reading key: version
-[2025-07-06 13:46:21] Key version value: 4.39
-[2025-07-06 13:46:21] Reading key: serve_lock
-[2025-07-06 13:46:21] Key serve_lock value: False
-[2025-07-06 13:46:21] Loading tasks from JSON file
-[2025-07-06 13:46:21] Loading tasks from _internal/tasks.json
-[2025-07-06 13:46:21] JSON file _internal/tasks.json does not exist
-[2025-07-06 13:46:22] Opening setting window
-[2025-07-06 13:46:22] Writing key admin_log = Test
-[2025-07-06 13:46:22] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:46:22] Key admin_log updated successfully
-[2025-07-06 13:46:22] Successfully wrote to admin_log, sufficient permissions
-[2025-07-06 13:46:27] Opening activities window
-[2025-07-06 13:46:27] Writing key admin_log = Test
-[2025-07-06 13:46:27] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:46:27] Key admin_log updated successfully
-[2025-07-06 13:46:27] Successfully wrote to admin_log, sufficient permissions
-[2025-07-06 13:47:13] Initializing MainWindow
-[2025-07-06 13:47:13] Ensuring configuration file exists
-[2025-07-06 13:47:13] Ensuring config file exists...
-[2025-07-06 13:47:13] Retry 1/5
-[2025-07-06 13:47:13] Reading existing config file...
-[2025-07-06 13:47:13] Reading config from _internal/system_info.ini
-[2025-07-06 13:47:13] Config sections: ['SystemInfo']
-[2025-07-06 13:47:13] Checking for missing keys...
-[2025-07-06 13:47:13] Getting motherboard serial number...
-[2025-07-06 13:47:13] Motherboard SN found: KT17MC05PI
-[2025-07-06 13:47:13] Membership: Free
-[2025-07-06 13:47:13] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 13:47:13] Config Motherboard SN: LEAF AUTO
-[2025-07-06 13:47:13] Current Motherboard SN: KT17MC05PI
-[2025-07-06 13:47:13] Config file is valid
-[2025-07-06 13:47:13] Reading configuration values
-[2025-07-06 13:47:13] Reading key: language
-[2025-07-06 13:47:13] Key language value: cn
-[2025-07-06 13:47:13] Reading key: membership
-[2025-07-06 13:47:13] Key membership value: Free
-[2025-07-06 13:47:13] Reading key: expiration_time
-[2025-07-06 13:47:13] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 13:47:13] Reading key: version
-[2025-07-06 13:47:13] Key version value: 4.39
-[2025-07-06 13:47:13] Reloading WeChat instances during initialization
-[2025-07-06 13:47:13] Starting to reload WeChat instances
-[2025-07-06 13:47:13] Reading key: language
-[2025-07-06 13:47:13] Key language value: cn
-[2025-07-06 13:47:14] WeChat not logged in during reload
-[2025-07-06 13:47:14] WeChat initialization failed: 微信未登录
-[2025-07-06 13:47:14] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 13:47:14] [ERROR_SOUND] Thread initialized
-[2025-07-06 13:47:14] [AutoInfo] Email processing thread started
-[2025-07-06 13:47:14] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 13:47:14] [AiAssistant] Initializing AI assistant...
-[2025-07-06 13:47:14] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 13:47:14] Creating system tray icon
-[2025-07-06 13:47:14] Creating system tray icon
-[2025-07-06 13:47:14] System tray icon created
-[2025-07-06 13:47:14] Setting window flags and attributes
-[2025-07-06 13:47:14] Connecting signals and updating UI elements
-[2025-07-06 13:47:14] Connecting UI signals
-[2025-07-06 13:47:14] [SETTINGS] Initializing SettingWindow
-[2025-07-06 13:47:14] [ERROR_SOUND] Thread initialized
-[2025-07-06 13:47:14] Reading key: membership
-[2025-07-06 13:47:14] Key membership value: Free
-[2025-07-06 13:47:14] [SETTINGS] Detected membership: Free
-[2025-07-06 13:47:14] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 13:47:14] [SETTINGS] Initializing settings
-[2025-07-06 13:47:14] Reading key: error_email
-[2025-07-06 13:47:14] Key error_email value: None
-[2025-07-06 13:47:14] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 13:47:14] Reading key: error_sound
-[2025-07-06 13:47:14] Key error_sound value: True
-[2025-07-06 13:47:14] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 13:47:14] Reading key: net_time
-[2025-07-06 13:47:14] Key net_time value: False
-[2025-07-06 13:47:14] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 13:47:14] Reading key: auto_update
-[2025-07-06 13:47:14] Key auto_update value: True
-[2025-07-06 13:47:14] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 13:47:14] Reading key: serve_lock
-[2025-07-06 13:47:14] Key serve_lock value: False
-[2025-07-06 13:47:14] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 13:47:14] Reading key: close_option
-[2025-07-06 13:47:14] Key close_option value: True
-[2025-07-06 13:47:14] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 13:47:14] Reading key: language
-[2025-07-06 13:47:14] Key language value: cn
-[2025-07-06 13:47:14] [SETTINGS] Set language to: 简体中文
-[2025-07-06 13:47:15] Reading key: version
-[2025-07-06 13:47:15] Key version value: 4.39
-[2025-07-06 13:47:15] [SETTINGS] Set version label to: 4.39
-[2025-07-06 13:47:15] Reading key: add_timestep
-[2025-07-06 13:47:15] Key add_timestep value: 10
-[2025-07-06 13:47:15] [SETTINGS] Set timestep to: 10
-[2025-07-06 13:47:15] Reading key: reply_delay
-[2025-07-06 13:47:15] Key reply_delay value: None
-[2025-07-06 13:47:15] Reading key: selected_audio_index
-[2025-07-06 13:47:15] Key selected_audio_index value: None
-[2025-07-06 13:47:15] [SETTINGS] Loading audio selection: 0
-[2025-07-06 13:47:15] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 13:47:15] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 13:47:15] [SETTINGS] Set audio index to: 0
-[2025-07-06 13:47:15] [REPLY_DIALOG] Initializing ReplyDialog
-[2025-07-06 13:47:15] [REPLY_DIALOG] Loading rules from JSON
-[2025-07-06 13:47:15] [REPLY_DIALOG] Rules file not found, starting with empty rules
-[2025-07-06 13:47:15] [REPLY_DIALOG] Displaying 0 rules
-[2025-07-06 13:47:15] File and message signals connected
-[2025-07-06 13:47:15] Window control signals connected
-[2025-07-06 13:47:15] Membership button signals connected
-[2025-07-06 13:47:15] Function button signals connected
-[2025-07-06 13:47:15] Checkbox signals connected
-[2025-07-06 13:47:15] VIP frame click event connected
-[2025-07-06 13:47:15] All signals connected
-[2025-07-06 13:47:15] Updating UI elements
-[2025-07-06 13:47:15] Getting application notice
-[2025-07-06 13:47:15] Set datetime to 2025-07-06 13:47:15
-[2025-07-06 13:47:15] Reading key: membership_class
-[2025-07-06 13:47:15] Key membership_class value: 0
-[2025-07-06 13:47:15] Reading key: error_sound
-[2025-07-06 13:47:15] Key error_sound value: True
-[2025-07-06 13:47:15] UI elements updated
-[2025-07-06 13:47:15] Applying membership limits for Free
-[2025-07-06 13:47:15] Applying membership limits for Free
-[2025-07-06 13:47:15] Applying Free membership limits
-[2025-07-06 13:47:16] Free trial remaining days: 29
-[2025-07-06 13:47:16] Membership limits applied
-[2025-07-06 13:47:16] Reading key: auto_update
-[2025-07-06 13:47:16] Key auto_update value: True
-[2025-07-06 13:47:16] Checking for updates
-[2025-07-06 13:47:16] Reading key: version
-[2025-07-06 13:47:16] Key version value: 4.39
-[2025-07-06 13:47:16] Reading key: serve_lock
-[2025-07-06 13:47:16] Key serve_lock value: False
-[2025-07-06 13:47:16] Loading tasks from JSON file
-[2025-07-06 13:47:16] Loading tasks from _internal/tasks.json
-[2025-07-06 13:47:16] JSON file _internal/tasks.json does not exist
-[2025-07-06 13:47:17] Opening setting window
-[2025-07-06 13:47:17] Writing key admin_log = Test
-[2025-07-06 13:47:17] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:17] Key admin_log updated successfully
-[2025-07-06 13:47:17] Successfully wrote to admin_log, sufficient permissions
-[2025-07-06 13:47:19] Opening activities window
-[2025-07-06 13:47:19] Writing key admin_log = Test
-[2025-07-06 13:47:19] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:19] Key admin_log updated successfully
-[2025-07-06 13:47:19] Successfully wrote to admin_log, sufficient permissions
-[2025-07-06 13:47:28] [SETTINGS] Saving settings and closing window
-[2025-07-06 13:47:28] Writing key error_email = False
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key error_email updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved error_email as: False
-[2025-07-06 13:47:28] Writing key error_sound = True
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key error_sound updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved error_sound as: True
-[2025-07-06 13:47:28] Writing key net_time = False
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key net_time updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved net_time as: False
-[2025-07-06 13:47:28] Writing key auto_update = True
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key auto_update updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved auto_update as: True
-[2025-07-06 13:47:28] Writing key serve_lock = False
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key serve_lock updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved serve_lock as: False
-[2025-07-06 13:47:28] Writing key close_option = True
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key close_option updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved close_option as: True
-[2025-07-06 13:47:28] Writing key add_timestep = 10
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key add_timestep updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved add_timestep as: 10
-[2025-07-06 13:47:28] Writing key language = cn
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key language updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved language as: cn
-[2025-07-06 13:47:28] Writing key selected_audio_index = 0
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key selected_audio_index updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Saved selected_audio_index as: 0
-[2025-07-06 13:47:28] Writing key reply_delay = 0
-[2025-07-06 13:47:28] Writing updated config to _internal/system_info.ini
-[2025-07-06 13:47:28] Key reply_delay updated successfully
-[2025-07-06 13:47:28] [SETTINGS] Settings saved successfully
-[2025-07-06 14:06:54] Initializing MainWindow
-[2025-07-06 14:06:54] Ensuring configuration file exists
-[2025-07-06 14:06:54] Ensuring config file exists...
-[2025-07-06 14:06:54] Retry 1/5
-[2025-07-06 14:06:54] Reading existing config file...
-[2025-07-06 14:06:54] Reading config from _internal/system_info.ini
-[2025-07-06 14:06:54] Config sections: ['SystemInfo']
-[2025-07-06 14:06:54] Checking for missing keys...
-[2025-07-06 14:06:54] Getting motherboard serial number...
-[2025-07-06 14:06:54] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:06:54] Membership: Free
-[2025-07-06 14:06:54] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:06:54] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:06:54] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:06:54] Config file is valid
-[2025-07-06 14:06:54] Reading configuration values
-[2025-07-06 14:06:54] Reading key: language
-[2025-07-06 14:06:54] Key language value: cn
-[2025-07-06 14:06:54] Reading key: membership
-[2025-07-06 14:06:54] Key membership value: Free
-[2025-07-06 14:06:54] Reading key: expiration_time
-[2025-07-06 14:06:54] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:06:54] Reading key: version
-[2025-07-06 14:06:54] Key version value: 4.39
-[2025-07-06 14:06:54] Reloading WeChat instances during initialization
-[2025-07-06 14:06:54] Starting to reload WeChat instances
-[2025-07-06 14:06:54] Reading key: language
-[2025-07-06 14:06:54] Key language value: cn
-[2025-07-06 14:06:55] WeChat not logged in during reload
-[2025-07-06 14:06:55] WeChat initialization failed: 微信未登录
-[2025-07-06 14:06:55] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:06:55] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:06:55] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:06:55] [AutoInfo] Email processing thread started
-[2025-07-06 14:06:55] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:06:55] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:06:55] Creating system tray icon
-[2025-07-06 14:06:55] Creating system tray icon
-[2025-07-06 14:06:55] System tray icon created
-[2025-07-06 14:06:55] Setting window flags and attributes
-[2025-07-06 14:06:55] Connecting signals and updating UI elements
-[2025-07-06 14:06:55] Connecting UI signals
-[2025-07-06 14:06:55] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:06:56] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:06:56] Reading key: membership
-[2025-07-06 14:06:56] Key membership value: Free
-[2025-07-06 14:06:56] [SETTINGS] Detected membership: Free
-[2025-07-06 14:06:56] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:06:56] [SETTINGS] Initializing settings
-[2025-07-06 14:06:56] Reading key: error_email
-[2025-07-06 14:06:56] Key error_email value: False
-[2025-07-06 14:06:56] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:06:56] Reading key: error_sound
-[2025-07-06 14:06:56] Key error_sound value: True
-[2025-07-06 14:06:56] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:06:56] Reading key: net_time
-[2025-07-06 14:06:56] Key net_time value: False
-[2025-07-06 14:06:56] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:06:56] Reading key: auto_update
-[2025-07-06 14:06:56] Key auto_update value: True
-[2025-07-06 14:06:56] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:06:56] Reading key: serve_lock
-[2025-07-06 14:06:56] Key serve_lock value: False
-[2025-07-06 14:06:56] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:06:56] Reading key: close_option
-[2025-07-06 14:06:56] Key close_option value: True
-[2025-07-06 14:06:56] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:06:56] Reading key: language
-[2025-07-06 14:06:56] Key language value: cn
-[2025-07-06 14:06:56] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:06:56] Reading key: version
-[2025-07-06 14:06:56] Key version value: 4.39
-[2025-07-06 14:06:56] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:06:56] Reading key: add_timestep
-[2025-07-06 14:06:56] Key add_timestep value: 10
-[2025-07-06 14:06:56] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:06:56] Reading key: reply_delay
-[2025-07-06 14:06:56] Key reply_delay value: 0
-[2025-07-06 14:06:56] Reading key: selected_audio_index
-[2025-07-06 14:06:56] Key selected_audio_index value: 0
-[2025-07-06 14:06:56] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:06:56] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:06:56] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:06:56] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:06:56] 进入ReplyDialog初始化
-[2025-07-06 14:06:56] 开始从JSON加载规则
-[2025-07-06 14:06:56] 未找到规则文件，创建新规则列表
-[2025-07-06 14:06:56] 开始显示规则
-[2025-07-06 14:06:56] 显示0条规则
-[2025-07-06 14:06:56] 完成ReplyDialog初始化
-[2025-07-06 14:06:56] File and message signals connected
-[2025-07-06 14:06:56] Window control signals connected
-[2025-07-06 14:06:56] Membership button signals connected
-[2025-07-06 14:06:56] Function button signals connected
-[2025-07-06 14:06:56] Checkbox signals connected
-[2025-07-06 14:06:56] VIP frame click event connected
-[2025-07-06 14:06:56] All signals connected
-[2025-07-06 14:06:56] Updating UI elements
-[2025-07-06 14:06:56] Getting application notice
-[2025-07-06 14:06:56] Set datetime to 2025-07-06 14:06:57
-[2025-07-06 14:06:56] Reading key: membership_class
-[2025-07-06 14:06:56] Key membership_class value: 0
-[2025-07-06 14:06:56] Reading key: error_sound
-[2025-07-06 14:06:56] Key error_sound value: True
-[2025-07-06 14:06:56] UI elements updated
-[2025-07-06 14:06:56] Applying membership limits for Free
-[2025-07-06 14:06:56] Applying membership limits for Free
-[2025-07-06 14:06:56] Applying Free membership limits
-[2025-07-06 14:06:57] Free trial remaining days: 29
-[2025-07-06 14:06:57] Membership limits applied
-[2025-07-06 14:06:57] Reading key: auto_update
-[2025-07-06 14:06:57] Key auto_update value: True
-[2025-07-06 14:06:57] Checking for updates
-[2025-07-06 14:06:57] Reading key: version
-[2025-07-06 14:06:57] Key version value: 4.39
-[2025-07-06 14:06:57] Reading key: serve_lock
-[2025-07-06 14:06:57] Key serve_lock value: False
-[2025-07-06 14:06:57] Loading tasks from JSON file
-[2025-07-06 14:06:57] Loading tasks from _internal/tasks.json
-[2025-07-06 14:06:57] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:07:04] 开始添加新规则
-[2025-07-06 14:07:04] 检查规则是否重复 - 关键词: 123, 匹配类型: 包含
-[2025-07-06 14:07:04] 创建规则显示框架
-[2025-07-06 14:07:04] 完成规则显示框架创建
-[2025-07-06 14:07:04] 成功添加规则 - 关键词: 123, 匹配类型: 包含
-[2025-07-06 14:07:15] 开始删除规则
-[2025-07-06 14:07:15] 从规则列表中移除 - 关键词: 123, 匹配类型: 包含
-[2025-07-06 14:07:15] 从界面移除规则组件
-[2025-07-06 14:07:16] 开始添加新规则
-[2025-07-06 14:07:17] 添加规则失败：关键词或回复内容为空
-[2025-07-06 14:07:19] 开始添加新规则
-[2025-07-06 14:07:19] 检查规则是否重复 - 关键词: 33, 匹配类型: 包含
-[2025-07-06 14:07:19] 创建规则显示框架
-[2025-07-06 14:07:19] 完成规则显示框架创建
-[2025-07-06 14:07:19] 成功添加规则 - 关键词: 33, 匹配类型: 包含
-[2025-07-06 14:12:38] Initializing MainWindow
-[2025-07-06 14:12:38] Ensuring configuration file exists
-[2025-07-06 14:12:38] Ensuring config file exists...
-[2025-07-06 14:12:38] Retry 1/5
-[2025-07-06 14:12:38] Reading existing config file...
-[2025-07-06 14:12:38] Reading config from _internal/system_info.ini
-[2025-07-06 14:12:38] Config sections: ['SystemInfo']
-[2025-07-06 14:12:38] Checking for missing keys...
-[2025-07-06 14:12:38] Getting motherboard serial number...
-[2025-07-06 14:12:38] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:12:38] Membership: Free
-[2025-07-06 14:12:38] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:12:38] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:12:38] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:12:38] Config file is valid
-[2025-07-06 14:12:38] Reading configuration values
-[2025-07-06 14:12:38] Reading key: language
-[2025-07-06 14:12:38] Key language value: cn
-[2025-07-06 14:12:38] Reading key: membership
-[2025-07-06 14:12:38] Key membership value: Free
-[2025-07-06 14:12:38] Reading key: expiration_time
-[2025-07-06 14:12:38] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:12:38] Reading key: version
-[2025-07-06 14:12:38] Key version value: 4.39
-[2025-07-06 14:12:38] Reloading WeChat instances during initialization
-[2025-07-06 14:12:38] Starting to reload WeChat instances
-[2025-07-06 14:12:38] Reading key: language
-[2025-07-06 14:12:38] Key language value: cn
-[2025-07-06 14:12:38] WeChat not logged in during reload
-[2025-07-06 14:12:38] WeChat initialization failed: 微信未登录
-[2025-07-06 14:12:38] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:12:38] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:12:38] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:12:38] [AutoInfo] Email processing thread started
-[2025-07-06 14:12:38] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:12:38] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:12:38] Creating system tray icon
-[2025-07-06 14:12:38] Creating system tray icon
-[2025-07-06 14:12:38] System tray icon created
-[2025-07-06 14:12:38] Setting window flags and attributes
-[2025-07-06 14:12:38] Connecting signals and updating UI elements
-[2025-07-06 14:12:38] Connecting UI signals
-[2025-07-06 14:12:38] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:12:39] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:12:39] Reading key: membership
-[2025-07-06 14:12:39] Key membership value: Free
-[2025-07-06 14:12:39] [SETTINGS] Detected membership: Free
-[2025-07-06 14:12:39] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:12:39] [SETTINGS] Initializing settings
-[2025-07-06 14:12:39] Reading key: error_email
-[2025-07-06 14:12:39] Key error_email value: False
-[2025-07-06 14:12:39] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:12:39] Reading key: error_sound
-[2025-07-06 14:12:39] Key error_sound value: True
-[2025-07-06 14:12:39] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:12:39] Reading key: net_time
-[2025-07-06 14:12:39] Key net_time value: False
-[2025-07-06 14:12:39] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:12:39] Reading key: auto_update
-[2025-07-06 14:12:39] Key auto_update value: True
-[2025-07-06 14:12:39] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:12:39] Reading key: serve_lock
-[2025-07-06 14:12:39] Key serve_lock value: False
-[2025-07-06 14:12:39] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:12:39] Reading key: close_option
-[2025-07-06 14:12:39] Key close_option value: True
-[2025-07-06 14:12:39] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:12:39] Reading key: language
-[2025-07-06 14:12:39] Key language value: cn
-[2025-07-06 14:12:39] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:12:39] Reading key: version
-[2025-07-06 14:12:39] Key version value: 4.39
-[2025-07-06 14:12:39] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:12:39] Reading key: add_timestep
-[2025-07-06 14:12:39] Key add_timestep value: 10
-[2025-07-06 14:12:39] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:12:39] Reading key: reply_delay
-[2025-07-06 14:12:39] Key reply_delay value: 0
-[2025-07-06 14:12:39] Reading key: selected_audio_index
-[2025-07-06 14:12:39] Key selected_audio_index value: 0
-[2025-07-06 14:12:39] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:12:39] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:12:39] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:12:39] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:12:39] 进入ReplyDialog初始化
-[2025-07-06 14:12:39] 开始从JSON加载规则
-[2025-07-06 14:12:39] 未找到规则文件，创建新规则列表
-[2025-07-06 14:12:39] 开始显示规则
-[2025-07-06 14:12:39] 显示0条规则
-[2025-07-06 14:12:39] 完成ReplyDialog初始化
-[2025-07-06 14:12:39] File and message signals connected
-[2025-07-06 14:12:39] Window control signals connected
-[2025-07-06 14:12:39] Membership button signals connected
-[2025-07-06 14:12:39] Function button signals connected
-[2025-07-06 14:12:39] Checkbox signals connected
-[2025-07-06 14:12:39] VIP frame click event connected
-[2025-07-06 14:12:39] All signals connected
-[2025-07-06 14:12:39] Updating UI elements
-[2025-07-06 14:12:39] Getting application notice
-[2025-07-06 14:12:40] Set datetime to 2025-07-06 14:12:40
-[2025-07-06 14:12:40] Reading key: membership_class
-[2025-07-06 14:12:40] Key membership_class value: 0
-[2025-07-06 14:12:40] Reading key: error_sound
-[2025-07-06 14:12:40] Key error_sound value: True
-[2025-07-06 14:12:40] UI elements updated
-[2025-07-06 14:12:40] Applying membership limits for Free
-[2025-07-06 14:12:40] Applying membership limits for Free
-[2025-07-06 14:12:40] Applying Free membership limits
-[2025-07-06 14:12:40] Free trial remaining days: 29
-[2025-07-06 14:12:40] Membership limits applied
-[2025-07-06 14:12:40] Reading key: auto_update
-[2025-07-06 14:12:40] Key auto_update value: True
-[2025-07-06 14:12:40] Checking for updates
-[2025-07-06 14:12:40] Reading key: version
-[2025-07-06 14:12:40] Key version value: 4.39
-[2025-07-06 14:12:40] Reading key: serve_lock
-[2025-07-06 14:12:40] Key serve_lock value: False
-[2025-07-06 14:12:40] Loading tasks from JSON file
-[2025-07-06 14:12:40] Loading tasks from _internal/tasks.json
-[2025-07-06 14:12:40] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:12:47] 开始添加新规则
-[2025-07-06 14:12:47] 检查规则是否重复 - 关键词: 试试, 匹配类型: 包含
-[2025-07-06 14:12:47] 创建规则显示框架
-[2025-07-06 14:12:47] 完成规则显示框架创建
-[2025-07-06 14:12:47] 成功添加规则 - 关键词: 试试, 匹配类型: 包含
-[2025-07-06 14:12:56] 开始添加新规则
-[2025-07-06 14:12:56] 检查规则是否重复 - 关键词: 呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱古古怪怪, 匹配类型: 包含
-[2025-07-06 14:12:56] 创建规则显示框架
-[2025-07-06 14:12:56] 完成规则显示框架创建
-[2025-07-06 14:12:56] 成功添加规则 - 关键词: 呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱古古怪怪, 匹配类型: 包含
-[2025-07-06 14:13:11] 开始添加新规则
-[2025-07-06 14:13:11] 检查规则是否重复 - 关键词: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv, 匹配类型: 包含
-[2025-07-06 14:13:11] 创建规则显示框架
-[2025-07-06 14:13:11] 完成规则显示框架创建
-[2025-07-06 14:13:11] 成功添加规则 - 关键词: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv, 匹配类型: 包含
-[2025-07-06 14:13:20] 开始添加新规则
-[2025-07-06 14:13:22] 添加规则失败：关键词或回复内容为空
-[2025-07-06 14:13:24] 开始添加新规则
-[2025-07-06 14:13:24] 检查规则是否重复 - 关键词: 不啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵不啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵, 匹配类型: 包含
-[2025-07-06 14:13:24] 创建规则显示框架
-[2025-07-06 14:13:24] 完成规则显示框架创建
-[2025-07-06 14:13:24] 成功添加规则 - 关键词: 不啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵不啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵啵, 匹配类型: 包含
-[2025-07-06 14:13:33] 开始添加新规则
-[2025-07-06 14:13:33] 检查规则是否重复 - 关键词: 版本, 匹配类型: 包含
-[2025-07-06 14:13:33] 创建规则显示框架
-[2025-07-06 14:13:33] 完成规则显示框架创建
-[2025-07-06 14:13:33] 成功添加规则 - 关键词: 版本, 匹配类型: 包含
-[2025-07-06 14:13:40] 开始添加新规则
-[2025-07-06 14:13:41] 检查规则是否重复 - 关键词: 版本, 匹配类型: 等于
-[2025-07-06 14:13:41] 创建规则显示框架
-[2025-07-06 14:13:41] 完成规则显示框架创建
-[2025-07-06 14:13:41] 成功添加规则 - 关键词: 版本, 匹配类型: 等于
-[2025-07-06 14:13:47] 开始添加新规则
-[2025-07-06 14:13:47] 检查规则是否重复 - 关键词: 那你, 匹配类型: 正则
-[2025-07-06 14:13:47] 创建规则显示框架
-[2025-07-06 14:13:47] 完成规则显示框架创建
-[2025-07-06 14:13:47] 成功添加规则 - 关键词: 那你, 匹配类型: 正则
-[2025-07-06 14:14:59] Initializing MainWindow
-[2025-07-06 14:14:59] Ensuring configuration file exists
-[2025-07-06 14:14:59] Ensuring config file exists...
-[2025-07-06 14:14:59] Retry 1/5
-[2025-07-06 14:14:59] Reading existing config file...
-[2025-07-06 14:14:59] Reading config from _internal/system_info.ini
-[2025-07-06 14:14:59] Config sections: ['SystemInfo']
-[2025-07-06 14:14:59] Checking for missing keys...
-[2025-07-06 14:14:59] Getting motherboard serial number...
-[2025-07-06 14:14:59] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:14:59] Membership: Free
-[2025-07-06 14:14:59] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:14:59] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:14:59] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:14:59] Config file is valid
-[2025-07-06 14:14:59] Reading configuration values
-[2025-07-06 14:14:59] Reading key: language
-[2025-07-06 14:14:59] Key language value: cn
-[2025-07-06 14:14:59] Reading key: membership
-[2025-07-06 14:14:59] Key membership value: Free
-[2025-07-06 14:14:59] Reading key: expiration_time
-[2025-07-06 14:14:59] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:14:59] Reading key: version
-[2025-07-06 14:14:59] Key version value: 4.39
-[2025-07-06 14:14:59] Reloading WeChat instances during initialization
-[2025-07-06 14:14:59] Starting to reload WeChat instances
-[2025-07-06 14:14:59] Reading key: language
-[2025-07-06 14:14:59] Key language value: cn
-[2025-07-06 14:15:00] WeChat not logged in during reload
-[2025-07-06 14:15:00] WeChat initialization failed: 微信未登录
-[2025-07-06 14:15:00] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:15:00] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:15:00] [AutoInfo] Email processing thread started
-[2025-07-06 14:15:00] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:15:00] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:15:00] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:15:00] Creating system tray icon
-[2025-07-06 14:15:00] Creating system tray icon
-[2025-07-06 14:15:00] System tray icon created
-[2025-07-06 14:15:00] Setting window flags and attributes
-[2025-07-06 14:15:00] Connecting signals and updating UI elements
-[2025-07-06 14:15:00] Connecting UI signals
-[2025-07-06 14:15:00] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:15:01] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:15:01] Reading key: membership
-[2025-07-06 14:15:01] Key membership value: Free
-[2025-07-06 14:15:01] [SETTINGS] Detected membership: Free
-[2025-07-06 14:15:01] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:15:01] [SETTINGS] Initializing settings
-[2025-07-06 14:15:01] Reading key: error_email
-[2025-07-06 14:15:01] Key error_email value: False
-[2025-07-06 14:15:01] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:15:01] Reading key: error_sound
-[2025-07-06 14:15:01] Key error_sound value: True
-[2025-07-06 14:15:01] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:15:01] Reading key: net_time
-[2025-07-06 14:15:01] Key net_time value: False
-[2025-07-06 14:15:01] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:15:01] Reading key: auto_update
-[2025-07-06 14:15:01] Key auto_update value: True
-[2025-07-06 14:15:01] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:15:01] Reading key: serve_lock
-[2025-07-06 14:15:01] Key serve_lock value: False
-[2025-07-06 14:15:01] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:15:01] Reading key: close_option
-[2025-07-06 14:15:01] Key close_option value: True
-[2025-07-06 14:15:01] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:15:01] Reading key: language
-[2025-07-06 14:15:01] Key language value: cn
-[2025-07-06 14:15:01] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:15:01] Reading key: version
-[2025-07-06 14:15:01] Key version value: 4.39
-[2025-07-06 14:15:01] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:15:01] Reading key: add_timestep
-[2025-07-06 14:15:01] Key add_timestep value: 10
-[2025-07-06 14:15:01] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:15:01] Reading key: reply_delay
-[2025-07-06 14:15:01] Key reply_delay value: 0
-[2025-07-06 14:15:01] Reading key: selected_audio_index
-[2025-07-06 14:15:01] Key selected_audio_index value: 0
-[2025-07-06 14:15:01] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:15:01] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:15:01] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:15:01] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:15:01] 进入ReplyDialog初始化
-[2025-07-06 14:15:01] 开始从JSON加载规则
-[2025-07-06 14:15:01] 未找到规则文件，创建新规则列表
-[2025-07-06 14:15:01] 开始显示规则
-[2025-07-06 14:15:01] 显示0条规则
-[2025-07-06 14:15:01] 完成ReplyDialog初始化
-[2025-07-06 14:15:01] File and message signals connected
-[2025-07-06 14:15:01] Window control signals connected
-[2025-07-06 14:15:01] Membership button signals connected
-[2025-07-06 14:15:01] Function button signals connected
-[2025-07-06 14:15:01] Checkbox signals connected
-[2025-07-06 14:15:01] VIP frame click event connected
-[2025-07-06 14:15:01] All signals connected
-[2025-07-06 14:15:01] Updating UI elements
-[2025-07-06 14:15:01] Getting application notice
-[2025-07-06 14:15:03] Set datetime to 2025-07-06 14:15:03
-[2025-07-06 14:15:03] Reading key: membership_class
-[2025-07-06 14:15:03] Key membership_class value: 0
-[2025-07-06 14:15:03] Reading key: error_sound
-[2025-07-06 14:15:03] Key error_sound value: True
-[2025-07-06 14:15:03] UI elements updated
-[2025-07-06 14:15:03] Applying membership limits for Free
-[2025-07-06 14:15:03] Applying membership limits for Free
-[2025-07-06 14:15:03] Applying Free membership limits
-[2025-07-06 14:15:05] Free trial remaining days: 29
-[2025-07-06 14:15:05] Membership limits applied
-[2025-07-06 14:15:05] Reading key: auto_update
-[2025-07-06 14:15:05] Key auto_update value: True
-[2025-07-06 14:15:05] Checking for updates
-[2025-07-06 14:15:05] Reading key: version
-[2025-07-06 14:15:05] Key version value: 4.39
-[2025-07-06 14:15:05] Reading key: serve_lock
-[2025-07-06 14:15:05] Key serve_lock value: False
-[2025-07-06 14:15:05] Loading tasks from JSON file
-[2025-07-06 14:15:05] Loading tasks from _internal/tasks.json
-[2025-07-06 14:15:05] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:15:23] 开始添加新规则
-[2025-07-06 14:15:23] 检查规则是否重复 - 关键词: 试试, 匹配类型: 包含
-[2025-07-06 14:15:23] 创建规则显示框架
-[2025-07-06 14:15:23] 完成规则显示框架创建
-[2025-07-06 14:15:23] 成功添加规则 - 关键词: 试试, 匹配类型: 包含
-[2025-07-06 14:30:33] Initializing MainWindow
-[2025-07-06 14:30:33] Ensuring configuration file exists
-[2025-07-06 14:30:33] Ensuring config file exists...
-[2025-07-06 14:30:33] Retry 1/5
-[2025-07-06 14:30:33] Reading existing config file...
-[2025-07-06 14:30:33] Reading config from _internal/system_info.ini
-[2025-07-06 14:30:33] Config sections: ['SystemInfo']
-[2025-07-06 14:30:33] Checking for missing keys...
-[2025-07-06 14:30:33] Getting motherboard serial number...
-[2025-07-06 14:30:33] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:30:33] Membership: Free
-[2025-07-06 14:30:33] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:30:33] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:30:33] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:30:33] Config file is valid
-[2025-07-06 14:30:33] Reading configuration values
-[2025-07-06 14:30:33] Reading key: language
-[2025-07-06 14:30:33] Key language value: cn
-[2025-07-06 14:30:33] Reading key: membership
-[2025-07-06 14:30:33] Key membership value: Free
-[2025-07-06 14:30:33] Reading key: expiration_time
-[2025-07-06 14:30:33] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:30:33] Reading key: version
-[2025-07-06 14:30:33] Key version value: 4.39
-[2025-07-06 14:30:33] Reloading WeChat instances during initialization
-[2025-07-06 14:30:33] Starting to reload WeChat instances
-[2025-07-06 14:30:33] Reading key: language
-[2025-07-06 14:30:33] Key language value: cn
-[2025-07-06 14:30:33] WeChat not logged in during reload
-[2025-07-06 14:30:35] WeChat initialization failed: 微信未登录
-[2025-07-06 14:30:35] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:30:35] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:30:35] [AutoInfo] Email processing thread started
-[2025-07-06 14:30:35] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:30:35] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:30:35] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:30:35] Creating system tray icon
-[2025-07-06 14:30:35] Creating system tray icon
-[2025-07-06 14:30:35] System tray icon created
-[2025-07-06 14:30:35] Setting window flags and attributes
-[2025-07-06 14:30:35] Connecting signals and updating UI elements
-[2025-07-06 14:30:35] Connecting UI signals
-[2025-07-06 14:30:35] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:30:36] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:30:36] Reading key: membership
-[2025-07-06 14:30:36] Key membership value: Free
-[2025-07-06 14:30:36] [SETTINGS] Detected membership: Free
-[2025-07-06 14:30:36] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:30:36] [SETTINGS] Initializing settings
-[2025-07-06 14:30:36] Reading key: error_email
-[2025-07-06 14:30:36] Key error_email value: False
-[2025-07-06 14:30:36] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:30:36] Reading key: error_sound
-[2025-07-06 14:30:36] Key error_sound value: True
-[2025-07-06 14:30:36] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:30:36] Reading key: net_time
-[2025-07-06 14:30:36] Key net_time value: False
-[2025-07-06 14:30:36] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:30:36] Reading key: auto_update
-[2025-07-06 14:30:36] Key auto_update value: True
-[2025-07-06 14:30:36] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:30:36] Reading key: serve_lock
-[2025-07-06 14:30:36] Key serve_lock value: False
-[2025-07-06 14:30:36] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:30:36] Reading key: close_option
-[2025-07-06 14:30:36] Key close_option value: True
-[2025-07-06 14:30:36] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:30:36] Reading key: language
-[2025-07-06 14:30:36] Key language value: cn
-[2025-07-06 14:30:36] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:30:36] Reading key: version
-[2025-07-06 14:30:36] Key version value: 4.39
-[2025-07-06 14:30:36] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:30:36] Reading key: add_timestep
-[2025-07-06 14:30:36] Key add_timestep value: 10
-[2025-07-06 14:30:36] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:30:36] Reading key: reply_delay
-[2025-07-06 14:30:36] Key reply_delay value: 0
-[2025-07-06 14:30:36] Reading key: selected_audio_index
-[2025-07-06 14:30:36] Key selected_audio_index value: 0
-[2025-07-06 14:30:36] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:30:36] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:30:36] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:30:36] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:30:36] Entering ReplyDialog initialization
-[2025-07-06 14:30:36] Starting to load rules from JSON
-[2025-07-06 14:30:36] Rule file not found, creating new rule list
-[2025-07-06 14:30:36] Starting to display rules
-[2025-07-06 14:30:36] Displayed 0 rules
-[2025-07-06 14:30:36] Completed ReplyDialog initialization
-[2025-07-06 14:30:36] File and message signals connected
-[2025-07-06 14:30:36] Window control signals connected
-[2025-07-06 14:30:36] Membership button signals connected
-[2025-07-06 14:30:36] Function button signals connected
-[2025-07-06 14:30:36] Checkbox signals connected
-[2025-07-06 14:30:36] VIP frame click event connected
-[2025-07-06 14:30:36] All signals connected
-[2025-07-06 14:30:36] Updating UI elements
-[2025-07-06 14:30:36] Getting application notice
-[2025-07-06 14:30:37] Set datetime to 2025-07-06 14:30:37
-[2025-07-06 14:30:37] Reading key: membership_class
-[2025-07-06 14:30:37] Key membership_class value: 0
-[2025-07-06 14:30:37] Reading key: error_sound
-[2025-07-06 14:30:37] Key error_sound value: True
-[2025-07-06 14:30:37] UI elements updated
-[2025-07-06 14:30:37] Applying membership limits for Free
-[2025-07-06 14:30:37] Applying membership limits for Free
-[2025-07-06 14:30:37] Applying Free membership limits
-[2025-07-06 14:30:37] Free trial remaining days: 29
-[2025-07-06 14:30:37] Membership limits applied
-[2025-07-06 14:30:37] Reading key: auto_update
-[2025-07-06 14:30:37] Key auto_update value: True
-[2025-07-06 14:30:37] Checking for updates
-[2025-07-06 14:30:38] Reading key: version
-[2025-07-06 14:30:38] Key version value: 4.39
-[2025-07-06 14:30:38] Reading key: serve_lock
-[2025-07-06 14:30:38] Key serve_lock value: False
-[2025-07-06 14:30:38] Loading tasks from JSON file
-[2025-07-06 14:30:38] Loading tasks from _internal/tasks.json
-[2025-07-06 14:30:38] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:30:46] Starting to add new rule
-[2025-07-06 14:30:46] Checking for duplicate rule - Keyword: 1123, Match Type: 包含
-[2025-07-06 14:30:46] Creating rule display frame
-[2025-07-06 14:30:46] Completed rule display frame creation
-[2025-07-06 14:30:46] Successfully added rule - Keyword: 1123, Match Type: 包含
-[2025-07-06 14:31:16] Initializing MainWindow
-[2025-07-06 14:31:16] Ensuring configuration file exists
-[2025-07-06 14:31:16] Ensuring config file exists...
-[2025-07-06 14:31:16] Retry 1/5
-[2025-07-06 14:31:16] Reading existing config file...
-[2025-07-06 14:31:16] Reading config from _internal/system_info.ini
-[2025-07-06 14:31:16] Config sections: ['SystemInfo']
-[2025-07-06 14:31:16] Checking for missing keys...
-[2025-07-06 14:31:16] Getting motherboard serial number...
-[2025-07-06 14:31:16] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:31:16] Membership: Free
-[2025-07-06 14:31:16] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:31:16] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:31:16] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:31:16] Config file is valid
-[2025-07-06 14:31:16] Reading configuration values
-[2025-07-06 14:31:16] Reading key: language
-[2025-07-06 14:31:16] Key language value: cn
-[2025-07-06 14:31:16] Reading key: membership
-[2025-07-06 14:31:16] Key membership value: Free
-[2025-07-06 14:31:16] Reading key: expiration_time
-[2025-07-06 14:31:16] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:31:16] Reading key: version
-[2025-07-06 14:31:16] Key version value: 4.39
-[2025-07-06 14:31:16] Reloading WeChat instances during initialization
-[2025-07-06 14:31:16] Starting to reload WeChat instances
-[2025-07-06 14:31:16] Reading key: language
-[2025-07-06 14:31:16] Key language value: cn
-[2025-07-06 14:31:16] WeChat not logged in during reload
-[2025-07-06 14:31:17] WeChat initialization failed: 微信未登录
-[2025-07-06 14:31:17] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:31:17] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:31:17] [AutoInfo] Email processing thread started
-[2025-07-06 14:31:17] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:31:17] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:31:17] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:31:17] Creating system tray icon
-[2025-07-06 14:31:17] Creating system tray icon
-[2025-07-06 14:31:17] System tray icon created
-[2025-07-06 14:31:17] Setting window flags and attributes
-[2025-07-06 14:31:17] Connecting signals and updating UI elements
-[2025-07-06 14:31:17] Connecting UI signals
-[2025-07-06 14:31:17] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:31:17] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:31:17] Reading key: membership
-[2025-07-06 14:31:17] Key membership value: Free
-[2025-07-06 14:31:17] [SETTINGS] Detected membership: Free
-[2025-07-06 14:31:17] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:31:17] [SETTINGS] Initializing settings
-[2025-07-06 14:31:17] Reading key: error_email
-[2025-07-06 14:31:17] Key error_email value: False
-[2025-07-06 14:31:17] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:31:17] Reading key: error_sound
-[2025-07-06 14:31:17] Key error_sound value: True
-[2025-07-06 14:31:17] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:31:17] Reading key: net_time
-[2025-07-06 14:31:17] Key net_time value: False
-[2025-07-06 14:31:17] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:31:17] Reading key: auto_update
-[2025-07-06 14:31:17] Key auto_update value: True
-[2025-07-06 14:31:17] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:31:17] Reading key: serve_lock
-[2025-07-06 14:31:17] Key serve_lock value: False
-[2025-07-06 14:31:17] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:31:17] Reading key: close_option
-[2025-07-06 14:31:17] Key close_option value: True
-[2025-07-06 14:31:17] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:31:17] Reading key: language
-[2025-07-06 14:31:17] Key language value: cn
-[2025-07-06 14:31:17] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:31:17] Reading key: version
-[2025-07-06 14:31:17] Key version value: 4.39
-[2025-07-06 14:31:17] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:31:17] Reading key: add_timestep
-[2025-07-06 14:31:17] Key add_timestep value: 10
-[2025-07-06 14:31:17] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:31:17] Reading key: reply_delay
-[2025-07-06 14:31:17] Key reply_delay value: 0
-[2025-07-06 14:31:17] Reading key: selected_audio_index
-[2025-07-06 14:31:17] Key selected_audio_index value: 0
-[2025-07-06 14:31:17] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:31:17] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:31:17] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:31:17] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:31:17] Entering ReplyDialog initialization
-[2025-07-06 14:31:17] Starting to load rules from JSON
-[2025-07-06 14:31:17] Rule file not found, creating new rule list
-[2025-07-06 14:31:17] Starting to display rules
-[2025-07-06 14:31:17] Displayed 0 rules
-[2025-07-06 14:31:17] Completed ReplyDialog initialization
-[2025-07-06 14:31:17] File and message signals connected
-[2025-07-06 14:31:17] Window control signals connected
-[2025-07-06 14:31:17] Membership button signals connected
-[2025-07-06 14:31:17] Function button signals connected
-[2025-07-06 14:31:17] Checkbox signals connected
-[2025-07-06 14:31:17] VIP frame click event connected
-[2025-07-06 14:31:17] All signals connected
-[2025-07-06 14:31:17] Updating UI elements
-[2025-07-06 14:31:17] Getting application notice
-[2025-07-06 14:31:19] Set datetime to 2025-07-06 14:31:19
-[2025-07-06 14:31:19] Reading key: membership_class
-[2025-07-06 14:31:19] Key membership_class value: 0
-[2025-07-06 14:31:19] Reading key: error_sound
-[2025-07-06 14:31:19] Key error_sound value: True
-[2025-07-06 14:31:19] UI elements updated
-[2025-07-06 14:31:19] Applying membership limits for Free
-[2025-07-06 14:31:19] Applying membership limits for Free
-[2025-07-06 14:31:19] Applying Free membership limits
-[2025-07-06 14:31:20] Free trial remaining days: 29
-[2025-07-06 14:31:20] Membership limits applied
-[2025-07-06 14:31:20] Reading key: auto_update
-[2025-07-06 14:31:20] Key auto_update value: True
-[2025-07-06 14:31:20] Checking for updates
-[2025-07-06 14:31:21] Reading key: version
-[2025-07-06 14:31:21] Key version value: 4.39
-[2025-07-06 14:31:21] Reading key: serve_lock
-[2025-07-06 14:31:21] Key serve_lock value: False
-[2025-07-06 14:31:21] Loading tasks from JSON file
-[2025-07-06 14:31:21] Loading tasks from _internal/tasks.json
-[2025-07-06 14:31:21] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:31:25] Starting to add new rule
-[2025-07-06 14:31:25] Checking for duplicate rule - Keyword: 11, Match Type: 包含
-[2025-07-06 14:31:25] Creating rule display frame
-[2025-07-06 14:31:25] Completed rule display frame creation
-[2025-07-06 14:31:25] Successfully added rule - Keyword: 11, Match Type: 包含
-[2025-07-06 14:31:44] Initializing MainWindow
-[2025-07-06 14:31:44] Ensuring configuration file exists
-[2025-07-06 14:31:44] Ensuring config file exists...
-[2025-07-06 14:31:44] Retry 1/5
-[2025-07-06 14:31:44] Reading existing config file...
-[2025-07-06 14:31:44] Reading config from _internal/system_info.ini
-[2025-07-06 14:31:44] Config sections: ['SystemInfo']
-[2025-07-06 14:31:44] Checking for missing keys...
-[2025-07-06 14:31:44] Getting motherboard serial number...
-[2025-07-06 14:31:44] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:31:44] Membership: Free
-[2025-07-06 14:31:44] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:31:44] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:31:44] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:31:44] Config file is valid
-[2025-07-06 14:31:44] Reading configuration values
-[2025-07-06 14:31:44] Reading key: language
-[2025-07-06 14:31:44] Key language value: cn
-[2025-07-06 14:31:44] Reading key: membership
-[2025-07-06 14:31:44] Key membership value: Free
-[2025-07-06 14:31:44] Reading key: expiration_time
-[2025-07-06 14:31:44] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:31:44] Reading key: version
-[2025-07-06 14:31:44] Key version value: 4.39
-[2025-07-06 14:31:44] Reloading WeChat instances during initialization
-[2025-07-06 14:31:44] Starting to reload WeChat instances
-[2025-07-06 14:31:44] Reading key: language
-[2025-07-06 14:31:44] Key language value: cn
-[2025-07-06 14:31:44] WeChat not logged in during reload
-[2025-07-06 14:31:44] WeChat initialization failed: 微信未登录
-[2025-07-06 14:31:44] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:31:44] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:31:44] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:31:44] [AutoInfo] Email processing thread started
-[2025-07-06 14:31:44] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:31:44] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:31:44] Creating system tray icon
-[2025-07-06 14:31:44] Creating system tray icon
-[2025-07-06 14:31:44] System tray icon created
-[2025-07-06 14:31:44] Setting window flags and attributes
-[2025-07-06 14:31:44] Connecting signals and updating UI elements
-[2025-07-06 14:31:44] Connecting UI signals
-[2025-07-06 14:31:44] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:31:45] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:31:45] Reading key: membership
-[2025-07-06 14:31:45] Key membership value: Free
-[2025-07-06 14:31:45] [SETTINGS] Detected membership: Free
-[2025-07-06 14:31:45] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:31:45] [SETTINGS] Initializing settings
-[2025-07-06 14:31:45] Reading key: error_email
-[2025-07-06 14:31:45] Key error_email value: False
-[2025-07-06 14:31:45] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:31:45] Reading key: error_sound
-[2025-07-06 14:31:45] Key error_sound value: True
-[2025-07-06 14:31:45] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:31:45] Reading key: net_time
-[2025-07-06 14:31:45] Key net_time value: False
-[2025-07-06 14:31:45] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:31:45] Reading key: auto_update
-[2025-07-06 14:31:45] Key auto_update value: True
-[2025-07-06 14:31:45] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:31:45] Reading key: serve_lock
-[2025-07-06 14:31:45] Key serve_lock value: False
-[2025-07-06 14:31:45] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:31:45] Reading key: close_option
-[2025-07-06 14:31:45] Key close_option value: True
-[2025-07-06 14:31:45] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:31:45] Reading key: language
-[2025-07-06 14:31:45] Key language value: cn
-[2025-07-06 14:31:45] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:31:45] Reading key: version
-[2025-07-06 14:31:45] Key version value: 4.39
-[2025-07-06 14:31:45] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:31:45] Reading key: add_timestep
-[2025-07-06 14:31:45] Key add_timestep value: 10
-[2025-07-06 14:31:45] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:31:45] Reading key: reply_delay
-[2025-07-06 14:31:45] Key reply_delay value: 0
-[2025-07-06 14:31:45] Reading key: selected_audio_index
-[2025-07-06 14:31:45] Key selected_audio_index value: 0
-[2025-07-06 14:31:45] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:31:45] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:31:45] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:31:45] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:31:45] Entering ReplyDialog initialization
-[2025-07-06 14:31:45] Starting to load rules from JSON
-[2025-07-06 14:31:45] Rule file not found, creating new rule list
-[2025-07-06 14:31:45] Starting to display rules
-[2025-07-06 14:31:45] Displayed 0 rules
-[2025-07-06 14:31:45] Completed ReplyDialog initialization
-[2025-07-06 14:31:45] File and message signals connected
-[2025-07-06 14:31:45] Window control signals connected
-[2025-07-06 14:31:45] Membership button signals connected
-[2025-07-06 14:31:45] Function button signals connected
-[2025-07-06 14:31:45] Checkbox signals connected
-[2025-07-06 14:31:45] VIP frame click event connected
-[2025-07-06 14:31:45] All signals connected
-[2025-07-06 14:31:45] Updating UI elements
-[2025-07-06 14:31:45] Getting application notice
-[2025-07-06 14:31:46] Set datetime to 2025-07-06 14:31:46
-[2025-07-06 14:31:46] Reading key: membership_class
-[2025-07-06 14:31:46] Key membership_class value: 0
-[2025-07-06 14:31:46] Reading key: error_sound
-[2025-07-06 14:31:46] Key error_sound value: True
-[2025-07-06 14:31:46] UI elements updated
-[2025-07-06 14:31:46] Applying membership limits for Free
-[2025-07-06 14:31:46] Applying membership limits for Free
-[2025-07-06 14:31:46] Applying Free membership limits
-[2025-07-06 14:31:46] Free trial remaining days: 29
-[2025-07-06 14:31:46] Membership limits applied
-[2025-07-06 14:31:46] Reading key: auto_update
-[2025-07-06 14:31:46] Key auto_update value: True
-[2025-07-06 14:31:46] Checking for updates
-[2025-07-06 14:31:46] Reading key: version
-[2025-07-06 14:31:46] Key version value: 4.39
-[2025-07-06 14:31:46] Reading key: serve_lock
-[2025-07-06 14:31:46] Key serve_lock value: False
-[2025-07-06 14:31:46] Loading tasks from JSON file
-[2025-07-06 14:31:46] Loading tasks from _internal/tasks.json
-[2025-07-06 14:31:46] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:31:52] Starting to add new rule
-[2025-07-06 14:31:52] Checking for duplicate rule - Keyword: 问问, Match Type: 包含
-[2025-07-06 14:31:52] Creating rule display frame
-[2025-07-06 14:31:52] Completed rule display frame creation
-[2025-07-06 14:31:52] Successfully added rule - Keyword: 问问, Match Type: 包含
-[2025-07-06 14:33:35] Initializing MainWindow
-[2025-07-06 14:33:35] Ensuring configuration file exists
-[2025-07-06 14:33:35] Ensuring config file exists...
-[2025-07-06 14:33:35] Retry 1/5
-[2025-07-06 14:33:35] Reading existing config file...
-[2025-07-06 14:33:35] Reading config from _internal/system_info.ini
-[2025-07-06 14:33:35] Config sections: ['SystemInfo']
-[2025-07-06 14:33:35] Checking for missing keys...
-[2025-07-06 14:33:35] Getting motherboard serial number...
-[2025-07-06 14:33:35] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:33:35] Membership: Free
-[2025-07-06 14:33:35] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:33:35] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:33:35] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:33:35] Config file is valid
-[2025-07-06 14:33:35] Reading configuration values
-[2025-07-06 14:33:35] Reading key: language
-[2025-07-06 14:33:35] Key language value: cn
-[2025-07-06 14:33:35] Reading key: membership
-[2025-07-06 14:33:35] Key membership value: Free
-[2025-07-06 14:33:35] Reading key: expiration_time
-[2025-07-06 14:33:35] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:33:35] Reading key: version
-[2025-07-06 14:33:35] Key version value: 4.39
-[2025-07-06 14:33:35] Reloading WeChat instances during initialization
-[2025-07-06 14:33:35] Starting to reload WeChat instances
-[2025-07-06 14:33:35] Reading key: language
-[2025-07-06 14:33:35] Key language value: cn
-[2025-07-06 14:33:36] WeChat not logged in during reload
-[2025-07-06 14:33:36] WeChat initialization failed: 微信未登录
-[2025-07-06 14:33:36] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:33:36] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:33:36] [AutoInfo] Email processing thread started
+# Log file created at 2025-07-06 14:49:47.217520
+[2025-07-06 14:49:47] [SETTINGS] Removed file: _internal/log
+[2025-07-06 14:49:47] [SETTINGS] Cleanup complete, restarting application
+[2025-07-06 14:50:35] Initializing MainWindow
+[2025-07-06 14:50:36] Ensuring configuration file exists
+[2025-07-06 14:50:36] Ensuring config file exists...
+[2025-07-06 14:50:36] Retry 1/5
+[2025-07-06 14:50:36] Reading existing config file...
+[2025-07-06 14:50:36] Reading config from _internal/system_info.ini
+[2025-07-06 14:50:36] Config sections: ['SystemInfo']
+[2025-07-06 14:50:36] Checking for missing keys...
+[2025-07-06 14:50:36] Getting motherboard serial number...
+[2025-07-06 14:50:36] Motherboard SN found: KT17MC05PI
+[2025-07-06 14:50:36] Membership: Free
+[2025-07-06 14:50:36] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 14:50:36] Config Motherboard SN: LEAF AUTO
+[2025-07-06 14:50:36] Current Motherboard SN: KT17MC05PI
+[2025-07-06 14:50:36] Config file is valid
+[2025-07-06 14:50:36] Reading configuration values
+[2025-07-06 14:50:36] Reading key: language
+[2025-07-06 14:50:36] Key language value: cn
+[2025-07-06 14:50:36] Reading key: membership
+[2025-07-06 14:50:36] Key membership value: Free
+[2025-07-06 14:50:36] Reading key: expiration_time
+[2025-07-06 14:50:36] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 14:50:36] Reading key: version
+[2025-07-06 14:50:36] Key version value: 4.39
+[2025-07-06 14:50:36] Reloading WeChat instances during initialization
+[2025-07-06 14:50:36] Starting to reload WeChat instances
+[2025-07-06 14:50:36] Reading key: language
+[2025-07-06 14:50:36] Key language value: cn
+[2025-07-06 14:50:36] Reading key: language
+[2025-07-06 14:50:36] Key language value: cn
+[2025-07-06 14:50:37] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 14:50:37] Default WeChat instance set to 杨圣洲
+[2025-07-06 14:50:37] Successfully initialized 1 WeChat instances
+[2025-07-06 14:50:37] Set default WeChat nickname to 杨圣洲
+[2025-07-06 14:50:37] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 14:50:37] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:50:37] [AutoInfo] Email processing thread started
+[2025-07-06 14:50:37] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 14:50:37] [AiAssistant] Initializing AI assistant...
+[2025-07-06 14:50:37] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 14:50:37] Creating system tray icon
+[2025-07-06 14:50:37] Creating system tray icon
+[2025-07-06 14:50:37] System tray icon created
+[2025-07-06 14:50:37] Setting window flags and attributes
+[2025-07-06 14:50:37] Connecting signals and updating UI elements
+[2025-07-06 14:50:37] Connecting UI signals
+[2025-07-06 14:50:37] [SETTINGS] Initializing SettingWindow
+[2025-07-06 14:50:38] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:50:38] Reading key: membership
+[2025-07-06 14:50:38] Key membership value: Free
+[2025-07-06 14:50:38] [SETTINGS] Detected membership: Free
+[2025-07-06 14:50:38] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 14:50:38] [SETTINGS] Initializing settings
+[2025-07-06 14:50:38] Reading key: error_email
+[2025-07-06 14:50:38] Key error_email value: False
+[2025-07-06 14:50:38] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 14:50:38] Reading key: error_sound
+[2025-07-06 14:50:38] Key error_sound value: True
+[2025-07-06 14:50:38] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 14:50:38] Reading key: net_time
+[2025-07-06 14:50:38] Key net_time value: False
+[2025-07-06 14:50:38] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 14:50:38] Reading key: auto_update
+[2025-07-06 14:50:38] Key auto_update value: True
+[2025-07-06 14:50:38] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 14:50:38] Reading key: serve_lock
+[2025-07-06 14:50:38] Key serve_lock value: False
+[2025-07-06 14:50:38] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 14:50:38] Reading key: close_option
+[2025-07-06 14:50:38] Key close_option value: True
+[2025-07-06 14:50:38] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 14:50:38] Reading key: language
+[2025-07-06 14:50:38] Key language value: cn
+[2025-07-06 14:50:38] [SETTINGS] Set language to: 简体中文
+[2025-07-06 14:50:38] Reading key: version
+[2025-07-06 14:50:38] Key version value: 4.39
+[2025-07-06 14:50:38] [SETTINGS] Set version label to: 4.39
+[2025-07-06 14:50:38] Reading key: add_timestep
+[2025-07-06 14:50:38] Key add_timestep value: 10
+[2025-07-06 14:50:38] [SETTINGS] Set timestep to: 10
+[2025-07-06 14:50:38] Reading key: reply_delay
+[2025-07-06 14:50:38] Key reply_delay value: 0
+[2025-07-06 14:50:38] Reading key: selected_audio_index
+[2025-07-06 14:50:38] Key selected_audio_index value: 0
+[2025-07-06 14:50:38] [SETTINGS] Loading audio selection: 0
+[2025-07-06 14:50:38] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 14:50:38] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 14:50:38] [SETTINGS] Set audio index to: 0
+[2025-07-06 14:50:38] Entering ReplyDialog initialization
+[2025-07-06 14:50:38] Starting to load rules from JSON
+[2025-07-06 14:50:38] Rule file not found, creating new rule list
+[2025-07-06 14:50:38] Starting to display rules
+[2025-07-06 14:50:38] Displayed 0 rules
+[2025-07-06 14:50:38] Completed ReplyDialog initialization
+[2025-07-06 14:50:38] File and message signals connected
+[2025-07-06 14:50:38] Window control signals connected
+[2025-07-06 14:50:38] Membership button signals connected
+[2025-07-06 14:50:38] Function button signals connected
+[2025-07-06 14:50:38] Checkbox signals connected
+[2025-07-06 14:50:38] VIP frame click event connected
+[2025-07-06 14:50:38] All signals connected
+[2025-07-06 14:50:38] Updating UI elements
+[2025-07-06 14:50:38] Getting application notice
+[2025-07-06 14:50:39] Set datetime to 2025-07-06 14:50:39
+[2025-07-06 14:50:39] Reading key: membership_class
+[2025-07-06 14:50:39] Key membership_class value: 0
+[2025-07-06 14:50:39] Reading key: error_sound
+[2025-07-06 14:50:39] Key error_sound value: True
+[2025-07-06 14:50:39] UI elements updated
+[2025-07-06 14:50:39] Applying membership limits for Free
+[2025-07-06 14:50:39] Applying membership limits for Free
+[2025-07-06 14:50:39] Applying Free membership limits
+[2025-07-06 14:50:39] Free trial remaining days: 29
+[2025-07-06 14:50:39] Membership limits applied
+[2025-07-06 14:50:39] Reading key: auto_update
+[2025-07-06 14:50:39] Key auto_update value: True
+[2025-07-06 14:50:39] Checking for updates
+[2025-07-06 14:50:39] Reading key: version
+[2025-07-06 14:50:39] Key version value: 4.39
+[2025-07-06 14:50:39] Reading key: serve_lock
+[2025-07-06 14:50:39] Key serve_lock value: False
+[2025-07-06 14:50:39] Loading tasks from JSON file
+[2025-07-06 14:50:39] Loading tasks from _internal/tasks.json
+[2025-07-06 14:50:39] JSON file _internal/tasks.json does not exist
+[2025-07-06 14:50:39] Setting up auto-completion for receiver LineEdit
+[2025-07-06 14:50:39] Auto-completion setup completed
+[2025-07-06 14:50:42] Mouse move event without left button press, ignoring
+[2025-07-06 14:51:02] Starting to add new rule
+[2025-07-06 14:51:02] Checking for duplicate rule - Keyword: A1, Match Type: 包含
+[2025-07-06 14:51:02] Creating rule display frame
+[2025-07-06 14:51:02] Completed rule display frame creation
+[2025-07-06 14:51:02] Successfully added rule - Keyword: A1, Match Type: 包含
+[2025-07-06 14:51:24] Starting to add new rule
+[2025-07-06 14:51:24] Checking for duplicate rule - Keyword: A2, Match Type: 等于
+[2025-07-06 14:51:24] Creating rule display frame
+[2025-07-06 14:51:24] Completed rule display frame creation
+[2025-07-06 14:51:24] Successfully added rule - Keyword: A2, Match Type: 等于
+[2025-07-06 14:51:35] Starting to add new rule
+[2025-07-06 14:51:35] Checking for duplicate rule - Keyword: A3, Match Type: 等于
+[2025-07-06 14:51:35] Creating rule display frame
+[2025-07-06 14:51:35] Completed rule display frame creation
+[2025-07-06 14:51:35] Successfully added rule - Keyword: A3, Match Type: 等于
+[2025-07-06 14:51:46] Starting to add new rule
+[2025-07-06 14:51:46] Checking for duplicate rule - Keyword: *., Match Type: 等于
+[2025-07-06 14:51:46] Creating rule display frame
+[2025-07-06 14:51:46] Completed rule display frame creation
+[2025-07-06 14:51:46] Successfully added rule - Keyword: *., Match Type: 等于
+[2025-07-06 14:51:50] Calling save rules and close dialog
+[2025-07-06 14:51:50] Starting to save rules to JSON
+[2025-07-06 14:51:50] Successfully saved 4 rules to JSON
+[2025-07-06 14:52:21] Initializing MainWindow
+[2025-07-06 14:52:21] Ensuring configuration file exists
+[2025-07-06 14:52:21] Ensuring config file exists...
+[2025-07-06 14:52:21] Retry 1/5
+[2025-07-06 14:52:21] Reading existing config file...
+[2025-07-06 14:52:21] Reading config from _internal/system_info.ini
+[2025-07-06 14:52:21] Config sections: ['SystemInfo']
+[2025-07-06 14:52:21] Checking for missing keys...
+[2025-07-06 14:52:21] Getting motherboard serial number...
+[2025-07-06 14:52:21] Motherboard SN found: KT17MC05PI
+[2025-07-06 14:52:21] Membership: Free
+[2025-07-06 14:52:21] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 14:52:21] Config Motherboard SN: LEAF AUTO
+[2025-07-06 14:52:21] Current Motherboard SN: KT17MC05PI
+[2025-07-06 14:52:21] Config file is valid
+[2025-07-06 14:52:21] Reading configuration values
+[2025-07-06 14:52:21] Reading key: language
+[2025-07-06 14:52:21] Key language value: cn
+[2025-07-06 14:52:21] Reading key: membership
+[2025-07-06 14:52:21] Key membership value: Free
+[2025-07-06 14:52:21] Reading key: expiration_time
+[2025-07-06 14:52:21] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 14:52:21] Reading key: version
+[2025-07-06 14:52:21] Key version value: 4.39
+[2025-07-06 14:52:21] Reloading WeChat instances during initialization
+[2025-07-06 14:52:21] Starting to reload WeChat instances
+[2025-07-06 14:52:21] Reading key: language
+[2025-07-06 14:52:21] Key language value: cn
+[2025-07-06 14:52:22] Reading key: language
+[2025-07-06 14:52:22] Key language value: cn
+[2025-07-06 14:52:23] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 14:52:23] Default WeChat instance set to 杨圣洲
+[2025-07-06 14:52:23] Successfully initialized 1 WeChat instances
+[2025-07-06 14:52:23] Set default WeChat nickname to 杨圣洲
+[2025-07-06 14:52:23] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 14:52:23] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:52:23] [AutoInfo] Email processing thread started
+[2025-07-06 14:52:23] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 14:52:23] [AiAssistant] Initializing AI assistant...
+[2025-07-06 14:52:23] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 14:52:23] Creating system tray icon
+[2025-07-06 14:52:23] Creating system tray icon
+[2025-07-06 14:52:23] System tray icon created
+[2025-07-06 14:52:23] Setting window flags and attributes
+[2025-07-06 14:52:23] Connecting signals and updating UI elements
+[2025-07-06 14:52:23] Connecting UI signals
+[2025-07-06 14:52:23] [SETTINGS] Initializing SettingWindow
+[2025-07-06 14:52:23] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:52:23] Reading key: membership
+[2025-07-06 14:52:23] Key membership value: Free
+[2025-07-06 14:52:23] [SETTINGS] Detected membership: Free
+[2025-07-06 14:52:23] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 14:52:23] [SETTINGS] Initializing settings
+[2025-07-06 14:52:23] Reading key: error_email
+[2025-07-06 14:52:23] Key error_email value: False
+[2025-07-06 14:52:23] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 14:52:23] Reading key: error_sound
+[2025-07-06 14:52:23] Key error_sound value: True
+[2025-07-06 14:52:23] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 14:52:23] Reading key: net_time
+[2025-07-06 14:52:23] Key net_time value: False
+[2025-07-06 14:52:23] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 14:52:23] Reading key: auto_update
+[2025-07-06 14:52:23] Key auto_update value: True
+[2025-07-06 14:52:23] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 14:52:23] Reading key: serve_lock
+[2025-07-06 14:52:23] Key serve_lock value: False
+[2025-07-06 14:52:23] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 14:52:23] Reading key: close_option
+[2025-07-06 14:52:23] Key close_option value: True
+[2025-07-06 14:52:23] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 14:52:23] Reading key: language
+[2025-07-06 14:52:23] Key language value: cn
+[2025-07-06 14:52:23] [SETTINGS] Set language to: 简体中文
+[2025-07-06 14:52:23] Reading key: version
+[2025-07-06 14:52:23] Key version value: 4.39
+[2025-07-06 14:52:23] [SETTINGS] Set version label to: 4.39
+[2025-07-06 14:52:23] Reading key: add_timestep
+[2025-07-06 14:52:23] Key add_timestep value: 10
+[2025-07-06 14:52:23] [SETTINGS] Set timestep to: 10
+[2025-07-06 14:52:23] Reading key: reply_delay
+[2025-07-06 14:52:23] Key reply_delay value: 0
+[2025-07-06 14:52:23] Reading key: selected_audio_index
+[2025-07-06 14:52:23] Key selected_audio_index value: 0
+[2025-07-06 14:52:23] [SETTINGS] Loading audio selection: 0
+[2025-07-06 14:52:23] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 14:52:23] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 14:52:23] [SETTINGS] Set audio index to: 0
+[2025-07-06 14:52:23] Entering ReplyDialog initialization
+[2025-07-06 14:52:23] Starting to load rules from JSON
+[2025-07-06 14:52:23] Successfully loaded 4 rules
+[2025-07-06 14:52:23] Starting to display rules
+[2025-07-06 14:52:23] Creating rule display frame
+[2025-07-06 14:52:23] Completed rule display frame creation
+[2025-07-06 14:52:23] Creating rule display frame
+[2025-07-06 14:52:23] Completed rule display frame creation
+[2025-07-06 14:52:23] Creating rule display frame
+[2025-07-06 14:52:23] Completed rule display frame creation
+[2025-07-06 14:52:23] Creating rule display frame
+[2025-07-06 14:52:23] Completed rule display frame creation
+[2025-07-06 14:52:23] Displayed 4 rules
+[2025-07-06 14:52:23] Completed ReplyDialog initialization
+[2025-07-06 14:52:23] File and message signals connected
+[2025-07-06 14:52:23] Window control signals connected
+[2025-07-06 14:52:23] Membership button signals connected
+[2025-07-06 14:52:23] Function button signals connected
+[2025-07-06 14:52:23] Checkbox signals connected
+[2025-07-06 14:52:23] VIP frame click event connected
+[2025-07-06 14:52:23] All signals connected
+[2025-07-06 14:52:23] Updating UI elements
+[2025-07-06 14:52:23] Getting application notice
+[2025-07-06 14:52:24] Set datetime to 2025-07-06 14:52:24
+[2025-07-06 14:52:24] Reading key: membership_class
+[2025-07-06 14:52:24] Key membership_class value: 0
+[2025-07-06 14:52:24] Reading key: error_sound
+[2025-07-06 14:52:24] Key error_sound value: True
+[2025-07-06 14:52:24] UI elements updated
+[2025-07-06 14:52:24] Applying membership limits for Free
+[2025-07-06 14:52:24] Applying membership limits for Free
+[2025-07-06 14:52:24] Applying Free membership limits
+[2025-07-06 14:52:24] Free trial remaining days: 29
+[2025-07-06 14:52:24] Membership limits applied
+[2025-07-06 14:52:24] Reading key: auto_update
+[2025-07-06 14:52:24] Key auto_update value: True
+[2025-07-06 14:52:24] Checking for updates
+[2025-07-06 14:52:24] Reading key: version
+[2025-07-06 14:52:24] Key version value: 4.39
+[2025-07-06 14:52:24] Reading key: serve_lock
+[2025-07-06 14:52:24] Key serve_lock value: False
+[2025-07-06 14:52:24] Loading tasks from JSON file
+[2025-07-06 14:52:24] Loading tasks from _internal/tasks.json
+[2025-07-06 14:52:24] JSON file _internal/tasks.json does not exist
+[2025-07-06 14:52:24] Setting up auto-completion for receiver LineEdit
+[2025-07-06 14:52:24] Auto-completion setup completed
+[2025-07-06 14:52:53] Initializing MainWindow
+[2025-07-06 14:52:53] Ensuring configuration file exists
+[2025-07-06 14:52:53] Ensuring config file exists...
+[2025-07-06 14:52:53] Retry 1/5
+[2025-07-06 14:52:53] Reading existing config file...
+[2025-07-06 14:52:53] Reading config from _internal/system_info.ini
+[2025-07-06 14:52:53] Config sections: ['SystemInfo']
+[2025-07-06 14:52:53] Checking for missing keys...
+[2025-07-06 14:52:53] Getting motherboard serial number...
+[2025-07-06 14:52:53] Motherboard SN found: KT17MC05PI
+[2025-07-06 14:52:53] Membership: Free
+[2025-07-06 14:52:53] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 14:52:53] Config Motherboard SN: LEAF AUTO
+[2025-07-06 14:52:53] Current Motherboard SN: KT17MC05PI
+[2025-07-06 14:52:53] Config file is valid
+[2025-07-06 14:52:53] Reading configuration values
+[2025-07-06 14:52:53] Reading key: language
+[2025-07-06 14:52:53] Key language value: cn
+[2025-07-06 14:52:53] Reading key: membership
+[2025-07-06 14:52:53] Key membership value: Free
+[2025-07-06 14:52:53] Reading key: expiration_time
+[2025-07-06 14:52:53] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 14:52:53] Reading key: version
+[2025-07-06 14:52:53] Key version value: 4.39
+[2025-07-06 14:52:53] Reloading WeChat instances during initialization
+[2025-07-06 14:52:53] Starting to reload WeChat instances
+[2025-07-06 14:52:53] Reading key: language
+[2025-07-06 14:52:53] Key language value: cn
+[2025-07-06 14:52:54] Reading key: language
+[2025-07-06 14:52:54] Key language value: cn
+[2025-07-06 14:52:55] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 14:52:55] Default WeChat instance set to 杨圣洲
+[2025-07-06 14:52:55] Successfully initialized 1 WeChat instances
+[2025-07-06 14:52:55] Set default WeChat nickname to 杨圣洲
+[2025-07-06 14:52:55] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 14:52:55] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:52:55] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 14:52:55] [AutoInfo] Email processing thread started
+[2025-07-06 14:52:55] [AiAssistant] Initializing AI assistant...
+[2025-07-06 14:52:55] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 14:52:55] Creating system tray icon
+[2025-07-06 14:52:55] Creating system tray icon
+[2025-07-06 14:52:55] System tray icon created
+[2025-07-06 14:52:55] Setting window flags and attributes
+[2025-07-06 14:52:55] Connecting signals and updating UI elements
+[2025-07-06 14:52:55] Connecting UI signals
+[2025-07-06 14:52:55] [SETTINGS] Initializing SettingWindow
+[2025-07-06 14:52:55] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:52:55] Reading key: membership
+[2025-07-06 14:52:55] Key membership value: Free
+[2025-07-06 14:52:55] [SETTINGS] Detected membership: Free
+[2025-07-06 14:52:55] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 14:52:55] [SETTINGS] Initializing settings
+[2025-07-06 14:52:55] Reading key: error_email
+[2025-07-06 14:52:55] Key error_email value: False
+[2025-07-06 14:52:55] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 14:52:55] Reading key: error_sound
+[2025-07-06 14:52:55] Key error_sound value: True
+[2025-07-06 14:52:55] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 14:52:55] Reading key: net_time
+[2025-07-06 14:52:55] Key net_time value: False
+[2025-07-06 14:52:55] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 14:52:55] Reading key: auto_update
+[2025-07-06 14:52:55] Key auto_update value: True
+[2025-07-06 14:52:55] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 14:52:55] Reading key: serve_lock
+[2025-07-06 14:52:55] Key serve_lock value: False
+[2025-07-06 14:52:55] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 14:52:55] Reading key: close_option
+[2025-07-06 14:52:55] Key close_option value: True
+[2025-07-06 14:52:55] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 14:52:55] Reading key: language
+[2025-07-06 14:52:55] Key language value: cn
+[2025-07-06 14:52:55] [SETTINGS] Set language to: 简体中文
+[2025-07-06 14:52:55] Reading key: version
+[2025-07-06 14:52:55] Key version value: 4.39
+[2025-07-06 14:52:55] [SETTINGS] Set version label to: 4.39
+[2025-07-06 14:52:55] Reading key: add_timestep
+[2025-07-06 14:52:55] Key add_timestep value: 10
+[2025-07-06 14:52:55] [SETTINGS] Set timestep to: 10
+[2025-07-06 14:52:55] Reading key: reply_delay
+[2025-07-06 14:52:55] Key reply_delay value: 0
+[2025-07-06 14:52:55] Reading key: selected_audio_index
+[2025-07-06 14:52:55] Key selected_audio_index value: 0
+[2025-07-06 14:52:55] [SETTINGS] Loading audio selection: 0
+[2025-07-06 14:52:55] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 14:52:55] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 14:52:55] [SETTINGS] Set audio index to: 0
+[2025-07-06 14:52:55] Entering ReplyDialog initialization
+[2025-07-06 14:52:55] Starting to load rules from JSON
+[2025-07-06 14:52:55] Successfully loaded 4 rules
+[2025-07-06 14:52:55] Starting to display rules
+[2025-07-06 14:52:55] Creating rule display frame
+[2025-07-06 14:52:55] Completed rule display frame creation
+[2025-07-06 14:52:55] Creating rule display frame
+[2025-07-06 14:52:55] Completed rule display frame creation
+[2025-07-06 14:52:55] Creating rule display frame
+[2025-07-06 14:52:55] Completed rule display frame creation
+[2025-07-06 14:52:55] Creating rule display frame
+[2025-07-06 14:52:55] Completed rule display frame creation
+[2025-07-06 14:52:55] Displayed 4 rules
+[2025-07-06 14:52:55] Completed ReplyDialog initialization
+[2025-07-06 14:52:55] File and message signals connected
+[2025-07-06 14:52:55] Window control signals connected
+[2025-07-06 14:52:55] Membership button signals connected
+[2025-07-06 14:52:55] Function button signals connected
+[2025-07-06 14:52:55] Checkbox signals connected
+[2025-07-06 14:52:55] VIP frame click event connected
+[2025-07-06 14:52:55] All signals connected
+[2025-07-06 14:52:55] Updating UI elements
+[2025-07-06 14:52:55] Getting application notice
+[2025-07-06 14:52:56] Set datetime to 2025-07-06 14:52:56
+[2025-07-06 14:52:56] Reading key: membership_class
+[2025-07-06 14:52:56] Key membership_class value: 0
+[2025-07-06 14:52:56] Reading key: error_sound
+[2025-07-06 14:52:56] Key error_sound value: True
+[2025-07-06 14:52:56] UI elements updated
+[2025-07-06 14:52:56] Applying membership limits for Free
+[2025-07-06 14:52:56] Applying membership limits for Free
+[2025-07-06 14:52:56] Applying Free membership limits
+[2025-07-06 14:52:56] Free trial remaining days: 29
+[2025-07-06 14:52:56] Membership limits applied
+[2025-07-06 14:52:56] Reading key: auto_update
+[2025-07-06 14:52:56] Key auto_update value: True
+[2025-07-06 14:52:56] Checking for updates
+[2025-07-06 14:52:56] Reading key: version
+[2025-07-06 14:52:56] Key version value: 4.39
+[2025-07-06 14:52:56] Reading key: serve_lock
+[2025-07-06 14:52:56] Key serve_lock value: False
+[2025-07-06 14:52:56] Loading tasks from JSON file
+[2025-07-06 14:52:56] Loading tasks from _internal/tasks.json
+[2025-07-06 14:52:56] JSON file _internal/tasks.json does not exist
+[2025-07-06 14:52:56] Setting up auto-completion for receiver LineEdit
+[2025-07-06 14:52:57] Auto-completion setup completed
+[2025-07-06 14:53:05] Calling save rules and close dialog
+[2025-07-06 14:53:05] Starting to save rules to JSON
+[2025-07-06 14:53:05] Successfully saved 4 rules to JSON
+[2025-07-06 14:53:15] [AiAssistant] Attempting to start takeover...
+[2025-07-06 14:53:15] [AiAssistant] Validating takeover parameters...
+[2025-07-06 14:53:15] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 14:53:15] [AiAssistant] Failed to start takeover: AiWorkerThread.__init__() got an unexpected keyword argument 'only_at_mode'
+[2025-07-06 14:54:40] Initializing MainWindow
+[2025-07-06 14:54:40] Ensuring configuration file exists
+[2025-07-06 14:54:40] Ensuring config file exists...
+[2025-07-06 14:54:40] Retry 1/5
+[2025-07-06 14:54:40] Reading existing config file...
+[2025-07-06 14:54:40] Reading config from _internal/system_info.ini
+[2025-07-06 14:54:40] Config sections: ['SystemInfo']
+[2025-07-06 14:54:40] Checking for missing keys...
+[2025-07-06 14:54:40] Getting motherboard serial number...
+[2025-07-06 14:54:40] Motherboard SN found: KT17MC05PI
+[2025-07-06 14:54:40] Membership: Free
+[2025-07-06 14:54:40] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 14:54:40] Config Motherboard SN: LEAF AUTO
+[2025-07-06 14:54:40] Current Motherboard SN: KT17MC05PI
+[2025-07-06 14:54:40] Config file is valid
+[2025-07-06 14:54:40] Reading configuration values
+[2025-07-06 14:54:40] Reading key: language
+[2025-07-06 14:54:40] Key language value: cn
+[2025-07-06 14:54:40] Reading key: membership
+[2025-07-06 14:54:40] Key membership value: Free
+[2025-07-06 14:54:40] Reading key: expiration_time
+[2025-07-06 14:54:40] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 14:54:40] Reading key: version
+[2025-07-06 14:54:40] Key version value: 4.39
+[2025-07-06 14:54:40] Reloading WeChat instances during initialization
+[2025-07-06 14:54:40] Starting to reload WeChat instances
+[2025-07-06 14:54:40] Reading key: language
+[2025-07-06 14:54:40] Key language value: cn
+[2025-07-06 14:54:40] Reading key: language
+[2025-07-06 14:54:40] Key language value: cn
+[2025-07-06 14:54:41] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 14:54:41] Default WeChat instance set to 杨圣洲
+[2025-07-06 14:54:41] Successfully initialized 1 WeChat instances
+[2025-07-06 14:54:41] Set default WeChat nickname to 杨圣洲
+[2025-07-06 14:54:41] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 14:54:41] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:54:41] [AutoInfo] Email processing thread started
 hip type: Free
-[2025-07-06 14:33:36] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:33:36] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:33:36] Creating system tray icon
-[2025-07-06 14:33:36] Creating system tray icon
-[2025-07-06 14:33:36] System tray icon created
-[2025-07-06 14:33:36] Setting window flags and attributes
-[2025-07-06 14:33:36] Connecting signals and updating UI elements
-[2025-07-06 14:33:36] Connecting UI signals
-[2025-07-06 14:33:36] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:33:36] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:33:36] Reading key: membership
-[2025-07-06 14:33:36] Key membership value: Free
-[2025-07-06 14:33:36] [SETTINGS] Detected membership: Free
-[2025-07-06 14:33:36] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:33:36] [SETTINGS] Initializing settings
-[2025-07-06 14:33:36] Reading key: error_email
-[2025-07-06 14:33:36] Key error_email value: False
-[2025-07-06 14:33:36] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:33:36] Reading key: error_sound
-[2025-07-06 14:33:36] Key error_sound value: True
-[2025-07-06 14:33:36] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:33:36] Reading key: net_time
-[2025-07-06 14:33:36] Key net_time value: False
-[2025-07-06 14:33:36] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:33:36] Reading key: auto_update
-[2025-07-06 14:33:36] Key auto_update value: True
-[2025-07-06 14:33:36] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:33:36] Reading key: serve_lock
-[2025-07-06 14:33:36] Key serve_lock value: False
-[2025-07-06 14:33:36] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:33:36] Reading key: close_option
-[2025-07-06 14:33:36] Key close_option value: True
-[2025-07-06 14:33:36] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:33:36] Reading key: language
-[2025-07-06 14:33:36] Key language value: cn
-[2025-07-06 14:33:36] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:33:36] Reading key: version
-[2025-07-06 14:33:36] Key version value: 4.39
-[2025-07-06 14:33:36] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:33:36] Reading key: add_timestep
-[2025-07-06 14:33:36] Key add_timestep value: 10
-[2025-07-06 14:33:36] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:33:36] Reading key: reply_delay
-[2025-07-06 14:33:36] Key reply_delay value: 0
-[2025-07-06 14:33:36] Reading key: selected_audio_index
-[2025-07-06 14:33:36] Key selected_audio_index value: 0
-[2025-07-06 14:33:36] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:33:36] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:33:36] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:33:36] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:33:37] Entering ReplyDialog initialization
-[2025-07-06 14:33:37] Starting to load rules from JSON
-[2025-07-06 14:33:37] Rule file not found, creating new rule list
-[2025-07-06 14:33:37] Starting to display rules
-[2025-07-06 14:33:37] Displayed 0 rules
-[2025-07-06 14:33:37] Completed ReplyDialog initialization
-[2025-07-06 14:33:37] File and message signals connected
-[2025-07-06 14:33:37] Window control signals connected
-[2025-07-06 14:33:37] Membership button signals connected
-[2025-07-06 14:33:37] Function button signals connected
-[2025-07-06 14:33:37] Checkbox signals connected
-[2025-07-06 14:33:37] VIP frame click event connected
-[2025-07-06 14:33:37] All signals connected
-[2025-07-06 14:33:37] Updating UI elements
-[2025-07-06 14:33:37] Getting application notice
-[2025-07-06 14:33:37] Set datetime to 2025-07-06 14:33:38
-[2025-07-06 14:33:37] Reading key: membership_class
-[2025-07-06 14:33:37] Key membership_class value: 0
-[2025-07-06 14:33:37] Reading key: error_sound
-[2025-07-06 14:33:37] Key error_sound value: True
-[2025-07-06 14:33:37] UI elements updated
-[2025-07-06 14:33:37] Applying membership limits for Free
-[2025-07-06 14:33:37] Applying membership limits for Free
-[2025-07-06 14:33:37] Applying Free membership limits
-[2025-07-06 14:33:38] Free trial remaining days: 29
-[2025-07-06 14:33:38] Membership limits applied
-[2025-07-06 14:33:38] Reading key: auto_update
-[2025-07-06 14:33:38] Key auto_update value: True
-[2025-07-06 14:33:38] Checking for updates
-[2025-07-06 14:33:38] Reading key: version
-[2025-07-06 14:33:38] Key version value: 4.39
-[2025-07-06 14:33:38] Reading key: serve_lock
-[2025-07-06 14:33:38] Key serve_lock value: False
-[2025-07-06 14:33:38] Loading tasks from JSON file
-[2025-07-06 14:33:38] Loading tasks from _internal/tasks.json
-[2025-07-06 14:33:38] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:33:43] Starting to add new rule
-[2025-07-06 14:33:43] Checking for duplicate rule - Keyword: 22, Match Type: 包含
-[2025-07-06 14:33:43] Creating rule display frame
-[2025-07-06 14:33:43] Completed rule display frame creation
-[2025-07-06 14:33:43] Successfully added rule - Keyword: 22, Match Type: 包含
-[2025-07-06 14:34:32] Initializing MainWindow
-[2025-07-06 14:34:32] Ensuring configuration file exists
-[2025-07-06 14:34:32] Ensuring config file exists...
-[2025-07-06 14:34:32] Retry 1/5
-[2025-07-06 14:34:32] Reading existing config file...
-[2025-07-06 14:34:32] Reading config from _internal/system_info.ini
-[2025-07-06 14:34:32] Config sections: ['SystemInfo']
-[2025-07-06 14:34:32] Checking for missing keys...
-[2025-07-06 14:34:32] Getting motherboard serial number...
-[2025-07-06 14:34:32] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:34:32] Membership: Free
-[2025-07-06 14:34:32] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:34:32] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:34:32] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:34:32] Config file is valid
-[2025-07-06 14:34:32] Reading configuration values
-[2025-07-06 14:34:32] Reading key: language
-[2025-07-06 14:34:32] Key language value: cn
-[2025-07-06 14:34:32] Reading key: membership
-[2025-07-06 14:34:32] Key membership value: Free
-[2025-07-06 14:34:32] Reading key: expiration_time
-[2025-07-06 14:34:32] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:34:32] Reading key: version
-[2025-07-06 14:34:32] Key version value: 4.39
-[2025-07-06 14:34:32] Reloading WeChat instances during initialization
-[2025-07-06 14:34:32] Starting to reload WeChat instances
-[2025-07-06 14:34:32] Reading key: language
-[2025-07-06 14:34:32] Key language value: cn
-[2025-07-06 14:34:33] WeChat not logged in during reload
-[2025-07-06 14:34:33] WeChat initialization failed: 微信未登录
-[2025-07-06 14:34:33] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:34:33] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:34:33] [AutoInfo] Email processing thread started
-[2025-07-06 14:34:33] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:34:33] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:34:33] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:34:33] Creating system tray icon
-[2025-07-06 14:34:33] Creating system tray icon
-[2025-07-06 14:34:33] System tray icon created
-[2025-07-06 14:34:33] Setting window flags and attributes
-[2025-07-06 14:34:33] Connecting signals and updating UI elements
-[2025-07-06 14:34:33] Connecting UI signals
-[2025-07-06 14:34:33] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:34:33] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:34:33] Reading key: membership
-[2025-07-06 14:34:33] Key membership value: Free
-[2025-07-06 14:34:33] [SETTINGS] Detected membership: Free
-[2025-07-06 14:34:33] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:34:33] [SETTINGS] Initializing settings
-[2025-07-06 14:34:33] Reading key: error_email
-[2025-07-06 14:34:33] Key error_email value: False
-[2025-07-06 14:34:33] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:34:33] Reading key: error_sound
-[2025-07-06 14:34:33] Key error_sound value: True
-[2025-07-06 14:34:33] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:34:33] Reading key: net_time
-[2025-07-06 14:34:33] Key net_time value: False
-[2025-07-06 14:34:33] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:34:33] Reading key: auto_update
-[2025-07-06 14:34:33] Key auto_update value: True
-[2025-07-06 14:34:33] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:34:33] Reading key: serve_lock
-[2025-07-06 14:34:33] Key serve_lock value: False
-[2025-07-06 14:34:33] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:34:33] Reading key: close_option
-[2025-07-06 14:34:33] Key close_option value: True
-[2025-07-06 14:34:33] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:34:33] Reading key: language
-[2025-07-06 14:34:33] Key language value: cn
-[2025-07-06 14:34:33] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:34:33] Reading key: version
-[2025-07-06 14:34:33] Key version value: 4.39
-[2025-07-06 14:34:33] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:34:33] Reading key: add_timestep
-[2025-07-06 14:34:33] Key add_timestep value: 10
-[2025-07-06 14:34:33] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:34:33] Reading key: reply_delay
-[2025-07-06 14:34:33] Key reply_delay value: 0
-[2025-07-06 14:34:33] Reading key: selected_audio_index
-[2025-07-06 14:34:33] Key selected_audio_index value: 0
-[2025-07-06 14:34:33] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:34:33] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:34:33] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:34:33] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:34:34] Entering ReplyDialog initialization
-[2025-07-06 14:34:34] Starting to load rules from JSON
-[2025-07-06 14:34:34] Rule file not found, creating new rule list
-[2025-07-06 14:34:34] Starting to display rules
-[2025-07-06 14:34:34] Displayed 0 rules
-[2025-07-06 14:34:34] Completed ReplyDialog initialization
-[2025-07-06 14:34:34] File and message signals connected
-[2025-07-06 14:34:34] Window control signals connected
-[2025-07-06 14:34:34] Membership button signals connected
-[2025-07-06 14:34:34] Function button signals connected
-[2025-07-06 14:34:34] Checkbox signals connected
-[2025-07-06 14:34:34] VIP frame click event connected
-[2025-07-06 14:34:34] All signals connected
-[2025-07-06 14:34:34] Updating UI elements
-[2025-07-06 14:34:34] Getting application notice
-[2025-07-06 14:34:34] Set datetime to 2025-07-06 14:34:34
-[2025-07-06 14:34:34] Reading key: membership_class
-[2025-07-06 14:34:34] Key membership_class value: 0
-[2025-07-06 14:34:34] Reading key: error_sound
-[2025-07-06 14:34:34] Key error_sound value: True
-[2025-07-06 14:34:34] UI elements updated
-[2025-07-06 14:34:34] Applying membership limits for Free
-[2025-07-06 14:34:34] Applying membership limits for Free
-[2025-07-06 14:34:34] Applying Free membership limits
-[2025-07-06 14:34:35] Free trial remaining days: 29
-[2025-07-06 14:34:35] Membership limits applied
-[2025-07-06 14:34:35] Reading key: auto_update
-[2025-07-06 14:34:35] Key auto_update value: True
-[2025-07-06 14:34:35] Checking for updates
-[2025-07-06 14:34:35] Reading key: version
-[2025-07-06 14:34:35] Key version value: 4.39
-[2025-07-06 14:34:35] Reading key: serve_lock
-[2025-07-06 14:34:35] Key serve_lock value: False
-[2025-07-06 14:34:35] Loading tasks from JSON file
-[2025-07-06 14:34:35] Loading tasks from _internal/tasks.json
-[2025-07-06 14:34:35] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:34:39] Starting to add new rule
-[2025-07-06 14:34:39] Checking for duplicate rule - Keyword: 试试, Match Type: 包含
-[2025-07-06 14:34:39] Creating rule display frame
-[2025-07-06 14:34:39] Completed rule display frame creation
-[2025-07-06 14:34:39] Successfully added rule - Keyword: 试试, Match Type: 包含
-[2025-07-06 14:35:02] Initializing MainWindow
-[2025-07-06 14:35:02] Ensuring configuration file exists
-[2025-07-06 14:35:02] Ensuring config file exists...
-[2025-07-06 14:35:02] Retry 1/5
-[2025-07-06 14:35:02] Reading existing config file...
-[2025-07-06 14:35:02] Reading config from _internal/system_info.ini
-[2025-07-06 14:35:02] Config sections: ['SystemInfo']
-[2025-07-06 14:35:02] Checking for missing keys...
-[2025-07-06 14:35:02] Getting motherboard serial number...
-[2025-07-06 14:35:02] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:35:02] Membership: Free
-[2025-07-06 14:35:02] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:35:02] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:35:02] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:35:02] Config file is valid
-[2025-07-06 14:35:02] Reading configuration values
-[2025-07-06 14:35:02] Reading key: language
-[2025-07-06 14:35:02] Key language value: cn
-[2025-07-06 14:35:02] Reading key: membership
-[2025-07-06 14:35:02] Key membership value: Free
-[2025-07-06 14:35:02] Reading key: expiration_time
-[2025-07-06 14:35:02] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:35:02] Reading key: version
-[2025-07-06 14:35:02] Key version value: 4.39
-[2025-07-06 14:35:02] Reloading WeChat instances during initialization
-[2025-07-06 14:35:02] Starting to reload WeChat instances
-[2025-07-06 14:35:02] Reading key: language
-[2025-07-06 14:35:02] Key language value: cn
-[2025-07-06 14:35:03] WeChat not logged in during reload
-[2025-07-06 14:35:03] WeChat initialization failed: 微信未登录
-[2025-07-06 14:35:03] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:35:03] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:35:03] [AutoInfo] Email processing thread started
-[2025-07-06 14:35:03] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:35:03] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:35:03] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:35:03] Creating system tray icon
-[2025-07-06 14:35:03] Creating system tray icon
-[2025-07-06 14:35:03] System tray icon created
-[2025-07-06 14:35:03] Setting window flags and attributes
-[2025-07-06 14:35:03] Connecting signals and updating UI elements
-[2025-07-06 14:35:03] Connecting UI signals
-[2025-07-06 14:35:03] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:35:03] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:35:03] Reading key: membership
-[2025-07-06 14:35:03] Key membership value: Free
-[2025-07-06 14:35:03] [SETTINGS] Detected membership: Free
-[2025-07-06 14:35:03] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:35:03] [SETTINGS] Initializing settings
-[2025-07-06 14:35:03] Reading key: error_email
-[2025-07-06 14:35:03] Key error_email value: False
-[2025-07-06 14:35:03] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:35:03] Reading key: error_sound
-[2025-07-06 14:35:03] Key error_sound value: True
-[2025-07-06 14:35:03] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:35:03] Reading key: net_time
-[2025-07-06 14:35:03] Key net_time value: False
-[2025-07-06 14:35:03] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:35:03] Reading key: auto_update
-[2025-07-06 14:35:03] Key auto_update value: True
-[2025-07-06 14:35:03] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:35:03] Reading key: serve_lock
-[2025-07-06 14:35:03] Key serve_lock value: False
-[2025-07-06 14:35:03] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:35:03] Reading key: close_option
-[2025-07-06 14:35:03] Key close_option value: True
-[2025-07-06 14:35:03] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:35:03] Reading key: language
-[2025-07-06 14:35:03] Key language value: cn
-[2025-07-06 14:35:03] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:35:03] Reading key: version
-[2025-07-06 14:35:03] Key version value: 4.39
-[2025-07-06 14:35:03] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:35:03] Reading key: add_timestep
-[2025-07-06 14:35:03] Key add_timestep value: 10
-[2025-07-06 14:35:03] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:35:03] Reading key: reply_delay
-[2025-07-06 14:35:03] Key reply_delay value: 0
-[2025-07-06 14:35:03] Reading key: selected_audio_index
-[2025-07-06 14:35:03] Key selected_audio_index value: 0
-[2025-07-06 14:35:03] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:35:03] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:35:03] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:35:03] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:35:04] Entering ReplyDialog initialization
-[2025-07-06 14:35:04] Starting to load rules from JSON
-[2025-07-06 14:35:04] Rule file not found, creating new rule list
-[2025-07-06 14:35:04] Starting to display rules
-[2025-07-06 14:35:04] Displayed 0 rules
-[2025-07-06 14:35:04] Completed ReplyDialog initialization
-[2025-07-06 14:35:04] File and message signals connected
-[2025-07-06 14:35:04] Window control signals connected
-[2025-07-06 14:35:04] Membership button signals connected
-[2025-07-06 14:35:04] Function button signals connected
-[2025-07-06 14:35:04] Checkbox signals connected
-[2025-07-06 14:35:04] VIP frame click event connected
-[2025-07-06 14:35:04] All signals connected
-[2025-07-06 14:35:04] Updating UI elements
-[2025-07-06 14:35:04] Getting application notice
-[2025-07-06 14:35:04] Set datetime to 2025-07-06 14:35:04
-[2025-07-06 14:35:04] Reading key: membership_class
-[2025-07-06 14:35:04] Key membership_class value: 0
-[2025-07-06 14:35:04] Reading key: error_sound
-[2025-07-06 14:35:04] Key error_sound value: True
-[2025-07-06 14:35:04] UI elements updated
-[2025-07-06 14:35:04] Applying membership limits for Free
-[2025-07-06 14:35:04] Applying membership limits for Free
-[2025-07-06 14:35:04] Applying Free membership limits
-[2025-07-06 14:35:04] Free trial remaining days: 29
-[2025-07-06 14:35:04] Membership limits applied
-[2025-07-06 14:35:04] Reading key: auto_update
-[2025-07-06 14:35:04] Key auto_update value: True
-[2025-07-06 14:35:04] Checking for updates
-[2025-07-06 14:35:05] Reading key: version
-[2025-07-06 14:35:05] Key version value: 4.39
-[2025-07-06 14:35:05] Reading key: serve_lock
-[2025-07-06 14:35:05] Key serve_lock value: False
-[2025-07-06 14:35:05] Loading tasks from JSON file
-[2025-07-06 14:35:05] Loading tasks from _internal/tasks.json
-[2025-07-06 14:35:05] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:35:10] Starting to add new rule
-[2025-07-06 14:35:10] Checking for duplicate rule - Keyword: 33, Match Type: 包含
-[2025-07-06 14:35:10] Creating rule display frame
-[2025-07-06 14:35:10] Completed rule display frame creation
-[2025-07-06 14:35:10] Successfully added rule - Keyword: 33, Match Type: 包含
-[2025-07-06 14:36:26] Starting to add new rule
-[2025-07-06 14:36:26] Checking for duplicate rule - Keyword: 等等, Match Type: 等于
-[2025-07-06 14:36:26] Creating rule display frame
-[2025-07-06 14:36:26] Completed rule display frame creation
-[2025-07-06 14:36:26] Successfully added rule - Keyword: 等等, Match Type: 等于
-[2025-07-06 14:36:30] Starting to add new rule
-[2025-07-06 14:36:30] Checking for duplicate rule - Keyword: 反复, Match Type: 等于
-[2025-07-06 14:36:30] Creating rule display frame
-[2025-07-06 14:36:30] Completed rule display frame creation
-[2025-07-06 14:36:30] Successfully added rule - Keyword: 反复, Match Type: 等于
-[2025-07-06 14:36:39] Starting to add new rule
-[2025-07-06 14:36:39] Checking for duplicate rule - Keyword: 发, Match Type: 正则
-[2025-07-06 14:36:39] Creating rule display frame
-[2025-07-06 14:36:39] Completed rule display frame creation
-[2025-07-06 14:36:39] Successfully added rule - Keyword: 发, Match Type: 正则
-[2025-07-06 14:36:42] Calling save rules and close dialog
-[2025-07-06 14:36:42] Starting to save rules to JSON
-[2025-07-06 14:36:42] Successfully saved 4 rules to JSON
-[2025-07-06 14:36:58] Starting to add new rule
-[2025-07-06 14:37:02] Failed to add rule: Invalid regular expression - *: nothing to repeat at position 0
-[2025-07-06 14:37:03] Processing cancel operation
-[2025-07-06 14:37:03] Rules unchanged, closing window directly
-[2025-07-06 14:48:23] Initializing MainWindow
-[2025-07-06 14:48:23] Ensuring configuration file exists
-[2025-07-06 14:48:23] Ensuring config file exists...
-[2025-07-06 14:48:23] Retry 1/5
-[2025-07-06 14:48:23] Reading existing config file...
-[2025-07-06 14:48:23] Reading config from _internal/system_info.ini
-[2025-07-06 14:48:23] Config sections: ['SystemInfo']
-[2025-07-06 14:48:23] Checking for missing keys...
-[2025-07-06 14:48:23] Getting motherboard serial number...
-[2025-07-06 14:48:23] Motherboard SN found: KT17MC05PI
-[2025-07-06 14:48:23] Membership: Free
-[2025-07-06 14:48:23] Expiration Time: 2025-08-05 13:46:19
-[2025-07-06 14:48:23] Config Motherboard SN: LEAF AUTO
-[2025-07-06 14:48:23] Current Motherboard SN: KT17MC05PI
-[2025-07-06 14:48:23] Config file is valid
-[2025-07-06 14:48:23] Reading configuration values
-[2025-07-06 14:48:23] Reading key: language
-[2025-07-06 14:48:23] Key language value: cn
-[2025-07-06 14:48:23] Reading key: membership
-[2025-07-06 14:48:23] Key membership value: Free
-[2025-07-06 14:48:23] Reading key: expiration_time
-[2025-07-06 14:48:23] Key expiration_time value: 2025-08-05 13:46:19
-[2025-07-06 14:48:23] Reading key: version
-[2025-07-06 14:48:23] Key version value: 4.39
-[2025-07-06 14:48:23] Reloading WeChat instances during initialization
-[2025-07-06 14:48:23] Starting to reload WeChat instances
-[2025-07-06 14:48:23] Reading key: language
-[2025-07-06 14:48:23] Key language value: cn
-[2025-07-06 14:48:23] WeChat not logged in during reload
-[2025-07-06 14:48:23] WeChat initialization failed: 微信未登录
-[2025-07-06 14:48:23] Initializing AutoInfo, Split, and AiAssistant modules
-[2025-07-06 14:48:23] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:48:23] [AutoInfo] Initialization completed, membership type: Free
-[2025-07-06 14:48:23] [AutoInfo] Email processing thread started
-[2025-07-06 14:48:23] [AiAssistant] Initializing AI assistant...
-[2025-07-06 14:48:23] [AiAssistant] Initialization completed, membership type: Free
-[2025-07-06 14:48:23] Creating system tray icon
-[2025-07-06 14:48:23] Creating system tray icon
-[2025-07-06 14:48:23] System tray icon created
-[2025-07-06 14:48:23] Setting window flags and attributes
-[2025-07-06 14:48:23] Connecting signals and updating UI elements
-[2025-07-06 14:48:23] Connecting UI signals
-[2025-07-06 14:48:23] [SETTINGS] Initializing SettingWindow
-[2025-07-06 14:48:24] [ERROR_SOUND] Thread initialized
-[2025-07-06 14:48:24] Reading key: membership
-[2025-07-06 14:48:24] Key membership value: Free
-[2025-07-06 14:48:24] [SETTINGS] Detected membership: Free
-[2025-07-06 14:48:24] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
-[2025-07-06 14:48:24] [SETTINGS] Initializing settings
-[2025-07-06 14:48:24] Reading key: error_email
-[2025-07-06 14:48:24] Key error_email value: False
-[2025-07-06 14:48:24] [SETTINGS] Set error_email checkbox to: False
-[2025-07-06 14:48:24] Reading key: error_sound
-[2025-07-06 14:48:24] Key error_sound value: True
-[2025-07-06 14:48:24] [SETTINGS] Set error_sound checkbox to: True
-[2025-07-06 14:48:24] Reading key: net_time
-[2025-07-06 14:48:24] Key net_time value: False
-[2025-07-06 14:48:24] [SETTINGS] Set net_time checkbox to: False
-[2025-07-06 14:48:24] Reading key: auto_update
-[2025-07-06 14:48:24] Key auto_update value: True
-[2025-07-06 14:48:24] [SETTINGS] Set auto_update checkbox to: True
-[2025-07-06 14:48:24] Reading key: serve_lock
-[2025-07-06 14:48:24] Key serve_lock value: False
-[2025-07-06 14:48:24] [SETTINGS] Set serve_lock checkbox to: False
-[2025-07-06 14:48:24] Reading key: close_option
-[2025-07-06 14:48:24] Key close_option value: True
-[2025-07-06 14:48:24] [SETTINGS] Set close_option checkbox to: True
-[2025-07-06 14:48:24] Reading key: language
-[2025-07-06 14:48:24] Key language value: cn
-[2025-07-06 14:48:24] [SETTINGS] Set language to: 简体中文
-[2025-07-06 14:48:24] Reading key: version
-[2025-07-06 14:48:24] Key version value: 4.39
-[2025-07-06 14:48:24] [SETTINGS] Set version label to: 4.39
-[2025-07-06 14:48:24] Reading key: add_timestep
-[2025-07-06 14:48:24] Key add_timestep value: 10
-[2025-07-06 14:48:24] [SETTINGS] Set timestep to: 10
-[2025-07-06 14:48:24] Reading key: reply_delay
-[2025-07-06 14:48:24] Key reply_delay value: 0
-[2025-07-06 14:48:24] Reading key: selected_audio_index
-[2025-07-06 14:48:24] Key selected_audio_index value: 0
-[2025-07-06 14:48:24] [SETTINGS] Loading audio selection: 0
-[2025-07-06 14:48:24] [SETTINGS] Updating selected sound to index: 0
-[2025-07-06 14:48:24] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
-[2025-07-06 14:48:24] [SETTINGS] Set audio index to: 0
-[2025-07-06 14:48:24] Entering ReplyDialog initialization
-[2025-07-06 14:48:24] Starting to load rules from JSON
-[2025-07-06 14:48:24] Successfully loaded 4 rules
-[2025-07-06 14:48:24] Starting to display rules
-[2025-07-06 14:48:24] Creating rule display frame
-[2025-07-06 14:48:24] Completed rule display frame creation
-[2025-07-06 14:48:24] Creating rule display frame
-[2025-07-06 14:48:24] Completed rule display frame creation
-[2025-07-06 14:48:24] Creating rule display frame
-[2025-07-06 14:48:24] Completed rule display frame creation
-[2025-07-06 14:48:24] Creating rule display frame
-[2025-07-06 14:48:24] Completed rule display frame creation
-[2025-07-06 14:48:24] Displayed 4 rules
-[2025-07-06 14:48:24] Completed ReplyDialog initialization
-[2025-07-06 14:48:24] File and message signals connected
-[2025-07-06 14:48:24] Window control signals connected
-[2025-07-06 14:48:24] Membership button signals connected
-[2025-07-06 14:48:24] Function button signals connected
-[2025-07-06 14:48:24] Checkbox signals connected
-[2025-07-06 14:48:24] VIP frame click event connected
-[2025-07-06 14:48:24] All signals connected
-[2025-07-06 14:48:24] Updating UI elements
-[2025-07-06 14:48:24] Getting application notice
-[2025-07-06 14:48:25] Set datetime to 2025-07-06 14:48:25
-[2025-07-06 14:48:25] Reading key: membership_class
-[2025-07-06 14:48:25] Key membership_class value: 0
-[2025-07-06 14:48:25] Reading key: error_sound
-[2025-07-06 14:48:25] Key error_sound value: True
-[2025-07-06 14:48:25] UI elements updated
-[2025-07-06 14:48:25] Applying membership limits for Free
-[2025-07-06 14:48:25] Applying membership limits for Free
-[2025-07-06 14:48:25] Applying Free membership limits
-[2025-07-06 14:48:25] Free trial remaining days: 29
-[2025-07-06 14:48:25] Membership limits applied
-[2025-07-06 14:48:25] Reading key: auto_update
-[2025-07-06 14:48:25] Key auto_update value: True
-[2025-07-06 14:48:25] Checking for updates
-[2025-07-06 14:48:25] Reading key: version
-[2025-07-06 14:48:25] Key version value: 4.39
-[2025-07-06 14:48:25] Reading key: serve_lock
-[2025-07-06 14:48:25] Key serve_lock value: False
-[2025-07-06 14:48:25] Loading tasks from JSON file
-[2025-07-06 14:48:25] Loading tasks from _internal/tasks.json
-[2025-07-06 14:48:25] JSON file _internal/tasks.json does not exist
-[2025-07-06 14:48:30] Starting to delete rule
-[2025-07-06 14:48:30] Removed from rule list - Keyword: 33, Match Type: 包含
-[2025-07-06 14:48:30] Removed rule widget from UI
-[2025-07-06 14:48:31] Starting to delete rule
-[2025-07-06 14:48:31] Removed from rule list - Keyword: 等等, Match Type: 等于
-[2025-07-06 14:48:31] Removed rule widget from UI
-[2025-07-06 14:48:32] Starting to delete rule
-[2025-07-06 14:48:32] Removed from rule list - Keyword: 反复, Match Type: 等于
-[2025-07-06 14:48:32] Removed rule widget from UI
-[2025-07-06 14:48:33] Starting to delete rule
-[2025-07-06 14:48:33] Removed from rule list - Keyword: 发, Match Type: 正则
-[2025-07-06 14:48:33] Removed rule widget from UI
-[2025-07-06 14:48:37] Calling save rules and close dialog
-[2025-07-06 14:48:37] Starting to save rules to JSON
-[2025-07-06 14:48:37] Successfully saved 0 rules to JSON
+[2025-07-06 14:54:41] [AiAssistant] Initializing AI assistant...
+[2025-07-06 14:54:41] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 14:54:41] Creating system tray icon
+[2025-07-06 14:54:41] Creating system tray icon
+[2025-07-06 14:54:41] System tray icon created
+[2025-07-06 14:54:41] Setting window flags and attributes
+[2025-07-06 14:54:41] Connecting signals and updating UI elements
+[2025-07-06 14:54:41] Connecting UI signals
+[2025-07-06 14:54:41] [SETTINGS] Initializing SettingWindow
+[2025-07-06 14:54:42] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:54:42] Reading key: membership
+[2025-07-06 14:54:42] Key membership value: Free
+[2025-07-06 14:54:42] [SETTINGS] Detected membership: Free
+[2025-07-06 14:54:42] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 14:54:42] [SETTINGS] Initializing settings
+[2025-07-06 14:54:42] Reading key: error_email
+[2025-07-06 14:54:42] Key error_email value: False
+[2025-07-06 14:54:42] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 14:54:42] Reading key: error_sound
+[2025-07-06 14:54:42] Key error_sound value: True
+[2025-07-06 14:54:42] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 14:54:42] Reading key: net_time
+[2025-07-06 14:54:42] Key net_time value: False
+[2025-07-06 14:54:42] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 14:54:42] Reading key: auto_update
+[2025-07-06 14:54:42] Key auto_update value: True
+[2025-07-06 14:54:42] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 14:54:42] Reading key: serve_lock
+[2025-07-06 14:54:42] Key serve_lock value: False
+[2025-07-06 14:54:42] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 14:54:42] Reading key: close_option
+[2025-07-06 14:54:42] Key close_option value: True
+[2025-07-06 14:54:42] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 14:54:42] Reading key: language
+[2025-07-06 14:54:42] Key language value: cn
+[2025-07-06 14:54:42] [SETTINGS] Set language to: 简体中文
+[2025-07-06 14:54:42] Reading key: version
+[2025-07-06 14:54:42] Key version value: 4.39
+[2025-07-06 14:54:42] [SETTINGS] Set version label to: 4.39
+[2025-07-06 14:54:42] Reading key: add_timestep
+[2025-07-06 14:54:42] Key add_timestep value: 10
+[2025-07-06 14:54:42] [SETTINGS] Set timestep to: 10
+[2025-07-06 14:54:42] Reading key: reply_delay
+[2025-07-06 14:54:42] Key reply_delay value: 0
+[2025-07-06 14:54:42] Reading key: selected_audio_index
+[2025-07-06 14:54:42] Key selected_audio_index value: 0
+[2025-07-06 14:54:42] [SETTINGS] Loading audio selection: 0
+[2025-07-06 14:54:42] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 14:54:42] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 14:54:42] [SETTINGS] Set audio index to: 0
+[2025-07-06 14:54:42] Entering ReplyDialog initialization
+[2025-07-06 14:54:42] Starting to load rules from JSON
+[2025-07-06 14:54:42] Successfully loaded 4 rules
+[2025-07-06 14:54:42] Starting to display rules
+[2025-07-06 14:54:42] Creating rule display frame
+[2025-07-06 14:54:42] Completed rule display frame creation
+[2025-07-06 14:54:42] Creating rule display frame
+[2025-07-06 14:54:42] Completed rule display frame creation
+[2025-07-06 14:54:42] Creating rule display frame
+[2025-07-06 14:54:42] Completed rule display frame creation
+[2025-07-06 14:54:42] Creating rule display frame
+[2025-07-06 14:54:42] Completed rule display frame creation
+[2025-07-06 14:54:42] Displayed 4 rules
+[2025-07-06 14:54:42] Completed ReplyDialog initialization
+[2025-07-06 14:54:42] File and message signals connected
+[2025-07-06 14:54:42] Window control signals connected
+[2025-07-06 14:54:42] Membership button signals connected
+[2025-07-06 14:54:42] Function button signals connected
+[2025-07-06 14:54:42] Checkbox signals connected
+[2025-07-06 14:54:42] VIP frame click event connected
+[2025-07-06 14:54:42] All signals connected
+[2025-07-06 14:54:42] Updating UI elements
+[2025-07-06 14:54:42] Getting application notice
+[2025-07-06 14:54:42] Set datetime to 2025-07-06 14:54:42
+[2025-07-06 14:54:42] Reading key: membership_class
+[2025-07-06 14:54:42] Key membership_class value: 0
+[2025-07-06 14:54:42] Reading key: error_sound
+[2025-07-06 14:54:42] Key error_sound value: True
+[2025-07-06 14:54:42] UI elements updated
+[2025-07-06 14:54:42] Applying membership limits for Free
+[2025-07-06 14:54:42] Applying membership limits for Free
+[2025-07-06 14:54:42] Applying Free membership limits
+[2025-07-06 14:54:43] Free trial remaining days: 29
+[2025-07-06 14:54:43] Membership limits applied
+[2025-07-06 14:54:43] Reading key: auto_update
+[2025-07-06 14:54:43] Key auto_update value: True
+[2025-07-06 14:54:43] Checking for updates
+[2025-07-06 14:54:43] Reading key: version
+[2025-07-06 14:54:43] Key version value: 4.39
+[2025-07-06 14:54:43] Reading key: serve_lock
+[2025-07-06 14:54:43] Key serve_lock value: False
+[2025-07-06 14:54:43] Loading tasks from JSON file
+[2025-07-06 14:54:43] Loading tasks from _internal/tasks.json
+[2025-07-06 14:54:43] JSON file _internal/tasks.json does not exist
+[2025-07-06 14:54:43] Setting up auto-completion for receiver LineEdit
+[2025-07-06 14:54:43] Auto-completion setup completed
+[2025-07-06 14:54:47] [AiAssistant] Attempting to start takeover...
+[2025-07-06 14:54:47] [AiAssistant] Validating takeover parameters...
+[2025-07-06 14:54:47] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 14:54:47] [WORKER_BASE] Thread initialized
+[2025-07-06 14:54:47] [AI_WORKER] Initializing thread
+[2025-07-06 14:54:47] [AI_WORKER] Loading reply rules
+[2025-07-06 14:54:47] [AI_WORKER] Loading reply rules
+[2025-07-06 14:54:47] [AI_WORKER] Successfully loaded 4 reply rules
+[2025-07-06 14:54:47] [AiAssistant] Failed to start takeover: 'WeChat' object has no attribute 'wx'
+[2025-07-06 14:58:58] Initializing MainWindow
+[2025-07-06 14:58:58] Ensuring configuration file exists
+[2025-07-06 14:58:58] Ensuring config file exists...
+[2025-07-06 14:58:58] Retry 1/5
+[2025-07-06 14:58:58] Reading existing config file...
+[2025-07-06 14:58:58] Reading config from _internal/system_info.ini
+[2025-07-06 14:58:58] Config sections: ['SystemInfo']
+[2025-07-06 14:58:58] Checking for missing keys...
+[2025-07-06 14:58:58] Getting motherboard serial number...
+[2025-07-06 14:58:58] Motherboard SN found: KT17MC05PI
+[2025-07-06 14:58:58] Membership: Free
+[2025-07-06 14:58:58] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 14:58:58] Config Motherboard SN: LEAF AUTO
+[2025-07-06 14:58:58] Current Motherboard SN: KT17MC05PI
+[2025-07-06 14:58:58] Config file is valid
+[2025-07-06 14:58:58] Reading configuration values
+[2025-07-06 14:58:58] Reading key: language
+[2025-07-06 14:58:58] Key language value: cn
+[2025-07-06 14:58:58] Reading key: membership
+[2025-07-06 14:58:58] Key membership value: Free
+[2025-07-06 14:58:58] Reading key: expiration_time
+[2025-07-06 14:58:58] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 14:58:58] Reading key: version
+[2025-07-06 14:58:58] Key version value: 4.39
+[2025-07-06 14:58:58] Reloading WeChat instances during initialization
+[2025-07-06 14:58:58] Starting to reload WeChat instances
+[2025-07-06 14:58:58] Reading key: language
+[2025-07-06 14:58:58] Key language value: cn
+[2025-07-06 14:58:58] Reading key: language
+[2025-07-06 14:58:58] Key language value: cn
+[2025-07-06 14:58:59] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 14:58:59] Default WeChat instance set to 杨圣洲
+[2025-07-06 14:58:59] Successfully initialized 1 WeChat instances
+[2025-07-06 14:58:59] Set default WeChat nickname to 杨圣洲
+[2025-07-06 14:58:59] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 14:58:59] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:58:59] [AutoInfo] Email processing thread started
+[2025-07-06 14:58:59] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 14:58:59] [AiAssistant] Initializing AI assistant...
+[2025-07-06 14:58:59] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 14:58:59] Creating system tray icon
+[2025-07-06 14:58:59] Creating system tray icon
+[2025-07-06 14:58:59] System tray icon created
+[2025-07-06 14:58:59] Setting window flags and attributes
+[2025-07-06 14:58:59] Connecting signals and updating UI elements
+[2025-07-06 14:58:59] Connecting UI signals
+[2025-07-06 14:58:59] [SETTINGS] Initializing SettingWindow
+[2025-07-06 14:59:00] [ERROR_SOUND] Thread initialized
+[2025-07-06 14:59:00] Reading key: membership
+[2025-07-06 14:59:00] Key membership value: Free
+[2025-07-06 14:59:00] [SETTINGS] Detected membership: Free
+[2025-07-06 14:59:00] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 14:59:00] [SETTINGS] Initializing settings
+[2025-07-06 14:59:00] Reading key: error_email
+[2025-07-06 14:59:00] Key error_email value: False
+[2025-07-06 14:59:00] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 14:59:00] Reading key: error_sound
+[2025-07-06 14:59:00] Key error_sound value: True
+[2025-07-06 14:59:00] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 14:59:00] Reading key: net_time
+[2025-07-06 14:59:00] Key net_time value: False
+[2025-07-06 14:59:00] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 14:59:00] Reading key: auto_update
+[2025-07-06 14:59:00] Key auto_update value: True
+[2025-07-06 14:59:00] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 14:59:00] Reading key: serve_lock
+[2025-07-06 14:59:00] Key serve_lock value: False
+[2025-07-06 14:59:00] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 14:59:00] Reading key: close_option
+[2025-07-06 14:59:00] Key close_option value: True
+[2025-07-06 14:59:00] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 14:59:00] Reading key: language
+[2025-07-06 14:59:00] Key language value: cn
+[2025-07-06 14:59:00] [SETTINGS] Set language to: 简体中文
+[2025-07-06 14:59:00] Reading key: version
+[2025-07-06 14:59:00] Key version value: 4.39
+[2025-07-06 14:59:00] [SETTINGS] Set version label to: 4.39
+[2025-07-06 14:59:00] Reading key: add_timestep
+[2025-07-06 14:59:00] Key add_timestep value: 10
+[2025-07-06 14:59:00] [SETTINGS] Set timestep to: 10
+[2025-07-06 14:59:00] Reading key: reply_delay
+[2025-07-06 14:59:00] Key reply_delay value: 0
+[2025-07-06 14:59:00] Reading key: selected_audio_index
+[2025-07-06 14:59:00] Key selected_audio_index value: 0
+[2025-07-06 14:59:00] [SETTINGS] Loading audio selection: 0
+[2025-07-06 14:59:00] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 14:59:00] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 14:59:00] [SETTINGS] Set audio index to: 0
+[2025-07-06 14:59:00] Entering ReplyDialog initialization
+[2025-07-06 14:59:00] Starting to load rules from JSON
+[2025-07-06 14:59:00] Successfully loaded 4 rules
+[2025-07-06 14:59:00] Starting to display rules
+[2025-07-06 14:59:00] Creating rule display frame
+[2025-07-06 14:59:00] Completed rule display frame creation
+[2025-07-06 14:59:00] Creating rule display frame
+[2025-07-06 14:59:00] Completed rule display frame creation
+[2025-07-06 14:59:00] Creating rule display frame
+[2025-07-06 14:59:00] Completed rule display frame creation
+[2025-07-06 14:59:00] Creating rule display frame
+[2025-07-06 14:59:00] Completed rule display frame creation
+[2025-07-06 14:59:00] Displayed 4 rules
+[2025-07-06 14:59:00] Completed ReplyDialog initialization
+[2025-07-06 14:59:00] File and message signals connected
+[2025-07-06 14:59:00] Window control signals connected
+[2025-07-06 14:59:00] Membership button signals connected
+[2025-07-06 14:59:00] Function button signals connected
+[2025-07-06 14:59:00] Checkbox signals connected
+[2025-07-06 14:59:00] VIP frame click event connected
+[2025-07-06 14:59:00] All signals connected
+[2025-07-06 14:59:00] Updating UI elements
+[2025-07-06 14:59:00] Getting application notice
+[2025-07-06 14:59:01] Set datetime to 2025-07-06 14:59:01
+[2025-07-06 14:59:01] Reading key: membership_class
+[2025-07-06 14:59:01] Key membership_class value: 0
+[2025-07-06 14:59:01] Reading key: error_sound
+[2025-07-06 14:59:01] Key error_sound value: True
+[2025-07-06 14:59:01] UI elements updated
+[2025-07-06 14:59:01] Applying membership limits for Free
+[2025-07-06 14:59:01] Applying membership limits for Free
+[2025-07-06 14:59:01] Applying Free membership limits
+[2025-07-06 14:59:01] Free trial remaining days: 29
+[2025-07-06 14:59:01] Membership limits applied
+[2025-07-06 14:59:01] Reading key: auto_update
+[2025-07-06 14:59:01] Key auto_update value: True
+[2025-07-06 14:59:01] Checking for updates
+[2025-07-06 14:59:01] Reading key: version
+[2025-07-06 14:59:01] Key version value: 4.39
+[2025-07-06 14:59:01] Reading key: serve_lock
+[2025-07-06 14:59:01] Key serve_lock value: False
+[2025-07-06 14:59:01] Loading tasks from JSON file
+[2025-07-06 14:59:01] Loading tasks from _internal/tasks.json
+[2025-07-06 14:59:01] JSON file _internal/tasks.json does not exist
+[2025-07-06 14:59:01] Setting up auto-completion for receiver LineEdit
+[2025-07-06 14:59:01] Auto-completion setup completed
+[2025-07-06 14:59:06] [AiAssistant] Attempting to start takeover...
+[2025-07-06 14:59:06] [AiAssistant] Validating takeover parameters...
+[2025-07-06 14:59:06] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 14:59:06] [WORKER_BASE] Thread initialized
+[2025-07-06 14:59:06] [AI_WORKER] Initializing thread
+[2025-07-06 14:59:06] [AI_WORKER] Loading reply rules
+[2025-07-06 14:59:06] [AI_WORKER] Loading reply rules
+[2025-07-06 14:59:06] [AI_WORKER] Successfully loaded 4 reply rules
+[2025-07-06 14:59:06] [AI_WORKER] Receiver list: ['QWE']
+[2025-07-06 14:59:06] [AI_WORKER] Starting listener initialization, targets: 1
+[2025-07-06 14:59:06] [AI_WORKER] Attempting to listen: QWE
+[2025-07-06 14:59:06] [AI_WORKER] Successfully listening: QWE
+[2025-07-06 14:59:06] [AI_WORKER] Initialization completed
+[2025-07-06 14:59:06] [AI_WORKER] Thread started
+[2025-07-06 14:59:06] [AI_WORKER] Status set to: Initializing
+[2025-07-06 14:59:06] [AI_WORKER] Starting initialization send, receivers: 1
+[2025-07-06 14:59:06] [AI_WORKER] Sending initialization message to: QWE
+[2025-07-06 14:59:07] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-07-06 14:59:07] [AiAssistant] Button icon updated successfully
+[2025-07-06 14:59:07] [AiAssistant] AI worker thread started successfully
+[2025-07-06 14:59:08] [AI_WORKER] Status set to: Running
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:08] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:08] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:08] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:09] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:09] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:09] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:10] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:10] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:10] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:11] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:11] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:11] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:12] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:12] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:12] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:13] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:13] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:13] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:14] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:14] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:14] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:15] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:15] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:15] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:16] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:16] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:16] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:16] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:16] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:16] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 14:59:16] [AI_WORKER] Starting message processing
+[2025-07-06 14:59:16] [AI_WORKER] Retrieving listened messages
+[2025-07-06 14:59:16] [AI_WORKER] Retrieved messages from 0 chats
+[2025-07-06 15:00:26] Initializing MainWindow
+[2025-07-06 15:00:26] Ensuring configuration file exists
+[2025-07-06 15:00:26] Ensuring config file exists...
+[2025-07-06 15:00:26] Retry 1/5
+[2025-07-06 15:00:26] Reading existing config file...
+[2025-07-06 15:00:26] Reading config from _internal/system_info.ini
+[2025-07-06 15:00:26] Config sections: ['SystemInfo']
+[2025-07-06 15:00:26] Checking for missing keys...
+[2025-07-06 15:00:26] Getting motherboard serial number...
+[2025-07-06 15:00:26] Motherboard SN found: KT17MC05PI
+[2025-07-06 15:00:26] Membership: Free
+[2025-07-06 15:00:26] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 15:00:26] Config Motherboard SN: LEAF AUTO
+[2025-07-06 15:00:26] Current Motherboard SN: KT17MC05PI
+[2025-07-06 15:00:26] Config file is valid
+[2025-07-06 15:00:26] Reading configuration values
+[2025-07-06 15:00:26] Reading key: language
+[2025-07-06 15:00:26] Key language value: cn
+[2025-07-06 15:00:26] Reading key: membership
+[2025-07-06 15:00:26] Key membership value: Free
+[2025-07-06 15:00:26] Reading key: expiration_time
+[2025-07-06 15:00:26] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 15:00:26] Reading key: version
+[2025-07-06 15:00:26] Key version value: 4.39
+[2025-07-06 15:00:26] Reloading WeChat instances during initialization
+[2025-07-06 15:00:26] Starting to reload WeChat instances
+[2025-07-06 15:00:26] Reading key: language
+[2025-07-06 15:00:26] Key language value: cn
+[2025-07-06 15:00:27] Reading key: language
+[2025-07-06 15:00:27] Key language value: cn
+[2025-07-06 15:00:27] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 15:00:27] Default WeChat instance set to 杨圣洲
+[2025-07-06 15:00:27] Successfully initialized 1 WeChat instances
+[2025-07-06 15:00:27] Set default WeChat nickname to 杨圣洲
+[2025-07-06 15:00:27] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 15:00:27] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:00:27] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 15:00:27] [AutoInfo] Email processing thread started
+[2025-07-06 15:00:27] [AiAssistant] Initializing AI assistant...
+[2025-07-06 15:00:27] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 15:00:27] Creating system tray icon
+[2025-07-06 15:00:27] Creating system tray icon
+[2025-07-06 15:00:27] System tray icon created
+[2025-07-06 15:00:27] Setting window flags and attributes
+[2025-07-06 15:00:27] Connecting signals and updating UI elements
+[2025-07-06 15:00:27] Connecting UI signals
+[2025-07-06 15:00:27] [SETTINGS] Initializing SettingWindow
+[2025-07-06 15:00:28] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:00:28] Reading key: membership
+[2025-07-06 15:00:28] Key membership value: Free
+[2025-07-06 15:00:28] [SETTINGS] Detected membership: Free
+[2025-07-06 15:00:28] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 15:00:28] [SETTINGS] Initializing settings
+[2025-07-06 15:00:28] Reading key: error_email
+[2025-07-06 15:00:28] Key error_email value: False
+[2025-07-06 15:00:28] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 15:00:28] Reading key: error_sound
+[2025-07-06 15:00:28] Key error_sound value: True
+[2025-07-06 15:00:28] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 15:00:28] Reading key: net_time
+[2025-07-06 15:00:28] Key net_time value: False
+[2025-07-06 15:00:28] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 15:00:28] Reading key: auto_update
+[2025-07-06 15:00:28] Key auto_update value: True
+[2025-07-06 15:00:28] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 15:00:28] Reading key: serve_lock
+[2025-07-06 15:00:28] Key serve_lock value: False
+[2025-07-06 15:00:28] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 15:00:28] Reading key: close_option
+[2025-07-06 15:00:28] Key close_option value: True
+[2025-07-06 15:00:28] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 15:00:28] Reading key: language
+[2025-07-06 15:00:28] Key language value: cn
+[2025-07-06 15:00:28] [SETTINGS] Set language to: 简体中文
+[2025-07-06 15:00:28] Reading key: version
+[2025-07-06 15:00:28] Key version value: 4.39
+[2025-07-06 15:00:28] [SETTINGS] Set version label to: 4.39
+[2025-07-06 15:00:28] Reading key: add_timestep
+[2025-07-06 15:00:28] Key add_timestep value: 10
+[2025-07-06 15:00:28] [SETTINGS] Set timestep to: 10
+[2025-07-06 15:00:28] Reading key: reply_delay
+[2025-07-06 15:00:28] Key reply_delay value: 0
+[2025-07-06 15:00:28] Reading key: selected_audio_index
+[2025-07-06 15:00:28] Key selected_audio_index value: 0
+[2025-07-06 15:00:28] [SETTINGS] Loading audio selection: 0
+[2025-07-06 15:00:28] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 15:00:28] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 15:00:28] [SETTINGS] Set audio index to: 0
+[2025-07-06 15:00:28] Entering ReplyDialog initialization
+[2025-07-06 15:00:28] Starting to load rules from JSON
+[2025-07-06 15:00:28] Successfully loaded 4 rules
+[2025-07-06 15:00:28] Starting to display rules
+[2025-07-06 15:00:28] Creating rule display frame
+[2025-07-06 15:00:28] Completed rule display frame creation
+[2025-07-06 15:00:28] Creating rule display frame
+[2025-07-06 15:00:28] Completed rule display frame creation
+[2025-07-06 15:00:28] Creating rule display frame
+[2025-07-06 15:00:28] Completed rule display frame creation
+[2025-07-06 15:00:28] Creating rule display frame
+[2025-07-06 15:00:28] Completed rule display frame creation
+[2025-07-06 15:00:28] Displayed 4 rules
+[2025-07-06 15:00:28] Completed ReplyDialog initialization
+[2025-07-06 15:00:28] File and message signals connected
+[2025-07-06 15:00:28] Window control signals connected
+[2025-07-06 15:00:28] Membership button signals connected
+[2025-07-06 15:00:28] Function button signals connected
+[2025-07-06 15:00:28] Checkbox signals connected
+[2025-07-06 15:00:28] VIP frame click event connected
+[2025-07-06 15:00:28] All signals connected
+[2025-07-06 15:00:28] Updating UI elements
+[2025-07-06 15:00:28] Getting application notice
+[2025-07-06 15:00:29] Set datetime to 2025-07-06 15:00:29
+[2025-07-06 15:00:29] Reading key: membership_class
+[2025-07-06 15:00:29] Key membership_class value: 0
+[2025-07-06 15:00:29] Reading key: error_sound
+[2025-07-06 15:00:29] Key error_sound value: True
+[2025-07-06 15:00:29] UI elements updated
+[2025-07-06 15:00:29] Applying membership limits for Free
+[2025-07-06 15:00:29] Applying membership limits for Free
+[2025-07-06 15:00:29] Applying Free membership limits
+[2025-07-06 15:00:29] Free trial remaining days: 29
+[2025-07-06 15:00:29] Membership limits applied
+[2025-07-06 15:00:29] Reading key: auto_update
+[2025-07-06 15:00:29] Key auto_update value: True
+[2025-07-06 15:00:29] Checking for updates
+[2025-07-06 15:00:29] Reading key: version
+[2025-07-06 15:00:29] Key version value: 4.39
+[2025-07-06 15:00:29] Reading key: serve_lock
+[2025-07-06 15:00:29] Key serve_lock value: False
+[2025-07-06 15:00:29] Loading tasks from JSON file
+[2025-07-06 15:00:29] Loading tasks from _internal/tasks.json
+[2025-07-06 15:00:29] JSON file _internal/tasks.json does not exist
+[2025-07-06 15:00:29] Setting up auto-completion for receiver LineEdit
+[2025-07-06 15:00:29] Auto-completion setup completed
+[2025-07-06 15:00:35] [AiAssistant] Attempting to start takeover...
+[2025-07-06 15:00:35] [AiAssistant] Validating takeover parameters...
+[2025-07-06 15:00:35] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 15:00:35] [WORKER_BASE] Thread initialized
+[2025-07-06 15:00:35] [AI_WORKER] Initializing thread
+[2025-07-06 15:00:35] [AI_WORKER] Loading reply rules
+[2025-07-06 15:00:35] [AI_WORKER] Loading reply rules
+[2025-07-06 15:00:35] [AI_WORKER] Successfully loaded 4 reply rules
+[2025-07-06 15:00:35] [AI_WORKER] Receiver list: ['QWE']
+[2025-07-06 15:00:35] [AI_WORKER] Starting listener initialization, targets: 1
+[2025-07-06 15:00:35] [AI_WORKER] Attempting to listen: QWE
+[2025-07-06 15:00:35] [AI_WORKER] Successfully listening: QWE
+[2025-07-06 15:00:35] [AI_WORKER] Initialization completed
+[2025-07-06 15:00:35] [AI_WORKER] Thread started
+[2025-07-06 15:00:35] [AI_WORKER] Status set to: Initializing
+[2025-07-06 15:00:35] [AI_WORKER] Starting initialization send, receivers: 1
+[2025-07-06 15:00:35] [AI_WORKER] Sending initialization message to: QWE
+[2025-07-06 15:00:35] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-07-06 15:00:35] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:00:35] [AiAssistant] AI worker thread started successfully
+[2025-07-06 15:00:37] [AI_WORKER] Status set to: Running
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:37] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:38] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:39] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:40] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:41] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:41] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:41] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:41] [AI_WORKER] Starting message processing
+[2025-07-06 15:00:55] Initializing MainWindow
+[2025-07-06 15:00:55] Ensuring configuration file exists
+[2025-07-06 15:00:55] Ensuring config file exists...
+[2025-07-06 15:00:55] Retry 1/5
+[2025-07-06 15:00:55] Reading existing config file...
+[2025-07-06 15:00:55] Reading config from _internal/system_info.ini
+[2025-07-06 15:00:55] Config sections: ['SystemInfo']
+[2025-07-06 15:00:55] Checking for missing keys...
+[2025-07-06 15:00:55] Getting motherboard serial number...
+[2025-07-06 15:00:55] Motherboard SN found: KT17MC05PI
+[2025-07-06 15:00:55] Membership: Free
+[2025-07-06 15:00:55] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 15:00:55] Config Motherboard SN: LEAF AUTO
+[2025-07-06 15:00:55] Current Motherboard SN: KT17MC05PI
+[2025-07-06 15:00:55] Config file is valid
+[2025-07-06 15:00:55] Reading configuration values
+[2025-07-06 15:00:55] Reading key: language
+[2025-07-06 15:00:55] Key language value: cn
+[2025-07-06 15:00:55] Reading key: membership
+[2025-07-06 15:00:55] Key membership value: Free
+[2025-07-06 15:00:55] Reading key: expiration_time
+[2025-07-06 15:00:55] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 15:00:55] Reading key: version
+[2025-07-06 15:00:55] Key version value: 4.39
+[2025-07-06 15:00:55] Reloading WeChat instances during initialization
+[2025-07-06 15:00:55] Starting to reload WeChat instances
+[2025-07-06 15:00:55] Reading key: language
+[2025-07-06 15:00:55] Key language value: cn
+[2025-07-06 15:00:56] Reading key: language
+[2025-07-06 15:00:56] Key language value: cn
+[2025-07-06 15:00:57] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 15:00:57] Default WeChat instance set to 杨圣洲
+[2025-07-06 15:00:57] Successfully initialized 1 WeChat instances
+[2025-07-06 15:00:57] Set default WeChat nickname to 杨圣洲
+[2025-07-06 15:00:57] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 15:00:57] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:00:57] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 15:00:57] [AutoInfo] Email processing thread started
+[2025-07-06 15:00:57] [AiAssistant] Initializing AI assistant...
+[2025-07-06 15:00:57] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 15:00:57] Creating system tray icon
+[2025-07-06 15:00:57] Creating system tray icon
+[2025-07-06 15:00:57] System tray icon created
+[2025-07-06 15:00:57] Setting window flags and attributes
+[2025-07-06 15:00:57] Connecting signals and updating UI elements
+[2025-07-06 15:00:57] Connecting UI signals
+[2025-07-06 15:00:57] [SETTINGS] Initializing SettingWindow
+[2025-07-06 15:00:57] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:00:57] Reading key: membership
+[2025-07-06 15:00:57] Key membership value: Free
+[2025-07-06 15:00:57] [SETTINGS] Detected membership: Free
+[2025-07-06 15:00:57] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 15:00:57] [SETTINGS] Initializing settings
+[2025-07-06 15:00:57] Reading key: error_email
+[2025-07-06 15:00:57] Key error_email value: False
+[2025-07-06 15:00:57] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 15:00:57] Reading key: error_sound
+[2025-07-06 15:00:57] Key error_sound value: True
+[2025-07-06 15:00:57] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 15:00:57] Reading key: net_time
+[2025-07-06 15:00:57] Key net_time value: False
+[2025-07-06 15:00:57] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 15:00:57] Reading key: auto_update
+[2025-07-06 15:00:57] Key auto_update value: True
+[2025-07-06 15:00:57] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 15:00:57] Reading key: serve_lock
+[2025-07-06 15:00:57] Key serve_lock value: False
+[2025-07-06 15:00:57] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 15:00:57] Reading key: close_option
+[2025-07-06 15:00:57] Key close_option value: True
+[2025-07-06 15:00:57] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 15:00:57] Reading key: language
+[2025-07-06 15:00:57] Key language value: cn
+[2025-07-06 15:00:57] [SETTINGS] Set language to: 简体中文
+[2025-07-06 15:00:57] Reading key: version
+[2025-07-06 15:00:57] Key version value: 4.39
+[2025-07-06 15:00:57] [SETTINGS] Set version label to: 4.39
+[2025-07-06 15:00:57] Reading key: add_timestep
+[2025-07-06 15:00:57] Key add_timestep value: 10
+[2025-07-06 15:00:57] [SETTINGS] Set timestep to: 10
+[2025-07-06 15:00:57] Reading key: reply_delay
+[2025-07-06 15:00:57] Key reply_delay value: 0
+[2025-07-06 15:00:57] Reading key: selected_audio_index
+[2025-07-06 15:00:57] Key selected_audio_index value: 0
+[2025-07-06 15:00:57] [SETTINGS] Loading audio selection: 0
+[2025-07-06 15:00:57] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 15:00:57] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 15:00:57] [SETTINGS] Set audio index to: 0
+[2025-07-06 15:00:57] Entering ReplyDialog initialization
+[2025-07-06 15:00:57] Starting to load rules from JSON
+[2025-07-06 15:00:57] Successfully loaded 4 rules
+[2025-07-06 15:00:57] Starting to display rules
+[2025-07-06 15:00:57] Creating rule display frame
+[2025-07-06 15:00:57] Completed rule display frame creation
+[2025-07-06 15:00:57] Creating rule display frame
+[2025-07-06 15:00:57] Completed rule display frame creation
+[2025-07-06 15:00:57] Creating rule display frame
+[2025-07-06 15:00:57] Completed rule display frame creation
+[2025-07-06 15:00:57] Creating rule display frame
+[2025-07-06 15:00:57] Completed rule display frame creation
+[2025-07-06 15:00:57] Displayed 4 rules
+[2025-07-06 15:00:57] Completed ReplyDialog initialization
+[2025-07-06 15:00:57] File and message signals connected
+[2025-07-06 15:00:57] Window control signals connected
+[2025-07-06 15:00:57] Membership button signals connected
+[2025-07-06 15:00:57] Function button signals connected
+[2025-07-06 15:00:57] Checkbox signals connected
+[2025-07-06 15:00:57] VIP frame click event connected
+[2025-07-06 15:00:57] All signals connected
+[2025-07-06 15:00:57] Updating UI elements
+[2025-07-06 15:00:57] Getting application notice
+[2025-07-06 15:00:58] Set datetime to 2025-07-06 15:00:58
+[2025-07-06 15:00:58] Reading key: membership_class
+[2025-07-06 15:00:58] Key membership_class value: 0
+[2025-07-06 15:00:58] Reading key: error_sound
+[2025-07-06 15:00:58] Key error_sound value: True
+[2025-07-06 15:00:58] UI elements updated
+[2025-07-06 15:00:58] Applying membership limits for Free
+[2025-07-06 15:00:58] Applying membership limits for Free
+[2025-07-06 15:00:58] Applying Free membership limits
+[2025-07-06 15:00:58] Free trial remaining days: 29
+[2025-07-06 15:00:58] Membership limits applied
+[2025-07-06 15:00:58] Reading key: auto_update
+[2025-07-06 15:00:58] Key auto_update value: True
+[2025-07-06 15:00:58] Checking for updates
+[2025-07-06 15:00:58] Reading key: version
+[2025-07-06 15:00:58] Key version value: 4.39
+[2025-07-06 15:00:58] Reading key: serve_lock
+[2025-07-06 15:00:58] Key serve_lock value: False
+[2025-07-06 15:00:58] Loading tasks from JSON file
+[2025-07-06 15:00:58] Loading tasks from _internal/tasks.json
+[2025-07-06 15:00:58] JSON file _internal/tasks.json does not exist
+[2025-07-06 15:00:58] Setting up auto-completion for receiver LineEdit
+[2025-07-06 15:00:58] Auto-completion setup completed
+[2025-07-06 15:01:05] [AiAssistant] Attempting to start takeover...
+[2025-07-06 15:01:05] [AiAssistant] Validating takeover parameters...
+[2025-07-06 15:01:05] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 15:01:05] [WORKER_BASE] Thread initialized
+[2025-07-06 15:01:05] [AI_WORKER] Initializing thread
+[2025-07-06 15:01:05] [AI_WORKER] Loading reply rules
+[2025-07-06 15:01:05] [AI_WORKER] Loading reply rules
+[2025-07-06 15:01:05] [AI_WORKER] Successfully loaded 4 reply rules
+[2025-07-06 15:01:05] [AI_WORKER] Receiver list: ['QWE']
+[2025-07-06 15:01:05] [AI_WORKER] Starting listener initialization, targets: 1
+[2025-07-06 15:01:05] [AI_WORKER] Attempting to listen: QWE
+[2025-07-06 15:01:05] [AI_WORKER] Successfully listening: QWE
+[2025-07-06 15:01:05] [AI_WORKER] Initialization completed
+[2025-07-06 15:01:06] [AI_WORKER] Thread started
+[2025-07-06 15:01:06] [AI_WORKER] Status set to: Initializing
+[2025-07-06 15:01:06] [AI_WORKER] Starting initialization send, receivers: 1
+[2025-07-06 15:01:06] [AI_WORKER] Sending initialization message to: QWE
+[2025-07-06 15:01:06] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-07-06 15:01:06] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:01:06] [AiAssistant] AI worker thread started successfully
+[2025-07-06 15:01:07] [AI_WORKER] Status set to: Running
+[2025-07-06 15:01:24] [AI_WORKER] Processing message: '你好...' from QWE
+[2025-07-06 15:01:24] [AI_WORKER] Processing message content: '你好...' from QWE
+[2025-07-06 15:01:24] [AI_WORKER] Is group chat: True
+[2025-07-06 15:01:24] [AI_WORKER] Checking rule matches
+[2025-07-06 15:01:24] [AI_WORKER] Matching message rule: '你好...' from QWE
+[2025-07-06 15:01:24] [AI_WORKER] Status set to: Stopped
+[2025-07-06 15:01:40] Initializing MainWindow
+[2025-07-06 15:01:40] Ensuring configuration file exists
+[2025-07-06 15:01:40] Ensuring config file exists...
+[2025-07-06 15:01:40] Retry 1/5
+[2025-07-06 15:01:40] Reading existing config file...
+[2025-07-06 15:01:40] Reading config from _internal/system_info.ini
+[2025-07-06 15:01:40] Config sections: ['SystemInfo']
+[2025-07-06 15:01:40] Checking for missing keys...
+[2025-07-06 15:01:40] Getting motherboard serial number...
+[2025-07-06 15:01:40] Motherboard SN found: KT17MC05PI
+[2025-07-06 15:01:40] Membership: Free
+[2025-07-06 15:01:40] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 15:01:40] Config Motherboard SN: LEAF AUTO
+[2025-07-06 15:01:40] Current Motherboard SN: KT17MC05PI
+[2025-07-06 15:01:40] Config file is valid
+[2025-07-06 15:01:40] Reading configuration values
+[2025-07-06 15:01:40] Reading key: language
+[2025-07-06 15:01:40] Key language value: cn
+[2025-07-06 15:01:40] Reading key: membership
+[2025-07-06 15:01:40] Key membership value: Free
+[2025-07-06 15:01:40] Reading key: expiration_time
+[2025-07-06 15:01:40] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 15:01:40] Reading key: version
+[2025-07-06 15:01:40] Key version value: 4.39
+[2025-07-06 15:01:40] Reloading WeChat instances during initialization
+[2025-07-06 15:01:40] Starting to reload WeChat instances
+[2025-07-06 15:01:40] Reading key: language
+[2025-07-06 15:01:40] Key language value: cn
+[2025-07-06 15:01:41] Reading key: language
+[2025-07-06 15:01:41] Key language value: cn
+[2025-07-06 15:01:42] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 15:01:42] Default WeChat instance set to 杨圣洲
+[2025-07-06 15:01:42] Successfully initialized 1 WeChat instances
+[2025-07-06 15:01:42] Set default WeChat nickname to 杨圣洲
+[2025-07-06 15:01:42] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 15:01:42] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:01:42] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 15:01:42] [AutoInfo] Email processing thread started
+[2025-07-06 15:01:42] [AiAssistant] Initializing AI assistant...
+[2025-07-06 15:01:42] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 15:01:42] Creating system tray icon
+[2025-07-06 15:01:42] Creating system tray icon
+[2025-07-06 15:01:42] System tray icon created
+[2025-07-06 15:01:42] Setting window flags and attributes
+[2025-07-06 15:01:42] Connecting signals and updating UI elements
+[2025-07-06 15:01:42] Connecting UI signals
+[2025-07-06 15:01:42] [SETTINGS] Initializing SettingWindow
+[2025-07-06 15:01:42] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:01:42] Reading key: membership
+[2025-07-06 15:01:42] Key membership value: Free
+[2025-07-06 15:01:42] [SETTINGS] Detected membership: Free
+[2025-07-06 15:01:42] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 15:01:42] [SETTINGS] Initializing settings
+[2025-07-06 15:01:42] Reading key: error_email
+[2025-07-06 15:01:42] Key error_email value: False
+[2025-07-06 15:01:42] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 15:01:42] Reading key: error_sound
+[2025-07-06 15:01:42] Key error_sound value: True
+[2025-07-06 15:01:42] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 15:01:42] Reading key: net_time
+[2025-07-06 15:01:42] Key net_time value: False
+[2025-07-06 15:01:42] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 15:01:42] Reading key: auto_update
+[2025-07-06 15:01:42] Key auto_update value: True
+[2025-07-06 15:01:42] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 15:01:42] Reading key: serve_lock
+[2025-07-06 15:01:42] Key serve_lock value: False
+[2025-07-06 15:01:42] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 15:01:42] Reading key: close_option
+[2025-07-06 15:01:42] Key close_option value: True
+[2025-07-06 15:01:42] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 15:01:42] Reading key: language
+[2025-07-06 15:01:42] Key language value: cn
+[2025-07-06 15:01:42] [SETTINGS] Set language to: 简体中文
+[2025-07-06 15:01:42] Reading key: version
+[2025-07-06 15:01:42] Key version value: 4.39
+[2025-07-06 15:01:42] [SETTINGS] Set version label to: 4.39
+[2025-07-06 15:01:42] Reading key: add_timestep
+[2025-07-06 15:01:42] Key add_timestep value: 10
+[2025-07-06 15:01:42] [SETTINGS] Set timestep to: 10
+[2025-07-06 15:01:42] Reading key: reply_delay
+[2025-07-06 15:01:42] Key reply_delay value: 0
+[2025-07-06 15:01:42] Reading key: selected_audio_index
+[2025-07-06 15:01:42] Key selected_audio_index value: 0
+[2025-07-06 15:01:42] [SETTINGS] Loading audio selection: 0
+[2025-07-06 15:01:42] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 15:01:42] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 15:01:42] [SETTINGS] Set audio index to: 0
+[2025-07-06 15:01:42] Entering ReplyDialog initialization
+[2025-07-06 15:01:42] Starting to load rules from JSON
+[2025-07-06 15:01:42] Successfully loaded 4 rules
+[2025-07-06 15:01:42] Starting to display rules
+[2025-07-06 15:01:42] Creating rule display frame
+[2025-07-06 15:01:42] Completed rule display frame creation
+[2025-07-06 15:01:42] Creating rule display frame
+[2025-07-06 15:01:42] Completed rule display frame creation
+[2025-07-06 15:01:42] Creating rule display frame
+[2025-07-06 15:01:42] Completed rule display frame creation
+[2025-07-06 15:01:42] Creating rule display frame
+[2025-07-06 15:01:42] Completed rule display frame creation
+[2025-07-06 15:01:42] Displayed 4 rules
+[2025-07-06 15:01:42] Completed ReplyDialog initialization
+[2025-07-06 15:01:42] File and message signals connected
+[2025-07-06 15:01:42] Window control signals connected
+[2025-07-06 15:01:42] Membership button signals connected
+[2025-07-06 15:01:42] Function button signals connected
+[2025-07-06 15:01:42] Checkbox signals connected
+[2025-07-06 15:01:42] VIP frame click event connected
+[2025-07-06 15:01:42] All signals connected
+[2025-07-06 15:01:42] Updating UI elements
+[2025-07-06 15:01:42] Getting application notice
+[2025-07-06 15:01:43] Set datetime to 2025-07-06 15:01:43
+[2025-07-06 15:01:43] Reading key: membership_class
+[2025-07-06 15:01:43] Key membership_class value: 0
+[2025-07-06 15:01:43] Reading key: error_sound
+[2025-07-06 15:01:43] Key error_sound value: True
+[2025-07-06 15:01:43] UI elements updated
+[2025-07-06 15:01:43] Applying membership limits for Free
+[2025-07-06 15:01:43] Applying membership limits for Free
+[2025-07-06 15:01:43] Applying Free membership limits
+[2025-07-06 15:01:43] Free trial remaining days: 29
+[2025-07-06 15:01:43] Membership limits applied
+[2025-07-06 15:01:43] Reading key: auto_update
+[2025-07-06 15:01:43] Key auto_update value: True
+[2025-07-06 15:01:43] Checking for updates
+[2025-07-06 15:01:43] Reading key: version
+[2025-07-06 15:01:43] Key version value: 4.39
+[2025-07-06 15:01:43] Reading key: serve_lock
+[2025-07-06 15:01:43] Key serve_lock value: False
+[2025-07-06 15:01:43] Loading tasks from JSON file
+[2025-07-06 15:01:43] Loading tasks from _internal/tasks.json
+[2025-07-06 15:01:43] JSON file _internal/tasks.json does not exist
+[2025-07-06 15:01:43] Setting up auto-completion for receiver LineEdit
+[2025-07-06 15:01:43] Exception during auto-completion setup: cannot access local variable 'name' where it is not associated with a value
+[2025-07-06 15:01:49] [AiAssistant] Attempting to start takeover...
+[2025-07-06 15:01:49] [AiAssistant] Validating takeover parameters...
+[2025-07-06 15:01:49] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 15:01:49] [WORKER_BASE] Thread initialized
+[2025-07-06 15:01:49] [AI_WORKER] Initializing thread
+[2025-07-06 15:01:49] [AI_WORKER] Loading reply rules
+[2025-07-06 15:01:49] [AI_WORKER] Loading reply rules
+[2025-07-06 15:01:49] [AI_WORKER] Successfully loaded 4 reply rules
+[2025-07-06 15:01:49] [AI_WORKER] Receiver list: ['QWE']
+[2025-07-06 15:01:49] [AI_WORKER] Starting listener initialization, targets: 1
+[2025-07-06 15:01:49] [AI_WORKER] Attempting to listen: QWE
+[2025-07-06 15:01:49] [AI_WORKER] Successfully listening: QWE
+[2025-07-06 15:01:49] [AI_WORKER] Initialization completed
+[2025-07-06 15:01:49] [AI_WORKER] Thread started
+[2025-07-06 15:01:49] [AI_WORKER] Status set to: Initializing
+[2025-07-06 15:01:49] [AI_WORKER] Starting initialization send, receivers: 1
+[2025-07-06 15:01:49] [AI_WORKER] Sending initialization message to: QWE
+[2025-07-06 15:01:49] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-07-06 15:01:49] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:01:49] [AiAssistant] AI worker thread started successfully
+[2025-07-06 15:01:51] [AI_WORKER] Status set to: Running
+[2025-07-06 15:02:00] [AI_WORKER] Processing message: '你好...' from QWE
+[2025-07-06 15:02:00] [AI_WORKER] Processing message content: '你好...' from QWE
+[2025-07-06 15:02:00] [AI_WORKER] Is group chat: True
+[2025-07-06 15:02:00] [AI_WORKER] Checking rule matches
+[2025-07-06 15:02:00] [AI_WORKER] Matching message rule: '你好...' from QWE
+[2025-07-06 15:02:01] [AI_WORKER] Status set to: Stopped
+[2025-07-06 15:08:54] Initializing MainWindow
+[2025-07-06 15:08:54] Ensuring configuration file exists
+[2025-07-06 15:08:54] Ensuring config file exists...
+[2025-07-06 15:08:54] Retry 1/5
+[2025-07-06 15:08:54] Reading existing config file...
+[2025-07-06 15:08:54] Reading config from _internal/system_info.ini
+[2025-07-06 15:08:54] Config sections: ['SystemInfo']
+[2025-07-06 15:08:54] Checking for missing keys...
+[2025-07-06 15:08:54] Getting motherboard serial number...
+[2025-07-06 15:08:54] Motherboard SN found: KT17MC05PI
+[2025-07-06 15:08:54] Membership: Free
+[2025-07-06 15:08:54] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 15:08:54] Config Motherboard SN: LEAF AUTO
+[2025-07-06 15:08:54] Current Motherboard SN: KT17MC05PI
+[2025-07-06 15:08:54] Config file is valid
+[2025-07-06 15:08:54] Reading configuration values
+[2025-07-06 15:08:54] Reading key: language
+[2025-07-06 15:08:54] Key language value: cn
+[2025-07-06 15:08:54] Reading key: membership
+[2025-07-06 15:08:54] Key membership value: Free
+[2025-07-06 15:08:54] Reading key: expiration_time
+[2025-07-06 15:08:54] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 15:08:54] Reading key: version
+[2025-07-06 15:08:54] Key version value: 4.39
+[2025-07-06 15:08:54] Reloading WeChat instances during initialization
+[2025-07-06 15:08:54] Starting to reload WeChat instances
+[2025-07-06 15:08:54] Reading key: language
+[2025-07-06 15:08:54] Key language value: cn
+[2025-07-06 15:08:55] Reading key: language
+[2025-07-06 15:08:55] Key language value: cn
+[2025-07-06 15:08:56] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 15:08:56] Default WeChat instance set to 杨圣洲
+[2025-07-06 15:08:56] Successfully initialized 1 WeChat instances
+[2025-07-06 15:08:56] Set default WeChat nickname to 杨圣洲
+[2025-07-06 15:08:56] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 15:08:56] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:08:56] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 15:08:56] [AutoInfo] Email processing thread started
+[2025-07-06 15:08:56] [AiAssistant] Initializing AI assistant...
+[2025-07-06 15:08:56] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 15:08:56] Creating system tray icon
+[2025-07-06 15:08:56] Creating system tray icon
+[2025-07-06 15:08:56] System tray icon created
+[2025-07-06 15:08:56] Setting window flags and attributes
+[2025-07-06 15:08:56] Connecting signals and updating UI elements
+[2025-07-06 15:08:56] Connecting UI signals
+[2025-07-06 15:08:56] [SETTINGS] Initializing SettingWindow
+[2025-07-06 15:08:56] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:08:56] Reading key: membership
+[2025-07-06 15:08:56] Key membership value: Free
+[2025-07-06 15:08:56] [SETTINGS] Detected membership: Free
+[2025-07-06 15:08:56] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 15:08:56] [SETTINGS] Initializing settings
+[2025-07-06 15:08:56] Reading key: error_email
+[2025-07-06 15:08:56] Key error_email value: False
+[2025-07-06 15:08:56] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 15:08:56] Reading key: error_sound
+[2025-07-06 15:08:56] Key error_sound value: True
+[2025-07-06 15:08:56] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 15:08:56] Reading key: net_time
+[2025-07-06 15:08:56] Key net_time value: False
+[2025-07-06 15:08:56] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 15:08:56] Reading key: auto_update
+[2025-07-06 15:08:56] Key auto_update value: True
+[2025-07-06 15:08:56] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 15:08:56] Reading key: serve_lock
+[2025-07-06 15:08:56] Key serve_lock value: False
+[2025-07-06 15:08:56] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 15:08:56] Reading key: close_option
+[2025-07-06 15:08:56] Key close_option value: True
+[2025-07-06 15:08:56] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 15:08:56] Reading key: language
+[2025-07-06 15:08:56] Key language value: cn
+[2025-07-06 15:08:56] [SETTINGS] Set language to: 简体中文
+[2025-07-06 15:08:56] Reading key: version
+[2025-07-06 15:08:56] Key version value: 4.39
+[2025-07-06 15:08:56] [SETTINGS] Set version label to: 4.39
+[2025-07-06 15:08:56] Reading key: add_timestep
+[2025-07-06 15:08:56] Key add_timestep value: 10
+[2025-07-06 15:08:56] [SETTINGS] Set timestep to: 10
+[2025-07-06 15:08:56] Reading key: reply_delay
+[2025-07-06 15:08:56] Key reply_delay value: 0
+[2025-07-06 15:08:56] Reading key: selected_audio_index
+[2025-07-06 15:08:56] Key selected_audio_index value: 0
+[2025-07-06 15:08:56] [SETTINGS] Loading audio selection: 0
+[2025-07-06 15:08:56] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 15:08:56] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 15:08:56] [SETTINGS] Set audio index to: 0
+[2025-07-06 15:08:56] Entering ReplyDialog initialization
+[2025-07-06 15:08:56] Starting to load rules from JSON
+[2025-07-06 15:08:56] Successfully loaded 4 rules
+[2025-07-06 15:08:56] Starting to display rules
+[2025-07-06 15:08:56] Creating rule display frame
+[2025-07-06 15:08:56] Completed rule display frame creation
+[2025-07-06 15:08:56] Creating rule display frame
+[2025-07-06 15:08:56] Completed rule display frame creation
+[2025-07-06 15:08:56] Creating rule display frame
+[2025-07-06 15:08:56] Completed rule display frame creation
+[2025-07-06 15:08:56] Creating rule display frame
+[2025-07-06 15:08:56] Completed rule display frame creation
+[2025-07-06 15:08:56] Displayed 4 rules
+[2025-07-06 15:08:56] Completed ReplyDialog initialization
+[2025-07-06 15:08:56] File and message signals connected
+[2025-07-06 15:08:56] Window control signals connected
+[2025-07-06 15:08:56] Membership button signals connected
+[2025-07-06 15:08:56] Function button signals connected
+[2025-07-06 15:08:56] Checkbox signals connected
+[2025-07-06 15:08:56] VIP frame click event connected
+[2025-07-06 15:08:56] All signals connected
+[2025-07-06 15:08:56] Updating UI elements
+[2025-07-06 15:08:56] Getting application notice
+[2025-07-06 15:08:57] Set datetime to 2025-07-06 15:08:57
+[2025-07-06 15:08:57] Reading key: membership_class
+[2025-07-06 15:08:57] Key membership_class value: 0
+[2025-07-06 15:08:57] Reading key: error_sound
+[2025-07-06 15:08:57] Key error_sound value: True
+[2025-07-06 15:08:57] UI elements updated
+[2025-07-06 15:08:57] Applying membership limits for Free
+[2025-07-06 15:08:57] Applying membership limits for Free
+[2025-07-06 15:08:57] Applying Free membership limits
+[2025-07-06 15:08:57] Free trial remaining days: 29
+[2025-07-06 15:08:57] Membership limits applied
+[2025-07-06 15:08:57] Reading key: auto_update
+[2025-07-06 15:08:57] Key auto_update value: True
+[2025-07-06 15:08:57] Checking for updates
+[2025-07-06 15:08:57] Reading key: version
+[2025-07-06 15:08:57] Key version value: 4.39
+[2025-07-06 15:08:57] Reading key: serve_lock
+[2025-07-06 15:08:57] Key serve_lock value: False
+[2025-07-06 15:08:57] Loading tasks from JSON file
+[2025-07-06 15:08:57] Loading tasks from _internal/tasks.json
+[2025-07-06 15:08:57] JSON file _internal/tasks.json does not exist
+[2025-07-06 15:08:57] Setting up auto-completion for receiver LineEdit
+[2025-07-06 15:08:57] Exception during auto-completion setup: cannot access local variable 'name' where it is not associated with a value
+[2025-07-06 15:09:06] [AiAssistant] Attempting to start takeover...
+[2025-07-06 15:09:06] [AiAssistant] Validating takeover parameters...
+[2025-07-06 15:09:06] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 15:09:06] [WORKER_BASE] Thread initialized
+[2025-07-06 15:09:06] [AI_WORKER] Loading auto-reply rules...
+[2025-07-06 15:09:06] [AI_WORKER] Rules loaded successfully
+[2025-07-06 15:09:06] [AI_WORKER] Initializing listeners for 1 chats
+[2025-07-06 15:09:06] [AI_WORKER] Successfully listening to: QWE
+[2025-07-06 15:09:06] [AI_WORKER] Thread initialized - OnlyAt: False, Nickname: 
+[2025-07-06 15:09:06] [AI_WORKER] Monitoring chats: ['QWE']
+[2025-07-06 15:09:06] [AI_WORKER] Thread started
+[2025-07-06 15:09:06] [AI_WORKER] Initializing connection with QWE
+[2025-07-06 15:09:07] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-07-06 15:09:07] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:09:07] [AiAssistant] AI worker thread started successfully
+[2025-07-06 15:09:08] [AI_WORKER] Connection initialized successfully
+[2025-07-06 15:09:17] [AI_WORKER] Processing 2 messages from QWE
+[2025-07-06 15:09:17] [AI_WORKER] Ignoring non-friend message: sys
+[2025-07-06 15:09:17] [AI_WORKER] Replying to all messages in monitored chats
+[2025-07-06 15:09:17] [AI_WORKER] Processing message: '你好啊...' from QWE (sender: 小羊)
+[2025-07-06 15:09:17] [AI_WORKER] Matching message: '你好啊...' from QWE
+[2025-07-06 15:09:36] [AI_WORKER] Processing 1 messages from QWE
+[2025-07-06 15:09:36] [AI_WORKER] Replying to all messages in monitored chats
+[2025-07-06 15:09:36] [AI_WORKER] Processing message: 'A1...' from QWE (sender: 小羊)
+[2025-07-06 15:09:36] [AI_WORKER] Matching message: 'A1...' from QWE
+[2025-07-06 15:09:36] [AI_WORKER] Partial match found for keyword: A1
+[2025-07-06 15:09:36] [AI_WORKER] Sending auto-reply: '回复A1...' to QWE
+[2025-07-06 15:09:38] [AI_WORKER] Processing 1 messages from QWE
+[2025-07-06 15:09:38] [AI_WORKER] Ignoring non-friend message: self
+[2025-07-06 15:09:43] [AI_WORKER] Processing 2 messages from QWE
+[2025-07-06 15:09:43] [AI_WORKER] Ignoring non-friend message: sys
+[2025-07-06 15:09:43] [AI_WORKER] Replying to all messages in monitored chats
+[2025-07-06 15:09:43] [AI_WORKER] Processing message: 'A2...' from QWE (sender: 小羊)
+[2025-07-06 15:09:43] [AI_WORKER] Matching message: 'A2...' from QWE
+[2025-07-06 15:09:43] [AI_WORKER] Full match found for keyword: A2
+[2025-07-06 15:09:43] [AI_WORKER] Sending auto-reply: '回复A2...' to QWE
+[2025-07-06 15:09:45] [AI_WORKER] Processing 1 messages from QWE
+[2025-07-06 15:09:45] [AI_WORKER] Ignoring non-friend message: self
+[2025-07-06 15:09:51] [AI_WORKER] Processing 2 messages from QWE
+[2025-07-06 15:09:51] [AI_WORKER] Ignoring non-friend message: sys
+[2025-07-06 15:09:51] [AI_WORKER] Replying to all messages in monitored chats
+[2025-07-06 15:09:51] [AI_WORKER] Processing message: 'A3...' from QWE (sender: 小羊)
+[2025-07-06 15:09:51] [AI_WORKER] Matching message: 'A3...' from QWE
+[2025-07-06 15:09:51] [AI_WORKER] Full match found for keyword: A3
+[2025-07-06 15:09:51] [AI_WORKER] Sending auto-reply: '回复A3...' to QWE
+[2025-07-06 15:09:53] [AI_WORKER] Processing 1 messages from QWE
+[2025-07-06 15:09:53] [AI_WORKER] Ignoring non-friend message: self
+[2025-07-06 15:09:55] [AI_WORKER] Processing 1 messages from QWE
+[2025-07-06 15:09:55] [AI_WORKER] Replying to all messages in monitored chats
+[2025-07-06 15:09:55] [AI_WORKER] Processing message: 'A4...' from QWE (sender: 小羊)
+[2025-07-06 15:09:55] [AI_WORKER] Matching message: 'A4...' from QWE
+[2025-07-06 15:10:07] [AiAssistant] Membership time limit reached (60 seconds), stopping takeover
+[2025-07-06 15:10:07] [WORKER_BASE] Thread interruption requested
+[2025-07-06 15:10:07] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-07-06 15:10:07] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:10:07] [AI_WORKER] Thread finished
+[2025-07-06 15:10:07] [AiAssistant] Handling thread finished event...
+[2025-07-06 15:10:07] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-07-06 15:10:07] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:10:07] [AiAssistant] AI worker thread completed successfully
+[2025-07-06 15:10:13] Calling save rules and close dialog
+[2025-07-06 15:10:13] Starting to save rules to JSON
+[2025-07-06 15:10:13] Successfully saved 4 rules to JSON
+[2025-07-06 15:11:04] Initializing MainWindow
+[2025-07-06 15:11:04] Ensuring configuration file exists
+[2025-07-06 15:11:04] Ensuring config file exists...
+[2025-07-06 15:11:04] Retry 1/5
+[2025-07-06 15:11:04] Reading existing config file...
+[2025-07-06 15:11:04] Reading config from _internal/system_info.ini
+[2025-07-06 15:11:04] Config sections: ['SystemInfo']
+[2025-07-06 15:11:04] Checking for missing keys...
+[2025-07-06 15:11:04] Getting motherboard serial number...
+[2025-07-06 15:11:04] Motherboard SN found: KT17MC05PI
+[2025-07-06 15:11:04] Membership: Free
+[2025-07-06 15:11:04] Expiration Time: 2025-08-05 13:46:19
+[2025-07-06 15:11:04] Config Motherboard SN: LEAF AUTO
+[2025-07-06 15:11:04] Current Motherboard SN: KT17MC05PI
+[2025-07-06 15:11:04] Config file is valid
+[2025-07-06 15:11:04] Reading configuration values
+[2025-07-06 15:11:04] Reading key: language
+[2025-07-06 15:11:04] Key language value: cn
+[2025-07-06 15:11:04] Reading key: membership
+[2025-07-06 15:11:04] Key membership value: Free
+[2025-07-06 15:11:04] Reading key: expiration_time
+[2025-07-06 15:11:04] Key expiration_time value: 2025-08-05 13:46:19
+[2025-07-06 15:11:04] Reading key: version
+[2025-07-06 15:11:04] Key version value: 4.39
+[2025-07-06 15:11:04] Reloading WeChat instances during initialization
+[2025-07-06 15:11:04] Starting to reload WeChat instances
+[2025-07-06 15:11:04] Reading key: language
+[2025-07-06 15:11:04] Key language value: cn
+[2025-07-06 15:11:05] Reading key: language
+[2025-07-06 15:11:05] Key language value: cn
+[2025-07-06 15:11:05] Successfully initialized WeChat instance for 杨圣洲
+[2025-07-06 15:11:05] Default WeChat instance set to 杨圣洲
+[2025-07-06 15:11:05] Successfully initialized 1 WeChat instances
+[2025-07-06 15:11:05] Set default WeChat nickname to 杨圣洲
+[2025-07-06 15:11:05] Initializing AutoInfo, Split, and AiAssistant modules
+[2025-07-06 15:11:05] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:11:05] [AutoInfo] Email processing thread started
+[2025-07-06 15:11:05] [AutoInfo] Initialization completed, membership type: Free
+[2025-07-06 15:11:05] [AiAssistant] Initializing AI assistant...
+[2025-07-06 15:11:05] [AiAssistant] Initialization completed, membership type: Free
+[2025-07-06 15:11:05] Creating system tray icon
+[2025-07-06 15:11:05] Creating system tray icon
+[2025-07-06 15:11:05] System tray icon created
+[2025-07-06 15:11:05] Setting window flags and attributes
+[2025-07-06 15:11:05] Connecting signals and updating UI elements
+[2025-07-06 15:11:05] Connecting UI signals
+[2025-07-06 15:11:05] [SETTINGS] Initializing SettingWindow
+[2025-07-06 15:11:06] [ERROR_SOUND] Thread initialized
+[2025-07-06 15:11:06] Reading key: membership
+[2025-07-06 15:11:06] Key membership value: Free
+[2025-07-06 15:11:06] [SETTINGS] Detected membership: Free
+[2025-07-06 15:11:06] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-07-06 15:11:06] [SETTINGS] Initializing settings
+[2025-07-06 15:11:06] Reading key: error_email
+[2025-07-06 15:11:06] Key error_email value: False
+[2025-07-06 15:11:06] [SETTINGS] Set error_email checkbox to: False
+[2025-07-06 15:11:06] Reading key: error_sound
+[2025-07-06 15:11:06] Key error_sound value: True
+[2025-07-06 15:11:06] [SETTINGS] Set error_sound checkbox to: True
+[2025-07-06 15:11:06] Reading key: net_time
+[2025-07-06 15:11:06] Key net_time value: False
+[2025-07-06 15:11:06] [SETTINGS] Set net_time checkbox to: False
+[2025-07-06 15:11:06] Reading key: auto_update
+[2025-07-06 15:11:06] Key auto_update value: True
+[2025-07-06 15:11:06] [SETTINGS] Set auto_update checkbox to: True
+[2025-07-06 15:11:06] Reading key: serve_lock
+[2025-07-06 15:11:06] Key serve_lock value: False
+[2025-07-06 15:11:06] [SETTINGS] Set serve_lock checkbox to: False
+[2025-07-06 15:11:06] Reading key: close_option
+[2025-07-06 15:11:06] Key close_option value: True
+[2025-07-06 15:11:06] [SETTINGS] Set close_option checkbox to: True
+[2025-07-06 15:11:06] Reading key: language
+[2025-07-06 15:11:06] Key language value: cn
+[2025-07-06 15:11:06] [SETTINGS] Set language to: 简体中文
+[2025-07-06 15:11:06] Reading key: version
+[2025-07-06 15:11:06] Key version value: 4.39
+[2025-07-06 15:11:06] [SETTINGS] Set version label to: 4.39
+[2025-07-06 15:11:06] Reading key: add_timestep
+[2025-07-06 15:11:06] Key add_timestep value: 10
+[2025-07-06 15:11:06] [SETTINGS] Set timestep to: 10
+[2025-07-06 15:11:06] Reading key: reply_delay
+[2025-07-06 15:11:06] Key reply_delay value: 0
+[2025-07-06 15:11:06] Reading key: selected_audio_index
+[2025-07-06 15:11:06] Key selected_audio_index value: 0
+[2025-07-06 15:11:06] [SETTINGS] Loading audio selection: 0
+[2025-07-06 15:11:06] [SETTINGS] Updating selected sound to index: 0
+[2025-07-06 15:11:06] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-07-06 15:11:06] [SETTINGS] Set audio index to: 0
+[2025-07-06 15:11:06] Entering ReplyDialog initialization
+[2025-07-06 15:11:06] Starting to load rules from JSON
+[2025-07-06 15:11:06] Successfully loaded 4 rules
+[2025-07-06 15:11:06] Starting to display rules
+[2025-07-06 15:11:06] Creating rule display frame
+[2025-07-06 15:11:06] Completed rule display frame creation
+[2025-07-06 15:11:06] Creating rule display frame
+[2025-07-06 15:11:06] Completed rule display frame creation
+[2025-07-06 15:11:06] Creating rule display frame
+[2025-07-06 15:11:06] Completed rule display frame creation
+[2025-07-06 15:11:06] Creating rule display frame
+[2025-07-06 15:11:06] Completed rule display frame creation
+[2025-07-06 15:11:06] Displayed 4 rules
+[2025-07-06 15:11:06] Completed ReplyDialog initialization
+[2025-07-06 15:11:06] File and message signals connected
+[2025-07-06 15:11:06] Window control signals connected
+[2025-07-06 15:11:06] Membership button signals connected
+[2025-07-06 15:11:06] Function button signals connected
+[2025-07-06 15:11:06] Checkbox signals connected
+[2025-07-06 15:11:06] VIP frame click event connected
+[2025-07-06 15:11:06] All signals connected
+[2025-07-06 15:11:06] Updating UI elements
+[2025-07-06 15:11:06] Getting application notice
+[2025-07-06 15:11:07] Set datetime to 2025-07-06 15:11:07
+[2025-07-06 15:11:07] Reading key: membership_class
+[2025-07-06 15:11:07] Key membership_class value: 0
+[2025-07-06 15:11:07] Reading key: error_sound
+[2025-07-06 15:11:07] Key error_sound value: True
+[2025-07-06 15:11:07] UI elements updated
+[2025-07-06 15:11:07] Applying membership limits for Free
+[2025-07-06 15:11:07] Applying membership limits for Free
+[2025-07-06 15:11:07] Applying Free membership limits
+[2025-07-06 15:11:07] Free trial remaining days: 29
+[2025-07-06 15:11:07] Membership limits applied
+[2025-07-06 15:11:07] Reading key: auto_update
+[2025-07-06 15:11:07] Key auto_update value: True
+[2025-07-06 15:11:07] Checking for updates
+[2025-07-06 15:11:07] Reading key: version
+[2025-07-06 15:11:07] Key version value: 4.39
+[2025-07-06 15:11:07] Reading key: serve_lock
+[2025-07-06 15:11:07] Key serve_lock value: False
+[2025-07-06 15:11:07] Loading tasks from JSON file
+[2025-07-06 15:11:07] Loading tasks from _internal/tasks.json
+[2025-07-06 15:11:07] JSON file _internal/tasks.json does not exist
+[2025-07-06 15:11:07] Setting up auto-completion for receiver LineEdit
+[2025-07-06 15:11:07] Exception during auto-completion setup: cannot access local variable 'name' where it is not associated with a value
+[2025-07-06 15:11:15] [AiAssistant] Attempting to start takeover...
+[2025-07-06 15:11:15] [AiAssistant] Validating takeover parameters...
+[2025-07-06 15:11:15] [AiAssistant] Creating and starting AI worker thread...
+[2025-07-06 15:11:15] [WORKER_BASE] Thread initialized
+[2025-07-06 15:11:15] [AI_WORKER] Loading auto-reply rules...
+[2025-07-06 15:11:15] [AI_WORKER] Rules loaded successfully
+[2025-07-06 15:11:15] [AI_WORKER] Initializing listeners for 1 chats
+[2025-07-06 15:11:15] [AI_WORKER] Successfully listening to: QWE
+[2025-07-06 15:11:15] [AI_WORKER] Thread initialized - OnlyAt: False, Nickname: 
+[2025-07-06 15:11:15] [AI_WORKER] Monitoring chats: ['QWE']
+[2025-07-06 15:11:15] [AI_WORKER] Thread started
+[2025-07-06 15:11:15] [AI_WORKER] Initializing connection with QWE
+[2025-07-06 15:11:15] [AiAssistant] Updating button icon to: resources/img/page3/page3_停止接管.svg
+[2025-07-06 15:11:15] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:11:15] [AiAssistant] AI worker thread started successfully
+[2025-07-06 15:11:16] [AI_WORKER] Connection initialized successfully
+[2025-07-06 15:11:22] [AiAssistant] Attempting to start takeover...
+[2025-07-06 15:11:22] [AiAssistant] Already in takeover mode, stopping current takeover
+[2025-07-06 15:11:22] [WORKER_BASE] Thread interruption requested
+[2025-07-06 15:11:22] [AiAssistant] Takeover stopped successfully
+[2025-07-06 15:11:22] [AI_WORKER] Thread finished
+[2025-07-06 15:11:22] [AiAssistant] Handling thread finished event...
+[2025-07-06 15:11:22] [AiAssistant] Updating button icon to: resources/img/page3/page3_开始接管.svg
+[2025-07-06 15:11:22] [AiAssistant] Button icon updated successfully
+[2025-07-06 15:11:22] [AiAssistant] AI worker thread completed successfully

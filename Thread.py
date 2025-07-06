@@ -11,7 +11,6 @@ import requests
 from PyQt6 import QtCore, QtMultimedia
 from PyQt6.QtCore import QDateTime, pyqtSignal
 
-from System_info import read_key_value
 from common import log, get_current_time, log_print, get_resource_path
 
 
@@ -66,338 +65,279 @@ class WorkerThreadBase(QtCore.QThread):
 
 
 class AiWorkerThread(WorkerThreadBase):
-    status_updated = QtCore.pyqtSignal(str)
-
-    def __init__(self, app_instance, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at=False):
+    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at=False,
+                 at_nickname=""):
         super().__init__()
-        log_print("[AI_WORKER] Initializing thread")
-        self.app_instance = app_instance
+        self.wx = wx
         self.receiver = receiver
         self.model = model
         self.system_content = role
-        log_print(f"[AI_WORKER] Loading reply rules")
         self.rules = self._load_rules()
+        self._is_running = True
         self.only_at = only_at
-        self.at_me = "@" + self.app_instance.wx.nickname
-        self.receiver_list = [r.strip() for r in receiver.replace(';', '；').split('；') if r.strip()]
-        log_print(f"[AI_WORKER] Receiver list: {self.receiver_list}")
+        self.at_nickname = at_nickname
+        self.chat_list = [r.strip() for r in receiver.replace(';', '；').split('；') if r.strip()]
         self.listen_list = []
-        self.init_listeners()
-        self.status = "Ready"
-        log_print("[AI_WORKER] Initialization completed")
+        self._init_listeners()
+        log_print(f"[AI_WORKER] Thread initialized - OnlyAt: {only_at}, Nickname: {at_nickname}")
+        log_print(f"[AI_WORKER] Monitoring chats: {self.chat_list}")
 
-    def init_listeners(self):
-        log_print(f"[AI_WORKER] Starting listener initialization, targets: {len(self.receiver_list)}")
-        for target in self.receiver_list:
-            log_print(f"[AI_WORKER] Attempting to listen: {target}")
-            if self.check_interruption():
-                log_print("[AI_WORKER] Listener initialization interrupted")
-                return
+    def _init_listeners(self):
+        log_print(f"[AI_WORKER] Initializing listeners for {len(self.chat_list)} chats")
+        for chat in self.chat_list:
             try:
-                self.app_instance.wx.AddListenChat(who=target)
-                self.listen_list.append(target)
-                log_print(f"[AI_WORKER] Successfully listening: {target}")
+                self.wx.AddListenChat(who=chat)
+                self.listen_list.append(chat)
+                log_print(f"[AI_WORKER] Successfully listening to: {chat}")
             except Exception as e:
-                log("ERROR", f"添加监听失败: {target}, 错误: {str(e)}")
+                log("ERROR", f"添加监听失败: {chat}, 错误: {str(e)}")
 
-    def _load_rules(self):
-        log_print("[AI_WORKER] Loading reply rules")
+    def _load_rules(self) -> Optional[List[Dict]]:
+        log_print("[AI_WORKER] Loading auto-reply rules...")
         try:
-            with open(get_resource_path('_internal/AutoReply_Rules.json'), 'r', encoding='utf-8') as f:
-                rules = json.load(f)
-                log_print(f"[AI_WORKER] Successfully loaded {len(rules)} reply rules")
-                return rules
-        except FileNotFoundError:
-            log_print("[AI_WORKER] Reply rules file not found")
-            return None
-        except json.JSONDecodeError:
-            log_print("[AI_WORKER] Error decoding reply rules file")
+            if os.path.exists(get_resource_path('_internal/AutoReply_Rules.json')):
+                with open(get_resource_path('_internal/AutoReply_Rules.json'), 'r', encoding='utf-8') as f:
+                    log_print("[AI_WORKER] Rules loaded successfully")
+                    return json.load(f)
+            else:
+                log("WARNING", "自动回复规则文件不存在，你可以创建一个")
+                log_print("[AI_WORKER] Rules file not found")
+                return None
+        except json.JSONDecodeError as e:
+            log("ERROR", "规则文件中的JSON格式无效")
+            log_print(f"[AI_WORKER] JSON decoding error: {str(e)}")
+            return []
+        except Exception as e:
+            log("ERROR", f"加载回复规则时出错: {str(e)}")
+            log_print(f"[AI_WORKER] Unexpected error loading rules: {str(e)}")
             return []
 
-    def _get_chat_name(self, who):
-        if not hasattr(self.app_instance.wx, 'GetChatName'):
-            log_print(f"[AI_WORKER] No GetChatName method, using raw ID: {who}")
-            return who
-        chat_name = self.app_instance.wx.GetChatName(who)
-        log_print(f"[AI_WORKER] Retrieved chat name: {who} -> {chat_name}")
-        return chat_name
-
-    def _match_rule(self, msg, who):
-        log_print(f"[AI_WORKER] Matching message rule: '{msg[:30]}...' from {who}")
-        if not self.rules or self.check_interruption():
-            log_print("[AI_WORKER] No rules or interrupted, skipping match")
+    def _match_rule(self, msg: str, chat_name: str) -> List[str]:
+        log_print(f"[AI_WORKER] Matching message: '{msg[:30]}...' from {chat_name}")
+        if not self.rules:
+            log_print("[AI_WORKER] No rules to match")
             return []
+
         matched_replies = []
-        msg = msg.strip()
-        chat_name = self._get_chat_name(who)
-        log_print(f"[AI_WORKER] Chat name: {chat_name}")
-
         for rule in self.rules:
-            if self.check_interruption():
-                log_print("[AI_WORKER] Match process interrupted")
-                break
-            keyword = rule['keyword'].strip()
-            if not keyword:
-                continue
+            try:
+                processed_msg = msg
+                if self.only_at and self.at_nickname:
+                    at_prefix = f"@{self.at_nickname}"
+                    if at_prefix in processed_msg:
+                        processed_msg = processed_msg.replace(at_prefix, "").strip()
+                        log_print(f"[AI_WORKER] Processed message in OnlyAt mode: '{processed_msg[:30]}...'")
 
-            apply_to = rule.get('apply_to', '全部').strip()
-            log_print(f"[AI_WORKER] Checking rule: '{keyword}', Apply to: {apply_to}")
+                apply_to = rule.get('apply_to', '全部').strip()
+                if apply_to != '全部':
+                    apply_groups = [g.strip() for g in apply_to.replace(';', '；').split('；') if g.strip()]
+                    if chat_name not in apply_groups:
+                        log_print(f"[AI_WORKER] Rule does not apply to {chat_name}")
+                        continue
 
-            if apply_to != '全部':
-                groups = [g.strip() for g in apply_to.replace(';', '；').split('；') if g.strip()]
-                if chat_name not in groups:
-                    log_print(f"[AI_WORKER] Rule does not apply to current chat: {chat_name}")
-                    continue
-
-            match_type = rule['match_type']
-            log_print(f"[AI_WORKER] Match type: {match_type}")
-
-            if match_type == '等于':
-                if msg == keyword:
-                    log_print(f"[AI_WORKER] Match success (equals): {keyword}")
-                    matched_replies.append(rule['reply_content'])
-            elif match_type == '包含':
-                if keyword in msg:
-                    log_print(f"[AI_WORKER] Match success (contains): {keyword}")
-                    matched_replies.append(rule['reply_content'])
-            elif match_type == '正则':
-                try:
-                    if re.search(keyword, msg):
-                        log_print(f"[AI_WORKER] Match success (regex): {keyword}")
+                if rule['match_type'] == '等于':
+                    if processed_msg.strip() == rule['keyword'].strip():
+                        log_print(f"[AI_WORKER] Full match found for keyword: {rule['keyword']}")
                         matched_replies.append(rule['reply_content'])
-                except re.error:
-                    log("ERROR", f"无效的正则表达式: {keyword}")
-                    continue
-        log_print(f"[AI_WORKER] Match completed, found {len(matched_replies)} replies")
+                elif rule['match_type'] == '包含':
+                    if rule['keyword'].strip() in processed_msg.strip():
+                        log_print(f"[AI_WORKER] Partial match found for keyword: {rule['keyword']}")
+                        matched_replies.append(rule['reply_content'])
+                elif rule['match_type'] == '正则':
+                    try:
+                        if re.search(rule['keyword'], processed_msg):
+                            log_print(f"[AI_WORKER] Regex match found for pattern: {rule['keyword']}")
+                            matched_replies.append(rule['reply_content'])
+                    except re.error as e:
+                        log("ERROR", f"无效的正则表达式: {rule['keyword']}, 错误: {str(e)}")
+            except KeyError as e:
+                log("ERROR", f"无效的规则格式: {rule}")
+                log_print(f"[AI_WORKER] Rule format error: Missing key {str(e)}")
+
         return matched_replies
 
     def run(self):
+        self._is_running = True
         log_print("[AI_WORKER] Thread started")
-        with self._stop_lock:
-            self._is_running = True
-            self.status = "Initializing"
-            self.status_updated.emit(self.status)
-            log_print("[AI_WORKER] Status set to: Initializing")
 
-        try:
-            log_print(f"[AI_WORKER] Starting initialization send, receivers: {len(self.receiver_list)}")
-            for receiver in self.receiver_list:
-                if self.check_interruption():
-                    log_print("[AI_WORKER] Initialization send interrupted")
-                    return
-                log_print(f"[AI_WORKER] Sending initialization message to: {receiver}")
-                self.app_instance.wx.SendMsg(msg=" ", who=receiver)
-        except Exception as e:
-            log("ERROR", f"初始化发送失败: {str(e)}")
-            self.app_instance.on_thread_finished()
-            return
+        for chat in self.chat_list:
+            try:
+                log_print(f"[AI_WORKER] Initializing connection with {chat}")
+                self.wx.SendMsg(msg=" ", who=chat)
+                log_print(f"[AI_WORKER] Connection initialized successfully")
+            except Exception as e:
+                log("ERROR", f"无法与 {chat} 初始化连接: {str(e)}")
+                log_print(f"[AI_WORKER] Connection initialization failed: {str(e)}")
 
-        self.status = "Running"
-        self.status_updated.emit(self.status)
-        log_print("[AI_WORKER] Status set to: Running")
-
-        while self.isRunning() and not self.check_interruption():
+        while self._is_running and not self._stop_event.is_set():
             try:
                 if self._is_paused:
-                    log_print("[AI_WORKER] Thread paused, sleeping 100ms")
-                    self.msleep(100)
+                    log_print("[AI_WORKER] Thread paused, sleeping...")
+                    time.sleep(0.1)
                     continue
 
-                log_print("[AI_WORKER] Starting message processing")
                 self._handle_messages()
-            except Exception as e:
-                log("ERROR", f"处理消息时发生异常: {str(e)}")
-                break
-            finally:
-                self.msleep(100)
 
-        self.status = "Stopped"
-        self.status_updated.emit(self.status)
-        log_print("[AI_WORKER] Status set to: Stopped")
-        self.app_instance.on_thread_finished()
-        with self._stop_lock:
-            self._is_running = False
-            log_print("[AI_WORKER] Thread stopped")
+            except Exception as e:
+                log("ERROR", f"处理消息时出错: {str(e)}")
+                log_print(f"[AI_WORKER] Critical error in main loop: {str(e)}")
+                time.sleep(1)
+            finally:
+                self.msleep(10)
+
+        log_print("[AI_WORKER] Thread finished")
+        self.finished.emit()
 
     def _handle_messages(self):
-        log_print("[AI_WORKER] Retrieving listened messages")
-        if self.check_interruption():
-            log_print("[AI_WORKER] Message processing interrupted")
-            return
-
-        messages_dict = self.app_instance.wx.GetListenMessage()
-        log_print(f"[AI_WORKER] Retrieved messages from {len(messages_dict)} chats")
-
+        messages_dict = self.wx.GetListenMessage()
         for chat, messages in messages_dict.items():
-            log_print(f"[AI_WORKER] Processing chat: {chat.who}, messages: {len(messages)}")
-            if self.check_interruption():
-                log_print("[AI_WORKER] Message processing interrupted")
-                break
+            chat_name = self._get_chat_name(chat.who)
+            log_print(f"[AI_WORKER] Processing {len(messages)} messages from {chat_name}")
 
             for message in messages:
-                if self.check_interruption():
-                    log_print("[AI_WORKER] Message processing interrupted")
-                    break
-
-                if self._is_ignored_message(message):
-                    log_print(
-                        f"[AI_WORKER] Ignoring message: type={getattr(message, 'type', 'unknown')}, sender={getattr(message, 'sender', 'unknown')}")
+                if message.type != "friend":
+                    log_print(f"[AI_WORKER] Ignoring non-friend message: {message.type}")
                     continue
 
-                log_print(f"[AI_WORKER] Processing message: '{message.content[:30]}...' from {chat.who}")
-                self._process_message(message.content, chat.who, message)
+                msg = message.content
+                sender = message.sender
 
-    def _is_ignored_message(self, message):
-        if hasattr(message, 'type') and message.type.lower() == 'sys':
-            return True
-        if hasattr(message, 'sender') and message.sender == 'Self':
-            return True
-        if hasattr(message, 'type') and message.type.lower() != 'friend':
-            return True
-        return False
+                if self._should_reply(msg, chat_name):
+                    self._process_message(msg, chat.who, chat_name, sender)
 
-    def _process_message(self, msg, who, message):
-        log_print(f"[AI_WORKER] Processing message content: '{msg[:30]}...' from {who}")
-        if self.check_interruption():
-            log_print("[AI_WORKER] Message content processing interrupted")
-            return
+    def _get_chat_name(self, who):
+        if hasattr(self.wx, 'GetChatName'):
+            return self.wx.GetChatName(who)
+        return who
 
-        if self.only_at and self.at_me not in msg:
-            log_print(f"[AI_WORKER] Message does not contain @, ignoring: '{msg[:30]}...'")
-            return
+    def _should_reply(self, msg: str, chat_name: str) -> bool:
+        if chat_name not in self.listen_list:
+            log_print(f"[AI_WORKER] Not listening to chat: {chat_name}")
+            return False
 
-        if self.at_me in msg:
-            original_msg = msg
-            msg = msg.replace(self.at_me, "").strip()
-            log_print(f"[AI_WORKER] Removed @ marker: '{original_msg[:30]}...' -> '{msg[:30]}...'")
+        if self.only_at and self.at_nickname:
+            log_print(f"[AI_WORKER] Checking message for @{self.at_nickname}: {msg[:30]}...")
+            return f"@{self.at_nickname}" in msg
 
-        is_group = who in self.receiver_list
-        log_print(f"[AI_WORKER] Is group chat: {is_group}")
+        log_print("[AI_WORKER] Replying to all messages in monitored chats")
+        return True
+
+    def _process_message(self, msg: str, who: str, chat_name: str, sender: str) -> None:
+        log_print(f"[AI_WORKER] Processing message: '{msg[:30]}...' from {chat_name} (sender: {sender})")
+
+        at_info = None
+        if self.only_at and self.at_nickname:
+            at_prefix = f"@{self.at_nickname}"
+            if at_prefix in msg:
+                original_msg = msg
+                processed_msg = original_msg.replace(at_prefix, "").strip()
+                at_info = sender
+                log_print(f"[AI_WORKER] Message processed in OnlyAt mode: '{processed_msg[:30]}...'")
+        else:
+            processed_msg = msg
 
         if self.rules:
-            log_print("[AI_WORKER] Checking rule matches")
-            matched_replies = self._match_rule(msg, who)
+            matched_replies = self._match_rule(processed_msg if self.only_at else msg, chat_name)
             if matched_replies:
-                log_print(f"[AI_WORKER] Found {len(matched_replies)} matching rules")
                 for reply in matched_replies:
-                    log_print(f"[AI_WORKER] Sending rule-based reply: '{reply[:30]}...' to {who}")
-                    self._send_reply(reply, who, is_group, message.sender if is_group else None)
+                    try:
+                        if os.path.isdir(os.path.dirname(reply)):
+                            if os.path.isfile(reply):
+                                log("INFO", f"发送文件 {os.path.basename(reply)} 给 {chat_name} 根据规则")
+                                log_print(f"[AI_WORKER] Sending file: {os.path.basename(reply)} to {chat_name}")
+                                self.wx.SendFiles(filepath=reply, who=who)
+                            else:
+                                log("ERROR", f"无效的规则: 文件不存在: {os.path.basename(reply)}")
+                                log_print(f"[AI_WORKER] File not found: {os.path.basename(reply)}")
+                        else:
+                            log("INFO", f"根据规则自动回复 '{reply}' 给 {chat_name}")
+                            log_print(f"[AI_WORKER] Sending auto-reply: '{reply[:30]}...' to {chat_name}")
+
+                            if self.only_at and at_info:
+                                self.wx.SendMsg(msg=reply, who=who, at=at_info)
+                            else:
+                                self.wx.SendMsg(msg=reply, who=who)
+                    except Exception as e:
+                        log("ERROR", f"发送自动回复时出错: {str(e)}")
+                        log_print(f"[AI_WORKER] Error sending auto-reply: {str(e)}")
                 return
 
-        if self.model != "禁用模型":
-            log_print(f"[AI_WORKER] Using {self.model} model to generate response")
-            self._send_ai_response(msg, who, is_group, message.sender if is_group else None)
+        if self.model == "禁用模型":
+            return
 
-    def _send_reply(self, reply, who, is_group=False, at_user=None):
-        log_print(f"[AI_WORKER] Preparing to send reply: '{reply[:30]}...' to {who}")
+        log_print(f"[AI_WORKER] No rule matches, generating AI reply for: '{processed_msg[:30]}...'")
+        self._generate_ai_reply(processed_msg if self.only_at else msg, who, chat_name, sender)
+
+    def _generate_ai_reply(self, msg: str, who: str, chat_name: str, sender: str):
+        log_print(f"[AI_WORKER] Generating AI reply using {self.model} model for {chat_name}")
         try:
-            if os.path.isdir(os.path.dirname(reply)):
-                if os.path.isfile(reply):
-                    log_print(f"[AI_WORKER] Sending file: {os.path.basename(reply)} to {who}")
-                    self.app_instance.wx.SendFiles(filepath=reply, who=who)
-                else:
-                    raise FileNotFoundError(f"回复规则有误,没有 {os.path.basename(reply)} 文件")
+            if self.model == "文心一言":
+                result = self._query_wenxin_api(msg)
+            elif self.model == "月之暗面":
+                result = self._query_moonshot_api(msg)
             else:
-                delay = int(read_key_value('reply_delay'))
-                log_print(f"[AI_WORKER] Sending text message with {delay}s delay: '{reply[:30]}...' to {who}")
-                time.sleep(delay)
-                if is_group and at_user and self.only_at:
-                    log_print(f"[AI_WORKER] Group message, @user: {at_user}")
-                    self.app_instance.wx.SendMsg(msg=reply, who=who, at=at_user)
+                result = self._query_default_api(msg)
+
+            if result:
+                log("INFO", f"AI回复发送给 {chat_name}: {result[:30]}...")
+                log_print(f"[AI_WORKER] AI reply sent to {chat_name}: {result[:30]}...")
+
+                if self.only_at:
+                    self.wx.SendMsg(msg=result, who=who, at=sender)
                 else:
-                    self.app_instance.wx.SendMsg(msg=reply, who=who)
+                    self.wx.SendMsg(msg=result, who=who)
+
         except Exception as e:
-            log("ERROR", f"发送回复失败: {str(e)}")
+            log("ERROR", f"调用AI API时出错: {str(e)}")
+            log_print(f"[AI_WORKER] Critical error calling AI API: {str(e)}")
 
-    def _send_ai_response(self, msg, who, is_group=False, at_user=None):
-        log_print(f"[AI_WORKER] Calling AI model for message: '{msg[:30]}...'")
-        result = self._query_ai_model(msg)
-        if result:
-            log_print(f"[AI_WORKER] AI model returned: '{result[:30]}...'")
-            if is_group and at_user and self.only_at:
-                log_print(f"[AI_WORKER] Sending AI response (group @): '{result[:30]}...' to {who}")
-                self.app_instance.wx.SendMsg(msg=result, who=who, at=at_user)
-            else:
-                log_print(f"[AI_WORKER] Sending AI response: '{result[:30]}...' to {who}")
-                self.app_instance.wx.SendMsg(msg=result, who=who)
+    def _query_wenxin_api(self, msg: str) -> str:
+        log_print("[AI_WORKER] Querying Wenxin Yiyan API")
+        access_token = self._get_access_token()
+        if not access_token:
+            log_print("[AI_WORKER] Failed to get access token")
+            return "Unable to obtain access token"
 
-    def _query_api(self, url, payload=None, headers=None, params=None, method='POST'):
-        log_print(f"[AI_WORKER] Calling API: {url}")
-        try:
-            response = requests.request(method=method, url=url, json=payload, headers=headers, params=params)
-            response.raise_for_status()
-            log_print(f"[AI_WORKER] API call successful")
-            return response.json()
-        except requests.RequestException as e:
-            log("ERROR", f"API请求失败: {e}")
-            return None
+        payload = {"messages": [{"role": "user", "content": msg}]}
+        result = self._query_api(
+            f"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token={access_token}",
+            payload=payload,
+            headers={'Content-Type': 'application/json'}
+        )
 
-    def _get_access_token(self):
-        log_print("[AI_WORKER] Retrieving Baidu API access token")
-        response = self._query_api(
+        return result.get('result', "Unable to parse response")
+
+    def _get_access_token(self) -> Optional[str]:
+        log_print("[AI_WORKER] Fetching Baidu API access token")
+        result = self._query_api(
             "https://aip.baidubce.com/oauth/2.0/token",
             params={'grant_type': 'client_credentials',
                     'client_id': 'eCB39lMiTbHXV0mTt1d6bBw7',
                     'client_secret': 'WUbEO3XdMNJLTJKNQfFbMSQvtBVzRhvu'}
         )
-        token = response.get("access_token") if response else None
-        log_print(f"[AI_WORKER] Access token retrieval result: {bool(token)}")
-        return token
 
-    def _query_ai_model(self, msg):
-        log_print(f"[AI_WORKER] Querying {self.model} model: '{msg[:30]}...'")
-        if self.model == "禁用模型":
-            log_print("[AI_WORKER] Model disabled")
-            return None
-        try:
-            if self.model == "文心一言":
-                return self._query_wenxin_model(msg)
-            elif self.model == "月之暗面":
-                return self._query_moonshot_model(msg)
-            elif self.model == "星火讯飞":
-                return self._query_other_model(msg)
-            else:
-                log_print(f"[AI_WORKER] Unknown AI model: {self.model}")
-                return "未知的AI模型"
-        except Exception as e:
-            log_print(f"[AI_WORKER] Error querying AI model: {str(e)}")
-            return "抱歉，AI模型查询失败，请稍后再试。"
+        return result.get("access_token") if result else None
 
-    def _query_wenxin_model(self, msg):
-        log_print("[AI_WORKER] Querying Wenxin Yiyan model")
-        access_token = self._get_access_token()
-        if not access_token:
-            log_print("[AI_WORKER] Failed to retrieve Baidu API access token")
-            return "无法获取百度API访问令牌"
-
-        payload = {"messages": [{"role": "user", "content": msg}]}
-        log_print(f"[AI_WORKER] Sending request to Wenxin Yiyan: {payload}")
-        response = self._query_api(
-            f"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token={access_token}",
-            payload=payload,
-            headers={'Content-Type': 'application/json'}
-        )
-        result = response.get('result', "无法解析响应") if response else "请求失败"
-        log_print(f"[AI_WORKER] Wenxin Yiyan returned: {result[:30]}...")
-        return result
-
-    def _query_moonshot_model(self, msg):
-        log_print("[AI_WORKER] Querying Moonshot model")
+    def _query_moonshot_api(self, msg: str) -> str:
+        log_print("[AI_WORKER] Querying Moonshot API")
         from openai import OpenAI
-        client = OpenAI(api_key="sk-dx1RuweBS0LU0bCR5HizbWjXLuBL6HrS8BT21NEEGwbeyuo6",
-                        base_url="https://api.moonshot.cn/v1")
-        log_print(f"[AI_WORKER] Sending request to Moonshot")
+
+        client = OpenAI(
+            api_key="sk-dx1RuweBS0LU0bCR5HizbWjXLuBL6HrS8BT21NEEGwbeyuo6",
+            base_url="https://api.moonshot.cn/v1"
+        )
+
         completion = client.chat.completions.create(
             model="moonshot-v1-8k",
             messages=[{"role": "system", "content": self.system_content},
                       {"role": "user", "content": msg}],
             temperature=0.9,
         )
-        log_print(f"[AI_WORKER] Moonshot returned: {completion.choices[0].message.content[:30]}...")
+
         return completion.choices[0].message.content
 
-    def _query_other_model(self, msg):
-        log_print("[AI_WORKER] Querying Xinghuo Xunfei model")
+    def _query_default_api(self, msg: str) -> str:
+        log_print("[AI_WORKER] Querying default API")
         data = {
             "max_tokens": 64,
             "top_k": 4,
@@ -408,15 +348,39 @@ class AiWorkerThread(WorkerThreadBase):
             ],
             "model": "4.0Ultra"
         }
+
         header = {
             "Authorization": "Bearer xCPWitJxfzhLaZNOAdtl:PgJXiEyvKjUaoGzKwgIi",
             "Content-Type": "application/json"
         }
-        log_print(f"[AI_WORKER] Sending request to Xinghuo Xunfei")
+
         response = self._query_api("https://spark-api-open.xf-yun.com/v1/chat/completions", data, header)
-        result = response['choices'][0]['message']['content'] if response else "无法解析响应"
-        log_print(f"[AI_WORKER] Xinghuo Xunfei returned: {result[:30]}...")
-        return result
+        return response['choices'][0]['message']['content'] if response else "Unable to parse response"
+
+    def _query_api(self, url: str, payload: Optional[Dict] = None,
+                   headers: Optional[Dict] = None, params: Optional[Dict] = None,
+                   method: str = 'POST') -> Optional[Dict]:
+        log_print(f"[AI_WORKER] Making API request to: {url[:50]}...")
+        try:
+            response = requests.request(
+                method=method,
+                url=url,
+                json=payload,
+                headers=headers,
+                params=params,
+                timeout=15
+            )
+            response.raise_for_status()
+            log_print(f"[AI_WORKER] API request successful: {url[:30]}...")
+            return response.json()
+        except requests.RequestException as e:
+            log("ERROR", f"API请求失败: {str(e)}")
+            log_print(f"[AI_WORKER] API request error: {str(e)}")
+            return None
+        except Exception as e:
+            log("ERROR", f"处理API响应时出错: {str(e)}")
+            log_print(f"[AI_WORKER] Unexpected error processing API response: {str(e)}")
+            return None
 
 
 class SplitWorkerThread(WorkerThreadBase):

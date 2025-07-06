@@ -75,18 +75,16 @@ class AiAssistant(QtWidgets.QWidget):
                 role = self.parent.Characters_lineEdit.text()
 
                 # 获取at模式和昵称
-                only_at_mode = self.parent.checkBox_onlyAt.isChecked()
-                at_nickname = self.parent.comboBox_nickName.currentText()
+                only_at = self.parent.checkBox_onlyAt.isChecked()
 
                 log_print("[AiAssistant] Creating and starting AI worker thread...")
-                # 传递only_at_mode和at_nickname参数
+                # 传递only_at和at_nickname参数
                 self.ai_thread = AiWorkerThread(
                     self.current_wx,
                     self.parent.takeOverReceiver_lineEdit.text(),
                     model=model,
                     role=role,
-                    only_at_mode=only_at_mode,
-                    at_nickname=at_nickname
+                    only_at=only_at
                 )
                 self.ai_thread.finished.connect(self.on_thread_finished)
                 self.ai_thread.start()

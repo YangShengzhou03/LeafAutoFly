@@ -178,7 +178,7 @@ class ReplyDialog(QtWidgets.QDialog):
         reply_label_layout = QtWidgets.QHBoxLayout(reply_label_frame)
         reply_label_layout.setContentsMargins(0, 0, 0, 0)
 
-        label_21 = QtWidgets.QLabel("回复", reply_label_frame)
+        label_21 = QtWidgets.QLabel("回复：", reply_label_frame)
         label_21.setObjectName("label_21")
         label_21.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         label_21.setMinimumWidth(30)
@@ -186,7 +186,7 @@ class ReplyDialog(QtWidgets.QDialog):
 
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
-        font.setPointSize(12)
+        font.setPointSize(13)
         label_21.setFont(font)
         label_21.setStyleSheet("""
             color: rgba(0, 0, 0, 180);
