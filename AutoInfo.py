@@ -188,7 +188,7 @@ class AutoInfo(QtWidgets.QWidget):
             wx_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             wx_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             wx_label.setMinimumWidth(1)
-            wx_label.setMaximumWidth(280)  # 限制最大宽度，防止溢出
+            wx_label.setMaximumWidth(250)  # 限制最大宽度，防止溢出
             wx_label.installEventFilter(self)
             top_layout.addWidget(wx_label)
 
