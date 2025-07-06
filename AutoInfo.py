@@ -80,12 +80,12 @@ class AutoInfo(QtWidgets.QWidget):
         except Exception as e:
             log_print(f"[AutoInfo] Failed to open file dialog: {str(e)}")
 
-    def video_chat(self):
+    def emotion(self):
         try:
-            self.parent.message_lineEdit.setText('Video_chat')
-            log_print("[AutoInfo] Set to video chat")
+            self.parent.message_lineEdit.setText('Emotion:')
+            log_print("[AutoInfo] Set to Emotion:")
         except Exception as e:
-            log_print(f"[AutoInfo] Failed to set video chat: {str(e)}")
+            log_print(f"[AutoInfo] Failed to set Emotion: {str(e)}")
 
     def save_tasks_to_json(self):
         try:

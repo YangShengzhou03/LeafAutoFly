@@ -1361,6 +1361,27 @@ class Ui_MainWindow(object):
 "}")
         self.message_lineEdit.setObjectName("message_lineEdit")
         self.horizontalLayout_22.addWidget(self.message_lineEdit)
+        self.emotion_pushButton = QtWidgets.QPushButton(parent=self.frame_36)
+        self.emotion_pushButton.setMinimumSize(QtCore.QSize(32, 32))
+        self.emotion_pushButton.setStyleSheet("QPushButton{\n"
+"    background-color: rgba(255, 255, 255, 0);\n"
+"border: none;\n"
+"border-radius:20px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"\n"
+"}\n"
+"QPushButton:pressed {\n"
+"\n"
+"}\n"
+"")
+        self.emotion_pushButton.setText("")
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap("resources/img/page1/page1_发送表情.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.emotion_pushButton.setIcon(icon15)
+        self.emotion_pushButton.setIconSize(QtCore.QSize(24, 24))
+        self.emotion_pushButton.setObjectName("emotion_pushButton")
+        self.horizontalLayout_22.addWidget(self.emotion_pushButton)
         self.file_pushButton = QtWidgets.QPushButton(parent=self.frame_36)
         self.file_pushButton.setMinimumSize(QtCore.QSize(32, 32))
         self.file_pushButton.setStyleSheet("QPushButton{\n"
@@ -1376,9 +1397,9 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.file_pushButton.setText("")
-        icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap("resources/img/page1/page1_打开文件.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.file_pushButton.setIcon(icon15)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("resources/img/page1/page1_打开文件.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.file_pushButton.setIcon(icon16)
         self.file_pushButton.setIconSize(QtCore.QSize(24, 24))
         self.file_pushButton.setObjectName("file_pushButton")
         self.horizontalLayout_22.addWidget(self.file_pushButton)
@@ -1572,9 +1593,9 @@ class Ui_MainWindow(object):
 "    background-color: rgb(90, 22, 230);\n"
 "}")
         self.add_pushButton.setText("")
-        icon16 = QtGui.QIcon()
-        icon16.addPixmap(QtGui.QPixmap("resources/img/page1/page1_添加任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.add_pushButton.setIcon(icon16)
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(QtGui.QPixmap("resources/img/page1/page1_添加任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.add_pushButton.setIcon(icon17)
         self.add_pushButton.setObjectName("add_pushButton")
         self.horizontalLayout_5.addWidget(self.add_pushButton)
         self.verticalLayout_9.addWidget(self.DataInput)
@@ -1690,9 +1711,9 @@ class Ui_MainWindow(object):
         self.pushButton_save.setStyleSheet("QPushButton {  \n"
 "    color: rgb(0, 0, 0);  \n"
 "}")
-        icon17 = QtGui.QIcon()
-        icon17.addPixmap(QtGui.QPixmap("resources/img/page1/page1_保存任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pushButton_save.setIcon(icon17)
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("resources/img/page1/page1_保存任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton_save.setIcon(icon18)
         self.pushButton_save.setObjectName("pushButton_save")
         self.horizontalLayout_26.addWidget(self.pushButton_save)
         self.pushButton_import = QtWidgets.QPushButton(parent=self.widget_64)
@@ -1704,9 +1725,9 @@ class Ui_MainWindow(object):
         self.pushButton_import.setStyleSheet("QPushButton {  \n"
 "    color: rgb(0, 0, 0);  \n"
 "}")
-        icon18 = QtGui.QIcon()
-        icon18.addPixmap(QtGui.QPixmap("resources/img/page1/page1_导入任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pushButton_import.setIcon(icon18)
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("resources/img/page1/page1_导入任务.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton_import.setIcon(icon19)
         self.pushButton_import.setObjectName("pushButton_import")
         self.horizontalLayout_26.addWidget(self.pushButton_import)
         self.checkBox_stopSleep = QtWidgets.QCheckBox(parent=self.widget_64)
@@ -1992,9 +2013,9 @@ class Ui_MainWindow(object):
         self.checkBox_Ai.setStyleSheet("QCheckBox {\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon19 = QtGui.QIcon()
-        icon19.addPixmap(QtGui.QPixmap("resources/img/page2/page2_智慧拆句.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.checkBox_Ai.setIcon(icon19)
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap("resources/img/page2/page2_智慧拆句.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.checkBox_Ai.setIcon(icon20)
         self.checkBox_Ai.setObjectName("checkBox_Ai")
         self.horizontalLayout_16.addWidget(self.checkBox_Ai)
         self.checkBox_period = QtWidgets.QCheckBox(parent=self.verticalWidget_3)
@@ -2591,9 +2612,9 @@ class Ui_MainWindow(object):
 "    background-color: rgb(90, 22, 230);\n"
 "}")
         self.pushButton_takeover.setText("")
-        icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap("resources/img/page3/page3_开始接管.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pushButton_takeover.setIcon(icon20)
+        icon21 = QtGui.QIcon()
+        icon21.addPixmap(QtGui.QPixmap("resources/img/page3/page3_开始接管.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton_takeover.setIcon(icon21)
         self.pushButton_takeover.setIconSize(QtCore.QSize(38, 38))
         self.pushButton_takeover.setObjectName("pushButton_takeover")
         self.horizontalLayout_150.addWidget(self.pushButton_takeover)

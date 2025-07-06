@@ -490,6 +490,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setting_window = SettingWindow()
         self.activities_window = ActivitiesWindow()
         self.key_reply = ReplyDialog()
+        self.emotion_pushButton.clicked.connect(self.auto_info.emotion)
         self.file_pushButton.clicked.connect(self.auto_info.openFileNameDialog)
         self.pushButton_save.clicked.connect(self.auto_info.save_configuration)
         self.pushButton_import.clicked.connect(self.auto_info.load_configuration)

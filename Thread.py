@@ -383,7 +383,6 @@ class AiWorkerThread(WorkerThreadBase):
             return None
 
 
-
 class SplitWorkerThread(WorkerThreadBase):
     """消息拆分发送工作线程"""
     sent_signal = QtCore.pyqtSignal(str, bool)
@@ -450,10 +449,8 @@ class WorkerThread(WorkerThreadBase):
         self._system_state = None
 
     def run(self) -> None:
-        """线程主循环"""
         self._is_running = True
 
-        # 设置系统不进入睡眠和锁屏状态
         if self.prevent_sleep:
             self._set_system_state(self.ES_CONTINUOUS | self.ES_SYSTEM_REQUIRED | self.ES_DISPLAY_REQUIRED)
             log("WARNING", "已阻止系统休眠和锁屏")
@@ -487,7 +484,7 @@ class WorkerThread(WorkerThreadBase):
                         log("INFO", f"下一个任务将在 {friendly_time} 后执行")
 
                         while remaining_time > 0 and not self.check_interruption():
-                            sleep_time = min(remaining_time, 0.5)  # 每次最多休眠0.5秒
+                            sleep_time = min(remaining_time, 0.5)
                             self.msleep(int(sleep_time * 1000))
                             remaining_time -= sleep_time
 
@@ -570,7 +567,11 @@ class WorkerThread(WorkerThreadBase):
                 if self.check_interruption():
                     return False
 
-                if os.path.isdir(os.path.dirname(info)):
+                if re.match(r'^Emotion:\d+$', info):
+                    emotion_index = int(info.split(':')[1])
+                    success = self._send_with_interruption(
+                        lambda: wx_instance.SendEmotion(emotion_index=emotion_index, who=name))
+                elif os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
                         log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname})")
