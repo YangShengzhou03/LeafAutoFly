@@ -1,0 +1,26 @@
+[
+    {
+        "keyword": "33",
+        "match_type": "包含",
+        "reply_content": "222",
+        "apply_to": "全部"
+    },
+    {
+        "keyword": "等等",
+        "match_type": "等于",
+        "reply_content": "试试",
+        "apply_to": "全部"
+    },
+    {
+        "keyword": "反复",
+        "match_type": "等于",
+        "reply_content": "反复",
+        "apply_to": "全部"
+    },
+    {
+        "keyword": "发",
+        "match_type": "正则",
+        "reply_content": "分隔",
+        "apply_to": "全部"
+    }
+]
