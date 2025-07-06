@@ -65,7 +65,7 @@ class WorkerThreadBase(QtCore.QThread):
 
 class AiWorkerThread(WorkerThreadBase):
     def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。",
-                 only_at=False, at_nickname=""):
+                 only_at=False):
         super().__init__()
         self.wx = wx
         self.receiver = receiver
@@ -74,11 +74,11 @@ class AiWorkerThread(WorkerThreadBase):
         self.rules = self._load_rules()
         self._is_running = True
         self.only_at = only_at
-        self.at_nickname = at_nickname
+        self.at_nickname = self.wx.nickname
         self.chat_list = [r.strip() for r in receiver.replace(';', '；').split('；') if r.strip()]
         self.listen_list = []
         self._init_listeners()
-        log_print(f"[AI_WORKER] Thread initialized - OnlyAt: {only_at}, Nickname: {at_nickname}")
+        log_print(f"[AI_WORKER] Thread initialized - OnlyAt: {self.only_at}, Nickname: {self.at_nickname}")
         log_print(f"[AI_WORKER] Monitoring chats: {self.chat_list}")
 
     def _init_listeners(self):

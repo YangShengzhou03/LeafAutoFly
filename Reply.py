@@ -65,6 +65,12 @@ class ReplyDialog(QtWidgets.QDialog):
                 json.dump(rules, file, ensure_ascii=False, indent=4)
             self.original_rules = rules.copy()
             log_print(f"Successfully saved {len(rules)} rules to JSON")
+
+            QtWidgets.QMessageBox.information(
+                self, "保存成功", "更改成功！",
+                QtWidgets.QMessageBox.StandardButton.Ok
+            )
+
         except Exception as e:
             log_print(f"Error saving rules: {str(e)}")
             QtWidgets.QMessageBox.critical(self, "保存失败", f"保存出错，{e}")
