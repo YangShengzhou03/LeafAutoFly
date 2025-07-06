@@ -94,8 +94,8 @@ class AiWorkerThread(WorkerThreadBase):
     def _load_rules(self) -> Optional[List[Dict]]:
         log_print("[AI_WORKER] Loading auto-reply rules...")
         try:
-            if os.path.exists(get_resource_path('_internal/AutoReply_Rules.json')):
-                with open(get_resource_path('_internal/AutoReply_Rules.json'), 'r', encoding='utf-8') as f:
+            if os.path.exists(get_resource_path('AutoReply_Rules.json')):
+                with open(get_resource_path('AutoReply_Rules.json'), 'r', encoding='utf-8') as f:
                     log_print("[AI_WORKER] Rules loaded successfully")
                     return json.load(f)
             else:
