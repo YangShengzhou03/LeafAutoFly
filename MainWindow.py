@@ -557,9 +557,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             log_print("Successfully wrote to admin_log, sufficient permissions")
         except Exception:
             log_print("Insufficient permissions to write admin_log")
-            QtWidgets.QMessageBox.critical(self, "非管理员身份", "当前非管理员身份运行，会员可能无法激活")
-        self.activities_window.show()
-        self.activities_window.activateWindow()
+            QtWidgets.QMessageBox.critical(self, "非管理员身份", "当前非管理员身份运行，会员无法激活")
+        else:
+            self.activities_window.show()
+            self.activities_window.activateWindow()
 
     def open_keyReply(self):
         log_print("Opening key reply window")

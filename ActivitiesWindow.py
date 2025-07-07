@@ -42,7 +42,7 @@ class ActivitiesWindow(QtWidgets.QMainWindow, Ui_ActivitiesWindow):
         self.ui.label_identify.setText(str(self.identify))
         self.ui.pushButton_exchange.clicked.connect(self.QQ_code)
         self.ui.pushButton_check.clicked.connect(self.QQ_code)
-        self.ui.pushButton_feedback.clicked.connect(self.QQ_code)
+        self.ui.pushButton_feedback.clicked.connect(self.help)
         self.ui.pushButton_privilege.clicked.connect(self.help)
         self.apply_default_styles()
 

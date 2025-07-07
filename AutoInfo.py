@@ -346,6 +346,29 @@ class AutoInfo(QtWidgets.QWidget):
                     log("WARNING", "任务列表为空，请先添加任务至任务列表")
                     log_print("[AutoInfo] Task list is empty, cannot start execution")
                 else:
+                    current_time = datetime.now()
+                    past_tasks = [task for task in self.ready_tasks
+                                  if datetime.fromisoformat(task['time']) < current_time]
+                    if past_tasks:
+                        message = (
+                            f"<p style='color:#d9534f;font-size:14px;'>发现已过期的定时任务</p>"
+                            f"<p>点击确定将立即执行这些任务，否则请重新设置再启动</p>"
+                        )
+
+                        msg_box = QtWidgets.QMessageBox(
+                            QtWidgets.QMessageBox.Icon.Warning,
+                            "过期任务二次确认",
+                            message,
+                            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                            self
+                        )
+                        msg_box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
+                        reply = msg_box.exec()
+
+                        if reply == QtWidgets.QMessageBox.StandardButton.No:
+                            log_print("[AutoInfo] Execution cancelled by user due to past tasks")
+                            return
+
                     self.is_executing = True
                     self.parent.start_pushButton.setText("停止执行")
                     self.worker_thread = WorkerThread(self)
