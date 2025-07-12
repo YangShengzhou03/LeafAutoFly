@@ -2,9 +2,9 @@
 
 > 🌟 让重复办公任务更轻松，用 AI 助手 + 自动化脚本提升微信效率的桌面工具
 
-[![License: GPL-2.0](https://img.shields.io/badge/License-GPL--2.0-blue.svg)](./LICENSE)
-![PyQt](https://img.shields.io/badge/PyQt-6.80-blueviolet?style=flat&logo=python)
-![GitHub stars](https://img.shields.io/github/stars/Yangshengzhou/lucky-smss?style=social)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![Python Version](https://img.shields.io/badge/Python-3.11.4-blue?style=flat-square)](https://www.python.org/)
+[![PyQt5](https://img.shields.io/badge/PyQt6-6.8.0-orange?style=flat-square)](https://www.riverbankcomputing.com/software/pyqt)
 ---
 
 ## 📚 目录
