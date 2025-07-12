@@ -138,19 +138,13 @@ class Split(QtWidgets.QWidget):
         if not message:
             return []
 
-        # 处理特殊情况：括号内的内容不拆分
         processed_message = self._handle_parentheses(message)
 
-        # 构建正则表达式模式
         delimiter_pattern = '|'.join(map(re.escape, delimiters))
 
-        # 使用正则表达式拆分句子
         sentences = re.split(delimiter_pattern, processed_message)
 
-        # 过滤空句子并去除首尾空格
         return [s.strip() for s in sentences if s.strip()]
 
     def _handle_parentheses(self, text: str) -> str:
-        # 简单处理括号内的内容，避免被分隔符拆分
-        # 这是一个简化的实现，实际情况可能需要更复杂的处理
         return re.sub(r'([\(\（][^(\(\（\)\）)]*[\)\）])', lambda m: m.group(0).replace('。', ''), text)

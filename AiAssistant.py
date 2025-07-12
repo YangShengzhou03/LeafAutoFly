@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtCore, QtGui
 from Thread import AiWorkerThread
 from common import log, get_resource_path, log_print
 
+
 class AiAssistant(QtWidgets.QWidget):
     def __init__(self, wx_instances, membership, parent=None):
         super().__init__(parent)
@@ -78,7 +79,8 @@ class AiAssistant(QtWidgets.QWidget):
 
                 log("DEBUG", "Leaf Ai 接管启动")
                 self.update_button_icon('resources/img/page3/page3_停止接管.svg')
-                self.parent.label_7.setText(self.parent.label_7.text().replace('Leaf Ai接管 准备就绪', 'Leaf Ai 已为您接管'))
+                self.parent.label_7.setText(
+                    self.parent.label_7.text().replace('Leaf Ai接管 准备就绪', 'Leaf Ai 已为您接管'))
 
                 log_print("[AiAssistant] Takeover started")
             except Exception as e:
@@ -92,7 +94,8 @@ class AiAssistant(QtWidgets.QWidget):
             self.is_taking_over = False
             self.timer.stop()
             self.update_button_icon('resources/img/page3/page3_开始接管.svg')
-            self.parent.label_7.setText(self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
+            self.parent.label_7.setText(
+                self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
         except Exception as e:
             log_print(f"[AiAssistant] Error handling thread finish: {e}")
 
@@ -120,7 +123,8 @@ class AiAssistant(QtWidgets.QWidget):
                         self.ai_thread.requestInterruption()
                         self.ai_thread = None
                     self.update_button_icon('resources/img/page3/page3_开始接管.svg')
-                    self.parent.label_7.setText(self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
+                    self.parent.label_7.setText(
+                        self.parent.label_7.text().replace('Leaf Ai 已为您接管', 'Leaf Ai接管 准备就绪'))
                     QtWidgets.QMessageBox.warning(self, "版本限制", "版本限制 接管终止，超级会员尊享无限接管")
             else:
                 h, rem = divmod(self.elapsed_time, 3600)
