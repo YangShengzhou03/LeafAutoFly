@@ -1,18 +1,19 @@
 import ctypes
 import json
 import os
+import random
 import re
 import threading
 import time
-from datetime import datetime
-from typing import Optional, Dict, List, Any
+from datetime import datetime, timedelta
+from typing import Optional, Dict
 
 import requests
 from PyQt6 import QtCore, QtMultimedia
-from PyQt6.QtCore import QDateTime, pyqtSignal
+from PyQt6.QtCore import QDateTime
 
 from System_info import read_key_value
-from common import log, get_current_time, log_print, get_resource_path
+from common import log, get_current_time, log_print
 
 
 class WorkerThreadBase(QtCore.QThread):
@@ -24,32 +25,29 @@ class WorkerThreadBase(QtCore.QThread):
         self._is_paused = False
         self._is_running = False
         self._stop_event = threading.Event()
-        self._stop_lock = threading.Lock()
         log_print("[WORKER_BASE] Thread initialized")
 
     def run(self):
         log_print("[WORKER_BASE] Error: Subclass must implement run() method")
         raise NotImplementedError("Subclasses must implement the run method")
 
-    def request_interruption(self) -> None:
-        with self._stop_lock:
-            self._stop_event.set()
-            self._is_running = False
-
     def pause(self):
-        self._is_paused = True
-        self.pause_changed.emit(True)
-        log_print("[WORKER_BASE] Thread paused")
+        if not self._is_paused:
+            self._is_paused = True
+            self.pause_changed.emit(True)
+            log_print("[WORKER_BASE] Thread paused")
 
     def resume(self):
-        self._is_paused = False
-        self.pause_changed.emit(False)
-        log_print("[WORKER_BASE] Thread resumed")
+        if self._is_paused:
+            self._is_paused = False
+            self.pause_changed.emit(False)
+            log_print("[WORKER_BASE] Thread resumed")
 
     def requestInterruption(self):
-        self._stop_event.set()
-        self._is_running = False
-        log_print("[WORKER_BASE] Thread interruption requested")
+        if self._is_running:
+            self._stop_event.set()
+            self._is_running = False
+            log_print("[WORKER_BASE] Thread interruption requested")
 
     def isPaused(self) -> bool:
         return self._is_paused
@@ -57,287 +55,612 @@ class WorkerThreadBase(QtCore.QThread):
     def isRunning(self) -> bool:
         return self._is_running
 
-    def check_interruption(self) -> bool:
-        """检查是否请求中断"""
-        with self._stop_lock:
-            return self._stop_event.is_set()
+    def wait_for_resume(self):
+        while self._is_paused and not self._stop_event.is_set():
+            self.msleep(100)
+
+
+class WorkerThread(WorkerThreadBase):
+    ES_CONTINUOUS = 0x80000000
+    ES_SYSTEM_REQUIRED = 0x00000001
+    ES_DISPLAY_REQUIRED = 0x00000002
+
+    def __init__(self, app_instance):
+        super().__init__()
+        self.app_instance = app_instance
+        self.prevent_sleep = False
+        self.current_time = 'sys'
+        self._system_state = None
+        log_print("[WORKER_THREAD] Thread initialized")
+
+    def run(self):
+        self._is_running = True
+        log_print("[WORKER_THREAD] Thread started")
+
+        if self.prevent_sleep:
+            self._set_system_state(self.ES_CONTINUOUS | self.ES_SYSTEM_REQUIRED | self.ES_DISPLAY_REQUIRED)
+            log("WARNING", "已阻止系统休眠和锁屏")
+            log_print("[WORKER_THREAD] System sleep prevention enabled")
+
+        try:
+            while self._is_running and not self._stop_event.is_set():
+                if self._is_paused:
+                    log_print("[WORKER_THREAD] Thread paused, sleeping...")
+                    self.wait_for_resume()
+                    continue
+
+                next_task = self._find_next_ready_task()
+                if next_task is None:
+                    log("INFO", "没有找到待执行的任务，线程退出")
+                    log_print("[WORKER_THREAD] No ready tasks found, exiting")
+                    break
+
+                try:
+                    task_time = datetime.strptime(next_task['time'], '%Y-%m-%dT%H:%M:%S')
+                    current_time = get_current_time(self.current_time)
+                    remaining_time = (task_time - current_time).total_seconds()
+
+                    if remaining_time > 0:
+                        days, remainder = divmod(int(remaining_time), 86400)
+                        hours, remainder = divmod(remainder, 3600)
+                        minutes, seconds = divmod(remainder, 60)
+                        time_parts = []
+                        if days > 0:
+                            time_parts.append(f"{days}天")
+                        if hours > 0:
+                            time_parts.append(f"{hours}时")
+                        if minutes > 0:
+                            time_parts.append(f"{minutes}分")
+                        time_parts.append(f"{seconds}秒")
+                        friendly_time = ''.join(time_parts)
+
+                        log("INFO", f"下一个任务将在 {friendly_time} 后执行")
+                        log_print(f"[WORKER_THREAD] Next task in {friendly_time}: {next_task}")
+
+                        self._wait_for_task_optimized(task_time)
+
+                    if self._stop_event.is_set():
+                        break
+
+                    success = self._execute_task(next_task)
+
+                    if success:
+                        self.app_instance.update_task_status(next_task['id'], '成功')
+                        log_print(f"[WORKER_THREAD] Task executed successfully: {next_task['id']}")
+                    else:
+                        self.app_instance.update_task_status(next_task['id'], '出错')
+                        log_print(f"[WORKER_THREAD] Task execution failed: {next_task['id']}")
+
+                except Exception as e:
+                    log("ERROR", f"处理任务时出错: {str(e)}")
+                    self.app_instance.update_task_status(next_task['id'], '出错')
+                    log_print(f"[WORKER_THREAD] Task execution failed: {next_task['id']}")
+                    time.sleep(1)
+
+        finally:
+            if self.prevent_sleep:
+                self._set_system_state(self.ES_CONTINUOUS)
+                log("WARNING", "已恢复系统休眠和锁屏设置")
+                log_print("[WORKER_THREAD] System sleep prevention disabled")
+
+            self._is_running = False
+            log_print("[WORKER_THREAD] Thread finished")
+            self.finished.emit()
+
+    def _wait_for_task_optimized(self, task_time: datetime):
+        start_sys_time = get_current_time(self.current_time)
+        start_mono_time = time.monotonic()
+        last_check_mono = start_mono_time
+        time_discrepancy_threshold = 2.0
+
+        while not self._stop_event.is_set():
+            if self._is_paused:
+                pause_start_mono = time.monotonic()
+                self.wait_for_resume()
+                if self._stop_event.is_set():
+                    return
+                pause_duration = time.monotonic() - pause_start_mono
+                start_mono_time += pause_duration
+                last_check_mono += pause_duration
+
+            current_sys_time = get_current_time(self.current_time)
+            current_mono_time = time.monotonic()
+            elapsed_mono = current_mono_time - start_mono_time
+
+            expected_sys_time = start_sys_time + timedelta(seconds=current_mono_time - start_mono_time)
+
+            if current_mono_time - last_check_mono > 1.0:
+                sys_mono_diff = (current_sys_time - expected_sys_time).total_seconds()
+                if abs(sys_mono_diff) > time_discrepancy_threshold:
+                    log("WARNING", f"检测到时间突变！系统时间与实际时间偏差 {sys_mono_diff:.2f}秒，已自动修正")
+                    start_sys_time = current_sys_time
+                    start_mono_time = current_mono_time
+                    expected_sys_time = start_sys_time
+                last_check_mono = current_mono_time
+
+            remaining_time = (task_time - current_sys_time).total_seconds()
+
+            if remaining_time <= 0:
+                return
+
+            if remaining_time > 86400:
+                sleep_interval = 30.0
+            elif remaining_time > 3600:
+                sleep_interval = 10.0
+            elif remaining_time > 60:
+                sleep_interval = 5.0
+            elif remaining_time > 10:
+                sleep_interval = 1.0
+            else:
+                sleep_interval = 0.1
+
+            sleep_interval = min(sleep_interval, remaining_time)
+            self.msleep(int(sleep_interval * 1000))
+
+    def _set_system_state(self, state_flags):
+        log_print(f"[WORKER_THREAD] Setting system execution state: 0x{state_flags:X}")
+        try:
+            self._system_state = ctypes.windll.kernel32.SetThreadExecutionState(state_flags)
+            if not self._system_state:
+                log("ERROR", f"设置系统状态失败，错误码: {ctypes.GetLastError()}")
+                log_print(f"[WORKER_THREAD] Failed to set system state, error code: {ctypes.GetLastError()}")
+        except Exception as e:
+            log("ERROR", f"调用系统API设置状态时出错: {str(e)}")
+            log_print(f"[WORKER_THREAD] Error calling system API: {str(e)}")
+
+    def _find_next_ready_task(self) -> Optional[Dict]:
+        log_print("[WORKER_THREAD] Searching for next ready task")
+        next_task = None
+        min_time = None
+
+        for task in self.app_instance.ready_tasks.values():
+            try:
+                task_time = QDateTime.fromString(task['time'], "yyyy-MM-ddTHH:mm:ss").toSecsSinceEpoch()
+                if min_time is None or task_time < min_time:
+                    min_time = task_time
+                    next_task = task
+            except Exception as e:
+                log("ERROR", f"解析任务时间时出错: {str(e)}")
+                log_print(f"[WORKER_THREAD] Error parsing task time: {str(e)}")
+
+        if next_task:
+            log_print(f"[WORKER_THREAD] Next task found: {next_task}")
+        else:
+            log_print("[WORKER_THREAD] No ready tasks found")
+
+        return next_task
+
+    def _execute_task(self, task: Dict) -> bool:
+        log_print(f"[WORKER_THREAD] Executing task: {task}")
+
+        try:
+            name = task['name']
+            info = task['info']
+            emotion_match = re.match(r'^SendEmotion:([\d,]+)', info)
+            if os.path.isdir(os.path.dirname(info)):
+                if os.path.isfile(info):
+                    file_name = os.path.basename(info)
+                    log("INFO", f"开始把文件 {file_name} 发给 {name}")
+                    log_print(f"[WORKER_THREAD] Sending file: {file_name} to {name}")
+                    if not self._send_files(filepath=info, who=name):
+                        raise LookupError("发送文件失败")
+                else:
+                    raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
+            elif emotion_match:
+                numbers = [int(n) for n in emotion_match.group(1).split(',') if n.strip().isdigit()]
+                valid_indices = [n for n in numbers if n >= 1]
+                if not valid_indices:
+                    raise ValueError("表情索引必须≥1")
+                if not self._send_emotion(emotion_index=random.choice(valid_indices) - 1, who=name):
+                    raise LookupError("发送表情包失败")
+            else:
+                log("INFO", f"正在把消息 '{info[:30]}...' 发给 {name}")
+                log_print(f"[WORKER_THREAD] Sending message: '{info}...' to {name}")
+
+                if not self._send_message(msg=info, who=name):
+                    raise LookupError("发送消息失败")
+
+            log("DEBUG", f"成功执行任务: 发送给 {name}")
+            log_print(f"[WORKER_THREAD] Task executed successfully: {name}")
+            return True
+
+        except Exception as e:
+            log("ERROR", f"执行任务失败: {str(e)}")
+            log_print(f"[WORKER_THREAD] Task execution failed: {str(e)}")
+            return False
+
+    def _send_message(self, msg: str, who: str) -> bool:
+        return self._retry_operation(lambda: self.app_instance.wx.SendMsg(msg=msg, who=who))
+
+    def _send_files(self, filepath: str, who: str) -> bool:
+        return self._retry_operation(lambda: self.app_instance.wx.SendFiles(filepath=filepath, who=who))
+
+    def _send_emotion(self, emotion_index: int, who: str) -> bool:
+        return self._retry_operation(lambda: self.app_instance.wx.SendEmotion(emotion_index, who=who))
+
+    def _retry_operation(self, operation, max_retries=3):
+        for attempt in range(max_retries):
+            try:
+                result = operation()
+                if result["status"] == "成功":
+                    return True
+                else:
+                    raise LookupError(f"操作失败: {result.get('message', '未知错误')}")
+            except Exception as e:
+                log("ERROR", f"操作失败 (尝试 {attempt + 1}/{max_retries}): {str(e)}")
+                if attempt < max_retries - 1:
+                    log("WARNING", "尝试重新连接微信客户端...")
+                    try:
+                        self.app_instance.parent.update_wx()
+                        time.sleep(1)
+                    except Exception as we:
+                        log("ERROR", f"更新微信客户端失败: {str(we)}")
+        return False
 
 
 class AiWorkerThread(WorkerThreadBase):
-    def __init__(self, wx, receiver, model="月之暗面", role="你很温馨,回复简单明了。",
-                 only_at=False):
+    status_updated = QtCore.pyqtSignal(str)
+
+    def __init__(self, app_instance, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at=False):
         super().__init__()
-        self.wx = wx
+        self.app_instance = app_instance
         self.receiver = receiver
         self.model = model
         self.system_content = role
         self.rules = self._load_rules()
-        self._is_running = True
         self.only_at = only_at
-        self.at_nickname = self.wx.nickname
-        self.chat_list = [r.strip() for r in receiver.replace(';', '；').split('；') if r.strip()]
+        self.at_me = "@" + self.app_instance.wx.nickname
+        self.receiver_list = [r.strip() for r in receiver.replace(';', '；').split('；') if r.strip()]
         self.listen_list = []
-        self._init_listeners()
-        log_print(f"[AI_WORKER] Thread initialized - OnlyAt: {self.only_at}, Nickname: {self.at_nickname}")
-        log_print(f"[AI_WORKER] Monitoring chats: {self.chat_list}")
+        self.last_sent_messages = {}
+        self._message_lock = threading.Lock()
+        log_print(f"[AI_WORKER] Thread initialized for receiver(s): {self.receiver}")
 
-    def _init_listeners(self):
-        log_print(f"[AI_WORKER] Initializing listeners for {len(self.chat_list)} chats")
-        for chat in self.chat_list:
+    def init_listeners(self):
+        if self._stop_event.is_set() or not self._is_running:
+            log_print("[AI_WORKER] Listener initialization interrupted")
+            return False
+
+        for target in self.receiver_list:
+            if self._stop_event.is_set() or not self._is_running:
+                log_print("[AI_WORKER] Listener initialization interrupted")
+                return False
+
             try:
-                self.wx.AddListenChat(who=chat)
-                self.listen_list.append(chat)
-                log_print(f"[AI_WORKER] Successfully listening to: {chat}")
+                self.app_instance.wx.AddListenChat(who=target)
+                self.listen_list.append(target)
+                log_print(f"[AI_WORKER] Added listener for: {target}")
             except Exception as e:
-                log("ERROR", f"添加监听失败: {chat}, 错误: {str(e)}")
+                log("ERROR", f"添加监听失败: {target}, 错误: {str(e)}")
+                log_print(f"[AI_WORKER] Failed to add listener: {target}, error: {str(e)}")
+                raise e
+        return True
 
-    def _load_rules(self) -> Optional[List[Dict]]:
-        log_print("[AI_WORKER] Loading auto-reply rules...")
+    def _load_rules(self):
         try:
-            if os.path.exists(get_resource_path('AutoReply_Rules.json')):
-                with open(get_resource_path('AutoReply_Rules.json'), 'r', encoding='utf-8') as f:
-                    log_print("[AI_WORKER] Rules loaded successfully")
-                    return json.load(f)
-            else:
-                log("WARNING", "自动回复规则文件不存在，你可以创建一个")
-                log_print("[AI_WORKER] Rules file not found")
-                return None
-        except json.JSONDecodeError as e:
-            log("ERROR", "规则文件中的JSON格式无效")
-            log_print(f"[AI_WORKER] JSON decoding error: {str(e)}")
-            return []
-        except Exception as e:
-            log("ERROR", f"加载回复规则时出错: {str(e)}")
-            log_print(f"[AI_WORKER] Unexpected error loading rules: {str(e)}")
+            with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as f:
+                log_print(f"[AI_WORKER] Loaded auto-reply rules")
+                return json.load(f)
+        except FileNotFoundError:
+            log_print("[AI_WORKER] Auto-reply rules file not found")
+            return None
+        except json.JSONDecodeError:
+            log_print("[AI_WORKER] Failed to parse auto-reply rules file")
             return []
 
-    def _match_rule(self, msg: str, chat_name: str) -> List[str]:
-        log_print(f"[AI_WORKER] Matching message: '{msg[:30]}...' from {chat_name}")
+    def _get_chat_name(self, who):
+        if not hasattr(self.app_instance.wx, 'GetChatName'):
+            return who
+        return self.app_instance.wx.GetChatName(who)
+
+    def _match_rule(self, msg, who):
         if not self.rules:
-            log_print("[AI_WORKER] No rules to match")
             return []
-
         matched_replies = []
+        msg = msg.strip()
+        chat_name = self._get_chat_name(who)
+
         for rule in self.rules:
-            try:
-                processed_msg = msg
-                if self.only_at and self.at_nickname:
-                    at_prefix = f"@{self.at_nickname}"
-                    if at_prefix in processed_msg:
-                        processed_msg = processed_msg.replace(at_prefix, "").strip()
-                        log_print(f"[AI_WORKER] Processed message in OnlyAt mode: '{processed_msg[:30]}...'")
+            if self._stop_event.is_set() or not self._is_running:
+                return []
 
-                apply_to = rule.get('apply_to', '全部').strip()
-                if apply_to != '全部':
-                    apply_groups = [g.strip() for g in apply_to.replace(';', '；').split('；') if g.strip()]
-                    if chat_name not in apply_groups:
-                        log_print(f"[AI_WORKER] Rule does not apply to {chat_name}")
-                        continue
+            keyword = rule['keyword'].strip()
+            if not keyword:
+                continue
 
-                if rule['match_type'] == '等于':
-                    if processed_msg.strip() == rule['keyword'].strip():
-                        log_print(f"[AI_WORKER] Full match found for keyword: {rule['keyword']}")
+            apply_to = rule.get('apply_to', '全部').strip()
+            if apply_to != '全部':
+                groups = [g.strip() for g in apply_to.replace(';', '；').split('；') if g.strip()]
+                if chat_name not in groups:
+                    continue
+
+            match_type = rule['match_type']
+            if match_type == '等于':
+                if msg == keyword:
+                    matched_replies.append(rule['reply_content'])
+            elif match_type == '包含':
+                if keyword in msg:
+                    matched_replies.append(rule['reply_content'])
+            elif match_type == '正则':
+                try:
+                    if re.search(keyword, msg):
                         matched_replies.append(rule['reply_content'])
-                elif rule['match_type'] == '包含':
-                    if rule['keyword'].strip() in processed_msg.strip():
-                        log_print(f"[AI_WORKER] Partial match found for keyword: {rule['keyword']}")
-                        matched_replies.append(rule['reply_content'])
-                elif rule['match_type'] == '正则':
-                    try:
-                        if re.search(rule['keyword'], processed_msg):
-                            log_print(f"[AI_WORKER] Regex match found for pattern: {rule['keyword']}")
-                            matched_replies.append(rule['reply_content'])
-                    except re.error as e:
-                        log("ERROR", f"无效的正则表达式: {rule['keyword']}, 错误: {str(e)}")
-            except KeyError as e:
-                log("ERROR", f"无效的规则格式: {rule}")
-                log_print(f"[AI_WORKER] Rule format error: Missing key {str(e)}")
-
+                except re.error:
+                    log("ERROR", f"无效的正则表达式: {keyword}")
+                    log_print(f"[AI_WORKER] Invalid regular expression: {keyword}")
+                    continue
         return matched_replies
 
     def run(self):
         self._is_running = True
-        log_print("[AI_WORKER] Thread started")
+        log_print("[AI_WORKER] start thread")
 
-        for chat in self.chat_list:
-            try:
-                log_print(f"[AI_WORKER] Initializing connection with {chat}")
-                self.wx.SendMsg(msg=" ", who=chat)
-                log_print(f"[AI_WORKER] Connection initialized successfully")
-            except Exception as e:
-                log("ERROR", f"无法与 {chat} 初始化连接: {str(e)}")
-                log_print(f"[AI_WORKER] Connection initialization failed: {str(e)}")
-
-        while self._is_running and not self._stop_event.is_set():
-            try:
-                if self._is_paused:
-                    log_print("[AI_WORKER] Thread paused, sleeping...")
-                    time.sleep(0.1)
-                    continue
-
-                self._handle_messages()
-
-            except Exception as e:
-                log("ERROR", f"处理消息时出错: {str(e)}")
-                log_print(f"[AI_WORKER] Critical error in main loop: {str(e)}")
-                time.sleep(1)
-            finally:
-                self.msleep(10)
-
-        log_print("[AI_WORKER] Thread finished")
-        self.finished.emit()
-
-    def _handle_messages(self):
-        messages_dict = self.wx.GetListenMessage()
-        for chat, messages in messages_dict.items():
-            chat_name = self._get_chat_name(chat.who)
-            log_print(f"[AI_WORKER] Processing {len(messages)} messages from {chat_name}")
-
-            for message in messages:
-                if message.type != "friend":
-                    log_print(f"[AI_WORKER] Ignoring non-friend message: {message.type}")
-                    continue
-
-                msg = message.content
-                sender = message.sender
-
-                if self._should_reply(msg, chat_name):
-                    self._process_message(msg, chat.who, chat_name, sender)
-
-    def _get_chat_name(self, who):
-        if hasattr(self.wx, 'GetChatName'):
-            return self.wx.GetChatName(who)
-        return who
-
-    def _should_reply(self, msg: str, chat_name: str) -> bool:
-        if chat_name not in self.listen_list:
-            log_print(f"[AI_WORKER] Not listening to chat: {chat_name}")
-            return False
-
-        if self.only_at and self.at_nickname:
-            log_print(f"[AI_WORKER] Checking message for @{self.at_nickname}: {msg[:30]}...")
-            return f"@{self.at_nickname}" in msg
-
-        log_print("[AI_WORKER] Replying to all messages in monitored chats")
-        return True
-
-    def _process_message(self, msg: str, who: str, chat_name: str, sender: str) -> None:
-        log_print(f"[AI_WORKER] Processing message: '{msg[:30]}...' from {chat_name} (sender: {sender})")
-
-        at_info = None
-        if self.only_at and self.at_nickname:
-            at_prefix = f"@{self.at_nickname}"
-            if at_prefix in msg:
-                original_msg = msg
-                processed_msg = original_msg.replace(at_prefix, "").strip()
-                at_info = sender
-                log_print(f"[AI_WORKER] Message processed in OnlyAt mode: '{processed_msg[:30]}...'")
-        else:
-            processed_msg = msg
-
-        if self.rules:
-            matched_replies = self._match_rule(processed_msg if self.only_at else msg, chat_name)
-            if matched_replies:
-                for reply in matched_replies:
-                    try:
-                        if os.path.isdir(os.path.dirname(reply)):
-                            if os.path.isfile(reply):
-                                log("INFO", f"发送文件 {os.path.basename(reply)} 给 {chat_name} 根据规则")
-                                log_print(f"[AI_WORKER] Sending file: {os.path.basename(reply)} to {chat_name}")
-                                self.wx.SendFiles(filepath=reply, who=who)
-                            else:
-                                log("ERROR", f"无效的规则: 文件不存在: {os.path.basename(reply)}")
-                                log_print(f"[AI_WORKER] File not found: {os.path.basename(reply)}")
-                        else:
-                            log("INFO", f"根据规则自动回复 '{reply}' 给 {chat_name}")
-                            log_print(f"[AI_WORKER] Sending auto-reply: '{reply[:30]}...' to {chat_name}")
-
-                            time.sleep(int(read_key_value('reply_delay')))
-                            if self.only_at and at_info:
-                                self.wx.SendMsg(msg=reply, who=who, at=at_info)
-                            else:
-                                self.wx.SendMsg(msg=reply, who=who)
-                    except Exception as e:
-                        log("ERROR", f"发送自动回复时出错: {str(e)}")
-                        log_print(f"[AI_WORKER] Error sending auto-reply: {str(e)}")
+        try:
+            if not self.init_listeners():
+                log_print("[AI_WORKER] Listener initialization interrupted")
                 return
 
-        if self.model == "禁用模型":
+            for receiver in self.receiver_list:
+                if self._stop_event.is_set() or not self._is_running:
+                    return
+
+                response = self.app_instance.wx.SendMsg(msg=" ", who=receiver)
+                if response.get('status') == '失败':
+                    raise ValueError(f"初始化发送失败: {response.get('message', '未找到该备注的好友')}")
+        except Exception as e:
+            log("ERROR", f"初始化发送失败: {str(e)}")
+            self.app_instance.on_thread_finished()
             return
 
-        log_print(f"[AI_WORKER] No rule matches, generating AI reply for: '{processed_msg[:30]}...'")
-        self._generate_ai_reply(processed_msg if self.only_at else msg, who, chat_name, sender)
+        while not self._stop_event.is_set() and self._is_running:
+            try:
+                if self.isPaused():
+                    self.wait_for_resume()
+                    continue
 
-    def _generate_ai_reply(self, msg: str, who: str, chat_name: str, sender: str):
-        log_print(f"[AI_WORKER] Generating AI reply using {self.model} model for {chat_name}")
+                if self._stop_event.is_set() or not self._is_running:
+                    break
+
+                self._handle_messages()
+            except Exception as e:
+                log("ERROR", f"处理消息时发生异常: {str(e)}")
+                if self._stop_event.is_set() or not self._is_running:
+                    break
+            finally:
+                self.msleep(100)
+
+        self._cleanup()
+        self._is_running = False
+        self.app_instance.on_thread_finished()
+
+    def _handle_messages(self):
+        if self._stop_event.is_set() or not self._is_running:
+            return
+
+        messages_dict = self.app_instance.wx.GetListenMessage()
+        for chat, messages in messages_dict.items():
+            if self._stop_event.is_set() or not self._is_running:
+                return
+
+            for message in messages:
+                if self._stop_event.is_set() or not self._is_running:
+                    return
+
+                if self._is_ignored_message(message):
+                    continue
+                self._process_message(message.content, chat.who, message)
+
+    def _is_ignored_message(self, message):
+        if hasattr(message, 'type') and message.type.lower() == 'sys':
+            return True
+        if hasattr(message, 'sender') and message.sender == 'Self':
+            return True
+        if hasattr(message, 'type') and message.type.lower() != 'friend':
+            return True
+        return False
+
+    def _process_message(self, msg, who, message):
+        if self._stop_event.is_set() or not self._is_running:
+            return
+
+        if self.only_at and self.at_me not in msg:
+            return
+
+        if self.at_me in msg:
+            msg = msg.replace(self.at_me, "").strip()
+
+        is_group = who in self.receiver_list
+
+        if self.rules:
+            matched_replies = self._match_rule(msg, who)
+            if matched_replies:
+                for reply in matched_replies:
+                    if self._stop_event.is_set() or not self._is_running:
+                        return
+                    self._send_reply(reply, who, is_group, message.sender if is_group else None)
+                return
+
+        if self.model != "禁用模型":
+            if self._stop_event.is_set() or not self._is_running:
+                return
+            self._send_ai_response(msg, who, is_group, message.sender if is_group else None)
+
+    def _cleanup(self):
+        log_print("[AI_WORKER] cleanup")
         try:
-            if self.model == "文心一言":
-                result = self._query_wenxin_api(msg)
-            elif self.model == "月之暗面":
-                result = self._query_moonshot_api(msg)
-            else:
-                result = self._query_default_api(msg)
-
-            if result:
-                log("INFO", f"AI回复发送给 {chat_name}: {result[:30]}...")
-                log_print(f"[AI_WORKER] AI reply sent to {chat_name}: {result[:30]}...")
-
-                if self.only_at:
-                    self.wx.SendMsg(msg=result, who=who, at=sender)
-                else:
-                    self.wx.SendMsg(msg=result, who=who)
-
+            for target in self.listen_list:
+                if hasattr(self.app_instance.wx, 'RemoveListenChat'):
+                    self.app_instance.wx.RemoveListenChat(who=target)
+            self.listen_list.clear()
         except Exception as e:
-            log("ERROR", f"调用AI API时出错: {str(e)}")
-            log_print(f"[AI_WORKER] Critical error calling AI API: {str(e)}")
+            log("ERROR", f"清理监听时出错: {str(e)}")
 
-    def _query_wenxin_api(self, msg: str) -> str:
-        log_print("[AI_WORKER] Querying Wenxin Yiyan API")
-        access_token = self._get_access_token()
-        if not access_token:
-            log_print("[AI_WORKER] Failed to get access token")
-            return "Unable to obtain access token"
+    def _should_prevent_duplicate(self, reply, who):
+        chat_name = self._get_chat_name(who)
+        current_time = time.time()
+        same_reply_threshold = int(read_key_value('same_reply')) * 60
 
-        payload = {"messages": [{"role": "user", "content": msg}]}
-        result = self._query_api(
-            f"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token={access_token}",
-            payload=payload,
-            headers={'Content-Type': 'application/json'}
-        )
+        with self._message_lock:
+            if chat_name in self.last_sent_messages:
+                last_message, last_time = self.last_sent_messages[chat_name]
+                if reply == last_message:
+                    time_diff = current_time - last_time
+                    if time_diff < same_reply_threshold:
+                        log("WARNING", f"阻止向 {chat_name} 发送重复消息: {reply}")
+                        return True
+        return False
 
-        return result.get('result', "Unable to parse response")
+    def _update_last_sent(self, reply, who):
+        chat_name = self._get_chat_name(who)
+        current_time = time.time()
+        cutoff = current_time - 3600
 
-    def _get_access_token(self) -> Optional[str]:
-        log_print("[AI_WORKER] Fetching Baidu API access token")
-        result = self._query_api(
+        with self._message_lock:
+            before_count = len(self.last_sent_messages)
+            self.last_sent_messages = {
+                k: v for k, v in self.last_sent_messages.items()
+                if v[1] > cutoff
+            }
+            after_count = len(self.last_sent_messages)
+            self.last_sent_messages[chat_name] = (reply, current_time)
+            cleaned_count = before_count - (after_count - 1)
+            if cleaned_count > 0:
+                log("WARNING", "已清理监听缓存，释放内存空间")
+                log_print(f"[AI_WORKER] Cleaned {cleaned_count} expired message caches, "
+                          f"current cache remaining: {after_count} entries")
+
+    def _send_reply(self, reply, who, is_group=False, at_user=None):
+        try:
+            if self._should_prevent_duplicate(reply, who):
+                return
+
+            if os.path.isdir(os.path.dirname(reply)):
+                if os.path.isfile(reply):
+                    response = self.app_instance.wx.SendFiles(filepath=reply, who=who)
+                    log_print(response)
+                    if response.get('status') == '失败':
+                        raise ValueError(f"发送文件失败: {response.get('message', '未找到该备注的好友')}")
+                    self._update_last_sent(f"[文件] {os.path.basename(reply)}", who)
+                else:
+                    raise FileNotFoundError(f"回复规则有误,没有 {os.path.basename(reply)} 文件")
+                return
+
+            time.sleep(int(read_key_value('reply_delay')))
+
+            emotion_match = re.match(r'^SendEmotion:([\d,]+)', reply)
+            if emotion_match:
+                numbers = [int(n) for n in emotion_match.group(1).split(',') if n.strip().isdigit()]
+                valid_indices = [n for n in numbers if n >= 1]
+
+                if not valid_indices:
+                    raise ValueError("表情索引必须≥1")
+                selected_index = random.choice(valid_indices)
+                emotion_id = selected_index - 1
+                response = self.app_instance.wx.SendEmotion(emotion_id, who=who)
+                log_print(response)
+                if response.get('status') == '失败':
+                    raise ValueError(f"发送表情失败: {response.get('message', '未找到表情包')}")
+            else:
+                if is_group and at_user and self.only_at:
+                    response = self.app_instance.wx.SendMsg(msg=reply, who=who, at=at_user)
+                else:
+                    response = self.app_instance.wx.SendMsg(msg=reply, who=who)
+                log_print(response)
+                if response.get('status') == '失败':
+                    raise ValueError(f"发送消息失败: {response.get('message', '未找到该备注的好友')}")
+
+            self._update_last_sent(reply, who)
+
+        except FileNotFoundError as e:
+            log("ERROR", str(e))
+        except ValueError as e:
+            log("ERROR", f"无效的表情索引: {str(e)}")
+        except Exception as e:
+            log("ERROR", f"发送回复失败: {str(e)}")
+
+    def _send_ai_response(self, msg, who, is_group=False, at_user=None):
+        result = self._query_ai_model(msg)
+        if result:
+            if self._should_prevent_duplicate(result, who):
+                return
+
+            if is_group and at_user and self.only_at:
+                response = self.app_instance.wx.SendMsg(msg=result, who=who, at=at_user)
+            else:
+                response = self.app_instance.wx.SendMsg(msg=result, who=who)
+
+            if response.get('status') == '失败':
+                raise ValueError(f"发送AI回复失败: {response.get('message', '未找到该备注的好友')}")
+
+            self._update_last_sent(result, who)
+
+    def _query_api(self, url, payload=None, headers=None, params=None, method='POST'):
+        try:
+            response = requests.request(
+                method=method,
+                url=url,
+                json=payload,
+                headers=headers,
+                params=params,
+                timeout=10
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            log("ERROR", f"API请求失败: {e}")
+            return None
+
+    def _get_access_token(self):
+        response = self._query_api(
             "https://aip.baidubce.com/oauth/2.0/token",
             params={'grant_type': 'client_credentials',
                     'client_id': 'eCB39lMiTbHXV0mTt1d6bBw7',
                     'client_secret': 'WUbEO3XdMNJLTJKNQfFbMSQvtBVzRhvu'}
         )
+        return response.get("access_token") if response else None
 
-        return result.get("access_token") if result else None
+    def _query_ai_model(self, msg):
+        if self.model == "禁用模型":
+            return None
+        try:
+            if self.model == "文心一言":
+                return self._query_wenxin_model(msg)
+            elif self.model == "月之暗面":
+                return self._query_moonshot_model(msg)
+            elif self.model == "星火讯飞":
+                return self._query_other_model(msg)
+            else:
+                return "未知的AI模型"
+        except Exception as e:
+            log("ERROR", f"AI模型查询失败: {str(e)}")
+            return "抱歉，AI模型查询失败，请稍后再试。"
 
-    def _query_moonshot_api(self, msg: str) -> str:
-        log_print("[AI_WORKER] Querying Moonshot API")
-        from openai import OpenAI
+    def _query_wenxin_model(self, msg):
+        access_token = self._get_access_token()
+        if not access_token:
+            return "无法获取百度API访问令牌"
 
-        client = OpenAI(
-            api_key="sk-dx1RuweBS0LU0bCR5HizbWjXLuBL6HrS8BT21NEEGwbeyuo6",
-            base_url="https://api.moonshot.cn/v1"
+        payload = {"messages": [{"role": "user", "content": msg}]}
+        response = self._query_api(
+            f"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token={access_token}",
+            payload=payload,
+            headers={'Content-Type': 'application/json'}
         )
+        return response.get('result', "无法解析响应") if response else "请求失败"
 
+    def _query_moonshot_model(self, msg):
+        from openai import OpenAI
+        client = OpenAI(api_key="sk-dx1RuweBS0LU0bCR5HizbWjXLuBL6HrS8BT21NEEGwbeyuo6",
+                        base_url="https://api.moonshot.cn/v1")
         completion = client.chat.completions.create(
             model="moonshot-v1-8k",
             messages=[{"role": "system", "content": self.system_content},
                       {"role": "user", "content": msg}],
             temperature=0.9,
         )
-
         return completion.choices[0].message.content
 
-    def _query_default_api(self, msg: str) -> str:
-        log_print("[AI_WORKER] Querying default API")
+    def _query_other_model(self, msg):
         data = {
             "max_tokens": 64,
             "top_k": 4,
@@ -348,301 +671,75 @@ class AiWorkerThread(WorkerThreadBase):
             ],
             "model": "4.0Ultra"
         }
-
         header = {
             "Authorization": "Bearer xCPWitJxfzhLaZNOAdtl:PgJXiEyvKjUaoGzKwgIi",
             "Content-Type": "application/json"
         }
-
         response = self._query_api("https://spark-api-open.xf-yun.com/v1/chat/completions", data, header)
-        return response['choices'][0]['message']['content'] if response else "Unable to parse response"
-
-    def _query_api(self, url: str, payload: Optional[Dict] = None,
-                   headers: Optional[Dict] = None, params: Optional[Dict] = None,
-                   method: str = 'POST') -> Optional[Dict]:
-        log_print(f"[AI_WORKER] Making API request to: {url[:50]}...")
-        try:
-            response = requests.request(
-                method=method,
-                url=url,
-                json=payload,
-                headers=headers,
-                params=params,
-                timeout=15
-            )
-            response.raise_for_status()
-            log_print(f"[AI_WORKER] API request successful: {url[:30]}...")
-            return response.json()
-        except requests.RequestException as e:
-            log("ERROR", f"API请求失败: {str(e)}")
-            log_print(f"[AI_WORKER] API request error: {str(e)}")
-            return None
-        except Exception as e:
-            log("ERROR", f"处理API响应时出错: {str(e)}")
-            log_print(f"[AI_WORKER] Unexpected error processing API response: {str(e)}")
-            return None
+        return response['choices'][0]['message']['content'] if response else "无法解析响应"
 
 
 class SplitWorkerThread(WorkerThreadBase):
-    """消息拆分发送工作线程"""
-    sent_signal = QtCore.pyqtSignal(str, bool)
-
-    def __init__(self, app_instance, receiver: str, sentences: List[str], wx: Any):
+    def __init__(self, app_instance, receiver, sentences):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.sentences = sentences
-        self.wx = wx
-        self._is_running = True
+        log_print(f"[SPLIT_WORKER] Thread initialized for receiver: {receiver}, {len(sentences)} sentences")
 
-    def run(self) -> None:
-        """线程主循环"""
+    def run(self):
         self._is_running = True
-        log("INFO", f"SplitWorkerThread 已启动，准备将 {len(self.sentences)} 条信息发给 {self.receiver}")
+        log_print(f"[SPLIT_WORKER] Thread started, sending {len(self.sentences)} messages to {self.receiver}")
 
         for i, sentence in enumerate(self.sentences):
             if self._stop_event.is_set() or not self._is_running:
-                log("INFO", f"收到停止信号，终止发送任务，当前进度: {i + 1}/{len(self.sentences)}")
                 break
+
+            if self._is_paused:
+                self.wait_for_resume()
+                if self._stop_event.is_set() or not self._is_running:
+                    break
 
             try:
                 log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
-                if self.wx:
-                    self.wx.SendMsg(msg=sentence, who=self.receiver)
-                    self.sent_signal.emit(sentence, True)  # 发送成功信号
-                else:
-                    log("ERROR", f"找不到微信实例，无法发送消息给 {self.receiver}")
-                    self.sent_signal.emit(sentence, False)  # 发送失败信号
-                    self._stop_event.set()
-                    break
-
-                # 添加发送间隔，避免过快
-                for _ in range(5):
-                    if self._stop_event.is_set():
-                        break
-                    self.msleep(100)
-
+                log_print(
+                    f"[SPLIT_WORKER] Sending message {i + 1}/{len(self.sentences)}: '{sentence[:30]}...' to {self.receiver}")
+                if not self._send_message(sentence, self.receiver):
+                    raise LookupError("发送失败")
+                self.msleep(500)
             except Exception as e:
                 log("ERROR", f"发送消息时出错: {str(e)}")
-                self.sent_signal.emit(sentence, False)  # 发送失败信号
+                log_print(f"[SPLIT_WORKER] Error sending message: {str(e)}")
                 self.app_instance.is_sending = False
+                self.app_instance.is_scheduled_task_active = False
                 self._stop_event.set()
                 break
 
-        log("INFO", f"拆句发送已完成，共发送 {len(self.sentences)} 条消息")
         self._is_running = False
+        log_print(f"[SPLIT_WORKER] Thread finished, all messages sent to {self.receiver}")
         self.finished.emit()
 
+    def _send_message(self, msg: str, who: str) -> bool:
+        return self._retry_operation(lambda: self.app_instance.wx.SendMsg(msg=msg, who=who))
 
-class WorkerThread(WorkerThreadBase):
-    ES_CONTINUOUS = 0x80000000
-    ES_SYSTEM_REQUIRED = 0x00000001
-    ES_DISPLAY_REQUIRED = 0x00000002
-
-    finished = pyqtSignal()
-
-    def __init__(self, app_instance):
-        super().__init__()
-        self.app_instance = app_instance
-        self.prevent_sleep = False
-        self.current_time = 'sys'
-        self._system_state = None
-
-    def run(self) -> None:
-        self._is_running = True
-
-        if self.prevent_sleep:
-            self._set_system_state(self.ES_CONTINUOUS | self.ES_SYSTEM_REQUIRED | self.ES_DISPLAY_REQUIRED)
-            log("WARNING", "已阻止系统休眠和锁屏")
-
-        try:
-            while self._is_running and not self._stop_event.is_set():
-                if self.check_interruption():
-                    break
-
-                next_task = self._find_next_ready_task()
-                if next_task is None:
-                    log("INFO", "没有找到待执行的任务，线程退出")
-                    break
-
-                try:
-                    task_time = datetime.strptime(next_task['time'], '%Y-%m-%dT%H:%M:%S')
-                    remaining_time = (task_time - get_current_time(self.current_time)).total_seconds()
-
-                    if remaining_time > 0:
-                        hours, remainder = divmod(int(remaining_time), 3600)
-                        minutes, seconds = divmod(remainder, 60)
-                        time_parts = []
-                        if hours > 0:
-                            time_parts.append(f"{hours}时")
-                        if minutes > 0:
-                            time_parts.append(f"{minutes}分")
-                        if seconds > 0 or not time_parts:
-                            time_parts.append(f"{seconds}秒")
-                        friendly_time = ''.join(time_parts)
-
-                        log("INFO", f"下一个任务将在 {friendly_time} 后执行")
-
-                        while remaining_time > 0 and not self.check_interruption():
-                            sleep_time = min(remaining_time, 0.5)
-                            self.msleep(int(sleep_time * 1000))
-                            remaining_time -= sleep_time
-
-                            if self.check_interruption():
-                                break
-
-                        if self.check_interruption():
-                            break
-
-                    if self.check_interruption():
-                        break
-
-                    success = self._execute_task(next_task)
-
-                    if self.check_interruption():
-                        log("WARNING", "任务执行过程中被用户终止")
-                        break
-
-                    if success:
-                        self.app_instance.update_task_status(next_task, '成功')
-                    else:
-                        self.app_instance.update_task_status(next_task, '出错')
-
-                except Exception as e:
-                    log("ERROR", f"处理任务时出错: {str(e)}")
-                    self.app_instance.update_task_status(next_task, '出错')
-                    time.sleep(1)
-
-        finally:
-            if self.prevent_sleep:
-                self._set_system_state(self.ES_CONTINUOUS)
-                log("WARNING", "已恢复系统休眠和锁屏设置")
-            self._is_running = False
-            self.finished.emit()
-
-    def _set_system_state(self, state_flags: int) -> None:
-        try:
-            self._system_state = ctypes.windll.kernel32.SetThreadExecutionState(state_flags)
-            if not self._system_state:
-                log("ERROR", f"设置系统状态失败，错误码: {ctypes.GetLastError()}")
-        except Exception as e:
-            log("ERROR", f"调用系统API设置状态时出错: {str(e)}")
-
-    def _find_next_ready_task(self) -> Optional[Dict]:
-        next_task = None
-        min_time = None
-
-        for task in self.app_instance.ready_tasks:
+    def _retry_operation(self, operation, max_retries=3):
+        for attempt in range(max_retries):
             try:
-                task_time = QDateTime.fromString(task['time'], "yyyy-MM-ddTHH:mm:ss").toSecsSinceEpoch()
-                if min_time is None or task_time < min_time:
-                    min_time = task_time
-                    next_task = task
-            except Exception as e:
-                log("ERROR", f"解析任务时间时出错: {str(e)}")
-
-        return next_task
-
-    def _execute_task(self, task: Dict) -> bool:
-        max_retries = 3
-        retries = 0
-        success = False
-
-        log("INFO", f"开始执行任务: {task.get('name', '未知')}")
-
-        while retries < max_retries and not success and not self.check_interruption():
-            try:
-                name = task['name']
-                info = task['info']
-                wx_nickname = task['wx_nickname']
-
-                if self.check_interruption():
-                    return False
-
-                wx_instance = self._get_wx_instance(wx_nickname)
-                if not wx_instance:
-                    log("ERROR", f"找不到微信实例 '{wx_nickname}'，无法执行任务")
-                    raise ValueError(f"找不到微信实例 '{wx_nickname}'")
-
-                if self.check_interruption():
-                    return False
-
-                if re.match(r'^Emotion:\d+$', info):
-                    emotion_index = int(info.split(':')[1])
-                    success = self._send_with_interruption(
-                        lambda: wx_instance.SendEmotion(emotion_index=emotion_index, who=name))
-                elif os.path.isdir(os.path.dirname(info)):
-                    if os.path.isfile(info):
-                        file_name = os.path.basename(info)
-                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname})")
-                        success = self._send_with_interruption(lambda: wx_instance.SendFiles(filepath=info, who=name))
-                    else:
-                        raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
+                result = operation()
+                if result["status"] == "成功":
+                    return True
                 else:
-                    log("INFO", f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {wx_nickname})")
-                    if "@所有人" in info:
-                        info = info.replace("@所有人", "").strip()
-                        success = self._send_with_interruption(lambda: wx_instance.AtAll(msg=info, who=name))
-                    else:
-                        success = self._send_with_interruption(lambda: wx_instance.SendMsg(msg=info, who=name))
-
-                if success:
-                    log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname})")
-
+                    raise LookupError(f"操作失败: {result.get('message', '未知错误')}")
             except Exception as e:
-                log("ERROR", f"执行任务失败 (尝试 {retries + 1}/{max_retries}): {str(e)}")
-                retries += 1
-
-                if retries < max_retries and not self.check_interruption():
+                log("ERROR", f"操作失败 (尝试 {attempt + 1}/{max_retries}): {str(e)}")
+                if attempt < max_retries - 1:
                     log("WARNING", "尝试重新连接微信客户端...")
                     try:
                         self.app_instance.parent.update_wx()
-                        for _ in range(10):
-                            if self.check_interruption():
-                                break
-                            self.msleep(100)
+                        time.sleep(1)
                     except Exception as we:
-                        log("ERROR", f"更新微信客户端失败: {str(we)}")
-
-        return success
-
-    def _get_wx_instance(self, wx_nickname: str) -> Any:
-        try:
-            wx_dict = self.app_instance.wx_dict
-
-            if wx_nickname in wx_dict:
-                return wx_dict[wx_nickname]
-
-            log("WARNING", f"找不到微信实例 '{wx_nickname}'，将使用默认实例")
-            if wx_dict:
-                return next(iter(wx_dict.values()))
-
-            log("ERROR", "没有可用的微信实例")
-            return None
-        except Exception as e:
-            log("ERROR", f"获取微信实例失败: {str(e)}")
-            return None
-
-    def _send_with_interruption(self, send_func):
-        if self.check_interruption():
-            return False
-
-        try:
-            send_thread = threading.Thread(target=send_func)
-            send_thread.daemon = True
-            send_thread.start()
-
-            while send_thread.is_alive():
-                if self.check_interruption():
-                    send_thread.join(timeout=0.5)
-                    return False
-                self.msleep(100)
-
-            return True
-
-        except Exception as e:
-            log("ERROR", f"发送过程中出错: {str(e)}")
-            return False
+                        log("ERROR", f"Failed to update WeChat client: {str(we)}")
+        return False
 
 
 class ErrorSoundThread(QtCore.QThread):
