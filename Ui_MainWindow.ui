@@ -37,7 +37,7 @@
      <widget class="QFrame" name="main_Frame">
       <property name="styleSheet">
        <string notr="true">QFrame#main_Frame{
-background:qradialgradient(cx:0.3,cy:0.3,radius:1.2,fx:0.15,fy:0.15,stop:0 rgb(162,129,247),stop:0.3 rgb(130,180,255),stop:0.5 rgb(119,111,252),stop:0.7 rgb(200,120,250),stop:0.9 rgb(119,111,252),stop:1 rgb(80,50,200));
+background-color: qradialgradient(cx:0, cy:0, radius:1, fx:0.1, fy:0.1, stop:0 rgb(162, 129, 247),  stop:1 rgb(119, 111, 252));
 border:0px solid red;
 border-radius:30px
 }</string>
@@ -1257,8 +1257,7 @@ padding-left:12px;</string>
                         </size>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">
-QFrame#frame_top3{
+                        <string notr="true">QFrame#frame_top3{
 color: rgb(255, 255, 255);
 border-radius: 10px;
 background-color: qradialgradient(cx:0, cy:0, radius:1, fx:0.1, fy:0.1, stop:0 rgb(243, 175, 189),  stop:1 rgb(155, 118, 218));
@@ -2684,7 +2683,7 @@ border-radius:10px
                                 </font>
                                </property>
                                <property name="text">
-                                <string>专业版</string>
+                                <string>PRO</string>
                                </property>
                               </widget>
                              </item>
@@ -2786,7 +2785,7 @@ border-radius:10px
                  </item>
                  <item>
                   <widget class="QFrame" name="DataInput">
-                   <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,0,0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,1,0,0">
                     <property name="spacing">
                      <number>9</number>
                     </property>
@@ -2815,13 +2814,13 @@ border-radius:10px
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>266</width>
+                        <width>388</width>
                         <height>54</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>388</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -2995,13 +2994,13 @@ QPushButton:pressed {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>200</width>
+                        <width>209</width>
                         <height>54</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>230</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -3097,8 +3096,14 @@ QLineEdit:hover {
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>278</width>
+                        <width>0</width>
                         <height>54</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="layoutDirection">
@@ -3131,7 +3136,7 @@ border-radius:12px</string>
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="time_label_2">
+                        <widget class="QLabel" name="label_2">
                          <property name="font">
                           <font>
                            <family>微软雅黑 Light</family>
@@ -3144,7 +3149,7 @@ border-radius:12px</string>
 }</string>
                          </property>
                          <property name="text">
-                          <string>发送时间</string>
+                          <string>定时</string>
                          </property>
                         </widget>
                        </item>
@@ -3158,13 +3163,13 @@ border-radius:12px</string>
                          </property>
                          <property name="minimumSize">
                           <size>
-                           <width>158</width>
+                           <width>0</width>
                            <height>0</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>158</width>
+                           <width>16777215</width>
                            <height>16777215</height>
                           </size>
                          </property>
@@ -3225,13 +3230,13 @@ QDateTimeEdit::up-button, QDateTimeEdit::down-button {
                          </property>
                          <property name="minimumSize">
                           <size>
-                           <width>64</width>
+                           <width>51</width>
                            <height>0</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>16777215</width>
+                           <width>88</width>
                            <height>16777215</height>
                           </size>
                          </property>
@@ -3380,13 +3385,13 @@ QPushButton:pressed {
                      </property>
                      <property name="minimumSize">
                       <size>
-                       <width>368</width>
+                       <width>388</width>
                        <height>482</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>368</width>
+                       <width>388</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -3449,7 +3454,7 @@ QScrollArea QScrollBar::sub-page:vertical {
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>368</width>
+                        <width>388</width>
                         <height>488</height>
                        </rect>
                       </property>
