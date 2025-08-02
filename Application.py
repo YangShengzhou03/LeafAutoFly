@@ -13,7 +13,7 @@ pyinstaller Application.spec
 
 def main():
     server = QLocalServer()
-    socket_name = "LeafAuto_Server_Socket"
+    socket_name = "LeafAuto_Pro_Server_Socket"
 
     client_socket = QLocalSocket()
     client_socket.connectToServer(socket_name)
@@ -32,7 +32,7 @@ def main():
 
     server.newConnection.connect(lambda: handle_incoming_connection(server, socket_name))
 
-    shared_memory = QtCore.QSharedMemory("LeafAuto_Server")
+    shared_memory = QtCore.QSharedMemory("LeafAuto_Pro_Server")
     if shared_memory.attach():
         log_print("The application is already running.")
         return 1
@@ -43,11 +43,11 @@ def main():
 
     app = QtWidgets.QApplication(sys.argv)
 
-    app.setApplicationName("LeafAuto")
-    app.setOrganizationName("LeafAuto")
+    app.setApplicationName("LeafAuto_Pro")
+    app.setOrganizationName("LeafAuto_Pro")
 
     window = MainWindow()
-    window.setWindowTitle("LeafAuto")
+    window.setWindowTitle("LeafAuto_Pro")
 
     if hasattr(window, 'centerOnScreen'):
         window.centerOnScreen()
@@ -70,7 +70,7 @@ def handle_incoming_connection(server, socket_name):
         message = socket.readAll().data().decode('utf-8')
         if message == "bring_to_front":
             for widget in QtWidgets.QApplication.topLevelWidgets():
-                if isinstance(widget, QtWidgets.QMainWindow) and widget.windowTitle() == "LeafAuto":
+                if isinstance(widget, QtWidgets.QMainWindow) and widget.windowTitle() == "LeafAuto_Pro":
                     if widget.windowState() & QtCore.Qt.WindowState.WindowMinimized:
                         widget.setWindowState(
                             widget.windowState() & ~QtCore.Qt.WindowState.WindowMinimized | QtCore.Qt.WindowState.WindowActive)

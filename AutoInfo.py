@@ -9,12 +9,11 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from queue import Queue
-from threading import Thread
+from threading import Thread, Lock
 
 import openpyxl
 from PyQt6 import QtWidgets, QtCore, QtGui
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QSizePolicy
+from PyQt6.QtCore import pyqtSignal
 
 from System_info import read_key_value
 from Thread import WorkerThread, ErrorSoundThread
@@ -22,13 +21,43 @@ from common import get_resource_path, log, str_to_bool, log_print
 
 
 class AutoInfo(QtWidgets.QWidget):
+    update_ui_signal = pyqtSignal(int, str, str, str, list, str)
+
     def __init__(self, wx_dict, membership, parent=None):
         super().__init__(parent)
         self.parent = parent
         self.wx_dict = wx_dict
-        self.Membership = membership
-        self.ready_tasks = []
-        self.completed_tasks = []
+        self.membership = membership
+
+        self.ready_tasks = {}
+        self.completed_tasks = {}
+        self.task_id_counter = 0
+        self.tasks_by_time = {}
+
+        self.weekday_map = {
+            "仅一次": [],
+            "星期一": [1],
+            "星期二": [2],
+            "星期三": [3],
+            "星期四": [4],
+            "星期五": [5],
+            "星期六": [6],
+            "星期日": [7],
+            "每天": list(range(1, 8)),
+            "工作日": list(range(1, 6)),
+            "周末末": [6, 7]
+        }
+
+        self.reverse_weekday_map = {
+            1: "星期一",
+            2: "星期二",
+            3: "星期三",
+            4: "星期四",
+            5: "星期五",
+            6: "星期六",
+            7: "星期日"
+        }
+
         self.is_executing = False
         self.worker_thread = None
         self.error_sound_thread = ErrorSoundThread()
@@ -40,648 +69,1038 @@ class AutoInfo(QtWidgets.QWidget):
             4: get_resource_path('resources/sound/error_sound_5.mp3')
         }
 
+        log("INFO", "初始化邮件处理线程...")
+        log_print("[AutoInfo] Initializing email processing thread...")
         self.email_queue = Queue()
-        self.email_thread = Thread(target=self._process_email_queue, daemon=True)
+        self.email_thread = Thread(target=self.process_email_queue, daemon=True)
         self.email_thread.start()
         self.last_email_time = 0
         self.email_cooldown = 60
-        log_print(f"[AutoInfo] Initialization completed, membership type: {self.Membership}")
 
-    def openFileNameDialog(self, filepath=None):
+        self.save_lock = Lock()
+        self.save_pending = False
+
+        self.update_ui_signal.connect(self.add_task_to_ui)
+
+        log("INFO", f"初始化完成。会员等级: {self.membership}")
+        log_print(f"[AutoInfo] Initialization completed. Membership level: {self.membership}")
+
+    def get_unique_task_id(self, preferred_id=None):
+        if preferred_id is not None and preferred_id not in self.ready_tasks and preferred_id not in self.completed_tasks:
+            self.task_id_counter = max(self.task_id_counter, preferred_id)
+            return preferred_id
+
+        self.task_id_counter += 1
+        return self.task_id_counter
+
+    def save_tasks_to_json(self):
         try:
+            log("INFO", "保存任务到JSON文件...")
+            log_print("[AutoInfo] Saving tasks to JSON file...")
+
+            tasks_list = []
+            for task in self.ready_tasks.values():
+                tasks_data = {
+                    'id': task['id'],
+                    'time': task['time'],
+                    'sender': task['sender'],
+                    'name': task['name'],
+                    'info': task['info'],
+                    'frequency': task['frequency']
+                }
+                tasks_list.append(tasks_data)
+
+            for task in self.completed_tasks.values():
+                task_data = {
+                    'id': task['id'],
+                    'time': task['time'],
+                    'sender': task['sender'],
+                    'name': task['name'],
+                    'info': task['info'],
+                    'frequency': task['frequency'],
+                    'status': task.get('status', '')
+                }
+                tasks_list.append(task_data)
+
+            log("INFO", f"准备将 {len(tasks_list)} 个任务保存到JSON文件...")
+            log_print(f"[AutoInfo] Preparing to save {len(tasks_list)} tasks to JSON file...")
+
+            if not os.path.exists('_internal'):
+                os.makedirs('_internal')
+                log("INFO", "创建了_internal目录")
+                log_print("[AutoInfo] Created _internal directory")
+
+            with open('_internal/tasks.json', 'w', encoding='utf-8') as f:
+                json.dump(tasks_list, f, ensure_ascii=False, indent=4)
+
+            log("INFO", f"任务保存成功。总任务数: {len(tasks_list)}")
+            log_print(f"[AutoInfo] Tasks saved successfully. Total tasks: {len(tasks_list)}")
+        except Exception as e:
+            log("ERROR", f"保存任务失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to save tasks: {str(e)}")
+            log("ERROR", "非管理员身份运行软件,未能将操作保存")
+            log_print("[AutoInfo] Running software as non-administrator, failed to save operation")
+
+    def delayed_save(self):
+        log("INFO", "准备延迟保存任务...")
+        log_print("[AutoInfo] Preparing for delayed task saving...")
+        with self.save_lock:
+            if self.save_pending:
+                log("INFO", "已有保存请求在等待，取消当前请求")
+                log_print("[AutoInfo] There is already a save request waiting, canceling current request")
+                return
+            self.save_pending = True
+        Thread(target=self.delayed_save_thread, daemon=True).start()
+        log("INFO", "延迟保存线程已启动")
+        log_print("[AutoInfo] Delayed save thread started")
+
+    def delayed_save_thread(self):
+        log("INFO", "延迟保存线程运行中，等待2秒...")
+        log_print("[AutoInfo] Delayed save thread running, waiting for 2 seconds...")
+        time.sleep(2)
+        self.save_tasks_to_json()
+        with self.save_lock:
+            self.save_pending = False
+        log("INFO", "延迟保存线程完成")
+        log_print("[AutoInfo] Delayed save thread completed")
+
+    def add_list_item(self):
+        log("INFO", "尝试添加新任务...")
+        log_print("[AutoInfo] Attempting to add new task...")
+
+        try:
+            time_text, name_text, info_text, frequency, sender_text = self.get_input_values()
+
+            if not all([time_text, name_text, info_text, sender_text]):
+                log("WARNING", "任务添加失败: 输入不完整，缺少必要信息")
+                log_print("[AutoInfo] Task addition failed: Incomplete input, missing necessary information")
+                log("WARNING", "请先输入有效内容、发送方和接收人再添加任务")
+                log_print("[AutoInfo] Please enter valid content, sender and recipient before adding task")
+                return
+
+            if self.membership == 'Free' and len(self.ready_tasks) >= 5:
+                log("WARNING", "任务添加失败: 免费会员限制(5个任务)已达上限")
+                log_print("[AutoInfo] Task addition failed: Free membership limit (5 tasks) reached")
+                log("WARNING", "试用版最多添加5个任务，请升级版本")
+                log_print("[AutoInfo] Trial version can add up to 5 tasks, please upgrade upgrade version")
+                QtWidgets.QMessageBox.warning(self, "试用版限制", "试用试用版最多添加5个任务，请升级版本")
+                return
+            elif self.membership == 'Base' and len(self.ready_tasks) >= 30:
+                log("WARNING", "任务添加失败: 基础会员限制(30个任务)已达上限")
+                log_print("[AutoInfo] Task addition failed: Basic membership limit (30 tasks) reached")
+                log("WARNING", "基础版最多添加30个任务,升级Ai版无限制")
+                log_print("[AutoInfo] Basic version can add up to 30 tasks, upgrade to Ai version for unlimited tasks")
+                QtWidgets.QMessageBox.warning(self, "标准版限制", "标准版最多添加30个任务，请升级版本")
+                return
+
+            task_id = self.get_unique_task_id()
+
+            task_data = {
+                'id': task_id,
+                'time': time_text,
+                'sender': sender_text,
+                'name': name_text,
+                'info': info_text,
+                'frequency': frequency
+            }
+
+            self.ready_tasks[task_id] = task_data
+            log("INFO", f"任务数据已添加到内存: {task_data}")
+            log_print(f"[AutoInfo] Task data added to memory: {task_data}")
+
+            if time_text not in self.tasks_by_time:
+                self.tasks_by_time[time_text] = []
+            self.tasks_by_time[time_text].append(task_id)
+            log("INFO", f"任务已添加到时间索引: {time_text}")
+            log_print(f"[AutoInfo] Task added to time index: {time_text}")
+
+            widget_item = self.create_widget(task_id, time_text, name_text, info_text, frequency, sender_text)
+            self.parent.formLayout_3.addRow(widget_item)
+            log("INFO", f"任务控件已添加到界面: {task_id}")
+            log_print(f"[AutoInfo] Task widget added to interface: {task_id}")
+
+            log('INFO',
+                f'已添加 {time_text[-8:]} 由 {sender_text[:8]} 发送给 {name_text[:8]}: {info_text[:25] + "……" if len(info_text) > 25 else info_text}')
+            log_print(
+                f"[AutoInfo] Added task {time_text[-8:]} from {sender_text[:8]} to {name_text[:8]}: {info_text[:25] + '...' if len(info_text) > 25 else info_text}")
+
+            timestep = int(read_key_value('add_timestep'))
+            self.parent.dateTimeEdit.setDateTime(
+                datetime.fromisoformat(time_text) + timedelta(minutes=timestep))
+            log("INFO", f"日期时间控件已更新，增加 {timestep} 分钟")
+            log_print(f"[AutoInfo] DateTime widget updated, increased by {timestep} minutes")
+
+            self.delayed_save()
+
+        except Exception as e:
+            log("ERROR", f"添加任务时发生异常: {str(e)}")
+            log_print(f"[AutoInfo] Exception occurred while adding task: {str(e)}")
+
+    def create_widget(self, task_id, time_text, name_text, info_text, frequency, sender_text):
+        try:
+            log("INFO", f"正在为任务创建控件: {sender_text} -> {name_text} - {info_text}...")
+            log_print(f"[AutoInfo] Creating widget for task: {sender_text} -> {name_text} - {info_text}...")
+
+            widget_item = QtWidgets.QWidget(parent=self.parent.scrollAreaWidgetContents_3)
+            widget_item.setMinimumSize(QtCore.QSize(360, 80))
+            widget_item.setMaximumSize(QtCore.QSize(360, 80))
+            widget_item.setStyleSheet("background-color: rgb(255, 255, 255);\nborder-radius:18px")
+            widget_item.setObjectName("widget_item")
+
+            horizontal_layout_76 = QtWidgets.QHBoxLayout(widget_item)
+            horizontal_layout_76.setContentsMargins(12, 2, 12, 2)
+            horizontal_layout_76.setSpacing(6)
+            horizontal_layout_76.setObjectName("horizontalLayout_76")
+
+            widget_54 = QtWidgets.QWidget(parent=widget_item)
+            widget_54.setMinimumSize(QtCore.QSize(36, 36))
+            widget_54.setMaximumSize(QtCore.QSize(36, 36))
+            widget_54.setStyleSheet(f"image: url({get_resource_path('resources/img/page1/page1_发送就绪.svg')});")
+            widget_54.setObjectName("widget_54")
+            horizontal_layout_76.addWidget(widget_54)
+
+            vertical_layout_64 = QtWidgets.QVBoxLayout()
+            vertical_layout_64.setContentsMargins(6, 6, 6, 6)
+            vertical_layout_64.setSpacing(0)
+            vertical_layout_64.setObjectName("verticalLayout_64")
+
+            horizontal_layout_77 = QtWidgets.QHBoxLayout()
+            horizontal_layout_77.setContentsMargins(0, 0, 0, 0)
+            horizontal_layout_77.setSpacing(4)
+            horizontal_layout_77.setObjectName("horizontalLayout_77")
+
+            sender_receiver_label = QtWidgets.QLabel(f"{sender_text} → {name_text}", parent=widget_item)
+            font = QtGui.QFont()
+            font.setFamily("微软雅黑 Light")
+            font.setPointSize(12)
+            sender_receiver_label.setFont(font)
+            sender_receiver_label.setStyleSheet("color:rgb(0, 0, 0);")
+            sender_receiver_label.setObjectName("sender_receiver_label")
+            horizontal_layout_77.addWidget(sender_receiver_label)
+
+            time_label = QtWidgets.QLabel(time_text, parent=widget_item)
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            time_label.setFont(font)
+            time_label.setStyleSheet("color: rgb(169, 169, 169);")
+            time_label.setAlignment(
+                QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTrailing | QtCore.Qt.AlignmentFlag.AlignVCenter)
+            time_label.setObjectName("time_label")
+            horizontal_layout_77.addWidget(time_label)
+
+            if not frequency:
+                frequency_text = "仅一次"
+            else:
+                sorted_weekdays = sorted(frequency)
+                frequency_text = ",".join([str(num) for num in sorted_weekdays])
+
+            frequency_label = QtWidgets.QLabel(frequency_text, parent=widget_item)
+            frequency_label.setStyleSheet("color:rgb(105, 27, 253);\ntext-align: center;\nbackground:rgba(0, 0, 0, 0);")
+            frequency_label.setObjectName("label_2")
+            horizontal_layout_77.addWidget(frequency_label)
+
+            horizontal_layout_77.setStretch(0, 1)
+            vertical_layout_64.addLayout(horizontal_layout_77)
+
+            horizontal_layout_7 = QtWidgets.QHBoxLayout()
+            horizontal_layout_7.setContentsMargins(0, 6, 12, 3)
+            horizontal_layout_7.setObjectName("horizontalLayout_7")
+
+            message_label = QtWidgets.QLabel(info_text, parent=widget_item)
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            message_label.setFont(font)
+            message_label.setStyleSheet("color: rgb(169, 169, 169);")
+            message_label.setObjectName("message_label")
+            horizontal_layout_7.addWidget(message_label)
+
+            delete_button = QtWidgets.QPushButton("删除", parent=widget_item)
+            delete_button.setFixedSize(50, 25)
+            delete_button.setStyleSheet(
+                "QPushButton { background-color: transparent; color: red; } QPushButton:hover { background-color: rgba(255, 0, 0, 0.1); }"
+            )
+            delete_button.clicked.connect(
+                lambda checked, tid=task_id: self.remove_task(tid))
+            delete_button.setVisible(False)
+
+            horizontal_layout_7.addWidget(delete_button)
+
+            widget_item.enterEvent = lambda event, btn=delete_button: btn.setVisible(True)
+            widget_item.leaveEvent = lambda event, btn=delete_button: btn.setVisible(False)
+
+            vertical_layout_64.addLayout(horizontal_layout_7)
+            horizontal_layout_76.addLayout(vertical_layout_64)
+
+            widget_item.task_id = task_id
+            log("INFO", f"任务控件创建成功: {sender_text} -> {name_text} - {info_text}...")
+            log_print(f"[AutoInfo] Task widget created successfully: {sender_text} -> {name_text} - {info_text}...")
+
+            return widget_item
+
+        except Exception as e:
+            log("ERROR", f"创建任务控件失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to create task widget: {str(e)}")
+            return None
+
+    def remove_task(self, task_id):
+        log("INFO", f"尝试删除任务 (ID: {task_id})...")
+        log_print(f"[AutoInfo] Attempting to remove task (ID: {task_id})...")
+
+        try:
+            widget = None
+            for i in range(self.parent.formLayout_3.count()):
+                item = self.parent.formLayout_3.itemAt(i)
+                if item and item.widget() and hasattr(item.widget(), 'task_id') and item.widget().task_id == task_id:
+                    widget = item.widget()
+                    break
+
+            if widget:
+                widget.hide()
+                QtCore.QTimer.singleShot(0, widget.deleteLater)
+                log("INFO", f"任务控件已从界面移除 (ID: {task_id})")
+                log_print(f"[AutoInfo] Task widget removed from interface (ID: {task_id})")
+            else:
+                log("WARNING", f"未在界面中找到任务控件 (ID: {task_id})")
+                log_print(f"[AutoInfo] Task widget not found in interface (ID: {task_id})")
+
+            def process_data_removal():
+                if self.error_sound_thread._is_running:
+                    self.error_sound_thread.stop_playback()
+                    log("INFO", "错误提示音已停止")
+                    log_print("[AutoInfo] Error sound stopped")
+
+                if task_id in self.ready_tasks:
+                    task = self.ready_tasks.pop(task_id)
+                elif task_id in self.completed_tasks:
+                    task = self.completed_tasks.pop(task_id)
+                else:
+                    log("WARNING", f"未找到任务数据 (ID: {task_id})")
+                    log_print(f"[AutoInfo] Task data not found (ID: {task_id})")
+                    return
+
+                if task:
+                    time_text = task['time']
+                    if time_text in self.tasks_by_time:
+                        try:
+                            self.tasks_by_time[time_text].remove(task_id)
+                            if not self.tasks_by_time[time_text]:
+                                del self.tasks_by_time[time_text]
+                                log("INFO", f"时间索引 {time_text} 已删除，因为已无任务")
+                                log_print(f"[AutoInfo] Time index {time_text} deleted as no tasks remain")
+                        except ValueError:
+                            log("WARNING", f"任务ID {task_id} 不在时间索引 {time_text} 中")
+                            log_print(f"[AutoInfo] Task ID {task_id} not in time index {time_text}")
+
+                    log('WARNING', f'已删除任务 {task["info"][:35] + "……" if len(task["info"]) > 30 else task["info"]}')
+                    log_print(f"[AutoInfo] Task removed: {task['info'][:35] + '...' if len(task['info']) > 30 else task['info']}")
+
+                    if not self.ready_tasks and self.is_executing:
+                        self.is_executing = False
+                        if self.parent and hasattr(self.parent, 'start_pushButton') and self.parent.start_pushButton:
+                            def update_button_text():
+                                if self.parent and self.parent.start_pushButton:
+                                    self.parent.start_pushButton.setText("开始执行")
+
+                            if QtCore.QThread.currentThread() != self.parent.thread():
+                                QtCore.QTimer.singleShot(0, update_button_text)
+                            else:
+                                update_button_text()
+
+                        if self.worker_thread is not None:
+                            self.worker_thread.requestInterruption()
+                            self.worker_thread = None
+                            log("INFO", "工作线程已停止")
+                            log_print("[AutoInfo] Worker thread stopped")
+
+                    self.delayed_save()
+
+            QtCore.QTimer.singleShot(100, process_data_removal)
+
+        except Exception as e:
+            log("ERROR", f"删除任务失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to remove task: {str(e)}")
+
+    def update_ui(self):
+        log("INFO", f"正在更新界面，共 {len(self.ready_tasks)} 个任务...")
+        log_print(f"[AutoInfo] Updating interface, total {len(self.ready_tasks)} tasks...")
+
+        try:
+            self.clear_layout(self.parent.formLayout_3)
+
+            sorted_task_ids = sorted(self.ready_tasks.keys(),
+                                     key=lambda tid: self.ready_tasks[tid]['time'])
+            log("INFO", f"任务已按时间排序: {sorted_task_ids}")
+            log_print(f"[AutoInfo] Tasks sorted by time: {sorted_task_ids}")
+
+            for task_id in sorted_task_ids:
+                task = self.ready_tasks[task_id]
+                widget = self.create_widget(
+                    task_id, task['time'], task['name'], task['info'], task['frequency'], task['sender'])
+                self.parent.formLayout_3.addRow(widget)
+
+            log("INFO", "界面更新成功")
+            log_print("[AutoInfo] Interface updated successfully")
+
+        except Exception as e:
+            log("ERROR", f"更新界面失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to update interface: {str(e)}")
+
+    def get_input_values(self):
+        try:
+            log("INFO", "获取输入值...")
+            log_print("[AutoInfo] Getting input values...")
+
+            sender_text = self.parent.comboBox_nickName.currentText()
+            name_text = self.parent.receiver_lineEdit.text()
+            info_text = self.parent.message_lineEdit.text()
+            time_text = self.parent.dateTimeEdit.dateTime().toString(QtCore.Qt.DateFormat.ISODate)
+
+            if hasattr(self.parent.comboBox_Frequency, 'get_checked_items'):
+                checked_items = self.parent.comboBox_Frequency.get_checked_items()
+                frequency = []
+                for item in checked_items:
+                    if item in self.weekday_map:
+                        frequency.extend(self.weekday_map[item])
+                frequency = list(set(frequency))
+            else:
+                frequency_text = self.parent.comboBox_Frequency.currentText()
+                frequency = self.weekday_map.get(frequency_text, [])
+
+            log("INFO",
+                f"输入值获取成功: 发送方={sender_text}, 接收方={name_text}, 时间={time_text}, 频率={frequency}")
+            log_print(
+                f"[AutoInfo] Input values obtained successfully: Sender={sender_text}, Receiver={name_text}, Time={time_text}, Frequency={frequency}")
+            return time_text, name_text, info_text, frequency, sender_text
+
+        except Exception as e:
+            log("ERROR", f"获取输入值失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to get input values: {str(e)}")
+            return None, None, None, None, None
+
+    def on_start_clicked(self):
+        log("INFO", f"开始按钮被点击。当前状态: {'执行中' if self.is_executing else '已停止'}")
+        log_print(f"[AutoInfo] Start button clicked. Current status: {'Executing' if self.is_executing else 'Stopped'}")
+
+        if self.is_executing:
+            self.is_executing = False
+            self.parent.start_pushButton.setText("开始执行")
+            if self.worker_thread is not None:
+                self.worker_thread.requestInterruption()
+                self.worker_thread = None
+                log("INFO", "工作线程已中断")
+                log_print("[AutoInfo] Worker thread interrupted")
+            if self.error_sound_thread._is_running:
+                self.error_sound_thread.stop_playback()
+                log("INFO", "错误提示音已停止")
+                log_print("[AutoInfo] Error sound stopped")
+        else:
+            if not self.ready_tasks:
+                log("WARNING", "任务列表为空，请先添加任务至任务列表")
+                log_print("[AutoInfo] Task list is empty, please add tasks first")
+                return
+
+            current_time = datetime.now()
+            has_past_tasks = any(
+                datetime.fromisoformat(time_str) < current_time
+                for time_str in self.tasks_by_time
+            )
+
+            if has_past_tasks:
+                message = (
+                    f"<p style='color:#d9534f;font-size:16px;'>发现已过期的定时任务</p>"
+                    f"<p>点击确定将立即执行这些任务，否则请重新设置再启动</p>"
+                )
+
+                msg_box = QtWidgets.QMessageBox(
+                    QtWidgets.QMessageBox.Icon.Warning,
+                    "过期任务二次确认",
+                    message,
+                    QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                    self
+                )
+                msg_box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
+                reply = msg_box.exec()
+
+                if reply == QtWidgets.QMessageBox.StandardButton.No:
+                    log("INFO", "用户取消执行过期任务")
+                    log_print("[AutoInfo] User canceled execution of expired tasks")
+                    return
+
+            self.is_executing = True
+            self.parent.start_pushButton.setText("停止执行")
+            self.worker_thread = WorkerThread(self)
+            self.worker_thread.prevent_sleep = self.parent.checkBox_stopSleep.isChecked()
+            self.worker_thread.current_time = 'mix' if str_to_bool(read_key_value('net_time')) else 'sys'
+            self.worker_thread.finished.connect(self.on_thread_finished)
+            self.worker_thread.start()
+            log("INFO", "工作线程已启动")
+            log_print("[AutoInfo] Worker thread started")
+
+    def clear_layout(self, layout):
+        try:
+            log("INFO", "正在清空布局...")
+            log_print("[AutoInfo] Clearing layout...")
+
+            while layout.count():
+                child = layout.takeAt(0)
+                if child.widget():
+                    child.widget().deleteLater()
+
+            log("INFO", "布局清空成功")
+            log_print("[AutoInfo] Layout cleared successfully")
+
+        except Exception as e:
+            log("ERROR", f"清空布局失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to clear layout: {str(e)}")
+
+    def update_task_status(self, task_id, status):
+        log("INFO", f"更新任务状态 (ID: {task_id}): {status}")
+        log_print(f"[AutoInfo] Updating task status (ID: {task_id}): {status}")
+
+        try:
+            if task_id not in self.ready_tasks:
+                log("WARNING", f"未找到任务ID {task_id} 以更新状态")
+                log_print(f"[AutoInfo] Task ID {task_id} not found for status update")
+                return
+
+            task = self.ready_tasks.pop(task_id)
+            time_text = task['time']
+
+            if time_text in self.tasks_by_time:
+                try:
+                    self.tasks_by_time[time_text].remove(task_id)
+                    if not self.tasks_by_time[time_text]:
+                        del self.tasks_by_time[time_text]
+                        log("INFO", f"时间索引 {time_text} 已删除，因为已无任务")
+                        log_print(f"[AutoInfo] Time index {time_text} deleted as no tasks remain")
+                except ValueError:
+                    log("WARNING", f"任务ID {task_id} 不在时间索引 {time_text} 中")
+                    log_print(f"[AutoInfo] Task ID {task_id} not in time index {time_text}")
+
+            task['status'] = status
+            self.completed_tasks[task_id] = task
+            log("INFO", f"任务已移动到已完成列表 (ID: {task_id})")
+            log_print(f"[AutoInfo] Task moved to completed list (ID: {task_id})")
+
+            for i in range(self.parent.formLayout_3.count()):
+                item = self.parent.formLayout_3.itemAt(i)
+                if item and item.widget() and hasattr(item.widget(), 'task_id') and item.widget().task_id == task_id:
+                    widget_item = item.widget()
+                    widget_image = widget_item.findChild(QtWidgets.QWidget, "widget_54")
+                    if widget_image:
+                        if status == '成功':
+                            icon_path = 'page1_发送成功.svg'
+                            log('INFO', f"任务发送成功: {task['sender']} -> {task['name']}")
+                            log_print(f"[AutoInfo] Task sent successfully: {task['sender']} -> {task['name']}")
+                        else:
+                            icon_path = 'page1_发送失败.svg'
+                            log('ERROR', f"任务发送失败: {task['sender']} -> {task['name']}")
+                            log_print(f"[AutoInfo] Task failed to send: {task['sender']} -> {task['name']}")
+
+                            if 'error_count' not in task:
+                                task['error_count'] = 1
+                                self.play_error_sound()
+                                self.send_error_email(task)
+                            else:
+                                task['error_count'] += 1
+                                log("WARNING",
+                                    f"任务 {task['sender']} -> {task['name']} 已失败 {task['error_count']} 次")
+                                log_print(
+                                    f"[AutoInfo] Task {task['sender']} -> {task['name']} has failed {task['error_count']} times")
+
+                        new_icon_path = get_resource_path(f'resources/img/page1/{icon_path}')
+                        widget_image.setStyleSheet(f"image: url({new_icon_path});")
+                        log("INFO", f"任务图标已更新为 {icon_path} (ID: {task_id})")
+                        log_print(f"[AutoInfo] Task icon updated to {icon_path} (ID: {task_id})")
+
+                    if task['frequency']:
+                        current_time = datetime.fromisoformat(task['time'])
+                        next_time = self.calculate_next_time(current_time, task['frequency'])
+                        if next_time:
+                            self.update_ui_signal.emit(task_id, next_time.isoformat(), task['name'], task['info'],
+                                                       task['frequency'], task['sender'])
+                            log("INFO", f"已发送更新UI信号，任务将重复执行 (ID: {task_id})")
+                            log_print(f"[AutoInfo] UI update signal sent, task will repeat (ID: {task_id})")
+
+                    self.delayed_save()
+                    log("INFO", f"任务状态更新成功 (ID: {task_id})")
+                    log_print(f"[AutoInfo] Task status updated successfully (ID: {task_id})")
+                    break
+
+        except Exception as e:
+            log("ERROR", f"更新任务状态失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to update task status: {str(e)}")
+
+    def calculate_next_time(self, current_time, frequency):
+        if not frequency:
+            log("INFO", "频率为空，不计算下一次时间")
+            log_print("[AutoInfo] Frequency is empty, not calculating next time")
+            return None
+
+        now = datetime.now()
+        start_time = current_time if current_time > now else now
+        log("INFO", f"开始计算下一次任务时间，起始时间: {start_time}")
+        log_print(f"[AutoInfo] Starting calculation of next task time, start time: {start_time}")
+
+        next_time = start_time
+        max_days = 30
+        days_checked = 0
+
+        while days_checked < max_days:
+            weekday_num = next_time.weekday() + 1
+
+            if weekday_num in frequency:
+                candidate_time = next_time.replace(
+                    hour=current_time.hour,
+                    minute=current_time.minute,
+                    second=current_time.second,
+                    microsecond=0
+                )
+
+                if candidate_time > now:
+                    log("INFO", f"计算得到下一次任务时间: {candidate_time}")
+                    log_print(f"[AutoInfo] Calculated next task time: {candidate_time}")
+                    return candidate_time
+
+            next_time += timedelta(days=1)
+            days_checked += 1
+
+        log("WARNING", "超过最大检查天数，未找到合适的下一次时间")
+        log_print("[AutoInfo] Exceeded maximum check days, no suitable next time found")
+        return None
+
+    def add_task_to_ui(self, original_task_id, time_text, name_text, info_text, frequency, sender_text):
+        try:
+            task_id = self.get_unique_task_id()
+            task_data = {
+                'id': task_id,
+                'time': time_text,
+                'sender': sender_text,
+                'name': name_text,
+                'info': info_text,
+                'frequency': frequency
+            }
+            self.ready_tasks[task_id] = task_data
+            log("INFO", f"已添加重复任务数据 (ID: {task_id})")
+            log_print(f"[AutoInfo] Added recurring task data (ID: {task_id})")
+
+            if time_text not in self.tasks_by_time:
+                self.tasks_by_time[time_text] = []
+            self.tasks_by_time[time_text].append(task_id)
+            log("INFO", f"任务已添加到时间索引: {time_text} (ID: {task_id})")
+            log_print(f"[AutoInfo] Task added to time index: {time_text} (ID: {task_id})")
+
+            widget_item = self.create_widget(task_id, time_text, name_text, info_text, frequency, sender_text)
+            if widget_item:
+                sorted_task_ids = sorted(self.ready_tasks.keys(),
+                                         key=lambda tid: self.ready_tasks[tid]['time'])
+                task_index = sorted_task_ids.index(task_id)
+                self.parent.formLayout_3.insertRow(task_index, widget_item)
+
+                self.parent.formLayout_3.update()
+                self.parent.scrollAreaWidgetContents_3.updateGeometry()
+                self.parent.scrollArea_3.update()
+
+                log('INFO',
+                    f'自动添加 {time_text} 由 {sender_text[:8]} 发送给 {name_text[:8]}: {info_text[:25] + "……" if len(info_text) > 25 else info_text}')
+                log_print(
+                    f"[AutoInfo] Automatically added {time_text} from {sender_text[:8]} to {name_text[:8]}: {info_text[:25] + '...' if len(info_text) > 25 else info_text}")
+                self.delayed_save()
+                log("INFO", f"重复任务已添加到界面 (ID: {task_id})")
+                log_print(f"[AutoInfo] Recurring task added to interface (ID: {task_id})")
+            else:
+                log("ERROR", "创建重复任务控件失败")
+                log_print("[AutoInfo] Failed to create recurring task widget")
+                self.task_id_counter -= 1
+                if task_id in self.ready_tasks:
+                    del self.ready_tasks[task_id]
+                if time_text in self.tasks_by_time and task_id in self.tasks_by_time[time_text]:
+                    self.tasks_by_time[time_text].remove(task_id)
+                log("WARNING", f"创建重复任务控件失败，已回滚操作 (ID: {task_id})")
+                log_print(f"[AutoInfo] Failed to create recurring task widget, rolled back operation (ID: {task_id})")
+
+        except Exception as e:
+            log("ERROR", f"添加重复任务到界面失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to add recurring task to interface: {str(e)}")
+            log("ERROR", "添加重复任务到界面时发生错误")
+            log_print("[AutoInfo] Error occurred while adding recurring task to interface")
+            self.task_id_counter -= 1
+
+    def on_thread_finished(self):
+        log("INFO", "工作线程已完成，正在处理...")
+        log_print("[AutoInfo] Worker thread completed, processing...")
+
+        try:
+            log("DEBUG", "所有任务执行完毕")
+            log_print("[AutoInfo] All tasks completed execution")
+            self.is_executing = False
+            self.parent.start_pushButton.setText("开始执行")
+
+            if self.parent.checkBox_Shutdown.isChecked():
+                self.shutdown_computer()
+
+        except Exception as e:
+            log("ERROR", f"处理线程完成事件失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to process thread completion event: {str(e)}")
+
+    def shutdown_computer(self):
+        log("INFO", "准备关闭计算机...")
+        log_print("[AutoInfo] Preparing to shut down computer...")
+
+        try:
+            for i in range(10, 0, -1):
+                log("WARNING", f"电脑在 {i} 秒后自动关机")
+                log_print(f"[AutoInfo] Computer will shut down automatically in {i} seconds")
+                time.sleep(1)
+
+            log("DEBUG", "正在关机中...")
+            log_print("[AutoInfo] Shutting down...")
+            os.system('shutdown /s /t 0')
+
+        except Exception as e:
+            log("ERROR", f"关闭计算机失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to shut down computer: {str(e)}")
+
+    def save_configuration(self):
+        log("INFO", "保存配置...")
+        log_print("[AutoInfo] Saving configuration...")
+
+        try:
+            if not self.ready_tasks:
+                log("WARNING", "当前任务列表为空,没有任务可供保存")
+                log_print("[AutoInfo] Current task list is empty, no tasks to save")
+                return
+
+            current_date = datetime.now().strftime("%m%d")
+            default_filename = f"LeafAuto自动计划_{current_date}"
+
+            documents_dir = os.path.expanduser("~/Documents")
+            file_name, _ = QtWidgets.QFileDialog.getSaveFileName(
+                self,
+                "保存任务计划",
+                os.path.join(documents_dir, default_filename),
+                "枫叶任务文件(*.xlsx);;所有文件(*)"
+            )
+
+            if file_name:
+                if not file_name.lower().endswith('.xlsx'):
+                    file_name += '.xlsx'
+                    log("INFO", f"文件名已自动添加.xlsx后缀: {file_name}")
+                    log_print(f"[AutoInfo] Filename automatically appended with .xlsx: {file_name}")
+
+                workbook = openpyxl.Workbook()
+                sheet = workbook.active
+                sheet.append(['ID', 'Time', 'Sender', 'Name', 'Info', 'Frequency'])
+
+                sorted_tasks = sorted(self.ready_tasks.values(), key=lambda x: x['time'])
+                for task in sorted_tasks:
+                    if not task['frequency']:
+                        freq_text = "仅一次"
+                    else:
+                        freq_text = ",".join(map(str, task['frequency']))
+                    sheet.append([task['id'], task['time'], task['sender'], task['name'], task['info'], freq_text])
+
+                workbook.save(file_name)
+                log("DEBUG", f"任务文件已保存至{file_name}")
+                log_print(f"[AutoInfo] Task file saved to {file_name}")
+
+        except Exception as e:
+            log("ERROR", f"保存配置失败: {str(e)}")
+            log_print(f"[AutoInfo] Failed to save configuration: {str(e)}")
+            log("ERROR", "保存任务配置失败")
+            log_print("[AutoInfo] Failed to save task configuration")
+
+    def open_file_dialog(self, filepath=None):
+        try:
+            log("INFO", "打开文件对话框...")
+            log_print("[AutoInfo] Opening file dialog...")
+
             if filepath:
                 self.parent.message_lineEdit.setText(str(filepath))
+                log("INFO", f"文件路径已设置: {filepath}")
                 log_print(f"[AutoInfo] File path set: {filepath}")
                 return
 
             file_filters = (
-                "All Files (*);;"
-                "Image Files (*.bmp *.gif *.jpg *.jpeg *.png *.svg *.tiff);;"
-                "Document Files (*.doc *.docx *.pdf *.txt *.odt);;"
-                "Spreadsheets (*.xls *.xlsx *.ods);;"
-                "Presentations (*.ppt *.pptx *.odp);;"
-                "Audio Files (*.mp3 *.wav *.flac *.aac);;"
-                "Video Files (*.mp4 *.avi *.mkv *.mov);;"
-                "Compressed Files (*.zip *.rar *.tar *.gz *.bz2)"
+                "所有文件 (*);;"
+                "图像文件 (*.bmp *.gif *.jpg *.jpeg *.png *.svg *.tiff);;"
+                "文档文件 (*.doc *.docx *.pdf *.txt *.odt);;"
+                "电子表格 (*.xls *.xlsx *.ods);;"
+                "演示文稿 (*.ppt *.pptx *.odp);;"
+                "音频文件 (*.mp3 *.wav *.flac *.aac);;"
+                "视频文件 (*.mp4 *.avi *.mkv *.mov);;"
+                "压缩文件 (*.zip *.rar *.tar *.gz *.bz2)"
             )
 
             options = QtWidgets.QFileDialog.Option.ReadOnly
-            fileName, _ = QtWidgets.QFileDialog.getOpenFileName(
+            file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
                 None,
-                "Select File to Send",
+                "选择要发送的文件",
                 "",
                 file_filters,
                 options=options
             )
 
-            if fileName:
-                self.parent.message_lineEdit.setText(fileName)
-                log_print(f"[AutoInfo] File selected: {fileName}")
+            if file_name:
+                self.parent.message_lineEdit.setText(file_name)
+                log("INFO", f"已选择文件: {file_name}")
+                log_print(f"[AutoInfo] File selected: {file_name}")
+
         except Exception as e:
+            log("ERROR", f"打开文件对话框失败: {str(e)}")
             log_print(f"[AutoInfo] Failed to open file dialog: {str(e)}")
 
-    def emotion(self):
-        try:
-            self.parent.message_lineEdit.setText('Emotion:')
-            log_print("[AutoInfo] Set to Emotion:")
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to set Emotion: {str(e)}")
-
-    def save_tasks_to_json(self):
-        try:
-            with open('_internal/tasks.json', 'w', encoding='utf-8') as f:
-                json.dump(self.ready_tasks, f, ensure_ascii=False, indent=4)
-            log_print(f"[AutoInfo] Tasks saved successfully, total {len(self.ready_tasks)} tasks")
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to save tasks: {str(e)}")
-            log("ERROR", "非管理员身份运行软件,未能将操作保存")
-
-    def add_list_item(self):
-        log_print("[AutoInfo] Attempting to add task...")
-        try:
-            time_text, name_text, info_text, frequency = self.get_input_values()
-            wx_nickname = self.parent.comboBox_nickName.currentText()
-
-            if not all([time_text, name_text, info_text]):
-                log_print("[AutoInfo] Failed to add task: Incomplete input")
-                log("WARNING", "请先输入有效内容和接收人再添加任务")
-                return
-
-            if self.Membership == 'Free' and len(self.ready_tasks) >= 5:
-                log_print("[AutoInfo] Failed to add task: Free version task limit reached")
-                log("WARNING", "试用版最多添加5个任务，请升级版本")
-                QtWidgets.QMessageBox.warning(self, "试用版限制", "试用版最多添加5个任务，请升级版本")
-                return
-            elif self.Membership == 'Base' and len(self.ready_tasks) >= 30:
-                log_print("[AutoInfo] Failed to add task: Basic version task limit reached")
-                log("WARNING", "基础版最多添加30个任务,升级Ai版无限制")
-                QtWidgets.QMessageBox.warning(self, "标准版限制", "标准版最多添加30个任务，请升级版本")
-                return
-
-            widget_item = self.create_widget(time_text, name_text, info_text, frequency, wx_nickname)
-            self.parent.formLayout_3.addRow(widget_item)
-            self.ready_tasks.append({
-                'time': time_text,
-                'name': name_text,
-                'info': info_text,
-                'frequency': frequency,
-                'wx_nickname': wx_nickname
-            })
-            log('INFO',
-                f'已添加 {time_text[-8:]} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (发送方: {wx_nickname})')
-            log_print(f"[AutoInfo] Task added successfully: {name_text} - {info_text[:20]}... (Sender: {wx_nickname})")
-
-            self.parent.dateTimeEdit.setDateTime(
-                datetime.fromisoformat(time_text) + timedelta(minutes=int(read_key_value('add_timestep'))))
-
-            self.save_tasks_to_json()
-        except Exception as e:
-            log_print(f"[AutoInfo] Error adding task: {str(e)}")
-
-    def create_widget(self, time_text, name_text, info_text, frequency, wx_nickname):
-        try:
-            # 确保所有文本参数都是字符串类型
-            name_text = str(name_text)
-            info_text = str(info_text)
-            wx_nickname = str(wx_nickname)
-
-            widget_item = QtWidgets.QWidget(parent=self.parent.scrollAreaWidgetContents_3)
-            widget_item.setMinimumSize(QtCore.QSize(360, 70))
-            widget_item.setMaximumSize(QtCore.QSize(360, 70))
-            widget_item.setStyleSheet("background-color: rgb(255, 255, 255);\nborder-radius:18px")
-            widget_item.setObjectName("widget_item")
-
-            horizontalLayout_76 = QtWidgets.QHBoxLayout(widget_item)
-            horizontalLayout_76.setContentsMargins(12, 2, 12, 2)
-            horizontalLayout_76.setSpacing(6)
-
-            widget_54 = QtWidgets.QWidget()
-            widget_54.setMinimumSize(QtCore.QSize(36, 36))
-            widget_54.setMaximumSize(QtCore.QSize(36, 36))
-            widget_54.setStyleSheet(f"image: url({get_resource_path('resources/img/page1/page1_发送就绪.svg')});")
-            horizontalLayout_76.addWidget(widget_54)
-
-            verticalLayout_64 = QtWidgets.QVBoxLayout()
-            verticalLayout_64.setContentsMargins(6, 6, 6, 6)
-            verticalLayout_64.setSpacing(0)
-            horizontalLayout_76.addLayout(verticalLayout_64)
-
-            top_layout = QtWidgets.QHBoxLayout()
-            top_layout.setContentsMargins(0, 0, 0, 0)
-            top_layout.setSpacing(4)
-
-            receiver_label = QtWidgets.QLabel(name_text)
-            receiver_label.setStyleSheet("color:rgb(0, 0, 0);")
-            receiver_label.setFont(QtGui.QFont("微软雅黑 Light", 12))
-            receiver_label.setWordWrap(True)  # 开启自动换行
-            receiver_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-            receiver_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-            receiver_label.setMinimumWidth(20)
-            receiver_label.setMaximumWidth(250)  # 限制最大宽度，防止溢出
-            receiver_label.installEventFilter(self)
-            top_layout.addWidget(receiver_label)
-
-            wx_label = QtWidgets.QLabel(wx_nickname)
-            wx_label.setStyleSheet("color: rgb(105, 27, 253); padding-left: 8px;")
-            wx_label.setFont(QtGui.QFont("微软雅黑 Light", 10))
-            wx_label.setWordWrap(True)  # 开启自动换行
-            wx_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-            wx_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-            wx_label.setMinimumWidth(50)
-            wx_label.setMaximumWidth(250)  # 限制最大宽度，防止溢出
-            wx_label.installEventFilter(self)
-            top_layout.addWidget(wx_label)
-
-            time_label = QtWidgets.QLabel(time_text)
-            time_label.setStyleSheet("color: rgb(169, 169, 169);")
-            time_label.setFont(QtGui.QFont("微软雅黑", 10))
-            time_label.setAlignment(
-                Qt.AlignmentFlag.AlignRight |
-                Qt.AlignmentFlag.AlignTrailing |
-                Qt.AlignmentFlag.AlignVCenter
-            )
-            time_label.setFixedWidth(140)
-            time_label.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-            top_layout.addWidget(time_label)
-
-            top_layout.setStretch(0, 1)
-            verticalLayout_64.addLayout(top_layout)
-
-            bottom_layout = QtWidgets.QHBoxLayout()
-            bottom_layout.setContentsMargins(0, 6, 12, 3)
-            bottom_layout.setSpacing(4)
-
-            message_label = QtWidgets.QLabel(info_text)
-            message_label.setStyleSheet("color: rgb(169, 169, 169);")
-            message_label.setFont(QtGui.QFont("微软雅黑", 10))
-            message_label.setWordWrap(True)  # 开启自动换行
-            message_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-            message_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-            message_label.setMinimumWidth(1)
-            message_label.setMaximumWidth(400)  # 限制最大宽度，防止溢出
-            message_label.installEventFilter(self)
-            bottom_layout.addWidget(message_label)
-
-            delete_button = QtWidgets.QPushButton("删除")
-            delete_button.setFixedSize(50, 25)
-            delete_button.setStyleSheet(
-                "QPushButton { background-color: transparent; color: red; } "
-                "QPushButton:hover { background-color: rgba(255, 0, 0, 0.1); }"
-            )
-            delete_button.clicked.connect(
-                lambda _, t=time_text, n=name_text, i=info_text, wx=wx_nickname: self.remove_task(t, n, i, wx)
-            )
-            delete_button.setVisible(False)
-            bottom_layout.addWidget(delete_button)
-
-            verticalLayout_64.addLayout(bottom_layout)
-
-            widget_item.enterEvent = lambda e, btn=delete_button: btn.setVisible(True)
-            widget_item.leaveEvent = lambda e, btn=delete_button: btn.setVisible(False)
-
-            widget_item.task = {
-                'time': time_text,
-                'name': name_text,
-                'info': info_text,
-                'frequency': frequency,
-                'wx_nickname': wx_nickname
-            }
-
-            log_print(
-                f"[AutoInfo] Task widget created successfully: {name_text} - {info_text[:20]}... (Sender: {wx_nickname})")
-            return widget_item
-
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to create task widget: {str(e)}")
-            return None
-
-    def eventFilter(self, obj, event):
-        if event.type() == QtCore.QEvent.Type.Resize and isinstance(obj, QtWidgets.QLabel):
-            width = obj.width() - 2
-            original_text = obj.property("originalText")
-            if not original_text:
-                original_text = obj.text()
-                obj.setProperty("originalText", original_text)
-
-            font_metrics = obj.fontMetrics()
-            elided_text = font_metrics.elidedText(original_text, Qt.TextElideMode.ElideRight, width)
-            obj.setText(elided_text)
-
-        return super().eventFilter(obj, event)
-
-    def remove_task(self, time_text, name_text, info_text, wx_nickname):
-        log_print(f"[AutoInfo] Attempting to delete task: {name_text} - {info_text[:20]}... (Sender: {wx_nickname})")
-        try:
-            if self.error_sound_thread._is_running:
-                self.error_sound_thread.stop_playback()
-                log_print("[AutoInfo] Error sound stopped")
-
-            for task in self.ready_tasks:
-                if (task['time'] == time_text and
-                        task['name'] == name_text and
-                        task['info'] == info_text and
-                        task['wx_nickname'] == wx_nickname):
-                    self.ready_tasks.remove(task)
-                    log('WARNING', f'已删除任务 {info_text[:35] + "……" if len(info_text) > 30 else info_text}')
-                    log_print(f"[AutoInfo] Task deleted successfully")
-                    break
-
-            if not self.ready_tasks:
-                self.is_executing = False
-                self.parent.start_pushButton.setText("开始执行")
-                if self.worker_thread is not None:
-                    self.worker_thread.request_interruption()
-                    self.worker_thread = None
-                    log_print("[AutoInfo] Worker thread stopped")
-
-            self.update_ui()
-            self.save_tasks_to_json()
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to delete task: {str(e)}")
-
-    def update_ui(self):
-        log_print("[AutoInfo] Updating UI display...")
-        try:
-            self.clear_layout(self.parent.formLayout_3)
-            for task in self.ready_tasks:
-                widget = self.create_widget(
-                    task['time'],
-                    task['name'],
-                    task['info'],
-                    task['frequency'],
-                    task['wx_nickname']
-                )
-                self.parent.formLayout_3.addRow(widget)
-            log_print(f"[AutoInfo] UI updated, displaying {len(self.ready_tasks)} tasks")
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to update UI: {str(e)}")
-
-    def get_input_values(self):
-        try:
-            name_text = self.parent.receiver_lineEdit.text()
-            info_text = self.parent.message_lineEdit.text()
-            time_text = self.parent.dateTimeEdit.dateTime().toString(QtCore.Qt.DateFormat.ISODate)
-            frequency = self.parent.comboBox_Frequency.currentText()
-            return time_text, name_text, info_text, frequency
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to get input values: {str(e)}")
-            return None, None, None, None
-
-    def on_start_clicked(self):
-        log_print("[AutoInfo] Start button clicked...")
-        try:
-            if self.is_executing:
-                self.is_executing = False
-                self.parent.start_pushButton.setText("开始执行")
-                if self.worker_thread is not None:
-                    self.worker_thread.request_interruption()
-                    self.worker_thread = None
-                    log_print("[AutoInfo] Worker thread stopped")
-                if self.error_sound_thread._is_running:
-                    self.error_sound_thread.stop_playback()
-                    log_print("[AutoInfo] Error sound stopped")
-                log_print("[AutoInfo] Stopped executing all tasks")
-            else:
-                if not self.ready_tasks:
-                    log("WARNING", "任务列表为空，请先添加任务至任务列表")
-                    log_print("[AutoInfo] Task list is empty, cannot start execution")
-                else:
-                    current_time = datetime.now()
-                    past_tasks = [task for task in self.ready_tasks
-                                  if datetime.fromisoformat(task['time']) < current_time]
-                    if past_tasks:
-                        message = (
-                            f"<p style='color:#d9534f;font-size:14px;'>发现已过期的定时任务</p>"
-                            f"<p>点击确定将立即执行这些任务，否则请重新设置再启动</p>"
-                        )
-
-                        msg_box = QtWidgets.QMessageBox(
-                            QtWidgets.QMessageBox.Icon.Warning,
-                            "过期任务二次确认",
-                            message,
-                            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
-                            self
-                        )
-                        msg_box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
-                        reply = msg_box.exec()
-
-                        if reply == QtWidgets.QMessageBox.StandardButton.No:
-                            log_print("[AutoInfo] Execution cancelled by user due to past tasks")
-                            return
-
-                    self.is_executing = True
-                    self.parent.start_pushButton.setText("停止执行")
-                    self.worker_thread = WorkerThread(self)
-                    self.worker_thread.prevent_sleep = self.parent.checkBox_stopSleep.isChecked()
-                    self.worker_thread.current_time = 'mix' if str_to_bool(read_key_value('net_time')) else 'sys'
-                    self.worker_thread.finished.connect(self.on_thread_finished)
-                    self.worker_thread.start()
-                    log_print("[AutoInfo] Started executing tasks, worker thread launched")
-        except Exception as e:
-            log_print(f"[AutoInfo] Error handling start button click: {str(e)}")
-
-    def clear_layout(self, layout):
-        try:
-            while layout.count():
-                child = layout.takeAt(0)
-                if child.widget():
-                    child.widget().deleteLater()
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to clear layout: {str(e)}")
-
-    def update_task_status(self, task, status):
-        log_print(f"[AutoInfo] Updating task status: {task['name']} - {status} (Sender: {task['wx_nickname']})")
-        try:
-            if task in self.ready_tasks:
-                task_index = self.ready_tasks.index(task)
-                self.ready_tasks[task_index]['status'] = status
-                self.completed_tasks.append(self.ready_tasks.pop(task_index))
-
-                for i in range(self.parent.formLayout_3.count()):
-                    item = self.parent.formLayout_3.itemAt(i)
-                    if item and item.widget():
-                        widget_item = item.widget()
-                        if hasattr(widget_item, 'task') and all(
-                                widget_item.task[key] == task[key] for key in
-                                ['time', 'name', 'info', 'frequency', 'wx_nickname']):
-                            # 修改：使用正确的方式查找图标部件
-                            widget_image = widget_item.findChild(QtWidgets.QWidget, None)
-                            if widget_image and widget_image.minimumSize() == QtCore.QSize(36, 36):
-                                if status == '成功':
-                                    icon_path_key = 'page1_发送成功.svg'
-                                else:
-                                    icon_path_key = 'page1_发送失败.svg'
-                                    # 仅在首次失败时播放声音和发送邮件
-                                    if 'error_count' not in task:
-                                        task['error_count'] = 1
-                                        self.play_error_sound()
-                                        self.send_error_email(task)
-                                    else:
-                                        task['error_count'] += 1
-                                        log_print(
-                                            f"[AutoInfo] Task {task['name']} has failed {task['error_count']} times")
-
-                                new_icon_path = get_resource_path(f'resources/img/page1/{icon_path_key}')
-                                widget_image.setStyleSheet(f"image: url({new_icon_path});")
-
-                                # 强制重绘部件，确保视觉更新
-                                widget_image.update()
-                                widget_item.update()
-
-                            # 处理重复任务
-                            next_time = datetime.fromisoformat(task['time'])
-
-                            if task['frequency'] == '每天':
-                                next_time += timedelta(days=1)
-                                # 添加 wx_nickname 参数
-                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
-                                                   task['wx_nickname'])
-                            elif task['frequency'] == '每周':
-                                next_time += timedelta(days=7)
-                                # 添加 wx_nickname 参数
-                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
-                                                   task['wx_nickname'])
-                            elif task['frequency'] == '工作日':
-                                while True:
-                                    next_time += timedelta(days=1)
-                                    if next_time.weekday() < 5:  # 0-4 为周一至周五
-                                        break
-                                # 添加 wx_nickname 参数
-                                self.add_next_task(next_time.isoformat(), task['name'], task['info'], task['frequency'],
-                                                   task['wx_nickname'])
-
-                            self.save_tasks_to_json()
-                            log_print(f"[AutoInfo] Task status updated: {task['name']} - {status}")
-                            break
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to update task status: {str(e)}")
-
-    def add_next_task(self, time_text, name_text, info_text, frequency, wx_nickname):
-        log_print(f"[AutoInfo] Adding next recurring task: {name_text} @ {time_text} (Sender: {wx_nickname})")
-        try:
-            widget_item = self.create_widget(time_text, name_text, info_text, frequency, wx_nickname)
-            self.parent.formLayout_3.addRow(widget_item)
-            self.ready_tasks.append({
-                'time': time_text,
-                'name': name_text,
-                'info': info_text,
-                'frequency': frequency,
-                'wx_nickname': wx_nickname
-            })
-            log('INFO',
-                f'自动添加 {time_text} 把 {info_text[:25] + "……" if len(info_text) > 25 else info_text} 发给 {name_text[:8]} (发送方: {wx_nickname})')
-            self.save_tasks_to_json()
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to add recurring task: {str(e)}")
-
-    def on_thread_finished(self):
-        log_print("[AutoInfo] Worker thread finished")
-        try:
-            log("DEBUG", "所有任务执行完毕")
-            self.is_executing = False
-            self.parent.start_pushButton.setText("开始执行")
-            if self.parent.checkBox_Shutdown.isChecked():
-                self.shutdown_computer()
-        except Exception as e:
-            log_print(f"[AutoInfo] Error handling thread finished event: {str(e)}")
-
-    def shutdown_computer(self):
-        log_print("[AutoInfo] Preparing to shut down computer...")
-        try:
-            for i in range(10, 0, -1):
-                log("WARNING", f"电脑在 {i} 秒后自动关机")
-                log_print(f"[AutoInfo] Shutdown countdown: {i} seconds")
-                time.sleep(1)
-            log("DEBUG", "正在关机中...")
-            os.system('shutdown /s /t 0')
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to shut down computer: {str(e)}")
-
-    def save_configuration(self):
-        log_print("[AutoInfo] Saving configuration...")
-        try:
-            if not self.ready_tasks:
-                log("WARNING", "当前任务列表为空,没有任务可供保存")
-                log_print("[AutoInfo] Task list is empty, nothing to save")
-                return
-
-            documents_dir = os.path.expanduser("~/Documents")
-            file_name, _ = QtWidgets.QFileDialog.getSaveFileName(self, "保存任务计划",
-                                                                 os.path.join(documents_dir, "LeafAuto PRO任务计划"),
-                                                                 "枫叶任务文件(*.xlsx);;所有文件(*)")
-
-            if file_name:
-                if not file_name.lower().endswith('.xlsx'):
-                    file_name += '.xlsx'
-
-                workbook = openpyxl.Workbook()
-                sheet = workbook.active
-                sheet.append(['Time', 'Name', 'Info', 'Frequency', 'WxNickname'])
-
-                for task in self.ready_tasks:
-                    sheet.append([task['time'], task['name'], task['info'], task['frequency'], task['wx_nickname']])
-
-                workbook.properties.creator = "LeafAuto PRO"
-                workbook.properties.title = "枫叶信息自动专业版任务计划"
-                workbook.properties.description = "LeafAuto专业版定时任务计划，仅供专业版使用。"
-                workbook.properties.lastModifiedBy = "LeafAutoPRO"
-                workbook.save(file_name)
-                log("DEBUG", f"任务文件已保存至{file_name}")
-                log_print(f"[AutoInfo] Configuration saved to: {file_name}")
-        except Exception as e:
-            log_print(f"[AutoInfo] Failed to save configuration: {str(e)}")
-
     def load_configuration(self, filepath=None):
+        log("INFO", "加载配置...")
         log_print("[AutoInfo] Loading configuration...")
+
+        filter_expired = str_to_bool(read_key_value("import_filter"))
+        expired_count = 0
+
         try:
             documents_dir = os.path.expanduser("~/Documents")
             file_name = filepath or QtWidgets.QFileDialog.getOpenFileName(
-                self, "导入任务计划", documents_dir, "LeafAuto PRO 任务文件(*.xlsx);;所有文件(*)"
+                self, "导入任务计划", documents_dir, "枫叶任务文件(*.xlsx);;所有文件(*)"
             )[0]
 
             if not file_name:
-                log_print("[AutoInfo] No file selected, import cancelled")
+                log("INFO", "文件选择已取消")
+                log_print("[AutoInfo] File selection canceled")
                 return
 
             workbook = openpyxl.load_workbook(file_name, read_only=True)
             sheet = workbook.active
             headers = [cell.value for cell in sheet[1]]
+            log("INFO", f"已读取文件头: {headers}")
+            log_print(f"[AutoInfo] File headers read: {headers}")
 
-            required_headers = ['Time', 'Name', 'Info', 'Frequency']
-            missing_headers = [h for h in required_headers if h not in headers]
-            if missing_headers:
-                raise ValueError(f"文件格式不正确，缺少必要的列: {', '.join(missing_headers)}")
+            required_headers = ['Time', 'Sender', 'Name', 'Info', 'Frequency']
+            if not all(h in headers for h in required_headers):
+                raise ValueError("文件格式不正确，缺少必要的列（可能缺少发送方列）")
 
-            wx_nickname_idx = headers.index('WxNickname') if 'WxNickname' in headers else None
+            has_id_column = 'ID' in headers
 
             tasks = []
             for row_idx, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
                 task = dict(zip(headers, row))
-                if not (task.get('Time') and task.get('Name') and task.get('Info')):
-                    continue
-                if not re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$", task['Time']):
-                    continue
-                if not task.get('Frequency'):
-                    task['Frequency'] = "仅一次"
-                if wx_nickname_idx is not None and row[wx_nickname_idx]:
-                    task['wx_nickname'] = row[wx_nickname_idx]
-                else:
-                    task['wx_nickname'] = self.parent.comboBox_nickName.currentText()
 
-                # 确保name和info作为字符串处理
+                if not (task.get('Time') and task.get('Sender') and task.get('Name') and task.get('Info')):
+                    log("WARNING", f"行 {row_idx} 缺少必要字段，已跳过")
+                    log_print(f"[AutoInfo] Row {row_idx} missing necessary fields, skipped")
+                    continue
+
+                if not re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$", task['Time']):
+                    log("WARNING", f"行 {row_idx} 时间格式不正确，已跳过")
+                    log_print(f"[AutoInfo] Row {row_idx} has incorrect time format, skipped")
+                    continue
+
+                try:
+                    task_time = datetime.fromisoformat(task['Time'])
+                except Exception as e:
+                    log("WARNING", f"行 {row_idx} 时间解析失败，跳过任务: {str(e)}")
+                    log_print(f"[AutoInfo] Row {row_idx} time parsing failed, skipping task: {str(e)}")
+                    continue
+
+                freq_text = task.get('Frequency', "仅一次")
+                if freq_text == "仅一次":
+                    task['Frequency'] = []
+                else:
+                    freq_list = []
+                    for day in freq_text.split(','):
+                        if day.strip().isdigit():
+                            num = int(day.strip())
+                            if 1 <= num <= 7:
+                                freq_list.append(num)
+                        else:
+                            for num, name in self.reverse_weekday_map.items():
+                                if name == day.strip():
+                                    freq_list.append(num)
+                                    break
+                    task['Frequency'] = list(set(freq_list))
+                    freq_list = task['Frequency']
+
+                current_time = datetime.now()
+                if task_time < current_time:
+                    if not filter_expired and task['Frequency']:
+                        adjusted_time = self.calculate_next_time(task_time, task['Frequency'])
+                        if adjusted_time:
+                            task['Time'] = adjusted_time.isoformat()
+                            log("INFO", f"行 {row_idx} 任务时间已调整为未来时间: {task['Time']}")
+                            log_print(f"[AutoInfo] Row {row_idx} task time adjusted to future time: {task['Time']}")
+                        else:
+                            log("WARNING", f"行 {row_idx} 无法调整任务时间，使用原始时间")
+                            log_print(f"[AutoInfo] Row {row_idx} cannot adjust task time, using original time")
+                    elif filter_expired:
+                        expired_count += 1
+                        continue
+
+                task['Sender'] = str(task['Sender']) if task['Sender'] is not None else ""
                 task['Name'] = str(task['Name']) if task['Name'] is not None else ""
                 task['Info'] = str(task['Info']) if task['Info'] is not None else ""
-
                 tasks.append(task)
+                log("INFO", f"行 {row_idx} 任务已解析成功")
+                log_print(f"[AutoInfo] Row {row_idx} task parsed successfully")
 
             workbook.close()
 
+            if filter_expired and expired_count > 0:
+                QtWidgets.QMessageBox.information(
+                    self,
+                    "过滤过期完成",
+                    f"已为您过滤{expired_count}个过期任务"
+                )
+                log("INFO", f"已过滤 {expired_count} 个过期任务")
+                log_print(f"[AutoInfo] Filtered out {expired_count} expired tasks")
+
         except Exception as e:
             log("ERROR", f"导入失败: {str(e)}")
-            log_print(f"[AutoInfo] Failed to load configuration: {str(e)}")
+            log_print(f"[AutoInfo] Import failed: {str(e)}")
             return
 
         if not tasks:
             log("ERROR", f"导入失败, 未找到有效任务数据")
-            log_print("[AutoInfo] No valid task data found")
+            log_print("[AutoInfo] Import failed, no valid task data found")
             return
 
-        MEMBERSHIP_LIMITS = {
+        membership_limits = {
             'Free': 5,
             'Base': 30,
             'AiVIP': float('inf'),
             'VIP': float('inf')
         }
 
-        limit = MEMBERSHIP_LIMITS.get(self.Membership, 5)
-        if len(self.ready_tasks) + len(tasks) > limit:
-            remaining = limit - len(self.ready_tasks)
+        limit = membership_limits.get(self.membership, 5)
+        current_count = len(self.ready_tasks)
+        if current_count + len(tasks) > limit:
+            remaining = limit - current_count
             if remaining <= 0:
                 log("WARNING", f"会员限制, 当前版本最多支持{limit}个任务")
-                log_print(f"[AutoInfo] Membership limit reached, current version supports up to {limit} tasks")
+                log_print(f"[AutoInfo] Membership limit, current version supports up to {limit} tasks")
                 return
+
             tasks = tasks[:remaining]
             log("WARNING", f"由于会员限制，只导入前{remaining}个任务")
-            log_print(f"[AutoInfo] Due to membership limitations, only importing first {remaining} tasks")
+            log_print(f"[AutoInfo] Due to membership restrictions, only first {remaining} tasks imported")
+
+        existing_ids = set(self.ready_tasks.keys()).union(set(self.completed_tasks.keys()))
+
+        if existing_ids:
+            max_existing_id = max(existing_ids)
+            if self.task_id_counter <= max_existing_id:
+                self.task_id_counter = max_existing_id
+                log("INFO", f"任务ID计数器已更新为最大现有ID: {self.task_id_counter}")
+                log_print(f"[AutoInfo] Task ID counter updated to maximum existing ID: {self.task_id_counter}")
 
         for task in tasks:
             try:
-                widget = self.create_widget(
-                    task['Time'],
-                    task['Name'],
-                    task['Info'],
-                    task['Frequency'],
-                    task['wx_nickname']
-                )
-                self.parent.formLayout_3.addRow(widget)
-                self.ready_tasks.append({
+                file_id = int(task['ID']) if has_id_column and task.get('ID') is not None and str(
+                    task['ID']).isdigit() else None
+                task_id = self.get_unique_task_id(preferred_id=file_id)
+
+                task_data = {
+                    'id': task_id,
                     'time': task['Time'],
+                    'sender': task['Sender'],
                     'name': task['Name'],
                     'info': task['Info'],
-                    'frequency': task['Frequency'],
-                    'wx_nickname': task['wx_nickname']
-                })
-                log_print(f"[AutoInfo] Task imported successfully: {task['Name']} (Sender: {task['wx_nickname']})")
+                    'frequency': task['Frequency']
+                }
+
+                self.ready_tasks[task_id] = task_data
+
+                time_text = task['Time']
+                if time_text not in self.tasks_by_time:
+                    self.tasks_by_time[time_text] = []
+                self.tasks_by_time[time_text].append(task_id)
+
+                widget = self.create_widget(task_id, task['Time'], task['Name'], task['Info'], task['Frequency'],
+                                            task['Sender'])
+                self.parent.formLayout_3.addRow(widget)
+
+                log("INFO", f"任务导入成功: {task['Sender']} -> {task['Name']} (ID: {task_id})")
+                log_print(f"[AutoInfo] Task imported successfully: {task['Sender']} -> {task['Name']} (ID: {task_id})")
             except Exception as e:
-                log("ERROR", f"创建任务失败: {task['Name']}")
-                log_print(f"[AutoInfo] Failed to create task: {task['Name']}, Error: {str(e)}")
+                log("ERROR", f"创建任务失败: {task['Sender']} -> {task['Name']}")
+                log_print(f"[AutoInfo] Failed to create task: {task['Sender']} -> {task['Name']}")
+                log("ERROR", f"导入任务失败: {task['Sender']} -> {task['Name']}, 错误: {str(e)}")
+                log_print(f"[AutoInfo] Failed to import task: {task['Sender']} -> {task['Name']}, error: {str(e)}")
 
         log("INFO", f"成功导入 {len(tasks)} 个任务")
         log_print(f"[AutoInfo] Successfully imported {len(tasks)} tasks")
-        self.save_tasks_to_json()
+        self.delayed_save()
+
+    def add_emotion_to_message(self):
+        log("DEBUG", "添加表情到消息")
+        log_print("[AutoInfo] Adding emotion to message")
+        print("Hello world")
 
     def play_error_sound(self):
+        log("INFO", "尝试播放错误提示音...")
         log_print("[AutoInfo] Attempting to play error sound...")
+
         try:
             if str_to_bool(read_key_value('error_sound')):
                 if self.error_sound_thread._is_running:
-                    log_print("[AutoInfo] Error sound already playing, skipping this time")
+                    log("INFO", "错误提示音正在播放中，已跳过")
+                    log_print("[AutoInfo] Error sound is already playing, skipped")
                     return
 
                 try:
                     selected_audio_index = int(read_key_value('selected_audio_index'))
                 except Exception:
                     selected_audio_index = 0
+                    log("WARNING", "音频索引获取失败，使用默认值0")
+                    log_print("[AutoInfo] Audio index retrieval failed, using default value 0")
 
                 if selected_audio_index in self.audio_files:
                     self.selected_audio_file = self.audio_files[selected_audio_index]
                 else:
                     log("ERROR", f"音频播放失败: 无效索引 {selected_audio_index}")
-                    log_print(f"[AutoInfo] Failed to play audio: Invalid index {selected_audio_index}")
+                    log_print(f"[AutoInfo] Audio playback failed: invalid index {selected_audio_index}")
                     return
 
                 self.error_sound_thread.update_sound_file(self.selected_audio_file)
                 self.error_sound_thread.start()
-                log_print(f"[AutoInfo] Playing error sound: {self.selected_audio_file}")
+                log("INFO", f"错误提示音正在播放: {self.selected_audio_file}")
+                log_print(f"[AutoInfo] Error sound playing: {self.selected_audio_file}")
+
         except Exception as e:
+            log("ERROR", f"播放错误提示音失败: {str(e)}")
             log_print(f"[AutoInfo] Failed to play error sound: {str(e)}")
 
     def send_error_email(self, task):
-        log_print(f"[AutoInfo] Attempting to send error email: {task['name']}")
+        log("INFO", f"正在将任务错误邮件加入队列: {task['sender']} -> {task['name']}")
+        log_print(f"[AutoInfo] Adding task error email to queue: {task['sender']} -> {task['name']}")
+
         if str_to_bool(read_key_value('error_email')):
             self.email_queue.put(task)
+            log("INFO", f"任务错误邮件已加入队列: {task['sender']} -> {task['name']}")
+            log_print(f"[AutoInfo] Task error email added to queue: {task['sender']} -> {task['name']}")
 
-    def _process_email_queue(self):
+    def process_email_queue(self):
+        log("INFO", "邮件处理线程已启动")
         log_print("[AutoInfo] Email processing thread started")
+
         while True:
             task = self.email_queue.get()
             if task is None:
                 break
-            self._send_email_safely(task)
+            self.send_email_safely(task)
             self.email_queue.task_done()
 
-    def _send_email_safely(self, task):
+    def send_email_safely(self, task):
         try:
-            # Check email cooldown
             current_time = time.time()
             if current_time - self.last_email_time < self.email_cooldown:
+                log("INFO",
+                    f"邮件冷却中，剩余 {self.email_cooldown - (current_time - self.last_email_time):.1f} 秒")
                 log_print(
                     f"[AutoInfo] Email cooldown active, remaining {self.email_cooldown - (current_time - self.last_email_time):.1f} seconds")
                 return
 
-            log_print(f"[AutoInfo] Sending error email for task: {task['name']}")
+            log("INFO", f"正在发送任务错误邮件: {task['sender']} -> {task['name']}")
+            log_print(f"[AutoInfo] Sending task error email: {task['sender']} -> {task['name']}")
 
-            # Email configuration
             sender_email = '3555844679@qq.com'
             receiver_email = read_key_value('email')
             smtp_server = 'smtp.qq.com'
@@ -689,129 +1108,138 @@ class AutoInfo(QtWidgets.QWidget):
             username = '3555844679@qq.com'
             password = 'xtibpzrdwnppchhi'
 
-            subject = f"定时任务执行失败 {task['time']}"
+            if not task['frequency']:
+                freq_display = "仅一次"
+            else:
+                freq_display = ",".join([self.reverse_weekday_map[num] for num in task['frequency']])
 
-            # Create message container
+            subject = f"定时信息发送失败 {task['time']}"
+
             message = MIMEMultipart('related')
-            message['From'] = 'LeafAuto PRO <3555844679@qq.com>'
+            message['From'] = 'LeafAuto <3555844679@qq.com>'
             message['To'] = receiver_email
             message['Subject'] = Header(subject, 'utf-8')
 
-            # HTML template with inline CSS for better email client compatibility
             html_content = f"""
-            <html>
-            <head>
-                <meta charset="utf-8">
-                <style>
-                    body {{ font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }}
-                    .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
-                    .header {{ background-color: #4a6fa5; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }}
-                    .content {{ background-color: white; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
-                    .section {{ margin-bottom: 20px; }}
-                    .highlight {{ background-color: #f0f4f8; padding: 10px; border-radius: 3px; }}
-                    .button {{ display: inline-block; background-color: #4a6fa5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 3px; }}
-                    .footer {{ margin-top: 20px; text-align: center; color: #6c757d; font-size: 12px; }}
-                    .support {{ margin-top: 10px; }}
-                    .separator {{ border-top: 1px solid #e9ecef; margin: 20px 0; }}
-                    .footer-image {{ max-width: 100%; margin-top: 20px; border-radius: 3px; }}
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h2>LeafAuto 消息通知</h2>
-                    </div>
-                    <div class="content">
-                        <div class="section">
-                            <p>尊敬的用户,</p>
-                            <p style="color: #d9534f; font-weight: bold;">😔 非常抱歉地通知您，枫叶未能成功发送您设置的定时信息。</p>
+                    <html>
+                    <head>
+                        <meta charset="utf-8">
+                        <style>
+                            body {{ font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }}
+                            .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                            .header {{ background-color: #4a6fa5; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }}
+                            .content {{ background-color: white; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
+                            .section {{ margin-bottom: 20px; }}
+                            .highlight {{ background-color: #f0f4f8; padding: 10px; border-radius: 3px; }}
+                            .button {{ display: inline-block; background-color: #4a6fa5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 3px; }}
+                            .footer {{ margin-top: 20px; text-align: center; color: #6c757d; font-size: 12px; }}
+                            .support {{ margin-top: 10px; }}
+                            .separator {{ border-top: 1px solid #e9ecef; margin: 20px 0; }}
+                            .footer-image {{ max-width: 100%; margin-top: 20px; border-radius: 3px; }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="header">
+                                <h2>LeafAuto 消息通知</h2>
+                            </div>
+                            <div class="content">
+                                <div class="section">
+                                    <p>尊敬的用户,</p>
+                                    <p style="color: #d9534f; font-weight: bold;">😔 非常抱歉地通知您，枫叶未能成功发送您设置的定时信息。</p>
+                                </div>
+
+                                <div class="section highlight">
+                                    <h3>📌 失败任务详情</h3>
+                                    <p>🕒 时间: {task['time']}</p>
+                                    <p>✉️ 发送方: {task['sender']}</p>
+                                    <p>👤 接收人: {task['name']}</p>
+                                    <p>💬 消息内容: {task['info']}</p>
+                                    <p>🔄 频率: {freq_display}</p>
+                                    <p style="color: #d9534f;">❌ 失败原因: 未知错误。</p>
+                                </div>
+
+                                <div class="section">
+                                    <h3>🔧 建议操作</h3>
+                                    <ol>
+                                        <li>检查接收人名称是否与联系人完全一致</li>
+                                        <li>确认接收人当前状态是否可以接收消息</li>
+                                        <li>尝试手动发送相同内容进行验证</li>
+                                    </ol>
+                                </div>
+
+                                <div class="section separator"></div>
+
+                                <div class="section">
+                                    <p>Dear Valued User 👋,</p>
+                                    <p style="color: #d9534f; font-weight: bold;">😔 We sincerely apologize for the inconvenience caused. Our system failed to deliver a scheduled message.</p>
+                                </div>
+
+                                <div class="section highlight">
+                                    <h3>📌 Delivery Failure Details</h3>
+                                    <p>🕒 Time: {task['time']}</p>
+                                    <p>✉️ Sender: {task['sender']}</p>
+                                    <p>👤 Recipient: {task['name']}</p>
+                                    <p>💬 Message: {task['info']}</p>
+                                    <p>🔄 Frequency: {freq_display}</p>
+                                    <p style="color: #d9534f;">❌ Failure Reason: System error</p>
+                                </div>
+
+                                <div class="section">
+                                    <h3>🔧 Recommended Actions</h3>
+                                    <ol>
+                                        <li>Verify the recipient's name matches exactly as in your contacts</li>
+                                        <li>Confirm the recipient is currently available to receive messages</li>
+                                        <li>Attempt to send the same content manually for validation</li>
+                                    </ol>
+                                </div>
+
+                                <div class="section separator"></div>
+
+                                <div class="section">
+                                    <p>🙇‍♀️ 对于此次未能准时送达的情况，我们深表歉意。感谢您的理解与支持。</p>
+                                </div>
+
+                                <div class="section support">
+                                    <h3>需要帮助？ | Need Help?</h3>
+                                    <p>✉️ 邮箱: 3555844679@qq.com</p>
+                                    <p>🕙 服务群: 1021471813</p>
+                                </div>
+
+                                <div class="section">
+                                    <img src="cid:footer_image" alt="Service Support" class="footer-image">
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <p>LeafAuto Team | {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())} (GMT+8)</p>
+                            </div>
                         </div>
+                    </body>
+                    </html>
+                    """
 
-                        <div class="section highlight">
-                            <h3>📌 失败任务详情</h3>
-                            <p>🕒 时间: {task['time']}</p>
-                            <p>👤 接收人: {task['name']}</p>
-                            <p>💬 消息内容: {task['info']}</p>
-                            <p style="color: #d9534f;">❌ 失败原因: 未知错误。</p>
-                        </div>
-
-                        <div class="section">
-                            <h3>🔧 建议操作</h3>
-                            <ol>
-                                <li>检查接收人名称是否与联系人完全一致</li>
-                                <li>确认接收人当前状态是否可以接收消息</li>
-                                <li>尝试手动发送相同内容进行验证</li>
-                            </ol>
-                        </div>
-
-                        <div class="section separator"></div>
-
-                        <div class="section">
-                            <p>Dear Valued User 👋,</p>
-                            <p style="color: #d9534f; font-weight: bold;">😔 We sincerely apologize for the inconvenience caused. Our system failed to deliver a scheduled message.</p>
-                        </div>
-
-                        <div class="section highlight">
-                            <h3>📌 Delivery Failure Details</h3>
-                            <p>🕒 Time: {task['time']}</p>
-                            <p>👤 Recipient: {task['name']}</p>
-                            <p>💬 Message: {task['info']}</p>
-                            <p style="color: #d9534f;">❌ Failure Reason: System error</p>
-                        </div>
-
-                        <div class="section">
-                            <h3>🔧 Recommended Actions</h3>
-                            <ol>
-                                <li>Verify the recipient's name matches exactly as in your contacts</li>
-                                <li>Confirm the recipient is currently available to receive messages</li>
-                                <li>Attempt to send the same content manually for validation</li>
-                            </ol>
-                        </div>
-
-                        <div class="section separator"></div>
-
-                        <div class="section">
-                            <p>🙇‍♀️ 对于此次未能准时送达的情况，我们深表歉意。感谢您的理解与支持。</p>
-                        </div>
-
-                        <div class="section support">
-                            <h3>需要帮助？ | Need Help?</h3>
-                            <p>✉️ 邮箱: 3555844679@qq.com</p>
-                            <p>🕙 服务群: 1021471813</p>
-                        </div>
-
-                        <div class="section">
-                            <img src="cid:footer_image" alt="Service Support" class="footer-image">
-                        </div>
-                    </div>
-                    <div class="footer">
-                        <p>LeafAuto Team | {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())} (GMT+8)</p>
-                    </div>
-                </div>
-            </body>
-            </html>
-            """
-
-            # Attach HTML content
             html_part = MIMEText(html_content, 'html', 'utf-8')
             message.attach(html_part)
 
-            # Attach footer image using get_resource_path()
             try:
                 footer_image_path = get_resource_path('resources/img/page1/email.png')
                 with open(footer_image_path, 'rb') as f:
                     footer_image = MIMEImage(f.read())
                     footer_image.add_header('Content-ID', '<footer_image>')
                     message.attach(footer_image)
+                log("INFO", "邮件底部图片已附加")
+                log_print("[AutoInfo] Email footer image attached")
             except Exception as e:
+                log("WARNING", f"附加底部图片失败: {str(e)}")
                 log_print(f"[AutoInfo] Failed to attach footer image: {str(e)}")
 
-            # Use SMTP with SSL
             with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
                 server.login(username, password)
                 server.sendmail(sender_email, [receiver_email], message.as_string())
                 self.last_email_time = current_time
-                log_print(f"[AutoInfo] Error email sent successfully: {task['name']}")
+                log("INFO", f"任务错误邮件发送成功: {task['sender']} -> {task['name']}")
+                log_print(f"[AutoInfo] Task error email sent successfully: {task['sender']} -> {task['name']}")
 
         except Exception as e:
+            log("ERROR", f"发送错误邮件失败: {str(e)}")
             log_print(f"[AutoInfo] Failed to send error email: {str(e)}")

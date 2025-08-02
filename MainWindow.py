@@ -14,6 +14,7 @@ import common
 from ActivitiesWindow import ActivitiesWindow
 from AiAssistant import AiAssistant
 from AutoInfo import AutoInfo
+from clickableComboBox import clickableComboBox
 from Reply import ReplyDialog
 from SettingWindow import SettingWindow
 from Split import Split
@@ -69,6 +70,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         global wx_instances
         log_print("Initializing MainWindow")
         self.setupUi(self)
+        log_print("[Main] Replacing combo box with CheckableComboBox...")
+        old_combobox = self.comboBox_Frequency
+        geometry = old_combobox.geometry()
+        parent_layout = old_combobox.parentWidget().layout()
+
+        if parent_layout:
+            for i in range(parent_layout.count()):
+                if parent_layout.itemAt(i).widget() == old_combobox:
+                    parent_layout.removeItem(parent_layout.itemAt(i))
+        old_combobox.deleteLater()
+
+        self.comboBox_Frequency = clickableComboBox(self)
+        self.comboBox_Frequency.setGeometry(geometry)
+        self.comboBox_Frequency.setObjectName("comboBox_Frequency")
+
+        self.comboBox_Frequency.add_item("仅一次")
+        self.comboBox_Frequency.add_item("星期一")
+        self.comboBox_Frequency.add_item("星期二")
+        self.comboBox_Frequency.add_item("星期三")
+        self.comboBox_Frequency.add_item("星期四")
+        self.comboBox_Frequency.add_item("星期五")
+        self.comboBox_Frequency.add_item("星期六")
+        self.comboBox_Frequency.add_item("星期日")
+
+        if parent_layout:
+            parent_layout.addWidget(self.comboBox_Frequency)
         self.ui = Ui_MainWindow()
         self.setWindowTitle("LeafAuto Pro")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/icon.ico')))
@@ -490,8 +517,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setting_window = SettingWindow()
         self.activities_window = ActivitiesWindow()
         self.key_reply = ReplyDialog()
-        self.emotion_pushButton.clicked.connect(self.auto_info.emotion)
-        self.file_pushButton.clicked.connect(self.auto_info.openFileNameDialog)
+        self.emotion_pushButton.clicked.connect(self.auto_info.add_emotion_to_message)
+        self.file_pushButton.clicked.connect(self.auto_info.open_file_dialog)
         self.pushButton_save.clicked.connect(self.auto_info.save_configuration)
         self.pushButton_import.clicked.connect(self.auto_info.load_configuration)
         self.add_pushButton.clicked.connect(self.auto_info.add_list_item)
