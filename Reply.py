@@ -41,7 +41,7 @@ class ReplyDialog(QtWidgets.QDialog):
     def loadRulesFromJson(self):
         log_print("Starting to load rules from JSON")
         try:
-            with open(get_resource_path('AutoReply_Rules.json'), 'r', encoding='utf-8') as file:
+            with open('_internal/AutoReply_Rules.json', 'r', encoding='utf-8') as file:
                 self.rules = json.load(file)
                 log_print(f"Successfully loaded {len(self.rules)} rules")
         except FileNotFoundError:
@@ -61,7 +61,7 @@ class ReplyDialog(QtWidgets.QDialog):
                         "reply_content": widget_item.findChild(QtWidgets.QLabel, "label_Reply").text(),
                         "apply_to": widget_item.findChild(QtWidgets.QLabel, "label_ApplyTo").text()
                     })
-            with open(get_resource_path('AutoReply_Rules.json'), 'w', encoding='utf-8') as file:
+            with open('_internal/AutoReply_Rules.json', 'w', encoding='utf-8') as file:
                 json.dump(rules, file, ensure_ascii=False, indent=4)
             self.original_rules = rules.copy()
             log_print(f"Successfully saved {len(rules)} rules to JSON")
@@ -83,8 +83,8 @@ class ReplyDialog(QtWidgets.QDialog):
     def create_frame(self, keyword, match_type, reply_content, apply_to="全部"):
         log_print("Creating rule display frame")
         RuleWidget_Item = QtWidgets.QWidget(parent=self.ui.scrollAreaWidgetContents)
-        RuleWidget_Item.setMinimumSize(QtCore.QSize(760, 50))
-        RuleWidget_Item.setMaximumSize(QtCore.QSize(16777215, 50))
+        RuleWidget_Item.setMinimumSize(QtCore.QSize(760, 38))
+        RuleWidget_Item.setMaximumSize(QtCore.QSize(16777215, 38))
         RuleWidget_Item.setObjectName("RuleWidget_Item")
 
         RuleWidget_Item.setStyleSheet("""
@@ -117,7 +117,7 @@ class ReplyDialog(QtWidgets.QDialog):
         label_KeyWord.setObjectName("label_KeyWord")
         label_KeyWord.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         label_KeyWord.setWordWrap(True)
-        label_KeyWord.setMaximumHeight(40)
+        label_KeyWord.setMaximumHeight(38)
 
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -195,7 +195,7 @@ class ReplyDialog(QtWidgets.QDialog):
         label_Reply.setObjectName("label_Reply")
         label_Reply.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         label_Reply.setWordWrap(True)
-        label_Reply.setMaximumHeight(40)
+        label_Reply.setMaximumHeight(38)
         label_Reply.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
 
         font = QtGui.QFont()
@@ -223,7 +223,7 @@ class ReplyDialog(QtWidgets.QDialog):
         label_ApplyTo.setObjectName("label_ApplyTo")
         label_ApplyTo.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         label_ApplyTo.setWordWrap(True)
-        label_ApplyTo.setMaximumHeight(40)
+        label_ApplyTo.setMaximumHeight(38)
 
         font = QtGui.QFont()
         font.setFamily("微软雅黑")

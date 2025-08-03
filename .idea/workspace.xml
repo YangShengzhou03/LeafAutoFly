@@ -7,11 +7,13 @@
     <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AiAssistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/AiAssistant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AutoInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/AutoInfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NicknameComboBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/NicknameComboBox.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/Split.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/Reply.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/System_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/System_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thread.py" beforeDir="false" afterPath="$PROJECT_DIR$/Thread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI_Reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Reply.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI_Reply.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Reply.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_internal/log" beforeDir="false" afterPath="$PROJECT_DIR$/_internal/log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_internal/system_info.ini" beforeDir="false" afterPath="$PROJECT_DIR$/_internal/system_info.ini" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,15 +141,7 @@
       <workItem from="1752338214802" duration="19000" />
       <workItem from="1752338413027" duration="6000" />
       <workItem from="1754142887876" duration="9813000" />
-      <workItem from="1754181236297" duration="9820000" />
-    </task>
-    <task id="LOCAL-00028" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751182905740</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1751182905740</updated>
+      <workItem from="1754181236297" duration="11252000" />
     </task>
     <task id="LOCAL-00029" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
@@ -533,7 +527,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754189262239</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754191104504</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1754191104504</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,6 +547,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="LeafAuto PRO更新" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754191047638" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754192417333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

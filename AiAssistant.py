@@ -98,7 +98,8 @@ class AiAssistant(QtWidgets.QWidget):
                 only_at = self.parent.checkBox_onlyAt.isChecked()
                 log_print(f"[AiAssistant] Takeover configuration - Model: {model}, Role: {role}, Only @: {only_at}")
                 log_print("[AiAssistant] Creating new AI worker thread")
-                self.ai_thread = AiWorkerThread(self.current_wx, receiver, model=model, role=role, only_at=only_at)
+                self.ai_thread = AiWorkerThread(app_instance=self, wx_instance=self.current_wx, receiver=receiver,
+                                                model=model, role=role, only_at=only_at)
                 self.ai_thread.finished.connect(self.on_thread_finished)
                 self.ai_thread.start()
                 self.timer.start(1000)

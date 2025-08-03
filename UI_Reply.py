@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from common import get_resource_path
-
 
 class Ui_ReplyDialog(object):
     def setupUi(self, ReplyDialog):
@@ -162,6 +160,27 @@ class Ui_ReplyDialog(object):
 "border-radius: 0px;")
         self.Reply_lineEdit.setObjectName("Reply_lineEdit")
         self.horizontalLayout_17.addWidget(self.Reply_lineEdit)
+        self.file_pushButton_2 = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
+        self.file_pushButton_2.setMinimumSize(QtCore.QSize(32, 32))
+        self.file_pushButton_2.setStyleSheet("QPushButton{\n"
+"    background-color: rgba(255, 255, 255, 0);\n"
+"border: none;\n"
+"border-radius:20px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"\n"
+"}\n"
+"QPushButton:pressed {\n"
+"\n"
+"}\n"
+"")
+        self.file_pushButton_2.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("resources/img/page3/page3_回复表情.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.file_pushButton_2.setIcon(icon)
+        self.file_pushButton_2.setIconSize(QtCore.QSize(24, 24))
+        self.file_pushButton_2.setObjectName("file_pushButton_2")
+        self.horizontalLayout_17.addWidget(self.file_pushButton_2)
         self.file_pushButton = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
         self.file_pushButton.setMinimumSize(QtCore.QSize(32, 32))
         self.file_pushButton.setStyleSheet("QPushButton{\n"
@@ -177,9 +196,9 @@ class Ui_ReplyDialog(object):
 "}\n"
 "")
         self.file_pushButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/page1/page1_打开文件.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.file_pushButton.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("resources/img/page1/page1_打开文件.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.file_pushButton.setIcon(icon1)
         self.file_pushButton.setIconSize(QtCore.QSize(24, 24))
         self.file_pushButton.setObjectName("file_pushButton")
         self.horizontalLayout_17.addWidget(self.file_pushButton)
@@ -203,6 +222,32 @@ class Ui_ReplyDialog(object):
 "border-radius: 0px;")
         self.Apply_lineEdit.setObjectName("Apply_lineEdit")
         self.horizontalLayout_17.addWidget(self.Apply_lineEdit)
+        self.pushButton_load = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
+        self.pushButton_load.setMinimumSize(QtCore.QSize(42, 28))
+        self.pushButton_load.setMaximumSize(QtCore.QSize(16777215, 28))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        self.pushButton_load.setFont(font)
+        self.pushButton_load.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_load.setStyleSheet("QPushButton {\n"
+"    background-color: rgba(153, 30, 30, 180);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    color: white;\n"
+"    font-size: 12px;\n"
+"    padding: 6px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgba(178, 44, 44, 0.75);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(121, 24, 24, 0.85);\n"
+"}")
+        self.pushButton_load.setObjectName("pushButton_load")
+        self.horizontalLayout_17.addWidget(self.pushButton_load)
         self.pushButton_add = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
         self.pushButton_add.setMinimumSize(QtCore.QSize(42, 28))
         self.pushButton_add.setMaximumSize(QtCore.QSize(16777215, 28))
@@ -229,32 +274,6 @@ class Ui_ReplyDialog(object):
 "}")
         self.pushButton_add.setObjectName("pushButton_add")
         self.horizontalLayout_17.addWidget(self.pushButton_add)
-        self.pushButton_load = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
-        self.pushButton_load.setMinimumSize(QtCore.QSize(42, 28))
-        self.pushButton_load.setMaximumSize(QtCore.QSize(16777215, 28))
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑")
-        font.setPointSize(-1)
-        self.pushButton_load.setFont(font)
-        self.pushButton_load.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        self.pushButton_load.setStyleSheet("QPushButton {\n"
-"    background-color: rgba(105, 27, 253, 180);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    color: white;\n"
-"    font-size: 12px;\n"
-"    padding: 6px;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(105, 27, 253, 0.75);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(105, 27, 253, 0.85);\n"
-"}")
-        self.pushButton_load.setObjectName("pushButton_load")
-        self.horizontalLayout_17.addWidget(self.pushButton_load)
         self.verticalLayout_2.addWidget(self.horizontalFrame_12)
         self.scrollArea = QtWidgets.QScrollArea(parent=self.mainframe)
         self.scrollArea.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
@@ -381,10 +400,10 @@ class Ui_ReplyDialog(object):
         self.Rule_comboBox.setItemText(1, _translate("ReplyDialog", "等于"))
         self.Rule_comboBox.setItemText(2, _translate("ReplyDialog", "正则"))
         self.label_18.setText(_translate("ReplyDialog", "回复"))
-        self.Reply_lineEdit.setPlaceholderText(_translate("ReplyDialog", "文字或文件"))
+        self.Reply_lineEdit.setPlaceholderText(_translate("ReplyDialog", "消息或文件"))
         self.label_19.setText(_translate("ReplyDialog", "应用于"))
-        self.Apply_lineEdit.setPlaceholderText(_translate("ReplyDialog", "群聊备注"))
-        self.pushButton_add.setText(_translate("ReplyDialog", "添加规则"))
-        self.pushButton_load.setText(_translate("ReplyDialog", "导入规则"))
+        self.Apply_lineEdit.setPlaceholderText(_translate("ReplyDialog", "好友/群聊备注"))
+        self.pushButton_load.setText(_translate("ReplyDialog", "导入"))
+        self.pushButton_add.setText(_translate("ReplyDialog", "添加"))
         self.pushButton_cancel.setText(_translate("ReplyDialog", "取消"))
         self.pushButton_save.setText(_translate("ReplyDialog", "保存"))

@@ -22,7 +22,8 @@ DEFAULT_VALUES = {
     'language': 'cn',
     'serve_lock': 'False',
     'add_timestep': 10,
-    'reply_delay': 0
+    'reply_delay': 0,
+    'same_reply': 0
 }
 
 
@@ -123,7 +124,8 @@ def create_config_file():
         'language': 'cn',
         'serve_lock': 'False',
         'add_timestep': '10',
-        'reply_delay': 0
+        'reply_delay': 0,
+        'same_reply': 0
     }
     os.makedirs(os.path.dirname(CONFIG_PATH), exist_ok=True)
     log_print(f'Writing config to {CONFIG_PATH}')

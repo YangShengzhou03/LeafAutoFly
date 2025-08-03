@@ -326,15 +326,16 @@ class WorkerThread(WorkerThreadBase):
 class AiWorkerThread(WorkerThreadBase):
     status_updated = QtCore.pyqtSignal(str)
 
-    def __init__(self, app_instance, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at=False):
+    def __init__(self, app_instance, wx_instance, receiver, model="月之暗面", role="你很温馨,回复简单明了。", only_at=False):
         super().__init__()
         self.app_instance = app_instance
+        self.wx_instance = wx_instance
         self.receiver = receiver
         self.model = model
         self.system_content = role
-        self.rules = self._load_rules()
         self.only_at = only_at
-        self.at_me = "@" + self.app_instance.wx.nickname
+        self.rules = self._load_rules()
+        self.at_me = "@" + wx_instance.nickname
         self.receiver_list = [r.strip() for r in receiver.replace(';', '；').split('；') if r.strip()]
         self.listen_list = []
         self.last_sent_messages = {}
@@ -352,7 +353,7 @@ class AiWorkerThread(WorkerThreadBase):
                 return False
 
             try:
-                self.app_instance.wx.AddListenChat(who=target)
+                self.wx_instance.AddListenChat(who=target)
                 self.listen_list.append(target)
                 log_print(f"[AI_WORKER] Added listener for: {target}")
             except Exception as e:
@@ -374,9 +375,9 @@ class AiWorkerThread(WorkerThreadBase):
             return []
 
     def _get_chat_name(self, who):
-        if not hasattr(self.app_instance.wx, 'GetChatName'):
+        if not hasattr(self.wx_instance, 'GetChatName'):
             return who
-        return self.app_instance.wx.GetChatName(who)
+        return self.wx_instance.GetChatName(who)
 
     def _match_rule(self, msg, who):
         if not self.rules:
@@ -429,7 +430,7 @@ class AiWorkerThread(WorkerThreadBase):
                 if self._stop_event.is_set() or not self._is_running:
                     return
 
-                response = self.app_instance.wx.SendMsg(msg=" ", who=receiver)
+                response = self.wx_instance.SendMsg(msg=" ", who=receiver)
                 if response.get('status') == '失败':
                     raise ValueError(f"初始化发送失败: {response.get('message', '未找到该备注的好友')}")
         except Exception as e:
@@ -462,7 +463,7 @@ class AiWorkerThread(WorkerThreadBase):
         if self._stop_event.is_set() or not self._is_running:
             return
 
-        messages_dict = self.app_instance.wx.GetListenMessage()
+        messages_dict = self.wx_instance.GetListenMessage()
         for chat, messages in messages_dict.items():
             if self._stop_event.is_set() or not self._is_running:
                 return
@@ -514,8 +515,8 @@ class AiWorkerThread(WorkerThreadBase):
         log_print("[AI_WORKER] cleanup")
         try:
             for target in self.listen_list:
-                if hasattr(self.app_instance.wx, 'RemoveListenChat'):
-                    self.app_instance.wx.RemoveListenChat(who=target)
+                if hasattr(self.wx_instance, 'RemoveListenChat'):
+                    self.wx_instance.RemoveListenChat(who=target)
             self.listen_list.clear()
         except Exception as e:
             log("ERROR", f"清理监听时出错: {str(e)}")
@@ -561,7 +562,7 @@ class AiWorkerThread(WorkerThreadBase):
 
             if os.path.isdir(os.path.dirname(reply)):
                 if os.path.isfile(reply):
-                    response = self.app_instance.wx.SendFiles(filepath=reply, who=who)
+                    response = self.wx_instance.SendFiles(filepath=reply, who=who)
                     log_print(response)
                     if response.get('status') == '失败':
                         raise ValueError(f"发送文件失败: {response.get('message', '未找到该备注的好友')}")
@@ -581,15 +582,15 @@ class AiWorkerThread(WorkerThreadBase):
                     raise ValueError("表情索引必须≥1")
                 selected_index = random.choice(valid_indices)
                 emotion_id = selected_index - 1
-                response = self.app_instance.wx.SendEmotion(emotion_id, who=who)
+                response = self.wx_instance.SendEmotion(emotion_id, who=who)
                 log_print(response)
                 if response.get('status') == '失败':
                     raise ValueError(f"发送表情失败: {response.get('message', '未找到表情包')}")
             else:
                 if is_group and at_user and self.only_at:
-                    response = self.app_instance.wx.SendMsg(msg=reply, who=who, at=at_user)
+                    response = self.wx_instance.SendMsg(msg=reply, who=who, at=at_user)
                 else:
-                    response = self.app_instance.wx.SendMsg(msg=reply, who=who)
+                    response = self.wx_instance.SendMsg(msg=reply, who=who)
                 log_print(response)
                 if response.get('status') == '失败':
                     raise ValueError(f"发送消息失败: {response.get('message', '未找到该备注的好友')}")
@@ -610,9 +611,9 @@ class AiWorkerThread(WorkerThreadBase):
                 return
 
             if is_group and at_user and self.only_at:
-                response = self.app_instance.wx.SendMsg(msg=result, who=who, at=at_user)
+                response = self.wx_instance.SendMsg(msg=result, who=who, at=at_user)
             else:
-                response = self.app_instance.wx.SendMsg(msg=result, who=who)
+                response = self.wx_instance.SendMsg(msg=result, who=who)
 
             if response.get('status') == '失败':
                 raise ValueError(f"发送AI回复失败: {response.get('message', '未找到该备注的好友')}")
