@@ -14,6 +14,7 @@ import common
 from ActivitiesWindow import ActivitiesWindow
 from AiAssistant import AiAssistant
 from AutoInfo import AutoInfo
+from NicknameComboBox import NicknameComboBox
 from Reply import ReplyDialog
 from SettingWindow import SettingWindow
 from Split import Split
@@ -95,6 +96,36 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if parent_layout:
             parent_layout.addWidget(self.comboBox_Frequency)
+
+        old_combobox = self.comboBox_nickName
+        parent_widget = old_combobox.parentWidget()
+        parent_layout = parent_widget.layout()
+        geometry = old_combobox.geometry()
+        object_name = old_combobox.objectName()
+
+        if parent_layout:
+            for i in range(parent_layout.count()):
+                item = parent_layout.itemAt(i)
+                if item.widget() == old_combobox:
+                    parent_layout.removeWidget(old_combobox)
+                    break
+        old_combobox.deleteLater()
+
+        self.comboBox_nickName = NicknameComboBox(parent=parent_widget)
+        self.comboBox_nickName.setGeometry(geometry)
+        self.comboBox_nickName.setObjectName(object_name)
+
+        if parent_layout:
+            insert_index = -1
+            for i in range(parent_layout.count()):
+                if isinstance(parent_layout.itemAt(i), QtWidgets.QSpacerItem):
+                    insert_index = i + 1
+                    break
+            if insert_index != -1:
+                parent_layout.insertWidget(insert_index, self.comboBox_nickName)
+            else:
+                parent_layout.addWidget(self.comboBox_nickName)
+
         self.ui = Ui_MainWindow()
         self.setWindowTitle("LeafAuto Pro")
         self.setWindowIcon(QtGui.QIcon(get_resource_path('resources/img/icon.ico')))

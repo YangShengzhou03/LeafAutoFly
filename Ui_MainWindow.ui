@@ -2836,7 +2836,7 @@ border-radius:12px</string>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_22">
                        <property name="spacing">
-                        <number>9</number>
+                        <number>6</number>
                        </property>
                        <property name="sizeConstraint">
                         <enum>QLayout::SetDefaultConstraint</enum>
@@ -2909,6 +2909,12 @@ QLineEdit:hover {
                        </item>
                        <item>
                         <widget class="QPushButton" name="emotion_pushButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
                          <property name="minimumSize">
                           <size>
                            <width>32</width>
@@ -2938,8 +2944,8 @@ QPushButton:pressed {
                          </property>
                          <property name="iconSize">
                           <size>
-                           <width>24</width>
-                           <height>24</height>
+                           <width>26</width>
+                           <height>26</height>
                           </size>
                          </property>
                         </widget>
@@ -3079,7 +3085,7 @@ QLineEdit:hover {
 }</string>
                          </property>
                          <property name="placeholderText">
-                          <string>联系人备注优先</string>
+                          <string>好友/群聊 备注</string>
                          </property>
                         </widget>
                        </item>
@@ -3583,7 +3589,7 @@ border-radius:12px</string>
 }</string>
                              </property>
                              <property name="text">
-                              <string>添加任务到左侧列表，再点击开始执行按钮</string>
+                              <string>点击右上角将任务添加到左侧，再点击开始执行</string>
                              </property>
                             </widget>
                            </item>
@@ -4793,7 +4799,7 @@ QLineEdit:hover {
 }</string>
                                </property>
                                <property name="placeholderText">
-                                <string>对象备注，多个用分号分隔</string>
+                                <string>好友/群聊 备注，多个分号分隔</string>
                                </property>
                               </widget>
                              </item>
@@ -4934,7 +4940,7 @@ border-radius: 2px;</string>
                                    <string notr="true">color:rgb(0, 0, 0);</string>
                                   </property>
                                   <property name="text">
-                                   <string>仅被@时回复</string>
+                                   <string>仅被@时触发</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -5029,7 +5035,7 @@ QCheckBox::indicator:disabled:checked {
 }</string>
                                </property>
                                <property name="text">
-                                <string>模型人设</string>
+                                <string>人设</string>
                                </property>
                               </widget>
                              </item>
