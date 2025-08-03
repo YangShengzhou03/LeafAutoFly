@@ -25,7 +25,7 @@ from clickableComboBox import clickableComboBox
 from common import get_resource_path, log, get_current_time, log_print, get_url
 
 wx_instances = {}
-current_version = 4.39
+current_version = 4.40
 
 
 def reload_wx():

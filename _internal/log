@@ -304,3 +304,112 @@
 [2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
 [2025-08-03 12:57:08] Key reply_delay updated successfully
 [2025-08-03 12:57:09] [SETTINGS] Settings saved successfully
+[2025-08-03 13:06:15] Initializing MainWindow
+[2025-08-03 13:06:15] [CheckableComboBox] Initializing CheckableComboBox...
+[2025-08-03 13:06:15] [CheckableComboBox] Initialization completed
+[2025-08-03 13:06:15] [CheckableComboBox] '仅一次' item index set to 0
+[2025-08-03 13:06:15] [NicknameComboBox] 初始化账号昵称选择下拉列表...
+[2025-08-03 13:06:15] [NicknameComboBox] 初始化完成
+[2025-08-03 13:06:15] Ensuring configuration file exists
+[2025-08-03 13:06:15] Ensuring config file exists...
+[2025-08-03 13:06:15] Retry 1/5
+[2025-08-03 13:06:15] Reading existing config file...
+[2025-08-03 13:06:15] Reading config from _internal/system_info.ini
+[2025-08-03 13:06:15] Config sections: ['SystemInfo']
+[2025-08-03 13:06:15] Checking for missing keys...
+[2025-08-03 13:06:15] Getting motherboard serial number...
+[2025-08-03 13:06:15] Motherboard SN found: KT17MC05PI
+[2025-08-03 13:06:15] Membership: Free
+[2025-08-03 13:06:15] Expiration Time: 2025-09-02 12:53:18
+[2025-08-03 13:06:15] Config Motherboard SN: LEAF AUTO
+[2025-08-03 13:06:15] Current Motherboard SN: KT17MC05PI
+[2025-08-03 13:06:15] Config file is valid
+[2025-08-03 13:06:15] Reading key: language
+[2025-08-03 13:06:15] Key language value: cn
+[2025-08-03 13:06:15] Reading key: membership
+[2025-08-03 13:06:15] Key membership value: Free
+[2025-08-03 13:06:15] Reading key: expiration_time
+[2025-08-03 13:06:15] Key expiration_time value: 2025-09-02 12:53:18
+[2025-08-03 13:06:15] Reading key: version
+[2025-08-03 13:06:15] Key version value: 4.39
+[2025-08-03 13:06:15] Starting to reload WeChat instances
+[2025-08-03 13:06:15] Reading key: language
+[2025-08-03 13:06:15] Key language value: cn
+[2025-08-03 13:06:16] Reading key: language
+[2025-08-03 13:06:16] Key language value: cn
+[2025-08-03 13:06:17] Successfully initialized WeChat instance for 杨圣洲
+[2025-08-03 13:06:17] Default WeChat instance set to 杨圣洲
+[2025-08-03 13:06:17] [ERROR_SOUND] Thread initialized
+[2025-08-03 13:06:17] [AutoInfo] Initialization completed. Membership level: Free
+[2025-08-03 13:06:17] [AiAssistant] Membership level detected: Free
+[2025-08-03 13:06:17] [AiAssistant] WeChat instances count: 1
+[2025-08-03 13:06:17] [AiAssistant] Updating current WeChat instance
+[2025-08-03 13:06:17] [AiAssistant] Successfully set current WeChat instance: 杨圣洲
+[2025-08-03 13:06:17] [AiAssistant] Initialization process completed
+[2025-08-03 13:06:17] System tray icon created
+[2025-08-03 13:06:17] [SETTINGS] Initializing SettingWindow
+[2025-08-03 13:06:17] [ERROR_SOUND] Thread initialized
+[2025-08-03 13:06:17] Reading key: membership
+[2025-08-03 13:06:17] Key membership value: Free
+[2025-08-03 13:06:17] [SETTINGS] Detected membership: Free
+[2025-08-03 13:06:17] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-08-03 13:06:17] [SETTINGS] Initializing settings
+[2025-08-03 13:06:17] Reading key: error_email
+[2025-08-03 13:06:17] Key error_email value: False
+[2025-08-03 13:06:17] [SETTINGS] Set error_email checkbox to: False
+[2025-08-03 13:06:17] Reading key: error_sound
+[2025-08-03 13:06:17] Key error_sound value: True
+[2025-08-03 13:06:17] [SETTINGS] Set error_sound checkbox to: True
+[2025-08-03 13:06:17] Reading key: net_time
+[2025-08-03 13:06:17] Key net_time value: False
+[2025-08-03 13:06:17] [SETTINGS] Set net_time checkbox to: False
+[2025-08-03 13:06:17] Reading key: auto_update
+[2025-08-03 13:06:17] Key auto_update value: True
+[2025-08-03 13:06:17] [SETTINGS] Set auto_update checkbox to: True
+[2025-08-03 13:06:17] Reading key: serve_lock
+[2025-08-03 13:06:17] Key serve_lock value: False
+[2025-08-03 13:06:17] [SETTINGS] Set serve_lock checkbox to: False
+[2025-08-03 13:06:17] Reading key: import_filter
+[2025-08-03 13:06:17] Key import_filter value: False
+[2025-08-03 13:06:17] [SETTINGS] Set import_filter checkbox to: False
+[2025-08-03 13:06:17] Reading key: close_option
+[2025-08-03 13:06:17] Key close_option value: True
+[2025-08-03 13:06:17] [SETTINGS] Set close_option checkbox to: True
+[2025-08-03 13:06:17] Reading key: language
+[2025-08-03 13:06:17] Key language value: cn
+[2025-08-03 13:06:17] [SETTINGS] Set language to: 简体中文
+[2025-08-03 13:06:17] Reading key: version
+[2025-08-03 13:06:17] Key version value: 4.39
+[2025-08-03 13:06:17] [SETTINGS] Set version label to: 4.39
+[2025-08-03 13:06:17] Reading key: add_timestep
+[2025-08-03 13:06:17] Key add_timestep value: 10
+[2025-08-03 13:06:17] [SETTINGS] Set timestep to: 10
+[2025-08-03 13:06:17] Reading key: same_reply
+[2025-08-03 13:06:17] Key same_reply value: 0
+[2025-08-03 13:06:17] [SETTINGS] Set same_reply to: 0
+[2025-08-03 13:06:17] Reading key: reply_delay
+[2025-08-03 13:06:17] Key reply_delay value: 0
+[2025-08-03 13:06:17] Reading key: selected_audio_index
+[2025-08-03 13:06:17] Key selected_audio_index value: 4
+[2025-08-03 13:06:17] [SETTINGS] Loading audio selection: 4
+[2025-08-03 13:06:17] [SETTINGS] Updating selected sound to index: 4
+[2025-08-03 13:06:17] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_5.mp3
+[2025-08-03 13:06:17] [SETTINGS] Set audio index to: 4
+[2025-08-03 13:06:17] [ACTIVITY] UI signals signals connected successfully
+[2025-08-03 13:06:17] Entering ReplyDialog initialization
+[2025-08-03 13:06:17] Starting to load rules from JSON
+[2025-08-03 13:06:17] Rule file not found, creating new rule list
+[2025-08-03 13:06:17] Starting to display rules
+[2025-08-03 13:06:17] Displayed 0 rules
+[2025-08-03 13:06:17] Completed ReplyDialog initialization
+[2025-08-03 13:06:17] Reading key: membership_class
+[2025-08-03 13:06:17] Key membership_class value: 0
+[2025-08-03 13:06:17] Reading key: error_sound
+[2025-08-03 13:06:17] Key error_sound value: True
+[2025-08-03 13:06:17] Applying Free membership limits
+[2025-08-03 13:06:17] Free trial remaining days: 29
+[2025-08-03 13:06:17] Membership limits applied
+[2025-08-03 13:06:17] Reading key: auto_update
+[2025-08-03 13:06:17] Key auto_update value: True
+[2025-08-03 13:06:18] Reading key: version
+[2025-08-03 13:06:18] Key version value: 4.39
