@@ -219,3 +219,4 @@ QPushButton:pressed {
     def help(self):
         log_print("[ACTIVITY] Opening help URL")
         QDesktopServices.openUrl(QUrl('https://blog.csdn.net/Yang_shengzhou/article/details/143782041'))
+        self.close()

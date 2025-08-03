@@ -160,9 +160,9 @@ class Ui_ReplyDialog(object):
 "border-radius: 0px;")
         self.Reply_lineEdit.setObjectName("Reply_lineEdit")
         self.horizontalLayout_17.addWidget(self.Reply_lineEdit)
-        self.file_pushButton_2 = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
-        self.file_pushButton_2.setMinimumSize(QtCore.QSize(32, 32))
-        self.file_pushButton_2.setStyleSheet("QPushButton{\n"
+        self.emotion_pushButton = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
+        self.emotion_pushButton.setMinimumSize(QtCore.QSize(32, 32))
+        self.emotion_pushButton.setStyleSheet("QPushButton{\n"
 "    background-color: rgba(255, 255, 255, 0);\n"
 "border: none;\n"
 "border-radius:20px;\n"
@@ -174,13 +174,13 @@ class Ui_ReplyDialog(object):
 "\n"
 "}\n"
 "")
-        self.file_pushButton_2.setText("")
+        self.emotion_pushButton.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("resources/img/page3/page3_回复表情.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.file_pushButton_2.setIcon(icon)
-        self.file_pushButton_2.setIconSize(QtCore.QSize(24, 24))
-        self.file_pushButton_2.setObjectName("file_pushButton_2")
-        self.horizontalLayout_17.addWidget(self.file_pushButton_2)
+        self.emotion_pushButton.setIcon(icon)
+        self.emotion_pushButton.setIconSize(QtCore.QSize(24, 24))
+        self.emotion_pushButton.setObjectName("emotion_pushButton")
+        self.horizontalLayout_17.addWidget(self.emotion_pushButton)
         self.file_pushButton = QtWidgets.QPushButton(parent=self.horizontalFrame_12)
         self.file_pushButton.setMinimumSize(QtCore.QSize(32, 32))
         self.file_pushButton.setStyleSheet("QPushButton{\n"

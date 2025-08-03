@@ -21,6 +21,7 @@ class ReplyDialog(QtWidgets.QDialog):
         self.ui.pushButton_save.clicked.connect(self.saveRulesToJsonAndClose)
         self.ui.pushButton_add.clicked.connect(self.add_rule)
         self.ui.file_pushButton.clicked.connect(self.open_file)
+        self.ui.emotion_pushButton.clicked.connect(self.emotion)
         self.ui.pushButton_cancel.clicked.connect(self.on_cancel_clicked)
         self.ui.pushButton_load.clicked.connect(self.import_excel_rules)
         self.rules = []
@@ -30,6 +31,9 @@ class ReplyDialog(QtWidgets.QDialog):
         self.displayRules()
         self.ui.Apply_lineEdit.setText("全部")
         log_print("Completed ReplyDialog initialization")
+
+    def emotion(self):
+        self.ui.Reply_lineEdit.setText("Emotion:")
 
     def open_file(self):
         log_print("Opening file selection dialog")
