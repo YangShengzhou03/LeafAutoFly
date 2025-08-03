@@ -245,28 +245,33 @@ class ReplyDialog(QtWidgets.QDialog):
         delete_button.setFixedSize(24, 24)
 
         delete_button.setStyleSheet("""
-            QPushButton#delete_button {
+            QPushButton {
                 background-color: rgba(255, 255, 255, 0);
                 border: none;
                 color: rgba(255, 100, 100, 0);
                 font-size: 14px;
                 font-weight: bold;
+                width: 24px;
+                height: 24px;
+                min-width: 24px;
+                max-width: 24px;
+                min-height: 24px;
+                max-height: 24px;
                 transition: all 0.3s ease;
             }
-            QWidget#RuleWidget_Item:hover QPushButton#delete_button {
+            QWidget:hover QPushButton {
                 color: rgba(255, 100, 100, 255);
             }
-            QPushButton#delete_button:hover {
+            QPushButton:hover {
                 color: white;
-                background-color: rgba(255, 59, 48, 1);
+                background-color: rgba(255, 59, 48, 0.3);
                 border-radius: 12px;
             }
-            QPushButton#delete_button:pressed {
+            QPushButton:pressed {
                 background-color: rgba(213, 0, 0, 1);
                 transform: scale(0.9);
             }
         """)
-
         delete_button.hide()
         delete_button.clicked.connect(lambda checked, widget=RuleWidget_Item: self.remove_rule(widget))
 

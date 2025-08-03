@@ -1607,7 +1607,7 @@ QCheckBox::indicator:disabled:checked {
                      </property>
                      <property name="styleSheet">
                       <string notr="true">QPushButton {
-    background-color: rgba(140, 120, 250, 180);
+    background-color: rgb(140, 120, 255);
     color: white;
     border: none;
     border-radius: 6px;
@@ -1616,7 +1616,7 @@ QCheckBox::indicator:disabled:checked {
 }
 
 QPushButton:hover {
-    background-color: rgb(140, 120, 255);
+	background-color: rgba(140, 120, 250, 180);
 }
 
 QPushButton:pressed {
@@ -1732,7 +1732,7 @@ QPushButton:pressed {
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_27">
+                  <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="1,1">
                    <property name="spacing">
                     <number>8</number>
                    </property>
@@ -1740,8 +1740,66 @@ QPushButton:pressed {
                     <enum>QLayout::SetMaximumSize</enum>
                    </property>
                    <property name="leftMargin">
-                    <number>220</number>
+                    <number>170</number>
                    </property>
+                   <property name="rightMargin">
+                    <number>170</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_8">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel {
+    color: rgb(0, 0, 0);
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>接管同回复间隔分钟</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="spinBox_sameReply">
+                     <property name="minimumSize">
+                      <size>
+                       <width>106</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>106</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QSpinBox {
+    border: 1px solid #ccc;
+    padding: 4px 20px 4px 8px;
+    font-family: 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    width: 120px;
+    background-color: #fff;
+    border-radius: 4px;
+    color: rgb(0, 0, 0);
+}
+
+QSpinBox:hover {
+    border-color: #888;
+    background-color: #f5f5f5;
+}
+
+QSpinBox:focus {
+    border-color: #0078d4;
+    box-shadow: 0 0 3px rgba(0, 120, 212, 0.8);
+}</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                  <item>
@@ -1760,11 +1818,51 @@ QPushButton:pressed {
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_28">
                    <property name="spacing">
-                    <number>8</number>
+                    <number>0</number>
                    </property>
                    <property name="leftMargin">
-                    <number>220</number>
+                    <number>170</number>
                    </property>
+                   <property name="rightMargin">
+                    <number>170</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_sendLog">
+                     <property name="minimumSize">
+                      <size>
+                       <width>88</width>
+                       <height>32</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>88</width>
+                       <height>32</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QPushButton {
+    background-color: rgb(140, 120, 255);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Microsoft YaHei';
+    font-size: 14px;
+}
+
+QPushButton:hover {
+	background-color: rgba(140, 120, 250, 180);
+}
+
+QPushButton:pressed {
+    background-color: rgb(140, 100, 255);
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>发送日志</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                  <item>
@@ -2111,7 +2209,7 @@ border:none;</string>
                      </property>
                      <property name="styleSheet">
                       <string notr="true">QPushButton {
-    background-color: rgba(140, 120, 250, 180);
+    background-color: rgb(140, 120, 255);
     color: white;
     border: none;
     border-radius: 6px;
@@ -2120,7 +2218,7 @@ border:none;</string>
 }
 
 QPushButton:hover {
-    background-color: rgb(140, 120, 255);
+	background-color: rgba(140, 120, 250, 180);
 }
 
 QPushButton:pressed {
@@ -2233,7 +2331,7 @@ QPushButton:pressed {
                      </property>
                      <property name="styleSheet">
                       <string notr="true">QPushButton {
-    background-color: rgba(140, 120, 250, 180);
+    background-color: rgb(140, 120, 255);
     color: white;
     border: none;
     border-radius: 6px;
@@ -2242,7 +2340,7 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(140, 120, 255);
+	background-color: rgba(140, 120, 250, 180);
 }
 
 QPushButton:pressed {

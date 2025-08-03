@@ -73,7 +73,7 @@ class NicknameComboBox(QtWidgets.QComboBox):
     def _init_styles(self):
         self.setStyleSheet("""
             QComboBox {
-                background: rgba(255, 255, 255, 10);
+                background: transparent;
                 border: 1px solid transparent;
                 color: white;
                 padding: 6px 12px;
@@ -83,12 +83,12 @@ class NicknameComboBox(QtWidgets.QComboBox):
             }
 
             QComboBox:hover {
-                background: rgba(255, 255, 255, 20);
+                background: transparent;
                 border-color: rgba(255, 255, 255, 40);
             }
 
             QComboBox:focus {
-                background: rgba(255, 255, 255, 20);
+                background: transparent;
                 border-color: #7B61FF;
                 outline: none;
                 box-shadow: 0 0 0 2px rgba(123, 97, 255, 30);
@@ -106,7 +106,7 @@ class NicknameComboBox(QtWidgets.QComboBox):
             }
 
             QComboBox::drop-down:hover {
-                background: rgba(255, 255, 255, 20);
+                background: transparent;
             }
 
             QComboBox::down-arrow {
@@ -170,6 +170,7 @@ class NicknameComboBox(QtWidgets.QComboBox):
                 opacity: 0.4;
             }
         """)
+
     def eventFilter(self, obj, event):
         try:
             if obj == self.lineEdit() and event.type() == QEvent.Type.MouseButtonRelease:

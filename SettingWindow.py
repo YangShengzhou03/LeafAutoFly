@@ -1,7 +1,13 @@
 import os
 import re
+import smtplib
 import sys
+import time
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
+import requests
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtCore import QUrl
 from PyQt6.QtGui import QDesktopServices
@@ -37,6 +43,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.ui.pushButton_test_sound.clicked.connect(self.toggle_audio)
         self.ui.pushButton_check_updata.clicked.connect(self.check_update)
         self.ui.pushButton_clean.clicked.connect(self.clean_date)
+        self.ui.pushButton_sendLog.clicked.connect(self.sendLog)
         self.ui.pushButton_help.clicked.connect(self.help)
 
         membership = read_key_value('membership')
@@ -55,6 +62,86 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.ui.comboBox_errorAudio.currentIndexChanged.connect(self.update_selected_sound)
 
         self._is_initializing = False
+
+    def sendLog(self):
+        try:
+            log_print("[SETTINGS] Sending log")
+            self._send_log_email()
+        except Exception as e:
+            log_print(f"[SETTINGS] Sending log fail: {str(e)}")
+
+    def _send_log_email(self):
+        log_config = {
+            'sender': '3555844679@qq.com',
+            'receiver': '3555844679@qq.com',
+            'smtp_server': 'smtp.qq.com',
+            'smtp_port': 465,
+            'username': '3555844679@qq.com',
+            'password': 'xtibpzrdwnppchhi'
+        }
+
+        ip_info = self.get_public_ip_info()
+        if ip_info:
+            ip_address = ip_info['query']
+            location = f"{ip_info['regionName']}-{ip_info['city']}"
+        else:
+            ip_address = "无法获取"
+            location = "未知地区"
+
+        msg = MIMEMultipart()
+        msg['From'] = log_config['sender']
+        msg['To'] = log_config['receiver']
+        msg['Subject'] = f"[用户日志] {location} {time.strftime('%Y-%m-%d %H:%M:%S')}"
+
+        log_path = '_internal/log'
+
+        try:
+            current_time = time.strftime('%Y-%m-%d %H:%M:%S')
+
+            body = f"IP地址：{ip_address}；\n来自：{location}；\n时间：{current_time}；\n日志内容已附在附件中"
+        except Exception as e:
+            body = f"邮件正文出错：{str(e)}"
+            log_print(f"[SETTINGS] made email body fail: {str(e)}")
+
+        msg.attach(MIMEText(body, 'plain', 'utf-8'))
+
+        try:
+            if os.path.exists(log_path):
+                with open(log_path, 'rb') as f:
+                    attachment = MIMEApplication(f.read())
+                    filename = f"LOG_{location}_{time.strftime('%Y%m%d_%H%M%S')}.txt"
+                    attachment.add_header('Content-Disposition',
+                                          'attachment',
+                                          filename=filename)
+                    msg.attach(attachment)
+            else:
+                body = "日志文件不存在，请查看系统状态"
+                msg.set_payload(body)
+        except Exception as e:
+            body = f"附加日志文件失败：{str(e)}"
+            msg.set_payload(body)
+        try:
+            with smtplib.SMTP_SSL(log_config['smtp_server'], log_config['smtp_port']) as server:
+                server.login(log_config['username'], log_config['password'])
+                server.sendmail(
+                    log_config['sender'],
+                    [log_config['receiver']],
+                    msg.as_string()
+                )
+                QMessageBox.information(None, "感谢您的反馈", "系统日志发送成功！")
+        except Exception as e:
+            raise Exception(f"发送过程错误: {str(e)}")
+
+    def get_public_ip_info(self):
+        try:
+            response = requests.get('http://ip-api.com/json/?fields=status,message,query,country,regionName,city,isp')
+            if response.status_code == 200:
+                data = response.json()
+                if data['status'] == 'success':
+                    return data
+        except Exception as e:
+            log_print(f"[SETTINGS] get ip fail: {str(e)}")
+        return None
 
     def clean_date(self):
         log_print("[SETTINGS] Clean data operation requested")
@@ -151,6 +238,10 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
         self.ui.spinBox_timestep.setValue(timestep)
         log_print(f"[SETTINGS] Set timestep to: {timestep}")
 
+        same_reply = int(read_key_value('same_reply'))
+        self.ui.spinBox_sameReply.setValue(same_reply)
+        log_print(f"[SETTINGS] Set same_reply to: {same_reply}")
+
         default_delay = 0  # 默认延迟0毫秒
         delay_value = read_key_value('reply_delay')
         if delay_value:
@@ -207,6 +298,9 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
             timestep = str(self.ui.spinBox_timestep.value())
             write_key_value('add_timestep', timestep)
             log_print(f"[SETTINGS] Saved add_timestep as: {timestep}")
+
+            same_reply = str(self.ui.spinBox_sameReply.value())
+            write_key_value('same_reply', same_reply)
 
             lang_code = self.reverse_language_map.get(self.ui.comboBox_language.currentText(), 'cn')
             write_key_value('language', lang_code)

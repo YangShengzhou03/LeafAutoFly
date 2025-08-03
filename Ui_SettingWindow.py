@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from common import get_resource_path
-
 
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
@@ -97,22 +95,22 @@ class Ui_SettingWindow(object):
         self.listWidget_setting.setObjectName("listWidget_setting")
         item = QtWidgets.QListWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/基本设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("resources/img/setting/基本设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/高级设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("resources/img/setting/高级设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon1)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/其他设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(QtGui.QPixmap("resources/img/setting/其他设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon2)
         self.listWidget_setting.addItem(item)
         item = QtWidgets.QListWidgetItem()
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/关于枫叶.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon3.addPixmap(QtGui.QPixmap("resources/img/setting/关于枫叶.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         item.setIcon(icon3)
         self.listWidget_setting.addItem(item)
         self.horizontalLayout_15.addWidget(self.listWidget_setting)
@@ -144,7 +142,7 @@ class Ui_SettingWindow(object):
 "color: rgb(0, 0, 0);\n"
 "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/完成设置.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon4.addPixmap(QtGui.QPixmap("resources/img/setting/完成设置.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_exit_setting.setIcon(icon4)
         self.pushButton_exit_setting.setObjectName("pushButton_exit_setting")
         self.horizontalLayout_16.addWidget(self.pushButton_exit_setting, 0, QtCore.Qt.AlignmentFlag.AlignBottom)
@@ -357,7 +355,7 @@ class Ui_SettingWindow(object):
 "border:none;")
         self.pushButton_test_sound.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/播放测试.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon5.addPixmap(QtGui.QPixmap("resources/img/setting/播放测试.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_test_sound.setIcon(icon5)
         self.pushButton_test_sound.setIconSize(QtCore.QSize(28, 28))
         self.pushButton_test_sound.setObjectName("pushButton_test_sound")
@@ -889,7 +887,7 @@ class Ui_SettingWindow(object):
         self.pushButton_clean.setMinimumSize(QtCore.QSize(88, 32))
         self.pushButton_clean.setMaximumSize(QtCore.QSize(88, 32))
         self.pushButton_clean.setStyleSheet("QPushButton {\n"
-"    background-color: rgba(140, 120, 250, 180);\n"
+"    background-color: rgb(140, 120, 255);\n"
 "    color: white;\n"
 "    border: none;\n"
 "    border-radius: 6px;\n"
@@ -898,7 +896,7 @@ class Ui_SettingWindow(object):
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"    background-color: rgb(140, 120, 255);\n"
+"    background-color: rgba(140, 120, 250, 180);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
@@ -946,16 +944,73 @@ class Ui_SettingWindow(object):
         self.verticalLayout_5.addWidget(self.label_setting_3)
         self.horizontalLayout_27 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_27.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMaximumSize)
-        self.horizontalLayout_27.setContentsMargins(220, -1, -1, -1)
+        self.horizontalLayout_27.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_27.setSpacing(8)
         self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.label_8 = QtWidgets.QLabel(parent=self.frame_setting_3)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_8.setFont(font)
+        self.label_8.setStyleSheet("QLabel {\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.label_8.setObjectName("label_8")
+        self.horizontalLayout_27.addWidget(self.label_8)
+        self.spinBox_sameReply = QtWidgets.QSpinBox(parent=self.frame_setting_3)
+        self.spinBox_sameReply.setMinimumSize(QtCore.QSize(106, 27))
+        self.spinBox_sameReply.setMaximumSize(QtCore.QSize(106, 27))
+        self.spinBox_sameReply.setStyleSheet("QSpinBox {\n"
+"    border: 1px solid #ccc;\n"
+"    padding: 4px 20px 4px 8px;\n"
+"    font-family: \'Microsoft YaHei\', sans-serif;\n"
+"    font-size: 14px;\n"
+"    width: 120px;\n"
+"    background-color: #fff;\n"
+"    border-radius: 4px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QSpinBox:hover {\n"
+"    border-color: #888;\n"
+"    background-color: #f5f5f5;\n"
+"}\n"
+"\n"
+"QSpinBox:focus {\n"
+"    border-color: #0078d4;\n"
+"    box-shadow: 0 0 3px rgba(0, 120, 212, 0.8);\n"
+"}")
+        self.spinBox_sameReply.setObjectName("spinBox_sameReply")
+        self.horizontalLayout_27.addWidget(self.spinBox_sameReply)
+        self.horizontalLayout_27.setStretch(0, 1)
+        self.horizontalLayout_27.setStretch(1, 1)
         self.verticalLayout_5.addLayout(self.horizontalLayout_27)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_5.addItem(spacerItem2)
         self.horizontalLayout_28 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_28.setContentsMargins(220, -1, -1, -1)
-        self.horizontalLayout_28.setSpacing(8)
+        self.horizontalLayout_28.setContentsMargins(170, -1, 170, -1)
+        self.horizontalLayout_28.setSpacing(0)
         self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.pushButton_sendLog = QtWidgets.QPushButton(parent=self.frame_setting_3)
+        self.pushButton_sendLog.setMinimumSize(QtCore.QSize(88, 32))
+        self.pushButton_sendLog.setMaximumSize(QtCore.QSize(88, 32))
+        self.pushButton_sendLog.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(140, 120, 255);\n"
+"    color: white;\n"
+"    border: none;\n"
+"    border-radius: 6px;\n"
+"    font-family: \'Microsoft YaHei\';\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgba(140, 120, 250, 180);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(140, 100, 255);\n"
+"}")
+        self.pushButton_sendLog.setObjectName("pushButton_sendLog")
+        self.horizontalLayout_28.addWidget(self.pushButton_sendLog)
         self.verticalLayout_5.addLayout(self.horizontalLayout_28)
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_5.addItem(spacerItem3)
@@ -1029,7 +1084,7 @@ class Ui_SettingWindow(object):
 "border:none;")
         self.pushButton_logo.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/setting/logo.png")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon6.addPixmap(QtGui.QPixmap("resources/img/setting/logo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pushButton_logo.setIcon(icon6)
         self.pushButton_logo.setIconSize(QtCore.QSize(80, 80))
         self.pushButton_logo.setObjectName("pushButton_logo")
@@ -1088,7 +1143,7 @@ class Ui_SettingWindow(object):
         self.pushButton_check_updata.setSizeIncrement(QtCore.QSize(80, 80))
         self.pushButton_check_updata.setBaseSize(QtCore.QSize(80, 80))
         self.pushButton_check_updata.setStyleSheet("QPushButton {\n"
-"    background-color: rgba(140, 120, 250, 180);\n"
+"    background-color: rgb(140, 120, 255);\n"
 "    color: white;\n"
 "    border: none;\n"
 "    border-radius: 6px;\n"
@@ -1097,7 +1152,7 @@ class Ui_SettingWindow(object):
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"    background-color: rgb(140, 120, 255);\n"
+"    background-color: rgba(140, 120, 250, 180);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
@@ -1141,7 +1196,7 @@ class Ui_SettingWindow(object):
         self.pushButton_help.setSizeIncrement(QtCore.QSize(80, 80))
         self.pushButton_help.setBaseSize(QtCore.QSize(80, 80))
         self.pushButton_help.setStyleSheet("QPushButton {\n"
-"    background-color: rgba(140, 120, 250, 180);\n"
+"    background-color: rgb(140, 120, 255);\n"
 "    color: white;\n"
 "    border: none;\n"
 "    border-radius: 6px;\n"
@@ -1150,7 +1205,7 @@ class Ui_SettingWindow(object):
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"    background-color: rgb(140, 120, 255);\n"
+"    background-color: rgba(140, 120, 250, 180);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
@@ -1245,6 +1300,8 @@ class Ui_SettingWindow(object):
         self.label_errorAudio_2.setText(_translate("SettingWindow", "清除软件缓存数据"))
         self.pushButton_clean.setText(_translate("SettingWindow", "清除缓存"))
         self.label_setting_3.setText(_translate("SettingWindow", "其他设置"))
+        self.label_8.setText(_translate("SettingWindow", "接管同回复间隔分钟"))
+        self.pushButton_sendLog.setText(_translate("SettingWindow", "发送日志"))
         self.label_setting_4.setText(_translate("SettingWindow", "关于枫叶"))
         self.label.setText(_translate("SettingWindow", "版本信息"))
         self.label_version.setText(_translate("SettingWindow", "Null"))
