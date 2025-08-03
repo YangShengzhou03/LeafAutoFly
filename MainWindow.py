@@ -246,40 +246,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             with open(json_file_path, 'r', encoding='utf-8') as f:
                 try:
                     loaded_tasks = json.load(f)
-                    # 清空现有任务但保留计数器
                     self.auto_info.ready_tasks.clear()
                     current_time = datetime.now()
-
-                    # 根据会员等级确定任务上限
-                    membership_limits = {
-                        'Free': 5,
-                        'VIP': 9999,
-                        'Base': 30  # 假设基础版限制30个
-                    }
+                    membership_limits = {'Free': 5, 'VIP': 9999, 'Base': 30}
                     membership_limit = membership_limits.get(self.Membership, 5)
                     remaining_slots = membership_limit - len(self.auto_info.ready_tasks)
-
                     for task in loaded_tasks:
-                        # 检查必要字段是否存在且有值
-                        required_keys = ['time', 'name', 'info', 'frequency']
-                        if not all(key in task and task[key] for key in required_keys):
+                        required_keys = ['time', 'name', 'info', 'sender']
+                        valid = True
+                        for key in required_keys:
+                            if key not in task or not task[key]:
+                                valid = False
+                                break
+                        if 'frequency' not in task:
+                            valid = False
+                        if not valid:
                             log("WARNING", "跳过不完整的任务数据")
                             continue
-
                         if remaining_slots <= 0:
                             log("WARNING", f"已达到最大任务限制 {membership_limit}，剩余任务将被忽略")
                             break
-
                         try:
-                            # 解析任务时间
                             task_time = datetime.fromisoformat(task['time'])
                         except ValueError:
                             log("WARNING", f"跳过时间格式错误的任务: {task['time']}")
                             continue
-
-                        # 处理过期的周期性任务
                         if task_time < current_time and task['frequency']:
-                            # 使用现有方法计算下一个有效时间
                             adjusted_time = self.auto_info.calculate_next_time(task_time, task['frequency'])
                             if adjusted_time:
                                 task_time = adjusted_time
@@ -287,48 +279,33 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                             else:
                                 log("WARNING", f"无法调整过期任务时间，已跳过: {task['name']}")
                                 continue
-
-                        # 生成唯一任务ID
                         self.auto_info.task_id_counter += 1
                         task_id = self.auto_info.task_id_counter
-
-                        # 存储任务数据（使用字典而不是列表）
                         task_data = {
                             'id': task_id,
                             'time': task_time.isoformat(),
                             'name': task['name'],
                             'info': task['info'],
+                            'sender': task['sender'],
                             'frequency': task['frequency']
                         }
                         self.auto_info.ready_tasks[task_id] = task_data
-
-                        # 更新时间索引
-                        if task_time.isoformat() not in self.auto_info.tasks_by_time:
-                            self.auto_info.tasks_by_time[task_time.isoformat()] = []
-                        self.auto_info.tasks_by_time[task_time.isoformat()].append(task_id)
-
-                        # 创建UI控件
+                        time_str = task_time.isoformat()
+                        if time_str not in self.auto_info.tasks_by_time:
+                            self.auto_info.tasks_by_time[time_str] = []
+                        self.auto_info.tasks_by_time[time_str].append(task_id)
                         widget_item = self.auto_info.create_widget(
-                            task_id,
-                            task_time.isoformat(),
-                            task['name'],
-                            task['info'],
-                            task['frequency'],
-                            task['sender']
+                            task_id, time_str, task['name'], task['info'], task['frequency'], task['sender']
                         )
                         if widget_item:
                             self.formLayout_3.addRow(widget_item)
                         else:
                             log("WARNING", f"创建任务UI控件失败: {task['name']}")
-
                         remaining_slots -= 1
-
                     if remaining_slots <= 0:
                         log("WARNING", f"当前已达到最大任务限制 {membership_limit}, 请升级会员")
                         log_print(f"Task limit reached for current membership: {membership_limit} tasks")
-
                     self.auto_info.save_tasks_to_json()
-
                 except json.JSONDecodeError:
                     log("ERROR", "无法解析JSON文件")
                     log_print(f"Failed to parse JSON file: {json_file_path}")
