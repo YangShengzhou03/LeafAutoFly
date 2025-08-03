@@ -456,8 +456,6 @@ class AutoInfo(QtWidgets.QWidget):
             self.worker_thread.current_time = 'mix' if str_to_bool(read_key_value('net_time')) else 'sys'
             self.worker_thread.finished.connect(self.on_thread_finished)
             self.worker_thread.start()
-            log("INFO", "工作线程已启动")
-            log_print("[AutoInfo] Worker thread started")
 
     def clear_layout(self, layout):
         try:
@@ -497,12 +495,8 @@ class AutoInfo(QtWidgets.QWidget):
                     if widget_image:
                         if status == '成功':
                             icon_path = 'page1_发送成功.svg'
-                            log('INFO', f"任务发送成功: {task['sender']} -> {task['name']}")
-                            log_print(f"[AutoInfo] Task sent successfully: {task['sender']} -> {task['name']}")
                         else:
                             icon_path = 'page1_发送失败.svg'
-                            log('ERROR', f"任务发送失败: {task['sender']} -> {task['name']}")
-                            log_print(f"[AutoInfo] Task failed to send: {task['sender']} -> {task['name']}")
 
                             if 'error_count' not in task:
                                 task['error_count'] = 1

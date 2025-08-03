@@ -2,7 +2,7 @@ import json
 import os
 import sys
 import winreg
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtCore import Qt, QUrl
@@ -14,13 +14,13 @@ import common
 from ActivitiesWindow import ActivitiesWindow
 from AiAssistant import AiAssistant
 from AutoInfo import AutoInfo
-from clickableComboBox import clickableComboBox
 from Reply import ReplyDialog
 from SettingWindow import SettingWindow
 from Split import Split
 from System_info import read_key_value, ensure_config_file_exists, write_key_value
 from Ui_MainWindow import Ui_MainWindow
 from UpdateDialog import check_update
+from clickableComboBox import clickableComboBox
 from common import get_resource_path, log, get_current_time, log_print, get_url
 
 wx_instances = {}

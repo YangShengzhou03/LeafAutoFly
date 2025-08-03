@@ -72,9 +72,6 @@ class WorkerThread(WorkerThreadBase):
         self.current_time = 'sys'
         self._system_state = None
 
-        log_print(f"[WORKER_THREAD] Thread initialized{self.app_instance.wx_dict}")
-    #     {'小羊': <wxauto object 小羊>}
-
     def run(self):
         self._is_running = True
         log_print("[WORKER_THREAD] Thread started")
@@ -87,7 +84,6 @@ class WorkerThread(WorkerThreadBase):
         try:
             while self._is_running and not self._stop_event.is_set():
                 if self._is_paused:
-                    log_print("[WORKER_THREAD] Thread paused, sleeping...")
                     self.wait_for_resume()
                     continue
 
@@ -200,7 +196,6 @@ class WorkerThread(WorkerThreadBase):
             self.msleep(int(sleep_interval * 1000))
 
     def _set_system_state(self, state_flags):
-        log_print(f"[WORKER_THREAD] Setting system execution state: 0x{state_flags:X}")
         try:
             self._system_state = ctypes.windll.kernel32.SetThreadExecutionState(state_flags)
             if not self._system_state:
@@ -211,7 +206,6 @@ class WorkerThread(WorkerThreadBase):
             log_print(f"[WORKER_THREAD] Error calling system API: {str(e)}")
 
     def _find_next_ready_task(self) -> Optional[Dict]:
-        log_print("[WORKER_THREAD] Searching for next ready task")
         next_task = None
         min_time = None
 
@@ -225,11 +219,6 @@ class WorkerThread(WorkerThreadBase):
                 log("ERROR", f"解析任务时间时出错: {str(e)}")
                 log_print(f"[WORKER_THREAD] Error parsing task time: {str(e)}")
 
-        if next_task:
-            log_print(f"[WORKER_THREAD] Next task found: {next_task['id']}")
-        else:
-            log_print("[WORKER_THREAD] No ready tasks found")
-
         return next_task
 
     def _execute_task(self, task: Dict) -> bool:
@@ -237,21 +226,16 @@ class WorkerThread(WorkerThreadBase):
         retries = 0
         success = False
 
-        log("INFO", f"开始执行任务: {task.get('name', '未知')} (ID: {task.get('id')})")
-
         while retries < max_retries and not success:
             try:
                 name = task['name']
                 info = task['info']
-                wx_nickname = task['wx_nickname']
+                sender = task['sender']
 
-                print(name, info, wx_nickname)
-                log("DEBUG", f"{name}: {info}, {wx_nickname}")
-
-                wx_instance = self._get_wx_instance(wx_nickname)
+                wx_instance = self._get_wx_instance(sender)
                 if not wx_instance:
-                    log("ERROR", f"找不到微信实例 '{wx_nickname}'，无法执行任务 (ID: {task.get('id')})")
-                    raise ValueError(f"找不到微信实例 '{wx_nickname}'")
+                    log("ERROR", f"找不到微信实例 '{sender}'，无法执行任务 (ID: {task.get('id')})")
+                    raise ValueError(f"找不到微信实例 '{sender}'")
 
                 if re.match(r'^Emotion:\d+$', info):
                     emotion_index = int(info.split(':')[1])
@@ -259,21 +243,21 @@ class WorkerThread(WorkerThreadBase):
                 elif os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
-                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname}, ID: {task.get('id')})")
+                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {sender}, ID: {task.get('id')})")
                         success = self._send_files(filepath=info, who=name)
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                 else:
-                    log("INFO",
-                        f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {wx_nickname}, ID: {task.get('id')})")
+                    log("WARNING",
+                        f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {sender}, ID: {task.get('id')})")
                     if "@所有人" in info:
                         info = info.replace("@所有人", "").strip()
-                        success = self._send_message(msg=info, who=name)
+                        success = self._send_message(wx_instance=wx_instance, msg=info, who=name)
                     else:
-                        success = self._send_message(msg=info, who=name)
+                        success = self._send_message(wx_instance=wx_instance, msg=info, who=name)
 
                 if success:
-                    log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname}, ID: {task.get('id')})")
+                    log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {sender})")
 
             except Exception as e:
                 log("ERROR", f"执行任务失败 (尝试 {retries + 1}/{max_retries}): {str(e)}")
@@ -299,7 +283,6 @@ class WorkerThread(WorkerThreadBase):
 
             log("WARNING", f"找不到微信实例 '{wx_nickname}'，将使用默认实例")
             if wx_dict:
-                print(wx_dict)
                 return wx_dict
 
             log("ERROR", "没有可用的微信实例")
@@ -308,8 +291,11 @@ class WorkerThread(WorkerThreadBase):
             log("ERROR", f"获取微信实例失败: {str(e)}")
             return None
 
-    def _send_message(self, msg: str, who: str) -> bool:
-        return self._retry_operation(lambda: self.app_instance.wx.SendMsg(msg=msg, who=who))
+    def _send_message(self, wx_instance: any, msg: str, who: str) -> bool:
+        return self._retry_operation(lambda: wx_instance.SendMsg(msg=msg, who=who))
+
+    def _At_all(self, wx_instance: any, msg: str, who: str) -> bool:
+        return self._retry_operation(lambda: wx_instance.AtAll(msg=msg, who=who, exact=True))
 
     def _send_files(self, filepath: str, who: str) -> bool:
         return self._retry_operation(lambda: self.app_instance.wx.SendFiles(filepath=filepath, who=who))
