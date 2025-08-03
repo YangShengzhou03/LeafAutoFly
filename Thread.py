@@ -573,7 +573,7 @@ class AiWorkerThread(WorkerThreadBase):
 
             time.sleep(int(read_key_value('reply_delay')))
 
-            emotion_match = re.match(r'^SendEmotion:([\d,]+)', reply)
+            emotion_match = re.match(r'^Emotion:([\d,]+)', reply)
             if emotion_match:
                 numbers = [int(n) for n in emotion_match.group(1).split(',') if n.strip().isdigit()]
                 valid_indices = [n for n in numbers if n >= 1]
