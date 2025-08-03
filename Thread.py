@@ -6,7 +6,7 @@ import re
 import threading
 import time
 from datetime import datetime, timedelta
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 
 import requests
 from PyQt6 import QtCore, QtMultimedia
@@ -71,7 +71,9 @@ class WorkerThread(WorkerThreadBase):
         self.prevent_sleep = False
         self.current_time = 'sys'
         self._system_state = None
-        log_print("[WORKER_THREAD] Thread initialized")
+
+        log_print(f"[WORKER_THREAD] Thread initialized{self.app_instance.wx_dict}")
+    #     {'小羊': <wxauto object 小羊>}
 
     def run(self):
         self._is_running = True
@@ -115,7 +117,7 @@ class WorkerThread(WorkerThreadBase):
                         friendly_time = ''.join(time_parts)
 
                         log("INFO", f"下一个任务将在 {friendly_time} 后执行")
-                        log_print(f"[WORKER_THREAD] Next task in {friendly_time}: {next_task}")
+                        log_print(f"[WORKER_THREAD] Next task in {friendly_time}: {next_task['id']}")
 
                         self._wait_for_task_optimized(task_time)
 
@@ -224,50 +226,87 @@ class WorkerThread(WorkerThreadBase):
                 log_print(f"[WORKER_THREAD] Error parsing task time: {str(e)}")
 
         if next_task:
-            log_print(f"[WORKER_THREAD] Next task found: {next_task}")
+            log_print(f"[WORKER_THREAD] Next task found: {next_task['id']}")
         else:
             log_print("[WORKER_THREAD] No ready tasks found")
 
         return next_task
 
     def _execute_task(self, task: Dict) -> bool:
-        log_print(f"[WORKER_THREAD] Executing task: {task}")
+        max_retries = 3
+        retries = 0
+        success = False
 
-        try:
-            name = task['name']
-            info = task['info']
-            emotion_match = re.match(r'^SendEmotion:([\d,]+)', info)
-            if os.path.isdir(os.path.dirname(info)):
-                if os.path.isfile(info):
-                    file_name = os.path.basename(info)
-                    log("INFO", f"开始把文件 {file_name} 发给 {name}")
-                    log_print(f"[WORKER_THREAD] Sending file: {file_name} to {name}")
-                    if not self._send_files(filepath=info, who=name):
-                        raise LookupError("发送文件失败")
+        log("INFO", f"开始执行任务: {task.get('name', '未知')} (ID: {task.get('id')})")
+
+        while retries < max_retries and not success:
+            try:
+                name = task['name']
+                info = task['info']
+                wx_nickname = task['wx_nickname']
+
+                print(name, info, wx_nickname)
+                log("DEBUG", f"{name}: {info}, {wx_nickname}")
+
+                wx_instance = self._get_wx_instance(wx_nickname)
+                if not wx_instance:
+                    log("ERROR", f"找不到微信实例 '{wx_nickname}'，无法执行任务 (ID: {task.get('id')})")
+                    raise ValueError(f"找不到微信实例 '{wx_nickname}'")
+
+                if re.match(r'^Emotion:\d+$', info):
+                    emotion_index = int(info.split(':')[1])
+                    success = self._send_emotion(emotion_index=emotion_index, who=name)
+                elif os.path.isdir(os.path.dirname(info)):
+                    if os.path.isfile(info):
+                        file_name = os.path.basename(info)
+                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {wx_nickname}, ID: {task.get('id')})")
+                        success = self._send_files(filepath=info, who=name)
+                    else:
+                        raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                 else:
-                    raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
-            elif emotion_match:
-                numbers = [int(n) for n in emotion_match.group(1).split(',') if n.strip().isdigit()]
-                valid_indices = [n for n in numbers if n >= 1]
-                if not valid_indices:
-                    raise ValueError("表情索引必须≥1")
-                if not self._send_emotion(emotion_index=random.choice(valid_indices) - 1, who=name):
-                    raise LookupError("发送表情包失败")
-            else:
-                log("INFO", f"正在把消息 '{info[:30]}...' 发给 {name}")
-                log_print(f"[WORKER_THREAD] Sending message: '{info}...' to {name}")
+                    log("INFO",
+                        f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {wx_nickname}, ID: {task.get('id')})")
+                    if "@所有人" in info:
+                        info = info.replace("@所有人", "").strip()
+                        success = self._send_message(msg=info, who=name)
+                    else:
+                        success = self._send_message(msg=info, who=name)
 
-                if not self._send_message(msg=info, who=name):
-                    raise LookupError("发送消息失败")
+                if success:
+                    log("DEBUG", f"成功执行任务: 发送给 {name} (发送方: {wx_nickname}, ID: {task.get('id')})")
 
-            log("DEBUG", f"成功执行任务: 发送给 {name}")
-            log_print(f"[WORKER_THREAD] Task executed successfully: {name}")
-            return True
+            except Exception as e:
+                log("ERROR", f"执行任务失败 (尝试 {retries + 1}/{max_retries}): {str(e)}")
+                retries += 1
 
+                if retries < max_retries:
+                    log("WARNING", "尝试重新连接微信客户端...")
+                    try:
+                        self.app_instance.parent.update_wx()
+                        for _ in range(10):
+                            self.msleep(100)
+                    except Exception as we:
+                        log("ERROR", f"更新微信客户端失败: {str(we)}")
+
+        return success
+
+    def _get_wx_instance(self, wx_nickname: str) -> Any:
+        try:
+            wx_dict = self.app_instance.wx_dict
+
+            if wx_nickname in wx_dict:
+                return wx_dict[wx_nickname]
+
+            log("WARNING", f"找不到微信实例 '{wx_nickname}'，将使用默认实例")
+            if wx_dict:
+                print(wx_dict)
+                return wx_dict
+
+            log("ERROR", "没有可用的微信实例")
+            return None
         except Exception as e:
-            log("ERROR", f"执行任务失败: {str(e)}")
-            log_print(f"[WORKER_THREAD] Task execution failed: {str(e)}")
-            return False
+            log("ERROR", f"获取微信实例失败: {str(e)}")
+            return None
 
     def _send_message(self, msg: str, who: str) -> bool:
         return self._retry_operation(lambda: self.app_instance.wx.SendMsg(msg=msg, who=who))

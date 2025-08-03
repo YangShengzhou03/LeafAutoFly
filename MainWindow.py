@@ -70,7 +70,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         global wx_instances
         log_print("Initializing MainWindow")
         self.setupUi(self)
-        log_print("[Main] Replacing combo box with CheckableComboBox...")
         old_combobox = self.comboBox_Frequency
         geometry = old_combobox.geometry()
         parent_layout = old_combobox.parentWidget().layout()
@@ -104,7 +103,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         try:
             log_print("Ensuring configuration file exists")
             ensure_config_file_exists()
-            log_print("Reading configuration values")
             self.language = read_key_value('language')
             self.Membership = read_key_value('membership')
             self.expiration_time = read_key_value('expiration_time')
@@ -119,40 +117,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             sys.exit()
 
         try:
-            log_print("Reloading WeChat instances during initialization")
             result = reload_wx()
             self.comboBox_nickName.clear()
 
             if '已初始化' in result:
-                log_print(f"Successfully initialized {len(wx_instances)} WeChat instances")
                 for nickname in wx_instances.keys():
                     self.comboBox_nickName.addItem(nickname)
                 if wx_instances:
                     default_nickname = next(iter(wx_instances))
                     self.comboBox_nickName.setCurrentText(default_nickname)
                     self.comboBox_nickName.currentTextChanged.connect(self.change_current_wx)
-                    log_print(f"Set default WeChat nickname to {default_nickname}")
             else:
-                log_print(f"WeChat initialization failed: {result}")
                 self.comboBox_nickName.addItem(result)
                 self.comboBox_nickName.setCurrentText(result)
 
         except Exception as e:
-            log_print(f"Exception during WeChat initialization: {str(e)}")
             log("ERROR", f"初始化微信实例时出错: {e}")
             self.comboBox_nickName.clear()
             self.comboBox_nickName.addItem('初始化出错')
             self.comboBox_nickName.setCurrentText('初始化出错')
 
-        log_print("Initializing AutoInfo, Split, and AiAssistant modules")
         self.auto_info = AutoInfo(wx_instances, self.Membership, self)
         self.split = Split(wx_instances, self.Membership, self)
         self.ai_assistant = AiAssistant(wx_instances, self.Membership, self)
 
-        log_print("Creating system tray icon")
         self.create_tray()
 
-        log_print("Setting window flags and attributes")
         self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
         self.mousePosition = None
@@ -160,25 +150,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mouseMoveEvent = self._mouse_move_event
         self.setAcceptDrops(True)
 
-        log_print("Connecting signals and updating UI elements")
         self.connect_signals()
         self._update_ui_elements()
-        log_print(f"Applying membership limits for {self.Membership}")
         self.apply_Membership_limits(self.Membership)
 
         if common.str_to_bool(read_key_value('auto_update')):
-            log_print("Checking for updates")
             check_update()
         if common.str_to_bool(read_key_value('serve_lock')):
-            log_print("Attempting to disable RDP lock")
             self.disable_rdp_lock()
 
-        log_print("Loading tasks from JSON file")
         self.load_tasks_from_json()
 
         try:
             if wx_instances:
-                log_print("Setting up auto-completion for receiver LineEdit")
                 default_wx = next(iter(wx_instances.values()))
                 default_wx.GetSessionList()
                 completer = QCompleter(default_wx.predict, self)
@@ -188,9 +172,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 if isinstance(popup, QListView):
                     popup.setStyleSheet(common.load_stylesheet("completer_QListView.css"))
                 self.receiver_lineEdit.setCompleter(completer)
-                log_print("Auto-completion setup completed")
         except Exception as e:
-            log_print(f"Exception during auto-completion setup: {str(e)}")
             print(e)
 
     def update_wx(self):
@@ -209,11 +191,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.comboBox_nickName.setCurrentText(default_nickname)
                 log_print(f"Set current WeChat nickname to {default_nickname}")
         else:
-            log_print(f"Failed to update WeChat instances: {result}")
             self.comboBox_nickName.addItem(result)
             self.comboBox_nickName.setCurrentText(result)
 
-        log_print("Updating module references to WeChat instances")
         self.auto_info.wx_instances = wx_instances
         self.split.wx_instances = wx_instances
         self.ai_assistant.wx_instances = wx_instances
@@ -228,68 +208,104 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             log_print(f"Successfully changed current WeChat instance to {selected_nickname}")
         else:
             log("WARNING", f"所选微信账号 {selected_nickname} 未初始化")
-            log_print(f"Failed to change current WeChat instance: {selected_nickname} not initialized")
 
     def load_tasks_from_json(self):
         json_file_path = '_internal/tasks.json'
-        log_print(f"Loading tasks from {json_file_path}")
         if os.path.exists(json_file_path):
-            log_print(f"JSON file {json_file_path} exists, attempting to load")
             with open(json_file_path, 'r', encoding='utf-8') as f:
                 try:
                     loaded_tasks = json.load(f)
+                    # 清空现有任务但保留计数器
                     self.auto_info.ready_tasks.clear()
                     current_time = datetime.now()
-                    log_print(f"Loaded {len(loaded_tasks)} tasks from JSON")
 
-                    membership_limit = 5 if self.Membership == 'Free' else (9999 if self.Membership == 'VIP' else 30)
+                    # 根据会员等级确定任务上限
+                    membership_limits = {
+                        'Free': 5,
+                        'VIP': 9999,
+                        'Base': 30  # 假设基础版限制30个
+                    }
+                    membership_limit = membership_limits.get(self.Membership, 5)
                     remaining_slots = membership_limit - len(self.auto_info.ready_tasks)
-                    log_print(f"Membership limit: {membership_limit}, remaining slots: {remaining_slots}")
 
                     for task in loaded_tasks:
-                        if (all(key in task for key in ['time', 'name', 'info', 'frequency', 'wx_nickname']) and
-                                remaining_slots > 0):
+                        # 检查必要字段是否存在且有值
+                        required_keys = ['time', 'name', 'info', 'frequency']
+                        if not all(key in task and task[key] for key in required_keys):
+                            log("WARNING", "跳过不完整的任务数据")
+                            continue
+
+                        if remaining_slots <= 0:
+                            log("WARNING", f"已达到最大任务限制 {membership_limit}，剩余任务将被忽略")
+                            break
+
+                        try:
+                            # 解析任务时间
                             task_time = datetime.fromisoformat(task['time'])
-                            log_print(f"Processing task: {task['name']}, original time: {task_time}")
+                        except ValueError:
+                            log("WARNING", f"跳过时间格式错误的任务: {task['time']}")
+                            continue
 
-                            while task_time < current_time and task['frequency'] in ['每天', '工作日']:
-                                task_time += timedelta(days=1)
-                                if task['frequency'] == '工作日':
-                                    while task_time.weekday() >= 5:
-                                        task_time += timedelta(days=1)
-                            log_print(f"Adjusted task time: {task_time}")
+                        # 处理过期的周期性任务
+                        if task_time < current_time and task['frequency']:
+                            # 使用现有方法计算下一个有效时间
+                            adjusted_time = self.auto_info.calculate_next_time(task_time, task['frequency'])
+                            if adjusted_time:
+                                task_time = adjusted_time
+                                log_print(f"任务时间已调整为未来时间: {task_time.isoformat()}")
+                            else:
+                                log("WARNING", f"无法调整过期任务时间，已跳过: {task['name']}")
+                                continue
 
-                            widget_item = self.auto_info.create_widget(task_time.isoformat(), task['name'],
-                                                                       task['info'], task['frequency'],
-                                                                       task['wx_nickname'])
+                        # 生成唯一任务ID
+                        self.auto_info.task_id_counter += 1
+                        task_id = self.auto_info.task_id_counter
+
+                        # 存储任务数据（使用字典而不是列表）
+                        task_data = {
+                            'id': task_id,
+                            'time': task_time.isoformat(),
+                            'name': task['name'],
+                            'info': task['info'],
+                            'frequency': task['frequency']
+                        }
+                        self.auto_info.ready_tasks[task_id] = task_data
+
+                        # 更新时间索引
+                        if task_time.isoformat() not in self.auto_info.tasks_by_time:
+                            self.auto_info.tasks_by_time[task_time.isoformat()] = []
+                        self.auto_info.tasks_by_time[task_time.isoformat()].append(task_id)
+
+                        # 创建UI控件
+                        widget_item = self.auto_info.create_widget(
+                            task_id,
+                            task_time.isoformat(),
+                            task['name'],
+                            task['info'],
+                            task['frequency'],
+                            task['sender']
+                        )
+                        if widget_item:
                             self.formLayout_3.addRow(widget_item)
-                            self.auto_info.ready_tasks.append({
-                                'time': task_time.isoformat(),
-                                'name': task['name'],
-                                'info': task['info'],
-                                'frequency': task['frequency'],
-                                'wx_nickname': task['wx_nickname']
-                            })
-                            remaining_slots -= 1
-                            log_print(f"Added task: {task['name']}, remaining slots: {remaining_slots}")
+                        else:
+                            log("WARNING", f"创建任务UI控件失败: {task['name']}")
+
+                        remaining_slots -= 1
 
                     if remaining_slots <= 0:
                         log("WARNING", f"当前已达到最大任务限制 {membership_limit}, 请升级会员")
-                        log_print(f"Reached membership task limit of {membership_limit}")
+                        log_print(f"Task limit reached for current membership: {membership_limit} tasks")
 
-                    log_print("Saving tasks back to JSON after processing")
                     self.auto_info.save_tasks_to_json()
 
                 except json.JSONDecodeError:
                     log("ERROR", "无法解析JSON文件")
-                    log_print("Failed to decode JSON file")
-                    self.ready_tasks = []
+                    log_print(f"Failed to parse JSON file: {json_file_path}")
+                    self.auto_info.ready_tasks.clear()
                 except Exception as e:
-                    log("ERROR", f"其他错误: {str(e)}")
-                    log_print(f"Exception during task loading: {str(e)}")
-                    self.ready_tasks = []
-        else:
-            log_print(f"JSON file {json_file_path} does not exist")
+                    log("ERROR", f"加载任务时出错: {str(e)}")
+                    log_print(f"Unexpected error while loading tasks: {str(e)}")
+                    self.auto_info.ready_tasks.clear()
 
     def on_vip_frame_clicked(self, event):
         log_print("VIP frame clicked")
@@ -310,29 +326,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             log_print("Opening activities window")
             self.open_activities_window()
         else:
-            log_print("Showing feedback")
             self.feedback()
 
     def dragEnterEvent(self, event):
-        log_print("Drag event detected")
         if event.mimeData().hasUrls():
-            log_print("Drag event contains URLs, accepting")
             event.acceptProposedAction()
-        else:
-            log_print("Drag event does not contain URLs, ignoring")
 
     def dropEvent(self, event):
-        log_print("Drop event detected")
         try:
             urls = event.mimeData().urls()
             if not urls:
-                log_print("No URLs in drop event")
                 return
 
             for url in urls:
                 file_name = url.toLocalFile()
                 if not file_name:
-                    log_print("Empty file name from URL")
                     continue
 
                 if os.path.isdir(file_name):
@@ -345,7 +353,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.auto_info.load_configuration(filepath=file_name)
                 else:
                     log_print(f"File dropped: {file_name}, opening as normal file")
-                    self.auto_info.openFileNameDialog(filepath=file_name)
+                    self.auto_info.open_file_dialog(filepath=file_name)
 
             log_print("Drop event processed successfully")
             event.accept()
@@ -354,20 +362,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             pass
 
     def _update_ui_elements(self):
-        log_print("Updating UI elements")
         self.get_notice()
         self.dateTimeEdit.setDateTime(get_current_time('mix'))
-        log_print(f"Set datetime to {get_current_time('mix')}")
         self.label_5.setText(self.expiration_time[:10])
         self.label_76.setText('LV.' + read_key_value('membership_class'))
         self.label_78.setText('ON' if common.str_to_bool(read_key_value('error_sound')) else 'OFF')
         self.label_80.setText(self.language.upper())
         self.label_82.setText('V' + self.version)
         self.log_textEdit.setReadOnly(True)
-        log_print("UI elements updated")
 
     def create_tray(self):
-        log_print("Creating system tray icon")
         self.tray_icon = QtWidgets.QSystemTrayIcon(self)
         self.tray_icon.setIcon(QtGui.QIcon(get_resource_path('resources/img/tray.ico')))
 
@@ -397,9 +401,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         log_print("System tray icon created")
 
     def on_tray_icon_activated(self, reason):
-        log_print(f"Tray icon activated with reason: {reason}")
         if reason == QtWidgets.QSystemTrayIcon.ActivationReason.Trigger:
-            log_print("Tray icon clicked, showing main interface")
             if self.isMinimized():
                 self.showNormal()
                 self.raise_()
@@ -410,7 +412,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.activateWindow()
 
     def apply_Membership_limits(self, membership):
-        log_print(f"Applying membership limits for {membership}")
         allow_icon = QtGui.QIcon()
         allow_icon.addPixmap(QtGui.QPixmap(get_resource_path('resources/img/page0/page0_允许白钩.svg')),
                              QtGui.QIcon.Mode.Normal,
@@ -513,7 +514,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         log_print("Membership limits applied")
 
     def connect_signals(self):
-        log_print("Connecting UI signals")
         self.setting_window = SettingWindow()
         self.activities_window = ActivitiesWindow()
         self.key_reply = ReplyDialog()
@@ -524,20 +524,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.add_pushButton.clicked.connect(self.auto_info.add_list_item)
         self.message_lineEdit.returnPressed.connect(self.auto_info.add_list_item)
         self.receiver_lineEdit.returnPressed.connect(self.auto_info.add_list_item)
-        log_print("File and message signals connected")
 
         self.close_pushButton.clicked.connect(self.head_close)
         self.maximize_pushButton.clicked.connect(self.toggle_maximize_restore)
         self.minimize_pushButton.clicked.connect(self.minimize_window)
         self.setup_pushButton.clicked.connect(self.open_setting_window)
         self.feedback_pushButton.clicked.connect(self.feedback)
-        log_print("Window control signals connected")
 
         self.Free_pushButton.clicked.connect(common.author)
         self.base_pushButton.clicked.connect(self.open_activities_window)
         self.Ai_pushButton.clicked.connect(self.open_activities_window)
         self.vip_pushButton.clicked.connect(self.open_activities_window)
-        log_print("Membership button signals connected")
 
         self.start_pushButton.clicked.connect(self.auto_info.on_start_clicked)
         self.pushButton_split.clicked.connect(self.split.on_start_split_clicked)
@@ -545,19 +542,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_takeover.clicked.connect(self.ai_assistant.start_takeover)
         self.takeOverReceiver_lineEdit.returnPressed.connect(self.ai_assistant.start_takeover)
         self.pushButton_addRule.clicked.connect(self.key_reply.show)
-        log_print("Function button signals connected")
 
         checkboxes = [self.checkBox_Ai, self.checkBox_period, self.checkBox_comma, self.checkBox_Space]
         for checkbox in checkboxes:
             checkbox.clicked.connect(lambda checked, c=checkbox: self.handle_checkbox_click(c))
-        log_print("Checkbox signals connected")
 
         self.vip_frame.mouseReleaseEvent = self.on_vip_frame_clicked
-        log_print("VIP frame click event connected")
-        log_print("All signals connected")
 
     def feedback(self):
-        log_print("Opening feedback URL")
         QDesktopServices.openUrl(QUrl('https://qun.qq.com/universal-share/share?ac=1&authKey=wjyQkU9iG7wc'
                                       '%2BsIEOWFE6cA0ayLLBdYwpMsKYveyufXSOE5FBe7bb9xxvuNYVsEn&busi_data'
                                       '=eyJncm91cENvZGUiOiIxMDIxNDcxODEzIiwidG9rZW4iOiJDaFYxYVpySU9FUVJr'
@@ -567,66 +559,49 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                       '=h5_group_info'))
 
     def open_setting_window(self):
-        log_print("Opening setting window")
         try:
             write_key_value('admin_log', 'Test')
             log_print("Successfully wrote to admin_log, sufficient permissions")
         except Exception:
-            log_print("Insufficient permissions to write admin_log")
             QtWidgets.QMessageBox.critical(self, "非管理员身份", "当前非管理员身份运行，设置可能无法保存")
         self.setting_window.show()
         self.setting_window.activateWindow()
 
     def open_activities_window(self):
-        log_print("Opening activities window")
         try:
             write_key_value('admin_log', 'Test')
-            log_print("Successfully wrote to admin_log, sufficient permissions")
         except Exception:
-            log_print("Insufficient permissions to write admin_log")
             QtWidgets.QMessageBox.critical(self, "非管理员身份", "当前非管理员身份运行，会员无法激活")
         else:
             self.activities_window.show()
             self.activities_window.activateWindow()
 
     def open_keyReply(self):
-        log_print("Opening key reply window")
         self.key_reply.show()
 
     def handle_checkbox_click(self, checkbox):
-        log_print(f"Checkbox clicked: {checkbox.objectName()}")
         if checkbox.isChecked():
             log_print(f"Checkbox {checkbox.objectName()} checked")
             if checkbox == self.checkBox_Ai:
-                log_print("Unchecking period, comma, and space checkboxes")
                 self.checkBox_period.setChecked(False)
                 self.checkBox_comma.setChecked(False)
                 self.checkBox_Space.setChecked(False)
             else:
-                log_print("Unchecking AI checkbox")
                 self.checkBox_Ai.setChecked(False)
-        else:
-            log_print(f"Checkbox {checkbox.objectName()} unchecked")
 
     def minimize_window(self):
-        log_print("Minimizing window")
         self.showMinimized()
 
     def close_application(self):
-        log_print("Closing application")
         QtWidgets.QApplication.quit()
 
     def head_close(self):
-        log_print("Handling head close action")
         if common.str_to_bool(read_key_value('close_option')):
-            log_print("Hiding to tray instead of closing")
             self.hide_to_tray()
         else:
-            log_print("Closing application")
             QtWidgets.QApplication.quit()
 
     def hide_to_tray(self):
-        log_print("Hiding application to system tray")
         self.hide()
         self.tray_icon.showMessage(
             "定时任务在后台继续执行",
@@ -634,17 +609,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QtWidgets.QSystemTrayIcon.MessageIcon.Information,
             2000
         )
-        log_print("System tray message shown")
 
     def toggle_maximize_restore(self):
         if self.isMaximized():
-            log_print("Restoring window from maximized state")
             self.showNormal()
             self.resize(1289, 734)
             self.maximize_pushButton.setIcon(QtGui.QIcon(get_resource_path(
                 'resources/img/窗口控制/窗口控制-最大化.svg')))
         else:
-            log_print("Maximizing window")
             self.showMaximized()
             self.maximize_pushButton.setIcon(QtGui.QIcon(get_resource_path('resources/img/窗口控制/窗口控制-还原.svg')))
 
@@ -652,42 +624,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mousePosition = event.globalPosition().toPoint() - self.frameGeometry().topLeft()
             event.accept()
-        else:
-            log_print(f"Mouse button {event.button()} pressed, ignoring")
 
     def _mouse_move_event(self, event):
         if self.mousePosition is not None and event.buttons() & QtCore.Qt.MouseButton.LeftButton:
             new_position = event.globalPosition().toPoint() - self.mousePosition
             self.move(new_position)
             event.accept()
-        else:
-            log_print("Mouse move event without left button press, ignoring")
 
     def show_main_interface(self):
-        log_print("Showing main interface")
         if self.isMinimized():
-            log_print("Restoring from minimized state")
             self.showNormal()
         else:
-            log_print("Showing main window")
             self.show()
         self.raise_()
         self.activateWindow()
 
     def get_notice(self):
-        log_print("Getting application notice")
         try:
             Key, notice_content = get_url()
             if notice_content:
                 self.textBrowser.setHtml(notice_content)
         except Exception:
-            log_print("Failed to get notice content, using default")
             self.textBrowser.setHtml('<center><h2>欢迎使用LeafAuto</h2><h2>LeafAuto Pro是我在2024'
                                      '年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。</h2'
                                      '></center>')
 
     def disable_rdp_lock(self):
-        log_print("Attempting to disable RDP lock screen")
         try:
             if sys.getwindowsversion().major >= 6:
                 log_print("Windows version is 6 or higher, checking admin privileges")
