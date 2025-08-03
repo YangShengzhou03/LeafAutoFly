@@ -329,10 +329,8 @@ class AutoInfo(QtWidgets.QWidget):
                             self.tasks_by_time[time_text].remove(task_id)
                             if not self.tasks_by_time[time_text]:
                                 del self.tasks_by_time[time_text]
-                                log("INFO", f"时间索引 {time_text} 已删除，因为已无任务")
                                 log_print(f"[AutoInfo] Time index {time_text} deleted as no tasks remain")
                         except ValueError:
-                            log("WARNING", f"任务ID {task_id} 不在时间索引 {time_text} 中")
                             log_print(f"[AutoInfo] Task ID {task_id} not in time index {time_text}")
 
                     log('WARNING', f'已删除任务 {task["info"][:35] + "……" if len(task["info"]) > 30 else task["info"]}')

@@ -239,20 +239,20 @@ class WorkerThread(WorkerThreadBase):
 
                 if re.match(r'^Emotion:\d+$', info):
                     emotion_index = int(info.split(':')[1])
-                    success = self._send_emotion(emotion_index=emotion_index, who=name)
+                    success = self._send_emotion(wx_instance=wx_instance, emotion_index=emotion_index, who=name)
                 elif os.path.isdir(os.path.dirname(info)):
                     if os.path.isfile(info):
                         file_name = os.path.basename(info)
-                        log("INFO", f"开始把文件 {file_name} 发给 {name} (发送方: {sender}, ID: {task.get('id')})")
-                        success = self._send_files(filepath=info, who=name)
+                        log("WARNING", f"开始把文件 {file_name} 发给 {name} (发送方: {sender})")
+                        success = self._send_files(wx_instance=wx_instance, filepath=info, who=name)
                     else:
                         raise FileNotFoundError(f"该路径下没有 {os.path.basename(info)} 文件")
                 else:
                     log("WARNING",
-                        f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {sender}, ID: {task.get('id')})")
+                        f"开始把消息 '{info[:30]}...' 发给 {name} (发送方: {sender})")
                     if "@所有人" in info:
                         info = info.replace("@所有人", "").strip()
-                        success = self._send_message(wx_instance=wx_instance, msg=info, who=name)
+                        success = self._At_all(wx_instance=wx_instance, msg=info, who=name)
                     else:
                         success = self._send_message(wx_instance=wx_instance, msg=info, who=name)
 
@@ -297,11 +297,11 @@ class WorkerThread(WorkerThreadBase):
     def _At_all(self, wx_instance: any, msg: str, who: str) -> bool:
         return self._retry_operation(lambda: wx_instance.AtAll(msg=msg, who=who, exact=True))
 
-    def _send_files(self, filepath: str, who: str) -> bool:
-        return self._retry_operation(lambda: self.app_instance.wx.SendFiles(filepath=filepath, who=who))
+    def _send_files(self, wx_instance: any, filepath: str, who: str) -> bool:
+        return self._retry_operation(lambda: wx_instance.SendFiles(filepath=filepath, who=who))
 
-    def _send_emotion(self, emotion_index: int, who: str) -> bool:
-        return self._retry_operation(lambda: self.app_instance.wx.SendEmotion(emotion_index, who=who))
+    def _send_emotion(self, wx_instance: any, emotion_index: int, who: str) -> bool:
+        return self._retry_operation(lambda: wx_instance.SendEmotion(emotion_index=emotion_index, who=who, exact=True))
 
     def _retry_operation(self, operation, max_retries=3):
         for attempt in range(max_retries):
