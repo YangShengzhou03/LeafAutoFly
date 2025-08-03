@@ -1,0 +1,306 @@
+# Log file created at 2025-08-03 12:53:13.249830
+[2025-08-03 12:53:13] Initializing MainWindow
+[2025-08-03 12:53:13] [CheckableComboBox] Initializing CheckableComboBox...
+[2025-08-03 12:53:13] [CheckableComboBox] Initialization completed
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 仅一次, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] '仅一次' item index set to 0
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期一, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期二, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期三, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期四, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期五, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期六, checked: False
+[2025-08-03 12:53:13] [CheckableComboBox] Adding item: 星期日, checked: False
+[2025-08-03 12:53:13] [NicknameComboBox] 初始化账号昵称选择下拉列表...
+[2025-08-03 12:53:13] [NicknameComboBox] 初始化完成
+[2025-08-03 12:53:13] Ensuring configuration file exists
+[2025-08-03 12:53:13] Ensuring config file exists...
+[2025-08-03 12:53:13] Retry 1/5
+[2025-08-03 12:53:13] Config file _internal/system_info.ini does not exist, creating...
+[2025-08-03 12:53:13] Creating new config file...
+[2025-08-03 12:53:17] Writing config to _internal/system_info.ini
+[2025-08-03 12:53:17] Config file created successfully
+[2025-08-03 12:53:17] Retry 2/5
+[2025-08-03 12:53:17] Reading existing config file...
+[2025-08-03 12:53:17] Reading config from _internal/system_info.ini
+[2025-08-03 12:53:17] Config sections: ['SystemInfo']
+[2025-08-03 12:53:17] Checking for missing keys...
+[2025-08-03 12:53:17] Getting motherboard serial number...
+[2025-08-03 12:53:17] Motherboard SN found: KT17MC05PI
+[2025-08-03 12:53:17] Membership: Free
+[2025-08-03 12:53:17] Expiration Time: 2025-09-02 12:53:18
+[2025-08-03 12:53:17] Config Motherboard SN: LEAF AUTO
+[2025-08-03 12:53:17] Current Motherboard SN: KT17MC05PI
+[2025-08-03 12:53:17] Config file is valid
+[2025-08-03 12:53:17] Reading key: language
+[2025-08-03 12:53:17] Key language value: cn
+[2025-08-03 12:53:17] Reading key: membership
+[2025-08-03 12:53:17] Key membership value: Free
+[2025-08-03 12:53:17] Reading key: expiration_time
+[2025-08-03 12:53:17] Key expiration_time value: 2025-09-02 12:53:18
+[2025-08-03 12:53:17] Reading key: version
+[2025-08-03 12:53:17] Key version value: 4.3
+[2025-08-03 12:53:17] Updating version from 4.3 to 4.39
+[2025-08-03 12:53:17] Writing key version = 4.39
+[2025-08-03 12:53:17] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:53:17] Key version updated successfully
+[2025-08-03 12:53:17] Starting to reload WeChat instances
+[2025-08-03 12:53:17] Reading key: language
+[2025-08-03 12:53:17] Key language value: cn
+[2025-08-03 12:53:17] Reading key: language
+[2025-08-03 12:53:17] Key language value: cn
+[2025-08-03 12:53:20] Successfully initialized WeChat instance for 杨圣洲
+[2025-08-03 12:53:20] Default WeChat instance set to 杨圣洲
+[2025-08-03 12:53:20] [ERROR_SOUND] Thread initialized
+[2025-08-03 12:53:20] [AutoInfo] Initialization completed. Membership level: Free
+[2025-08-03 12:53:20] [AiAssistant] Membership level detected: Free
+[2025-08-03 12:53:20] [AiAssistant] WeChat instances count: 1
+[2025-08-03 12:53:20] [AiAssistant] Updating current WeChat instance
+[2025-08-03 12:53:20] [AiAssistant] Successfully set current WeChat instance: 杨圣洲
+[2025-08-03 12:53:20] [AiAssistant] Initialization process completed
+[2025-08-03 12:53:20] System tray icon created
+[2025-08-03 12:53:20] [SETTINGS] Initializing SettingWindow
+[2025-08-03 12:53:20] [ERROR_SOUND] Thread initialized
+[2025-08-03 12:53:20] Reading key: membership
+[2025-08-03 12:53:20] Key membership value: Free
+[2025-08-03 12:53:20] [SETTINGS] Detected membership: Free
+[2025-08-03 12:53:20] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-08-03 12:53:20] [SETTINGS] Initializing settings
+[2025-08-03 12:53:20] Reading key: error_email
+[2025-08-03 12:53:20] Key error_email value: None
+[2025-08-03 12:53:20] [SETTINGS] Set error_email checkbox to: False
+[2025-08-03 12:53:20] Reading key: error_sound
+[2025-08-03 12:53:20] Key error_sound value: True
+[2025-08-03 12:53:20] [SETTINGS] Set error_sound checkbox to: True
+[2025-08-03 12:53:20] Reading key: net_time
+[2025-08-03 12:53:20] Key net_time value: False
+[2025-08-03 12:53:20] [SETTINGS] Set net_time checkbox to: False
+[2025-08-03 12:53:20] Reading key: auto_update
+[2025-08-03 12:53:20] Key auto_update value: True
+[2025-08-03 12:53:20] [SETTINGS] Set auto_update checkbox to: True
+[2025-08-03 12:53:20] Reading key: serve_lock
+[2025-08-03 12:53:20] Key serve_lock value: False
+[2025-08-03 12:53:20] [SETTINGS] Set serve_lock checkbox to: False
+[2025-08-03 12:53:20] Reading key: import_filter
+[2025-08-03 12:53:20] Key import_filter value: False
+[2025-08-03 12:53:20] [SETTINGS] Set import_filter checkbox to: False
+[2025-08-03 12:53:20] Reading key: close_option
+[2025-08-03 12:53:20] Key close_option value: True
+[2025-08-03 12:53:20] [SETTINGS] Set close_option checkbox to: True
+[2025-08-03 12:53:20] Reading key: language
+[2025-08-03 12:53:20] Key language value: cn
+[2025-08-03 12:53:20] [SETTINGS] Set language to: 简体中文
+[2025-08-03 12:53:20] Reading key: version
+[2025-08-03 12:53:20] Key version value: 4.39
+[2025-08-03 12:53:20] [SETTINGS] Set version label to: 4.39
+[2025-08-03 12:53:20] Reading key: add_timestep
+[2025-08-03 12:53:20] Key add_timestep value: 10
+[2025-08-03 12:53:20] [SETTINGS] Set timestep to: 10
+[2025-08-03 12:53:20] Reading key: same_reply
+[2025-08-03 12:53:20] Key same_reply value: 0
+[2025-08-03 12:53:20] [SETTINGS] Set same_reply to: 0
+[2025-08-03 12:53:20] Reading key: reply_delay
+[2025-08-03 12:53:20] Key reply_delay value: 0
+[2025-08-03 12:53:20] Reading key: selected_audio_index
+[2025-08-03 12:53:20] Key selected_audio_index value: None
+[2025-08-03 12:53:20] [SETTINGS] Loading audio selection: 0
+[2025-08-03 12:53:20] [SETTINGS] Updating selected sound to index: 0
+[2025-08-03 12:53:20] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-08-03 12:53:20] [SETTINGS] Set audio index to: 0
+[2025-08-03 12:53:21] [ACTIVITY] UI signals signals connected successfully
+[2025-08-03 12:53:21] Entering ReplyDialog initialization
+[2025-08-03 12:53:21] Starting to load rules from JSON
+[2025-08-03 12:53:21] Rule file not found, creating new rule list
+[2025-08-03 12:53:21] Starting to display rules
+[2025-08-03 12:53:21] Displayed 0 rules
+[2025-08-03 12:53:21] Completed ReplyDialog initialization
+[2025-08-03 12:53:25] Reading key: membership_class
+[2025-08-03 12:53:25] Key membership_class value: 0
+[2025-08-03 12:53:25] Reading key: error_sound
+[2025-08-03 12:53:25] Key error_sound value: True
+[2025-08-03 12:53:25] Applying Free membership limits
+[2025-08-03 12:53:27] Free trial remaining days: 29
+[2025-08-03 12:53:27] Membership limits applied
+[2025-08-03 12:53:27] Reading key: auto_update
+[2025-08-03 12:53:27] Key auto_update value: True
+[2025-08-03 12:53:31] Reading key: serve_lock
+[2025-08-03 12:53:31] Key serve_lock value: False
+[2025-08-03 12:56:23] Initializing MainWindow
+[2025-08-03 12:56:23] [CheckableComboBox] Initializing CheckableComboBox...
+[2025-08-03 12:56:23] [CheckableComboBox] Initialization completed
+[2025-08-03 12:56:23] [CheckableComboBox] '仅一次' item index set to 0
+[2025-08-03 12:56:23] [NicknameComboBox] 初始化账号昵称选择下拉列表...
+[2025-08-03 12:56:23] [NicknameComboBox] 初始化完成
+[2025-08-03 12:56:23] Ensuring configuration file exists
+[2025-08-03 12:56:23] Ensuring config file exists...
+[2025-08-03 12:56:23] Retry 1/5
+[2025-08-03 12:56:23] Reading existing config file...
+[2025-08-03 12:56:23] Reading config from _internal/system_info.ini
+[2025-08-03 12:56:23] Config sections: ['SystemInfo']
+[2025-08-03 12:56:23] Checking for missing keys...
+[2025-08-03 12:56:23] Getting motherboard serial number...
+[2025-08-03 12:56:23] Motherboard SN found: KT17MC05PI
+[2025-08-03 12:56:23] Membership: Free
+[2025-08-03 12:56:23] Expiration Time: 2025-09-02 12:53:18
+[2025-08-03 12:56:23] Config Motherboard SN: LEAF AUTO
+[2025-08-03 12:56:23] Current Motherboard SN: KT17MC05PI
+[2025-08-03 12:56:23] Config file is valid
+[2025-08-03 12:56:23] Reading key: language
+[2025-08-03 12:56:23] Key language value: cn
+[2025-08-03 12:56:23] Reading key: membership
+[2025-08-03 12:56:23] Key membership value: Free
+[2025-08-03 12:56:23] Reading key: expiration_time
+[2025-08-03 12:56:23] Key expiration_time value: 2025-09-02 12:53:18
+[2025-08-03 12:56:23] Reading key: version
+[2025-08-03 12:56:23] Key version value: 4.39
+[2025-08-03 12:56:23] Starting to reload WeChat instances
+[2025-08-03 12:56:23] Reading key: language
+[2025-08-03 12:56:23] Key language value: cn
+[2025-08-03 12:56:24] Reading key: language
+[2025-08-03 12:56:24] Key language value: cn
+[2025-08-03 12:56:25] Successfully initialized WeChat instance for 杨圣洲
+[2025-08-03 12:56:25] Default WeChat instance set to 杨圣洲
+[2025-08-03 12:56:25] [ERROR_SOUND] Thread initialized
+[2025-08-03 12:56:25] [AutoInfo] Initialization completed. Membership level: Free
+[2025-08-03 12:56:25] [AiAssistant] Membership level detected: Free
+[2025-08-03 12:56:25] [AiAssistant] WeChat instances count: 1
+[2025-08-03 12:56:25] [AiAssistant] Updating current WeChat instance
+[2025-08-03 12:56:25] [AiAssistant] Successfully set current WeChat instance: 杨圣洲
+[2025-08-03 12:56:25] [AiAssistant] Initialization process completed
+[2025-08-03 12:56:25] System tray icon created
+[2025-08-03 12:56:25] [SETTINGS] Initializing SettingWindow
+[2025-08-03 12:56:25] [ERROR_SOUND] Thread initialized
+[2025-08-03 12:56:25] Reading key: membership
+[2025-08-03 12:56:25] Key membership value: Free
+[2025-08-03 12:56:25] [SETTINGS] Detected membership: Free
+[2025-08-03 12:56:25] [SETTINGS] Disabled net_time and Email checkboxes for Free membership
+[2025-08-03 12:56:25] [SETTINGS] Initializing settings
+[2025-08-03 12:56:25] Reading key: error_email
+[2025-08-03 12:56:25] Key error_email value: None
+[2025-08-03 12:56:25] [SETTINGS] Set error_email checkbox to: False
+[2025-08-03 12:56:25] Reading key: error_sound
+[2025-08-03 12:56:25] Key error_sound value: True
+[2025-08-03 12:56:25] [SETTINGS] Set error_sound checkbox to: True
+[2025-08-03 12:56:25] Reading key: net_time
+[2025-08-03 12:56:25] Key net_time value: False
+[2025-08-03 12:56:25] [SETTINGS] Set net_time checkbox to: False
+[2025-08-03 12:56:25] Reading key: auto_update
+[2025-08-03 12:56:25] Key auto_update value: True
+[2025-08-03 12:56:25] [SETTINGS] Set auto_update checkbox to: True
+[2025-08-03 12:56:25] Reading key: serve_lock
+[2025-08-03 12:56:25] Key serve_lock value: False
+[2025-08-03 12:56:25] [SETTINGS] Set serve_lock checkbox to: False
+[2025-08-03 12:56:25] Reading key: import_filter
+[2025-08-03 12:56:25] Key import_filter value: False
+[2025-08-03 12:56:25] [SETTINGS] Set import_filter checkbox to: False
+[2025-08-03 12:56:25] Reading key: close_option
+[2025-08-03 12:56:25] Key close_option value: True
+[2025-08-03 12:56:25] [SETTINGS] Set close_option checkbox to: True
+[2025-08-03 12:56:25] Reading key: language
+[2025-08-03 12:56:25] Key language value: cn
+[2025-08-03 12:56:25] [SETTINGS] Set language to: 简体中文
+[2025-08-03 12:56:25] Reading key: version
+[2025-08-03 12:56:25] Key version value: 4.39
+[2025-08-03 12:56:25] [SETTINGS] Set version label to: 4.39
+[2025-08-03 12:56:25] Reading key: add_timestep
+[2025-08-03 12:56:25] Key add_timestep value: 10
+[2025-08-03 12:56:25] [SETTINGS] Set timestep to: 10
+[2025-08-03 12:56:25] Reading key: same_reply
+[2025-08-03 12:56:25] Key same_reply value: 0
+[2025-08-03 12:56:25] [SETTINGS] Set same_reply to: 0
+[2025-08-03 12:56:25] Reading key: reply_delay
+[2025-08-03 12:56:25] Key reply_delay value: 0
+[2025-08-03 12:56:25] Reading key: selected_audio_index
+[2025-08-03 12:56:25] Key selected_audio_index value: None
+[2025-08-03 12:56:25] [SETTINGS] Loading audio selection: 0
+[2025-08-03 12:56:25] [SETTINGS] Updating selected sound to index: 0
+[2025-08-03 12:56:25] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_1.mp3
+[2025-08-03 12:56:25] [SETTINGS] Set audio index to: 0
+[2025-08-03 12:56:25] [ACTIVITY] UI signals signals connected successfully
+[2025-08-03 12:56:25] Entering ReplyDialog initialization
+[2025-08-03 12:56:25] Starting to load rules from JSON
+[2025-08-03 12:56:25] Rule file not found, creating new rule list
+[2025-08-03 12:56:25] Starting to display rules
+[2025-08-03 12:56:25] Displayed 0 rules
+[2025-08-03 12:56:25] Completed ReplyDialog initialization
+[2025-08-03 12:56:25] Reading key: membership_class
+[2025-08-03 12:56:25] Key membership_class value: 0
+[2025-08-03 12:56:25] Reading key: error_sound
+[2025-08-03 12:56:25] Key error_sound value: True
+[2025-08-03 12:56:25] Applying Free membership limits
+[2025-08-03 12:56:25] Free trial remaining days: 29
+[2025-08-03 12:56:25] Membership limits applied
+[2025-08-03 12:56:25] Reading key: auto_update
+[2025-08-03 12:56:25] Key auto_update value: True
+[2025-08-03 12:56:26] Reading key: version
+[2025-08-03 12:56:26] Key version value: 4.39
+[2025-08-03 12:56:26] Reading key: serve_lock
+[2025-08-03 12:56:26] Key serve_lock value: False
+[2025-08-03 12:56:35] Reading key: import_filter
+[2025-08-03 12:56:35] Key import_filter value: False
+[2025-08-03 12:56:41] [AutoInfo] Adding emotion to message
+[2025-08-03 12:56:47] Processing cancel operation
+[2025-08-03 12:56:47] Rules unchanged, closing window directly
+[2025-08-03 12:56:59] Writing key admin_log = Test
+[2025-08-03 12:56:59] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:56:59] Key admin_log updated successfully
+[2025-08-03 12:56:59] Successfully wrote to admin_log, sufficient permissions
+[2025-08-03 12:57:02] [SETTINGS] Updating selected sound to index: 4
+[2025-08-03 12:57:02] [SETTINGS] Selected audio file: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_5.mp3
+[2025-08-03 12:57:02] [SETTINGS] Test sound button clicked
+[2025-08-03 12:57:02] [SETTINGS] Playing test sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_5.mp3
+[2025-08-03 12:57:02] [ERROR_SOUND] Sound file updated: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_5.mp3
+[2025-08-03 12:57:02] [ERROR_SOUND] Testing sound playback
+[2025-08-03 12:57:02] [ERROR_SOUND] Thread started
+[2025-08-03 12:57:02] [ERROR_SOUND] Playing sound: D:/Code/Python/LeafAuto_Pro/resources/sound/error_sound_5.mp3
+[2025-08-03 12:57:08] [SETTINGS] Saving settings and closing window
+[2025-08-03 12:57:08] [ERROR_SOUND] Playback stopped by user
+[2025-08-03 12:57:08] [ERROR_SOUND] Cleaning up resources
+[2025-08-03 12:57:08] [SETTINGS] Stopped running audio thread
+[2025-08-03 12:57:08] Writing key error_email = False
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key error_email updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved error_email as: False
+[2025-08-03 12:57:08] Writing key error_sound = True
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key error_sound updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved error_sound as: True
+[2025-08-03 12:57:08] Writing key net_time = False
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key net_time updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved net_time as: False
+[2025-08-03 12:57:08] Writing key auto_update = True
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key auto_update updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved auto_update as: True
+[2025-08-03 12:57:08] Writing key serve_lock = False
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key serve_lock updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved serve_lock as: False
+[2025-08-03 12:57:08] Writing key import_filter = False
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key import_filter updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved import_filter as: False
+[2025-08-03 12:57:08] Writing key close_option = True
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key close_option updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved close_option as: True
+[2025-08-03 12:57:08] Writing key add_timestep = 10
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key add_timestep updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved add_timestep as: 10
+[2025-08-03 12:57:08] Writing key same_reply = 0
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key same_reply updated successfully
+[2025-08-03 12:57:08] Writing key language = cn
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key language updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved language as: cn
+[2025-08-03 12:57:08] Writing key selected_audio_index = 4
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key selected_audio_index updated successfully
+[2025-08-03 12:57:08] [SETTINGS] Saved selected_audio_index as: 4
+[2025-08-03 12:57:08] Writing key reply_delay = 0
+[2025-08-03 12:57:08] Writing updated config to _internal/system_info.ini
+[2025-08-03 12:57:08] Key reply_delay updated successfully
+[2025-08-03 12:57:09] [SETTINGS] Settings saved successfully

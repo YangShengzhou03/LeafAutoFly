@@ -163,7 +163,6 @@ class clickableComboBox(QtWidgets.QComboBox):
 
     def add_item(self, text, checked=False):
         try:
-            log_print(f"[CheckableComboBox] Adding item: {text}, checked: {checked}")
             item = QtWidgets.QListWidgetItem(text)
             item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
             item.setCheckState(Qt.CheckState.Checked if checked else Qt.CheckState.Unchecked)

@@ -657,7 +657,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2); "> <h2 style="color:#ffffff; 
             font-family:'Microsoft YaHei', sans-serif;">欢迎使用LeafAuto PRO</h2> <p style="font-size:16px; text-align:left; 
             margin-top:15px; color:#ffffff; font-family:'Microsoft YaHei', sans-serif; text-indent:2em;"> LeafAuto 
-            是我在2024年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。 </p> <p style="font-size:16px; text-align:left; 
+            是我在2024年大二时写的练习程序，这是她的专业版本。希望大家多提宝贵意见，同时也希望大家会喜欢她。 </p> <p style="font-size:16px; text-align:left; 
             margin-top:15px; color:#ffffff; font-family:'Microsoft YaHei', sans-serif; text-indent:2em;"> 当前 LeafAuto 
             仅支持微信 v3.9 版本（微信 4.0 暂不兼容），您可前往微信官网下载 v3.9 版本使用。 </p> <p style="font-size:16px; text-align:left; 
             margin-top:15px; color:#ffffff; font-family:'Microsoft YaHei', sans-serif; text-indent:2em;"> 
