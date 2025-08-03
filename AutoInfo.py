@@ -642,14 +642,14 @@ class AutoInfo(QtWidgets.QWidget):
                 return
 
             current_date = datetime.now().strftime("%m%d")
-            default_filename = f"LeafAuto自动计划_{current_date}"
+            default_filename = f"LeafAuto专业版计划_{current_date}"
 
             documents_dir = os.path.expanduser("~/Documents")
             file_name, _ = QtWidgets.QFileDialog.getSaveFileName(
                 self,
                 "保存任务计划",
                 os.path.join(documents_dir, default_filename),
-                "枫叶任务文件(*.xlsx);;所有文件(*)"
+                "专业版任务文件(*.xlsx);;所有文件(*)"
             )
 
             if file_name:
@@ -713,7 +713,7 @@ class AutoInfo(QtWidgets.QWidget):
         try:
             documents_dir = os.path.expanduser("~/Documents")
             file_name = filepath or QtWidgets.QFileDialog.getOpenFileName(
-                self, "导入任务计划", documents_dir, "枫叶任务文件(*.xlsx);;所有文件(*)"
+                self, "导入任务计划", documents_dir, "专业版任务文件(*.xlsx);;所有文件(*)"
             )[0]
 
             if not file_name:

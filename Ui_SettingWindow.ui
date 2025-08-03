@@ -1827,6 +1827,120 @@ QSpinBox:focus {
                     <number>170</number>
                    </property>
                    <item>
+                    <widget class="QLabel" name="label_9">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel {
+    color: rgb(0, 0, 0);
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>导入计划时过滤过期任务</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="checkBox_importFilter">
+                     <property name="minimumSize">
+                      <size>
+                       <width>52</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>52</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QCheckBox {
+    width: 18px;
+    height: 14px;
+    margin: 1px;
+    border-radius: 14px;
+    padding: 0;
+    border: 1px solid #8a8a8a;
+}
+
+QCheckBox::indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 1px;
+}
+
+QCheckBox:unchecked {
+    background-color: white;
+}
+
+QCheckBox:checked {
+    background-color: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));
+}
+
+QCheckBox::indicator:unchecked {
+    background: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));
+    left: 1px;
+}
+
+QCheckBox::indicator:checked {
+    background-color: white;
+    left: 24px;
+}
+
+QCheckBox:disabled {
+    border-color: #cccccc;
+    background-color: #f0f0f0;
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    background: #a0a0a0;
+    box-shadow: none;
+}
+
+QCheckBox::indicator:disabled:checked {
+    background-color: #a0a0a0;
+    box-shadow: none;
+}    </string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <property name="spacing">
+                    <number>8</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>170</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>170</number>
+                   </property>
+                   <item>
                     <widget class="QPushButton" name="pushButton_sendLog">
                      <property name="minimumSize">
                       <size>
@@ -1863,29 +1977,6 @@ QPushButton:pressed {
                      </property>
                     </widget>
                    </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_10">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <property name="spacing">
-                    <number>8</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>220</number>
-                   </property>
                   </layout>
                  </item>
                  <item>

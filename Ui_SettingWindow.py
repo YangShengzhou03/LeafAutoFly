@@ -990,6 +990,78 @@ class Ui_SettingWindow(object):
         self.horizontalLayout_28.setContentsMargins(170, -1, 170, -1)
         self.horizontalLayout_28.setSpacing(0)
         self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.label_9 = QtWidgets.QLabel(parent=self.frame_setting_3)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_9.setFont(font)
+        self.label_9.setStyleSheet("QLabel {\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.label_9.setObjectName("label_9")
+        self.horizontalLayout_28.addWidget(self.label_9)
+        self.checkBox_importFilter = QtWidgets.QCheckBox(parent=self.frame_setting_3)
+        self.checkBox_importFilter.setMinimumSize(QtCore.QSize(52, 30))
+        self.checkBox_importFilter.setMaximumSize(QtCore.QSize(52, 30))
+        self.checkBox_importFilter.setStyleSheet("QCheckBox {\n"
+"    width: 18px;\n"
+"    height: 14px;\n"
+"    margin: 1px;\n"
+"    border-radius: 14px;\n"
+"    padding: 0;\n"
+"    border: 1px solid #8a8a8a;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 24px;\n"
+"    height: 24px;\n"
+"    border-radius: 12px;\n"
+"    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);\n"
+"    position: absolute;\n"
+"    top: 1px;\n"
+"}\n"
+"\n"
+"QCheckBox:unchecked {\n"
+"    background-color: white;\n"
+"}\n"
+"\n"
+"QCheckBox:checked {\n"
+"    background-color: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:unchecked {\n"
+"    background: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0.66 rgba(134, 119, 253, 255), stop:1 rgba(119, 111, 252, 255));\n"
+"    left: 1px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    background-color: white;\n"
+"    left: 24px;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    border-color: #cccccc;\n"
+"    background-color: #f0f0f0;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled:unchecked {\n"
+"    background: #a0a0a0;\n"
+"    box-shadow: none;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled:checked {\n"
+"    background-color: #a0a0a0;\n"
+"    box-shadow: none;\n"
+"}    ")
+        self.checkBox_importFilter.setText("")
+        self.checkBox_importFilter.setObjectName("checkBox_importFilter")
+        self.horizontalLayout_28.addWidget(self.checkBox_importFilter)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_28)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem3)
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_9.setContentsMargins(170, -1, 170, -1)
+        self.horizontalLayout_9.setSpacing(8)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.pushButton_sendLog = QtWidgets.QPushButton(parent=self.frame_setting_3)
         self.pushButton_sendLog.setMinimumSize(QtCore.QSize(88, 32))
         self.pushButton_sendLog.setMaximumSize(QtCore.QSize(88, 32))
@@ -1010,14 +1082,7 @@ class Ui_SettingWindow(object):
 "    background-color: rgb(140, 100, 255);\n"
 "}")
         self.pushButton_sendLog.setObjectName("pushButton_sendLog")
-        self.horizontalLayout_28.addWidget(self.pushButton_sendLog)
-        self.verticalLayout_5.addLayout(self.horizontalLayout_28)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem3)
-        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_9.setContentsMargins(220, -1, -1, -1)
-        self.horizontalLayout_9.setSpacing(8)
-        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.horizontalLayout_9.addWidget(self.pushButton_sendLog)
         self.verticalLayout_5.addLayout(self.horizontalLayout_9)
         spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_5.addItem(spacerItem4)
@@ -1301,6 +1366,7 @@ class Ui_SettingWindow(object):
         self.pushButton_clean.setText(_translate("SettingWindow", "清除缓存"))
         self.label_setting_3.setText(_translate("SettingWindow", "其他设置"))
         self.label_8.setText(_translate("SettingWindow", "接管同回复间隔分钟"))
+        self.label_9.setText(_translate("SettingWindow", "导入计划时过滤过期任务"))
         self.pushButton_sendLog.setText(_translate("SettingWindow", "发送日志"))
         self.label_setting_4.setText(_translate("SettingWindow", "关于枫叶"))
         self.label.setText(_translate("SettingWindow", "版本信息"))

@@ -215,6 +215,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
             ('net_time', self.ui.checkBox_net_time),
             ('auto_update', self.ui.checkBox_updata),
             ('serve_lock', self.ui.checkBox_sever),
+            ('import_filter', self.ui.checkBox_importFilter),
             ('close_option', self.ui.checkBox_close_option)
         ]:
             value = str_to_bool(read_key_value(key))
@@ -289,6 +290,7 @@ class SettingWindow(QtWidgets.QMainWindow, Ui_SettingWindow):
                 ('net_time', self.ui.checkBox_net_time),
                 ('auto_update', self.ui.checkBox_updata),
                 ('serve_lock', self.ui.checkBox_sever),
+                ('import_filter', self.ui.checkBox_importFilter),
                 ('close_option', self.ui.checkBox_close_option)
             ]:
                 value = str(checkbox.isChecked())
