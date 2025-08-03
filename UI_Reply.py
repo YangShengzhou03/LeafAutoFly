@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from common import get_resource_path
+
 
 class Ui_ReplyDialog(object):
     def setupUi(self, ReplyDialog):
@@ -176,7 +178,7 @@ class Ui_ReplyDialog(object):
 "")
         self.emotion_pushButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("resources/img/page3/page3_回复表情.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/page3/page3_回复表情.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.emotion_pushButton.setIcon(icon)
         self.emotion_pushButton.setIconSize(QtCore.QSize(24, 24))
         self.emotion_pushButton.setObjectName("emotion_pushButton")
@@ -197,7 +199,7 @@ class Ui_ReplyDialog(object):
 "")
         self.file_pushButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("resources/img/page1/page1_打开文件.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap(get_resource_path("resources/img/page1/page1_打开文件.svg")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.file_pushButton.setIcon(icon1)
         self.file_pushButton.setIconSize(QtCore.QSize(24, 24))
         self.file_pushButton.setObjectName("file_pushButton")

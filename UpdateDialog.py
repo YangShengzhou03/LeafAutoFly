@@ -35,7 +35,7 @@ def check_update():
             else:
                 necessary = True
             dialog = UpdateDialog(url=lastlyVersionUrl, title=title_str, content=update_content, necessary=necessary)
-            dialog.exec_()
+            dialog.exec()
         else:
             return 0
     except Exception:

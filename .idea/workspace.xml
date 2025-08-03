@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clickableComboBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/clickableComboBox.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI_Reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Reply.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ui_SettingWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ui_SettingWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpdateDialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/UpdateDialog.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,15 +139,7 @@
       <workItem from="1754142887876" duration="9813000" />
       <workItem from="1754181236297" duration="14607000" />
       <workItem from="1754196070722" duration="15000" />
-      <workItem from="1754196753458" duration="315000" />
-    </task>
-    <task id="LOCAL-00038" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751214535430</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1751214535430</updated>
+      <workItem from="1754196753458" duration="790000" />
     </task>
     <task id="LOCAL-00039" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
@@ -531,7 +525,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754196076777</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197077177</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197077177</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
