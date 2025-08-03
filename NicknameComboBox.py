@@ -39,8 +39,8 @@ class NicknameComboBox(QtWidgets.QComboBox):
 
         self.view.setStyleSheet("""
             QListView {
-                border-radius: 8px;
-                padding: 4px 0;
+                border-radius: 0px;
+                padding: 0px;
                 outline: none;
             }
         """)
@@ -77,6 +77,7 @@ class NicknameComboBox(QtWidgets.QComboBox):
             QComboBox {{
                 background: transparent;
                 border: 1px solid transparent;
+                border-color: rgba(255, 255, 255, 20);
                 color: white;
                 padding: 6px 12px;
                 padding-right: 30px;
@@ -128,7 +129,6 @@ class NicknameComboBox(QtWidgets.QComboBox):
             }}
 
             QComboBox QAbstractItemView {{
-                border-radius: 0;
                 background: white;
                 border: 0;
                 padding: 0px;
