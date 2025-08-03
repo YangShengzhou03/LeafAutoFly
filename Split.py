@@ -116,18 +116,13 @@ class Split(QtWidgets.QWidget):
 
         self.split_thread = SplitWorkerThread(
             self,
-            receiver,
-            self.prepared_sentences,
-            wx=self.current_wx
+            receiver=receiver,
+            sentences=self.prepared_sentences,
+            wx_instance=self.current_wx
         )
         self.split_thread.finished.connect(self.on_thread_finished)
-        self.split_thread.sent_signal.connect(self._on_sent)
         self.split_thread.start()
         log("INFO", f"开始向 {receiver} 发送拆分的句子")
-
-    def _on_sent(self, sentence: str, success: bool) -> None:
-        status = "成功" if success else "失败"
-        log("INFO", f"句子发送{status}: {sentence[:20]}...")
 
     def on_thread_finished(self) -> None:
         log("INFO", "段落拆句发送任务执行完成")

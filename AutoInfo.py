@@ -869,6 +869,7 @@ class AutoInfo(QtWidgets.QWidget):
         self.delayed_save()
 
     def add_emotion_to_message(self):
+        self.parent.message_lineEdit.setText("Emotion:")
         log_print("[AutoInfo] Adding emotion to message")
 
     def play_error_sound(self):

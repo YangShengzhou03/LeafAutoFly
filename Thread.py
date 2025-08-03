@@ -705,11 +705,12 @@ class AiWorkerThread(WorkerThreadBase):
 
 
 class SplitWorkerThread(WorkerThreadBase):
-    def __init__(self, app_instance, receiver, sentences):
+    def __init__(self, app_instance, receiver, sentences, wx_instance):
         super().__init__()
         self.app_instance = app_instance
         self.receiver = receiver
         self.sentences = sentences
+        self.wx_instance = wx_instance
         log_print(f"[SPLIT_WORKER] Thread initialized for receiver: {receiver}, {len(sentences)} sentences")
 
     def run(self):
@@ -729,7 +730,7 @@ class SplitWorkerThread(WorkerThreadBase):
                 log("INFO", f"发送 ({i + 1}/{len(self.sentences)}) '{sentence[:30]}...' 给 {self.receiver}")
                 log_print(
                     f"[SPLIT_WORKER] Sending message {i + 1}/{len(self.sentences)}: '{sentence[:30]}...' to {self.receiver}")
-                if not self._send_message(sentence, self.receiver):
+                if not self._send_message(msg=sentence, who=self.receiver):
                     raise LookupError("发送失败")
                 self.msleep(500)
             except Exception as e:
@@ -745,7 +746,7 @@ class SplitWorkerThread(WorkerThreadBase):
         self.finished.emit()
 
     def _send_message(self, msg: str, who: str) -> bool:
-        return self._retry_operation(lambda: self.app_instance.wx.SendMsg(msg=msg, who=who))
+        return self._retry_operation(lambda: self.wx_instance.SendMsg(msg=msg, who=who))
 
     def _retry_operation(self, operation, max_retries=3):
         for attempt in range(max_retries):

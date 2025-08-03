@@ -125,35 +125,38 @@ class NicknameComboBox(QtWidgets.QComboBox):
                 transform: translateY(1px);
             }
 
-            QListView {
+            QComboBox QAbstractItemView {
                 border-radius: 0;
                 background: white;
                 border: 0;
-                padding: 0px;
+                padding: 0px;          /* 视图内边距归零 */
+                margin: 0px;           /* 视图外边距归零 */
                 color: #333;
                 outline: none;
+                show-decoration-selected: 0;
             }
 
-            QListView::item {
-                height: 36px;
+            QComboBox QAbstractItemView::item {
+                height: 26px;
                 padding: 0px;
-                border-radius: 0;
                 margin: 0px;
+                border-radius: 0;
                 transition: all 0.2s ease;
+                border: none;
             }
 
-            QListView::item:hover {
+            QComboBox QAbstractItemView::item:hover {
                 background: #F0F5FF;
                 color: #7B61FF;
             }
 
-            QListView::item:selected {
+            QComboBox QAbstractItemView::item:selected {
                 background: #7B61FF;
                 color: white;
                 border-radius: 0;
             }
 
-            QListView::item:selected:hover {
+            QComboBox QAbstractItemView::item:selected:hover {
                 background: #6A50E0;
             }
 
@@ -167,7 +170,6 @@ class NicknameComboBox(QtWidgets.QComboBox):
                 opacity: 0.4;
             }
         """)
-
     def eventFilter(self, obj, event):
         try:
             if obj == self.lineEdit() and event.type() == QEvent.Type.MouseButtonRelease:
@@ -188,7 +190,6 @@ class NicknameComboBox(QtWidgets.QComboBox):
 
         except Exception as e:
             log_print(f"[NicknameComboBox] 事件过滤器错误: {str(e)}")
-            log("ERROR", "昵称选择框事件处理出错")
             return False
 
     def showPopup(self):
@@ -196,8 +197,6 @@ class NicknameComboBox(QtWidgets.QComboBox):
             return
 
         self._is_open = True
-        log_print("[NicknameComboBox] 显示下拉列表")
-
         self.view.setMinimumWidth(self.width())
         super().showPopup()
 
@@ -206,7 +205,6 @@ class NicknameComboBox(QtWidgets.QComboBox):
             return
 
         self._is_open = False
-        log_print(f"[NicknameComboBox] 隐藏下拉列表")
         super().hidePopup()
 
     def add_nickname(self, nickname, icon=None):
@@ -229,7 +227,6 @@ class NicknameComboBox(QtWidgets.QComboBox):
 
         except Exception as e:
             log_print(f"[NicknameComboBox] 添加昵称错误: {str(e)}")
-            log("ERROR", f"添加昵称 '{nickname}' 失败")
 
     def get_current_nickname(self):
         return self._current_nickname
@@ -248,4 +245,3 @@ class NicknameComboBox(QtWidgets.QComboBox):
         self.clear()
         self._current_nickname = None
         self.setEditText("")
-        log_print("[NicknameComboBox] 清空所有昵称")
