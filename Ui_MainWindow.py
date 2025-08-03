@@ -1250,6 +1250,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         font.setBold(True)
         self.label_81.setFont(font)
+        self.label_81.setStyleSheet("QLabel {\n"
+"color: rgb(255, 0, 0);\n"
+"}")
         self.label_81.setObjectName("label_81")
         self.verticalLayout_41.addWidget(self.label_81)
         self.horizontalLayout_53 = QtWidgets.QHBoxLayout()
@@ -1657,7 +1660,7 @@ class Ui_MainWindow(object):
         self.scrollArea_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.scrollArea_3.setObjectName("scrollArea_3")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 388, 488))
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 388, 482))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.formLayout_3 = QtWidgets.QFormLayout(self.scrollAreaWidgetContents_3)
         self.formLayout_3.setLabelAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)

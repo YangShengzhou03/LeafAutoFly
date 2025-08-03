@@ -2682,6 +2682,11 @@ border-radius:10px
                                  <bold>true</bold>
                                 </font>
                                </property>
+                               <property name="styleSheet">
+                                <string notr="true">QLabel {
+color: rgb(255, 0, 0);
+}</string>
+                               </property>
                                <property name="text">
                                 <string>PRO</string>
                                </property>
@@ -3461,7 +3466,7 @@ QScrollArea QScrollBar::sub-page:vertical {
                         <x>0</x>
                         <y>0</y>
                         <width>388</width>
-                        <height>488</height>
+                        <height>482</height>
                        </rect>
                       </property>
                       <layout class="QFormLayout" name="formLayout_3">

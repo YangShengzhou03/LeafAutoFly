@@ -653,9 +653,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             if notice_content:
                 self.textBrowser.setHtml(notice_content)
         except Exception:
-            self.textBrowser.setHtml('<center><h2>欢迎使用LeafAuto</h2><h2>LeafAuto Pro是我在2024'
-                                     '年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。</h2'
-                                     '></center>')
+            self.textBrowser.setHtml("""<div style="text-align:center; padding:20px; border:2px solid #ff9800; 
+            border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2); "> <h2 style="color:#ffffff; 
+            font-family:'Microsoft YaHei', sans-serif;">欢迎使用LeafAuto PRO</h2> <p style="font-size:16px; text-align:left; 
+            margin-top:15px; color:#ffffff; font-family:'Microsoft YaHei', sans-serif; text-indent:2em;"> LeafAuto 
+            是我在2024年大二时写的练习程序，没想到居然这么多人爱用。希望大家多提宝贵意见，同时也希望大家会喜欢她。 </p> <p style="font-size:16px; text-align:left; 
+            margin-top:15px; color:#ffffff; font-family:'Microsoft YaHei', sans-serif; text-indent:2em;"> 当前 LeafAuto 
+            仅支持微信 v3.9 版本（微信 4.0 暂不兼容），您可前往微信官网下载 v3.9 版本使用。 </p> <p style="font-size:16px; text-align:left; 
+            margin-top:15px; color:#ffffff; font-family:'Microsoft YaHei', sans-serif; text-indent:2em;"> 
+            如果您觉得好用，可以推荐给更多人，这样能让她变得更好！ </p> </div> """)
 
     def disable_rdp_lock(self):
         try:
