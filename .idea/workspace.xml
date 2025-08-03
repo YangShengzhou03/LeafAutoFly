@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新" />
+    <list default="true" id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="LeafAuto PRO更新">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NicknameComboBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/NicknameComboBox.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,14 +137,8 @@
       <workItem from="1754181236297" duration="14607000" />
       <workItem from="1754196070722" duration="15000" />
       <workItem from="1754196753458" duration="955000" />
-    </task>
-    <task id="LOCAL-00042" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751382418536</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1751382418536</updated>
+      <workItem from="1754197864268" duration="13000" />
+      <workItem from="1754198358980" duration="175000" />
     </task>
     <task id="LOCAL-00043" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
@@ -527,7 +524,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754197690442</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197870482</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197870482</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

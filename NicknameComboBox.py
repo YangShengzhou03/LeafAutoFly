@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import Qt, QEvent
 from PyQt6.QtGui import QFont, QStandardItemModel, QStandardItem
 
-from common import log, log_print
+from common import log, log_print, get_resource_path
 
 
 class CenterAlignedDelegate(QtWidgets.QStyledItemDelegate):
@@ -71,8 +71,10 @@ class NicknameComboBox(QtWidgets.QComboBox):
         log_print("[NicknameComboBox] 初始化完成")
 
     def _init_styles(self):
-        self.setStyleSheet("""
-            QComboBox {
+        arrow_path = get_resource_path('resources/img/List/下拉.svg')
+
+        self.setStyleSheet(f"""
+            QComboBox {{
                 background: transparent;
                 border: 1px solid transparent;
                 color: white;
@@ -80,21 +82,21 @@ class NicknameComboBox(QtWidgets.QComboBox):
                 padding-right: 30px;
                 border-radius: 8px;
                 transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            }
+            }}
 
-            QComboBox:hover {
+            QComboBox:hover {{
                 background: transparent;
                 border-color: rgba(255, 255, 255, 40);
-            }
+            }}
 
-            QComboBox:focus {
+            QComboBox:focus {{
                 background: transparent;
                 border-color: #7B61FF;
                 outline: none;
                 box-shadow: 0 0 0 2px rgba(123, 97, 255, 30);
-            }
+            }}
 
-            QComboBox::drop-down {
+            QComboBox::drop-down {{
                 subcontrol-origin: padding;
                 subcontrol-position: top right;
                 width: 28px;
@@ -103,72 +105,72 @@ class NicknameComboBox(QtWidgets.QComboBox):
                 background: transparent;
                 border-radius: 0px;
                 margin-right: 2px;
-            }
+            }}
 
-            QComboBox::drop-down:hover {
+            QComboBox::drop-down:hover {{
                 background: transparent;
-            }
+            }}
 
-            QComboBox::down-arrow {
-                image: url("resources/img/List/下拉.svg");
+            QComboBox::down-arrow {{
+                image: url("{arrow_path}");
                 width: 24px;
                 height: 24px;
                 opacity: 0.9;
                 transition: transform 0.2s ease;
-            }
+            }}
 
-            QComboBox::down-arrow:hover {
+            QComboBox::down-arrow:hover {{
                 opacity: 1;
-            }
+            }}
 
-            QComboBox::down-arrow:pressed {
+            QComboBox::down-arrow:pressed {{
                 transform: translateY(1px);
-            }
+            }}
 
-            QComboBox QAbstractItemView {
+            QComboBox QAbstractItemView {{
                 border-radius: 0;
                 background: white;
                 border: 0;
-                padding: 0px;          /* 视图内边距归零 */
-                margin: 0px;           /* 视图外边距归零 */
+                padding: 0px;
+                margin: 0px;
                 color: #333;
                 outline: none;
                 show-decoration-selected: 0;
-            }
+            }}
 
-            QComboBox QAbstractItemView::item {
+            QComboBox QAbstractItemView::item {{
                 height: 26px;
                 padding: 0px;
                 margin: 0px;
                 border-radius: 0;
                 transition: all 0.2s ease;
                 border: none;
-            }
+            }}
 
-            QComboBox QAbstractItemView::item:hover {
+            QComboBox QAbstractItemView::item:hover {{
                 background: #F0F5FF;
                 color: #7B61FF;
-            }
+            }}
 
-            QComboBox QAbstractItemView::item:selected {
+            QComboBox QAbstractItemView::item:selected {{
                 background: #7B61FF;
                 color: white;
                 border-radius: 0;
-            }
+            }}
 
-            QComboBox QAbstractItemView::item:selected:hover {
+            QComboBox QAbstractItemView::item:selected:hover {{
                 background: #6A50E0;
-            }
+            }}
 
-            QComboBox:disabled {
+            QComboBox:disabled {{
                 background: rgba(255, 255, 255, 5);
                 color: #AAAAAA;
                 border-color: transparent;
-            }
+            }}
 
-            QComboBox:disabled QComboBox::down-arrow {
+            QComboBox:disabled QComboBox::down-arrow {{
                 opacity: 0.4;
-            }
+            }}
         """)
 
     def eventFilter(self, obj, event):
