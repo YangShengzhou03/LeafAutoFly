@@ -28,7 +28,6 @@ class AutoInfo(QtWidgets.QWidget):
         self.parent = parent
         self.wx_dict = wx_dict
         self.membership = membership
-
         self.ready_tasks = {}
         self.completed_tasks = {}
         self.task_id_counter = 0
