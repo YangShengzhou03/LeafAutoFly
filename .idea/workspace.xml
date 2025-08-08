@@ -138,22 +138,7 @@
       <workItem from="1754198358980" duration="219000" />
       <workItem from="1754199231288" duration="840000" />
       <workItem from="1754232753375" duration="1127000" />
-    </task>
-    <task id="LOCAL-00047" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751780902841</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1751780902841</updated>
-    </task>
-    <task id="LOCAL-00048" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751781149101</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1751781149101</updated>
+      <workItem from="1754657358583" duration="806000" />
     </task>
     <task id="LOCAL-00049" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
@@ -531,7 +516,23 @@
       <option name="project" value="LOCAL" />
       <updated>1754233877749</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754657681833</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1754657681833</updated>
+    </task>
+    <task id="LOCAL-00097" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754657737051</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1754657737051</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,6 +544,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="LeafAuto PRO更新" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754199878569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754658154242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
