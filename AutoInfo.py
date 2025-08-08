@@ -92,6 +92,7 @@ class AutoInfo(QtWidgets.QWidget):
         try:
             log_print("[AutoInfo] Saving tasks to JSON file...")
             tasks_list = []
+            # 只保存ready_tasks，不保存completed_tasks
             for task in self.ready_tasks.values():
                 tasks_data = {
                     'id': task['id'],
@@ -102,18 +103,6 @@ class AutoInfo(QtWidgets.QWidget):
                     'frequency': task['frequency']
                 }
                 tasks_list.append(tasks_data)
-
-            for task in self.completed_tasks.values():
-                task_data = {
-                    'id': task['id'],
-                    'time': task['time'],
-                    'sender': task['sender'],
-                    'name': task['name'],
-                    'info': task['info'],
-                    'frequency': task['frequency'],
-                    'status': task.get('status', '')
-                }
-                tasks_list.append(task_data)
 
             log_print(f"[AutoInfo] Preparing to save {len(tasks_list)} tasks to JSON file...")
 
@@ -297,23 +286,20 @@ class AutoInfo(QtWidgets.QWidget):
     def remove_task(self, task_id):
         log_print(f"[AutoInfo] Attempting to remove task (ID: {task_id})...")
         try:
-            widget = None
+            widgets_to_remove = []
+            
             for i in range(self.parent.formLayout_3.count()):
                 item = self.parent.formLayout_3.itemAt(i)
-                if item and item.widget() and hasattr(item.widget(), 'task_id') and item.widget().task_id == task_id:
-                    widget = item.widget()
-                    break
+                if item and item.widget() and hasattr(item.widget(), 'task_id'):
+                    if item.widget().task_id == task_id or item.widget().task_id in self.completed_tasks:
+                        widgets_to_remove.append(item.widget())
 
-            if widget:
+            for widget in widgets_to_remove:
                 widget.hide()
                 QtCore.QTimer.singleShot(0, widget.deleteLater)
-                log_print(f"[AutoInfo] Task widget removed from interface (ID: {task_id})")
-
+            
             def process_data_removal():
-                if self.error_sound_thread._is_running:
-                    self.error_sound_thread.stop_playback()
-                    log_print("[AutoInfo] Error sound stopped")
-
+                task = None
                 if task_id in self.ready_tasks:
                     task = self.ready_tasks.pop(task_id)
                 elif task_id in self.completed_tasks:
@@ -324,37 +310,40 @@ class AutoInfo(QtWidgets.QWidget):
 
                 if task:
                     time_text = task['time']
-                    if time_text in self.tasks_by_time:
-                        try:
-                            self.tasks_by_time[time_text].remove(task_id)
-                            if not self.tasks_by_time[time_text]:
-                                del self.tasks_by_time[time_text]
-                                log_print(f"[AutoInfo] Time index {time_text} deleted as no tasks remain")
-                        except ValueError:
-                            log_print(f"[AutoInfo] Task ID {task_id} not in time index {time_text}")
+                    if time_text in self.tasks_by_time and task_id in self.tasks_by_time[time_text]:
+                        self.tasks_by_time[time_text].remove(task_id)
+                        if not self.tasks_by_time[time_text]:
+                            del self.tasks_by_time[time_text]
 
                     log('WARNING', f'已删除任务 {task["info"][:35] + "……" if len(task["info"]) > 30 else task["info"]}')
-                    log_print(f"[AutoInfo] Task removed: {task['info'][:35] + '...' if len(task['info']) > 30 else task['info']}")
 
-                    if not self.ready_tasks and self.is_executing:
-                        self.is_executing = False
-                        if self.parent and hasattr(self.parent, 'start_pushButton') and self.parent.start_pushButton:
-                            def update_button_text():
-                                if self.parent and self.parent.start_pushButton:
-                                    self.parent.start_pushButton.setText("开始执行")
+                completed_ids = list(self.completed_tasks.keys())
+                for completed_id in completed_ids:
+                    completed_task = self.completed_tasks.pop(completed_id)
+                    time_text = completed_task['time']
+                    if time_text in self.tasks_by_time and completed_id in self.tasks_by_time[time_text]:
+                        self.tasks_by_time[time_text].remove(completed_id)
+                        if not self.tasks_by_time[time_text]:
+                            del self.tasks_by_time[time_text]
 
-                            if QtCore.QThread.currentThread() != self.parent.thread():
-                                QtCore.QTimer.singleShot(0, update_button_text)
-                            else:
-                                update_button_text()
+                if not self.ready_tasks and self.is_executing:
+                    self.is_executing = False
+                    if self.parent and hasattr(self.parent, 'start_pushButton') and self.parent.start_pushButton:
+                        def update_button_text():
+                            if self.parent and self.parent.start_pushButton:
+                                self.parent.start_pushButton.setText("开始执行")
 
-                        if self.worker_thread is not None:
-                            self.worker_thread.requestInterruption()
-                            self.worker_thread = None
-                            log("INFO", "工作线程已停止")
-                            log_print("[AutoInfo] Worker thread stopped")
+                        if QtCore.QThread.currentThread() != self.parent.thread():
+                            QtCore.QTimer.singleShot(0, update_button_text)
+                        else:
+                            update_button_text()
 
-                    self.delayed_save()
+                    if self.worker_thread is not None:
+                        self.worker_thread.requestInterruption()
+                        self.worker_thread = None
+                        log("INFO", "工作线程已停止")
+
+                self.delayed_save()
 
             QtCore.QTimer.singleShot(100, process_data_removal)
 
