@@ -4,14 +4,14 @@
 
 
 <div align="center">
-  <a href="https://github.com/YangShengzhou03/LeafAutoPRO">
-    <img src="https://img.shields.io/github/stars/YangShengzhou03/LeafAutoPRO?style=for-the-badge&logo=github" alt="GitHub Stars">
-  </a>
   <a href="LICENSE.md">
     <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=open-source-initiative" alt="MIT License">
   </a>
   <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3.11.4-blue?style=for-the-badge&logo=python" alt="Python Version">
+    <img src="https://img.shields.io/badge/Python-3.11%2B-blue?style=for-the-badge&logo=python" alt="Python Version">
+  </a>
+  <a href="https://pypi.org/project/PyQt6/">
+    <img src="https://img.shields.io/badge/PyQt6-6.8.0-green?style=for-the-badge&logo=qt" alt="PyQt6 Version">
   </a>
 </div>
 
