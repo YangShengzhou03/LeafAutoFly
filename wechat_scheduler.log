@@ -1,0 +1,27 @@
+2025-08-10 08:49:47,400 - INFO - Could not import comtypes.gen._944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0: No module named 'comtypes.gen._944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0'
+2025-08-10 08:49:47,404 - INFO - # Generating comtypes.gen._944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0
+2025-08-10 08:49:47,468 - INFO - # Generating comtypes.gen.UIAutomationClient
+2025-08-10 08:49:47,474 - INFO - Could not import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0: No module named 'comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0'
+2025-08-10 08:49:47,475 - INFO - # Generating comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
+2025-08-10 08:49:47,485 - INFO - # Generating comtypes.gen.stdole
+2025-08-10 08:49:48,460 - INFO - Î¢ÐÅ³õÊ¼»¯³É¹¦
+2025-08-10 08:49:49,942 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.102:5000
+2025-08-10 08:49:49,942 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-10 08:49:53,647 - INFO - 192.168.1.102 - - [10/Aug/2025 08:49:53] "GET / HTTP/1.1" 200 -
+2025-08-10 08:49:53,649 - INFO - 192.168.1.102 - - [10/Aug/2025 08:49:53] "GET / HTTP/1.1" 200 -
+2025-08-10 08:49:54,431 - INFO - 192.168.1.102 - - [10/Aug/2025 08:49:54] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 08:49:54,492 - INFO - 192.168.1.102 - - [10/Aug/2025 08:49:54] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 08:49:56,590 - INFO - 192.168.1.102 - - [10/Aug/2025 08:49:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-10 08:50:06,134 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:06] "[31m[1mPOST /api/tasks HTTP/1.1[0m" 400 -
+2025-08-10 08:50:11,822 - INFO - ÒÑ±£´æ 1 ¸öÈÎÎñ
+2025-08-10 08:50:11,822 - INFO - ÈÎÎñÏß³Ì 1 Æô¶¯
+2025-08-10 08:50:11,823 - INFO - ÒÑÆô¶¯ÈÎÎñ 1 µÄÖ´ÐÐÏß³Ì
+2025-08-10 08:50:11,823 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:11] "[35m[1mPOST /api/tasks HTTP/1.1[0m" 201 -
+2025-08-10 08:50:11,826 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:11] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 08:50:36,362 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:36] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 08:50:37,726 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:37] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 08:50:38,279 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:38] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 08:50:38,970 - INFO - 192.168.1.102 - - [10/Aug/2025 08:50:38] "GET /api/tasks HTTP/1.1" 200 -

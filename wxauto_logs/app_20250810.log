@@ -1,0 +1,21 @@
+2025-08-10 09:04:31 [wxauto] [DEBUG] [wx.py:31]  开始监听
+2025-08-10 09:04:31 [root] [INFO] [Application.py:23]  微信初始化成功
+2025-08-10 09:04:31 [root] [INFO] [Application.py:49]  成功加载 1 个任务
+2025-08-10 09:04:31 [root] [INFO] [Application.py:108]  任务线程 1 启动
+2025-08-10 09:04:31 [root] [INFO] [Application.py:170]  已启动任务 1 的执行线程
+2025-08-10 09:04:33 [werkzeug] [INFO] [_internal.py:97]  [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.102:5000
+2025-08-10 09:04:33 [werkzeug] [INFO] [_internal.py:97]  [33mPress CTRL+C to quit[0m
+2025-08-10 09:04:41 [werkzeug] [INFO] [_internal.py:97]  127.0.0.1 - - [10/Aug/2025 09:04:41] "GET / HTTP/1.1" 200 -
+2025-08-10 09:04:49 [werkzeug] [INFO] [_internal.py:97]  192.168.1.102 - - [10/Aug/2025 09:04:49] "GET / HTTP/1.1" 200 -
+2025-08-10 09:04:49 [werkzeug] [INFO] [_internal.py:97]  192.168.1.102 - - [10/Aug/2025 09:04:49] "GET / HTTP/1.1" 200 -
+2025-08-10 09:05:03 [werkzeug] [INFO] [_internal.py:97]  127.0.0.1 - - [10/Aug/2025 09:05:03] "GET /api/tasks HTTP/1.1" 200 -
+2025-08-10 09:05:06 [werkzeug] [INFO] [_internal.py:97]  127.0.0.1 - - [10/Aug/2025 09:05:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-10 09:05:23 [werkzeug] [INFO] [_internal.py:97]  127.0.0.1 - - [10/Aug/2025 09:05:23] "[31m[1mPOST /api/tasks HTTP/1.1[0m" 400 -
+2025-08-10 09:05:31 [root] [INFO] [Application.py:65]  已保存 2 个任务
+2025-08-10 09:05:31 [root] [INFO] [Application.py:108]  任务线程 2 启动
+2025-08-10 09:05:31 [root] [INFO] [Application.py:170]  已启动任务 2 的执行线程
+2025-08-10 09:05:31 [werkzeug] [INFO] [_internal.py:97]  127.0.0.1 - - [10/Aug/2025 09:05:31] "[35m[1mPOST /api/tasks HTTP/1.1[0m" 201 -
+2025-08-10 09:05:31 [werkzeug] [INFO] [_internal.py:97]  127.0.0.1 - - [10/Aug/2025 09:05:31] "GET /api/tasks HTTP/1.1" 200 -

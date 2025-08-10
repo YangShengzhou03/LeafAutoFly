@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeafAuto | 智能任务管理系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981', // 主色调：清新绿色
+                        secondary: '#3B82F6', // 辅助色：蓝色
+                        accent: '#8B5CF6', // 强调色：紫色
+                        success: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#1E293B',
+                        'dark-light': '#334155',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03)',
+                        'card-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    }
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .card-transition {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-slate-50 text-slate-800 min-h-screen">
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 bg-blur border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fa-solid fa-leaf text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent text-gradient">LeafAuto</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors">
+                        <i class="fa-solid fa-question-circle mr-1"></i> 帮助
+                    </button>
+                    <button class="px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                        <i class="fa-solid fa-user mr-1"></i> 账户
+                    </button>
+                </div>
+
+                <div class="md:hidden">
+                    <button type="button" class="text-slate-500 hover:text-slate-700 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 页面标题 -->
+        <div class="mb-10 text-center">
+            <h1 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-slate-800 mb-3">
+                智能任务管理系统
+            </h1>
+            <p class="text-slate-500 max-w-2xl mx-auto">
+                轻松创建和管理定时任务，自动化您的日常工作流程，提高效率
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左侧：任务创建表单 -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-card p-6 card-transition hover:shadow-card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                            <i class="fa-solid fa-plus text-primary"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold">创建新任务</h2>
+                    </div>
+
+                    <form id="taskForm" class="space-y-5">
+                        <div>
+                            <label for="taskTime" class="block text-sm font-medium text-slate-700 mb-1">
+                                执行时间
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-clock text-slate-400"></i>
+                                </div>
+                                <input type="datetime-local" id="taskTime" required
+                                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="taskName" class="block text-sm font-medium text-slate-700 mb-1">
+                                接收人
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-user text-slate-400"></i>
+                                </div>
+                                <input type="text" id="taskName" placeholder="输入接收人名称" required
+                                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="taskInfo" class="block text-sm font-medium text-slate-700 mb-1">
+                                任务内容
+                            </label>
+                            <div class="relative">
+                                <div class="absolute left-3 top-3 pointer-events-none">
+                                    <i class="fa-solid fa-comment text-slate-400"></i>
+                                </div>
+                                <textarea id="taskInfo" rows="4" placeholder="输入要发送的消息内容" required
+                                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="taskFrequency" class="block text-sm font-medium text-slate-700 mb-1">
+                                执行频率
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-repeat text-slate-400"></i>
+                                </div>
+                                <select id="taskFrequency"
+                                    class="block w-full pl-10 pr-10 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all appearance-none bg-white">
+                                    <option value="仅一次">仅一次</option>
+                                    <option value="每天">每天</option>
+                                    <option value="每周">每周</option>
+                                    <option value="每月">每月</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-chevron-down text-slate-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center">
+                            <i class="fa-solid fa-save mr-2"></i>
+                            添加任务
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 统计卡片 -->
+                <div class="mt-6 bg-gradient-to-br from-secondary to-accent rounded-2xl shadow-card p-6 text-white card-transition hover:shadow-card-hover">
+                    <h3 class="font-semibold mb-4">任务统计</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/90">等待执行</span>
+                            <span class="font-medium" id="pending-count">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/90">已完成</span>
+                            <span class="font-medium" id="completed-count">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white/90">已暂停</span>
+                            <span class="font-medium" id="paused-count">0</span>
+                        </div>
+                        <div class="h-1 w-full bg-white/20 rounded-full mt-4 overflow-hidden">
+                            <div class="h-full bg-white rounded-full" style="width: 65%"></div>
+                        </div>
+                        <div class="text-sm text-white/80 text-right">完成率 65%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：任务列表 -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-card p-6 card-transition hover:shadow-card-hover h-full">
+                    <div class="flex flex-wrap items-center justify-between mb-6 gap-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-tasks text-secondary"></i>
+                            </div>
+                            <h2 class="text-xl font-semibold">任务列表</h2>
+                        </div>
+
+                        <div class="task-filters flex flex-wrap gap-2">
+                            <button class="filter-btn active px-4 py-2 rounded-full text-sm font-medium bg-primary text-white transition-all" data-filter="all">
+                                <i class="fa-solid fa-list mr-1"></i> 所有
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="pending">
+                                <i class="fa-solid fa-clock mr-1"></i> 等待
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="completed">
+                                <i class="fa-solid fa-check mr-1"></i> 完成
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="paused">
+                                <i class="fa-solid fa-pause mr-1"></i> 暂停
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="tasksContainer" class="space-y-4 max-h-[calc(100vh-380px)] overflow-y-auto scrollbar-hide pr-2">
+                        <!-- 任务将通过JavaScript动态加载 -->
+                        <div class="empty-state flex flex-col items-center justify-center py-16 text-center">
+                            <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                                <i class="fa-solid fa-calendar-alt text-2xl text-slate-400"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-slate-800 mb-1">暂无任务</h3>
+                            <p class="text-slate-500 max-w-md">点击左侧"添加任务"按钮创建您的第一个定时任务，开始自动化工作流程</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fa-solid fa-leaf text-primary mr-2"></i>
+                    <span class="font-semibold">LeafAuto</span>
+                    <span class="text-slate-500 text-sm ml-4">© 2023 智能任务管理系统</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-500 hover:text-primary transition-colors">
+                        <i class="fa-solid fa-question-circle"></i>
+                        <span class="ml-1">帮助中心</span>
+                    </a>
+                    <a href="#" class="text-slate-500 hover:text-primary transition-colors">
+                        <i class="fa-solid fa-file-text"></i>
+                        <span class="ml-1">使用文档</span>
+                    </a>
+                    <a href="#" class="text-slate-500 hover:text-primary transition-colors">
+                        <i class="fa-solid fa-shield"></i>
+                        <span class="ml-1">隐私政策</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 通知组件 -->
+    <div id="notification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm"></div>
+
+    <script>
+        // 当前过滤状态
+        let currentFilter = 'all';
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 设置默认时间为当前时间往后30分钟
+            const defaultTime = new Date();
+            defaultTime.setMinutes(defaultTime.getMinutes() + 30);
+            document.getElementById('taskTime').value = defaultTime.toISOString().slice(0, 16);
+
+            loadTasks();
+            setupFormSubmit();
+            setupFilters();
+            setupScrollEffect();
+        });
+
+        // 滚动效果 - 导航栏样式变化
+        function setupScrollEffect() {
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 10) {
+                    header.classList.add('shadow');
+                    header.classList.remove('shadow-sm');
+                } else {
+                    header.classList.remove('shadow');
+                    header.classList.add('shadow-sm');
+                }
+            });
+        }
+
+        // 加载任务列表
+        function loadTasks() {
+            fetch('/api/tasks')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正常');
+                    }
+                    return response.json();
+                })
+                .then(tasks => {
+                    const container = document.getElementById('tasksContainer');
+                    container.innerHTML = '';
+
+                    // 更新统计数据
+                    updateTaskStatistics(tasks);
+
+                    if (tasks.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state flex flex-col items-center justify-center py-16 text-center">
+                                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                                    <i class="fa-solid fa-calendar-alt text-2xl text-slate-400"></i>
+                                </div>
+                                <h3 class="text-lg font-medium text-slate-800 mb-1">暂无任务</h3>
+                                <p class="text-slate-500 max-w-md">点击左侧"添加任务"按钮创建您的第一个定时任务，开始自动化工作流程</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    // 按时间排序，最近的任务排在前面
+                    tasks.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+                    tasks.forEach(task => {
+                        // 根据当前过滤条件决定是否显示任务
+                        if (currentFilter !== 'all' && task.status !== currentFilter) {
+                            return;
+                        }
+
+                        // 状态样式映射
+                        const statusConfig = {
+                            'pending': {
+                                color: 'bg-warning/10 text-warning',
+                                badge: 'bg-warning text-white',
+                                text: '等待执行'
+                            },
+                            'completed': {
+                                color: 'bg-success/10 text-success',
+                                badge: 'bg-success text-white',
+                                text: '已完成'
+                            },
+                            'failed': {
+                                color: 'bg-danger/10 text-danger',
+                                badge: 'bg-danger text-white',
+                                text: '执行失败'
+                            },
+                            'paused': {
+                                color: 'bg-slate-200 text-slate-700',
+                                badge: 'bg-slate-500 text-white',
+                                text: '已暂停'
+                            },
+                            'cancelled': {
+                                color: 'bg-slate-200 text-slate-700',
+                                badge: 'bg-slate-500 text-white',
+                                text: '已取消'
+                            }
+                        };
+
+                        const config = statusConfig[task.status] || statusConfig['pending'];
+
+                        const taskElement = document.createElement('div');
+                        taskElement.className = `task-item bg-white border border-slate-200 rounded-xl p-5 card-transition hover:shadow-lg hover:border-slate-300`;
+                        taskElement.dataset.status = task.status;
+
+                        // 决定状态按钮的显示文本和图标
+                        const statusAction = task.status === 'paused'
+                            ? `<button class="resume-btn px-3 py-1.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors flex items-center"
+                                   onclick="updateTaskStatus(${task.id}, 'pending')">
+                                <i class="fa-solid fa-play mr-1.5"></i> 恢复
+                              </button>`
+                            : `<button class="pause-btn px-3 py-1.5 bg-warning text-white rounded-lg text-sm font-medium hover:bg-warning/90 transition-colors flex items-center"
+                                   onclick="updateTaskStatus(${task.id}, 'paused')">
+                                <i class="fa-solid fa-pause mr-1.5"></i> 暂停
+                              </button>`;
+
+                        // 构建任务HTML
+                        taskElement.innerHTML = `
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-medium text-slate-800">${task.name}</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium ${config.badge}">${config.text}</span>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-lg p-3 mb-4 text-sm text-slate-700">
+                                ${task.info}
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm mb-4">
+                                <div class="flex items-center text-slate-500">
+                                    <i class="fa-solid fa-clock ${config.color} mr-2 w-4 text-center"></i>
+                                    <span>执行时间: ${formatDateTime(task.time)}</span>
+                                </div>
+                                <div class="flex items-center text-slate-500">
+                                    <i class="fa-solid fa-repeat ${config.color} mr-2 w-4 text-center"></i>
+                                    <span>频率: ${task.frequency}</span>
+                                </div>
+                                ${task.last_run ? `
+                                <div class="flex items-center text-slate-500">
+                                    <i class="fa-solid fa-history ${config.color} mr-2 w-4 text-center"></i>
+                                    <span>上次执行: ${formatDateTime(task.last_run)}</span>
+                                </div>
+                                ` : ''}
+                                ${task.last_status ? `
+                                <div class="flex items-center text-slate-500">
+                                    <i class="fa-solid fa-info-circle ${config.color} mr-2 w-4 text-center"></i>
+                                    <span>上次状态: ${task.last_status}</span>
+                                </div>
+                                ` : ''}
+                            </div>
+
+                            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                                ${task.status !== 'completed' && task.status !== 'cancelled' ? statusAction : ''}
+                                <button class="delete-btn px-3 py-1.5 bg-danger text-white rounded-lg text-sm font-medium hover:bg-danger/90 transition-colors flex items-center"
+                                        onclick="deleteTask(${task.id})">
+                                    <i class="fa-solid fa-trash mr-1.5"></i> 删除
+                                </button>
+                            </div>
+                        `;
+
+                        // 添加淡入动画
+                        taskElement.style.opacity = "0";
+                        taskElement.style.transform = "translateY(10px)";
+                        container.appendChild(taskElement);
+
+                        // 触发动画
+                        setTimeout(() => {
+                            taskElement.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+                            taskElement.style.opacity = "1";
+                            taskElement.style.transform = "translateY(0)";
+                        }, 50);
+                    });
+                })
+                .catch(error => {
+                    console.error('加载任务失败:', error);
+                    document.getElementById('tasksContainer').innerHTML = `
+                        <div class="empty-state flex flex-col items-center justify-center py-16 text-center">
+                            <div class="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center mb-4">
+                                <i class="fa-solid fa-exclamation-triangle text-2xl text-danger"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-slate-800 mb-1">加载失败</h3>
+                            <p class="text-slate-500 max-w-md">无法加载任务列表，请刷新页面重试</p>
+                            <button onclick="loadTasks()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
+                                重试
+                            </button>
+                        </div>
+                    `;
+                });
+        }
+
+        // 更新任务统计数据
+        function updateTaskStatistics(tasks) {
+            const pendingCount = tasks.filter(t => t.status === 'pending').length;
+            const completedCount = tasks.filter(t => t.status === 'completed').length;
+            const pausedCount = tasks.filter(t => t.status === 'paused').length;
+
+            document.getElementById('pending-count').textContent = pendingCount;
+            document.getElementById('completed-count').textContent = completedCount;
+            document.getElementById('paused-count').textContent = pausedCount;
+        }
+
+        // 设置表单提交事件
+        function setupFormSubmit() {
+            document.getElementById('taskForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const taskTime = document.getElementById('taskTime').value;
+                const taskName = document.getElementById('taskName').value;
+                const taskInfo = document.getElementById('taskInfo').value;
+                const taskFrequency = document.getElementById('taskFrequency').value;
+
+                // 简单验证
+                if (!taskTime || !taskName || !taskInfo) {
+                    showNotification('请填写所有必填字段', 'error');
+                    return;
+                }
+
+                // 确保时间格式正确
+                const isoTime = `${taskTime}:00`;
+
+                const task = {
+                    time: isoTime,
+                    name: taskName,
+                    info: taskInfo,
+                    frequency: [taskFrequency]
+                };
+
+                // 添加加载状态
+                const submitBtn = e.submitter;
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 处理中...';
+
+                fetch('/api/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(task)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => {
+                            throw new Error(data.error || '创建任务失败');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    // 重置表单并重新加载任务列表
+                    document.getElementById('taskForm').reset();
+                    // 重置默认时间
+                    const defaultTime = new Date();
+                    defaultTime.setMinutes(defaultTime.getMinutes() + 30);
+                    document.getElementById('taskTime').value = defaultTime.toISOString().slice(0, 16);
+                    loadTasks();
+
+                    // 显示成功提示
+                    showNotification('任务创建成功！', 'success');
+                })
+                .catch(error => {
+                    console.error('创建任务失败:', error);
+                    showNotification(error.message, 'error');
+                })
+                .finally(() => {
+                    // 恢复按钮状态
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
+            });
+        }
+
+        // 设置过滤按钮事件
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 更新活跃状态
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-primary', 'text-white');
+                        b.classList.add('bg-slate-100', 'text-slate-700');
+                    });
+
+                    btn.classList.add('active', 'bg-primary', 'text-white');
+                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+
+                    // 设置当前过滤条件并重新加载任务
+                    currentFilter = btn.dataset.filter;
+
+                    // 添加过渡动画
+                    const container = document.getElementById('tasksContainer');
+                    container.style.opacity = "0.5";
+
+                    setTimeout(() => {
+                        loadTasks();
+                        container.style.opacity = "1";
+                    }, 200);
+                });
+            });
+        }
+
+        // 删除任务
+        function deleteTask(taskId) {
+            if (confirm('确定要删除这个任务吗？此操作不可恢复。')) {
+                fetch(`/api/tasks/${taskId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('删除任务失败');
+                    }
+                    loadTasks();
+                    showNotification('任务已删除', 'success');
+                })
+                .catch(error => {
+                    console.error('删除任务失败:', error);
+                    showNotification('删除任务失败', 'error');
+                });
+            }
+        }
+
+        // 更新任务状态（暂停/恢复）
+        function updateTaskStatus(taskId, status) {
+            fetch(`/api/tasks/${taskId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: status })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`更新任务状态失败`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                loadTasks();
+                const actionText = status === 'paused' ? '暂停' : '恢复';
+                showNotification(`任务已${actionText}`, 'success');
+            })
+            .catch(error => {
+                console.error('更新任务状态失败:', error);
+                showNotification('更新任务状态失败', 'error');
+            });
+        }
+
+        // 获取状态文本
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '等待执行',
+                'completed': '已完成',
+                'failed': '执行失败',
+                'paused': '已暂停',
+                'cancelled': '已取消'
+            };
+            return statusMap[status] || status;
+        }
+
+        // 格式化日期时间
+        function formatDateTime(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // 显示通知
+        function showNotification(message, type = 'info') {
+            const notificationEl = document.getElementById('notification');
+
+            // 样式映射
+            const styleConfig = {
+                success: {
+                    icon: 'fa-check-circle',
+                    bgColor: 'bg-success',
+                    textColor: 'text-white'
+                },
+                error: {
+                    icon: 'fa-exclamation-circle',
+                    bgColor: 'bg-danger',
+                    textColor: 'text-white'
+                },
+                info: {
+                    icon: 'fa-info-circle',
+                    bgColor: 'bg-secondary',
+                    textColor: 'text-white'
+                }
+            };
+
+            const config = styleConfig[type] || styleConfig.info;
+
+            // 设置通知内容
+            notificationEl.innerHTML = `
+                <div class="flex items-center p-4 rounded-xl shadow-lg ${config.bgColor} ${config.textColor}">
+                    <i class="fa-solid ${config.icon} mr-3 text-lg"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            // 显示通知
+            notificationEl.classList.remove('translate-y-20', 'opacity-0');
+            notificationEl.classList.add('translate-y-0', 'opacity-100');
+
+            // 3秒后隐藏
+            setTimeout(() => {
+                notificationEl.classList.remove('translate-y-0', 'opacity-100');
+                notificationEl.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
