@@ -1,298 +1,421 @@
-import json
 import os
-import threading
+import json
 import time
-from datetime import datetime, timedelta
-import logging
-from flask import Flask, render_template, request, jsonify
-from wxauto import WeChat
+import random
+import datetime
+from flask import Flask, request, jsonify, render_template, send_from_directory
+import threading
 
-# 配置日志
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('wechat_scheduler.log'),
-        logging.StreamHandler()
-    ]
-)
+app = Flask(__name__, static_folder='.', static_url_path='')
 
-# 初始化微信
-try:
-    wx = WeChat()
-    logging.info("微信初始化成功")
-except Exception as e:
-    logging.error(f"微信初始化失败: {str(e)}")
-    wx = None
+# 模拟数据库 - 实际应用中应使用真实数据库
+TASKS = []
+ACTIVITIES = []
+RULES = []
+NEXT_TASK_ID = 1
+NEXT_ACTIVITY_ID = 1
 
-app = Flask(__name__)
+# 模拟微信实例
+WECHAT_INSTANCES = [
+    {"id": 1, "name": "当前微信", "status": "已连接", "last_active": datetime.datetime.now().isoformat()}
+]
 
-# 内存存储任务列表
-tasks = []
-task_id_counter = 1
-
-# 数据持久化到本地文件
-DATA_FILE = "tasks.json"
-# 存储活跃的任务线程
-task_threads = {}
-
-
-def load_tasks():
-    """从本地文件加载任务"""
-    global tasks, task_id_counter
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, 'r', encoding='utf-8') as f:
-                tasks = json.load(f)
-                if tasks:
-                    task_id_counter = max(task['id'] for task in tasks) + 1
-                    logging.info(f"成功加载 {len(tasks)} 个任务")
-
-                    # 重启未完成的任务
-                    for task in tasks:
-                        if task['status'] == 'pending':
-                            start_task_worker(task['id'])
-        except Exception as e:
-            logging.error(f"加载任务失败: {str(e)}")
-            tasks = []
+# 模拟AI状态
+AI_STATUS = {
+    "running": False,
+    "start_time": None,
+    "processed_count": 0,
+    "ai_reply_count": 0,
+    "rule_reply_count": 0,
+    "settings": {
+        "receiver": "",
+        "global_takeover": False,
+        "model": "moonshot",
+        "role": "",
+        "only_at": False
+    }
+}
 
 
-def save_tasks():
-    """保存任务到本地文件"""
-    try:
-        with open(DATA_FILE, 'w', encoding='utf-8') as f:
-            json.dump(tasks, f, ensure_ascii=False, indent=2)
-        logging.info(f"已保存 {len(tasks)} 个任务")
-    except Exception as e:
-        logging.error(f"保存任务失败: {str(e)}")
+# 任务执行线程
+class TaskExecutor(threading.Thread):
+    def __init__(self):
+        super().__init__()
+        self.daemon = True
+        self.running = True
+        self.paused = False
+
+    def run(self):
+        while self.running:
+            if not self.paused:
+                now = datetime.datetime.now()
+                # 检查并执行到期任务
+                for task in TASKS:
+                    if task["status"] == "pending":
+                        task_time = datetime.datetime.fromisoformat(task["time"])
+                        if now >= task_time:
+                            self.execute_task(task)
+
+            time.sleep(1)  # 每秒检查一次
+
+    def execute_task(self, task):
+        # 模拟执行任务
+        success = random.random() > 0.2  # 80%成功率
+        task["status"] = "completed" if success else "failed"
+        task["last_executed"] = datetime.datetime.now().isoformat()
+
+        # 记录活动
+        add_activity(
+            "发送消息" if success else "发送失败",
+            f"向 {task['receiver']} 发送消息: {task['message']}",
+            "success" if success else "error"
+        )
+
+        # 处理重复任务
+        if task["frequency"] != "once" and success:
+            task["status"] = "pending"
+            # 更新下次执行时间
+            task_time = datetime.datetime.fromisoformat(task["time"])
+            if task["frequency"] == "daily":
+                next_time = task_time + datetime.timedelta(days=1)
+            elif task["frequency"] == "workdays":
+                days = 1
+                while True:
+                    next_day = task_time + datetime.timedelta(days=days)
+                    if next_day.weekday() < 5:  # 周一到周五
+                        break
+                    days += 1
+                next_time = next_day
+            elif task["frequency"] == "weekends":
+                days = 1
+                while True:
+                    next_day = task_time + datetime.timedelta(days=days)
+                    if next_day.weekday() >= 5:  # 周六和周日
+                        break
+                    days += 1
+                next_time = next_day
+            else:  # custom，这里简单处理为每天
+                next_time = task_time + datetime.timedelta(days=1)
+
+            task["time"] = next_time.isoformat()
+
+    def pause(self):
+        self.paused = True
+
+    def resume(self):
+        self.paused = False
+
+    def stop(self):
+        self.running = False
 
 
-def send_wechat_message(who, msg):
-    """发送微信消息并处理异常"""
-    if not wx:
-        logging.error("微信未初始化，无法发送消息")
-        return False
-
-    try:
-        wx.SendMsg(msg=msg, who=who)
-        logging.info(f"已向 {who} 发送消息: {msg}")
-        return True
-    except Exception as e:
-        logging.error(f"发送消息给 {who} 失败: {str(e)}")
-        return False
+# 启动任务执行器
+task_executor = TaskExecutor()
+task_executor.start()
 
 
-def calculate_next_run_time(task):
-    """计算任务的下一次运行时间"""
-    current_time = datetime.now()
-    last_run_time = datetime.fromisoformat(task['last_run']) \
-        if 'last_run' in task else datetime.fromisoformat(task['time'])
-
-    frequency = task['frequency'][0] if task['frequency'] else '仅一次'
-
-    if frequency == '仅一次':
-        return None
-    elif frequency == '每天':
-        return last_run_time + timedelta(days=1)
-    elif frequency == '每周':
-        return last_run_time + timedelta(weeks=1)
-    elif frequency == '每月':
-        # 简化处理，实际可能需要更复杂的逻辑
-        return last_run_time + timedelta(days=30)
-    return None
+# 辅助函数：添加活动记录
+def add_activity(activity_type, content, status):
+    global NEXT_ACTIVITY_ID
+    activity = {
+        "id": NEXT_ACTIVITY_ID,
+        "time": datetime.datetime.now().isoformat(),
+        "type": activity_type,
+        "content": content,
+        "status": status
+    }
+    ACTIVITIES.append(activity)
+    NEXT_ACTIVITY_ID += 1
+    # 限制活动记录数量
+    if len(ACTIVITIES) > 1000:
+        ACTIVITIES.pop(0)
+    return activity
 
 
-def task_worker(task_id):
-    """任务执行线程，支持重复执行"""
-    global tasks
-    logging.info(f"任务线程 {task_id} 启动")
-
-    try:
-        while True:
-            # 查找任务
-            task = next((t for t in tasks if t['id'] == task_id), None)
-            if not task:
-                logging.info(f"任务 {task_id} 不存在，线程退出")
-                break
-
-            # 检查任务状态
-            if task['status'] != 'pending':
-                logging.info(f"任务 {task_id} 状态为 {task['status']}，线程退出")
-                break
-
-            # 检查任务是否需要执行
-            now = datetime.now()
-            task_time = datetime.fromisoformat(task['time'])
-
-            if now >= task_time:
-                # 执行任务：发送微信消息
-                success = send_wechat_message(task['name'], task['info'])
-
-                # 更新任务信息
-                task['last_run'] = now.isoformat()
-                task['last_status'] = '成功' if success else '失败'
-
-                # 计算下一次运行时间（如果需要）
-                next_time = calculate_next_run_time(task)
-                if next_time:
-                    task['time'] = next_time.isoformat()
-                    logging.info(f"任务 {task_id} 将在 {task['time']} 再次执行")
-                else:
-                    task['status'] = 'completed'
-                    logging.info(f"任务 {task_id} 已完成")
-
-                save_tasks()
-
-                # 如果是一次性任务，执行后退出
-                if not next_time:
-                    break
-
-            # 每10秒检查一次
-            time.sleep(10)
-
-    except Exception as e:
-        logging.error(f"任务线程 {task_id} 出错: {str(e)}")
-    finally:
-        if task_id in task_threads:
-            del task_threads[task_id]
-        logging.info(f"任务线程 {task_id} 已停止")
-
-
-def start_task_worker(task_id):
-    """启动任务线程并跟踪"""
-    if task_id in task_threads and task_threads[task_id].is_alive():
-        logging.warning(f"任务 {task_id} 线程已存在，无需重复启动")
-        return False
-
-    thread = threading.Thread(target=task_worker, args=(task_id,), daemon=True)
-    task_threads[task_id] = thread
-    thread.start()
-    logging.info(f"已启动任务 {task_id} 的执行线程")
-    return True
-
-
+# 路由：首页 - 提供前端页面
 @app.route('/')
 def index():
-    """首页"""
-    return render_template('index.html')
+    # 尝试多种方式返回首页，增加容错性
+    try:
+        # 尝试从模板目录加载
+        return render_template('index.html')
+    except:
+        try:
+            # 尝试从静态目录加载
+            return send_from_directory(app.static_folder, 'index.html')
+        except:
+            # 如果都失败，返回简单的提示信息
+            return "服务器运行中，但未找到首页文件(index.html)", 200
 
 
-@app.route('/api/tasks', methods=['GET'])
+# 路由：获取所有任务
+@app.route('/api/get_tasks', methods=['GET'])
 def get_tasks():
-    """获取所有任务"""
-    return jsonify(tasks)
+    return jsonify(TASKS)
 
 
-@app.route('/api/tasks', methods=['POST'])
-def create_task():
-    """创建新任务"""
-    global tasks, task_id_counter
+# 路由：添加新任务
+@app.route('/api/add_task', methods=['POST'])
+def add_task():
+    global NEXT_TASK_ID
     data = request.json
 
-    # 验证必要参数
-    required_fields = ['time', 'name', 'info']
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "缺少必要参数"}), 400
+    # 验证必要字段
+    if not all(k in data for k in ['receiver', 'message', 'time', 'frequency']):
+        return jsonify({"status": "error", "message": "缺少必要字段"})
 
-    # 验证时间格式
-    try:
-        task_time = datetime.fromisoformat(data['time'])
-        if task_time < datetime.now():
-            return jsonify({"error": "任务时间不能早于当前时间"}), 400
-    except ValueError:
-        return jsonify({"error": "时间格式不正确，应为ISO格式 (YYYY-MM-DDTHH:MM:SS)"}), 400
-
-    # 验证频率参数
-    valid_frequencies = ['仅一次', '每天', '每周', '每月']
-    frequency = data.get('frequency', ['仅一次'])
-    if not isinstance(frequency, list) or len(frequency) == 0 or frequency[0] not in valid_frequencies:
-        return jsonify({"error": f"频率参数无效，必须是 {valid_frequencies} 中的一个"}), 400
-
-    # 创建新任务
     task = {
-        'id': task_id_counter,
-        'time': data['time'],
-        'name': data['name'],
-        'info': data['info'],
-        'frequency': frequency,
-        'status': 'pending',
-        'created_at': datetime.now().isoformat(),
-        'last_run': None,
-        'last_status': None
+        "id": NEXT_TASK_ID,
+        "receiver": data['receiver'],
+        "message": data['message'],
+        "time": data['time'],
+        "frequency": data['frequency'],
+        "status": "pending",
+        "created_at": datetime.datetime.now().isoformat(),
+        "last_executed": None
     }
 
-    tasks.append(task)
-    task_id_counter += 1
-    save_tasks()
+    TASKS.append(task)
+    NEXT_TASK_ID += 1
 
-    # 启动任务线程
-    start_task_worker(task['id'])
+    # 记录活动
+    add_activity("添加任务", f"新增任务: 向 {task['receiver']} 发送消息", "success")
 
-    return jsonify(task), 201
-
-
-@app.route('/api/tasks/<int:task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    """删除任务"""
-    global tasks
-    initial_length = len(tasks)
-    tasks = [t for t in tasks if t['id'] != task_id]
-
-    if len(tasks) < initial_length:
-        # 停止相关线程
-        if task_id in task_threads:
-            # 标记任务为已取消
-            for task in tasks:
-                if task['id'] == task_id:
-                    task['status'] = 'cancelled'
-                    break
-            save_tasks()
-            logging.info(f"任务 {task_id} 已取消")
-
-        save_tasks()
-        return jsonify({"success": True})
-    return jsonify({"error": "任务不存在"}), 404
+    return jsonify({"status": "success", "task_id": task["id"]})
 
 
-@app.route('/api/tasks/<int:task_id>/status', methods=['GET'])
-def get_task_status(task_id):
-    """获取任务状态"""
-    task = next((t for t in tasks if t['id'] == task_id), None)
-    if task:
-        return jsonify({
-            'id': task['id'],
-            'status': task['status'],
-            'last_run': task.get('last_run'),
-            'last_status': task.get('last_status'),
-            'next_run': task['time'] if task['status'] == 'pending' else None
-        })
-    return jsonify({"error": "任务不存在"}), 404
-
-
-@app.route('/api/tasks/<int:task_id>/status', methods=['PUT'])
-def update_task_status(task_id):
-    """更新任务状态（暂停/恢复）"""
+# 路由：更新任务
+@app.route('/api/update_task', methods=['POST'])
+def update_task():
     data = request.json
-    if 'status' not in data or data['status'] not in ['pending', 'paused']:
-        return jsonify({"error": "状态参数无效，必须是 'pending' 或 'paused'"}), 400
 
-    task = next((t for t in tasks if t['id'] == task_id), None)
+    # 查找任务
+    task = next((t for t in TASKS if t["id"] == data.get('id')), None)
     if not task:
-        return jsonify({"error": "任务不存在"}), 404
+        return jsonify({"status": "error", "message": "任务不存在"})
 
-    # 如果从暂停状态恢复，需要重新启动线程
-    if data['status'] == 'pending' and task['status'] == 'paused':
-        task['status'] = 'pending'
-        start_task_worker(task_id)
-    else:
-        task['status'] = data['status']
+    # 更新任务字段
+    if 'receiver' in data:
+        task['receiver'] = data['receiver']
+    if 'message' in data:
+        task['message'] = data['message']
+    if 'time' in data:
+        task['time'] = data['time']
+    if 'frequency' in data:
+        task['frequency'] = data['frequency']
 
-    save_tasks()
-    return jsonify({"success": True, "status": task['status']})
+    # 记录活动
+    add_activity("更新任务", f"更新任务 #{task['id']}", "success")
+
+    return jsonify({"status": "success"})
 
 
+# 路由：删除任务
+@app.route('/api/remove_task', methods=['POST'])
+def remove_task():
+    data = request.json
+    task_id = data.get('id')
+
+    global TASKS
+    # 查找并删除任务
+    task = next((t for t in TASKS if t["id"] == task_id), None)
+    if not task:
+        return jsonify({"status": "error", "message": "任务不存在"})
+
+    TASKS = [t for t in TASKS if t["id"] != task_id]
+
+    # 记录活动
+    add_activity("删除任务", f"删除任务 #{task_id}", "success")
+
+    return jsonify({"status": "success"})
+
+
+# 路由：启动任务
+@app.route('/api/start_task', methods=['POST'])
+def start_task():
+    data = request.json
+    task_id = data.get('id')
+    start_all = data.get('all', False)
+
+    if start_all:
+        # 启动所有任务
+        for task in TASKS:
+            task["status"] = "pending"
+        task_executor.resume()
+        add_activity("启动任务", "启动所有任务", "success")
+        return jsonify({"status": "success"})
+    elif task_id:
+        # 启动单个任务
+        task = next((t for t in TASKS if t["id"] == task_id), None)
+        if not task:
+            return jsonify({"status": "error", "message": "任务不存在"})
+
+        task["status"] = "pending"
+        add_activity("启动任务", f"启动任务 #{task_id}", "success")
+        return jsonify({"status": "success"})
+
+    return jsonify({"status": "error", "message": "参数错误"})
+
+
+# 路由：停止任务
+@app.route('/api/stop_task', methods=['POST'])
+def stop_task():
+    data = request.json
+    task_id = data.get('id')
+    stop_all = data.get('all', False)
+
+    if stop_all:
+        # 停止所有任务
+        for task in TASKS:
+            if task["status"] == "pending":
+                task["status"] = "stopped"
+        task_executor.pause()
+        add_activity("停止任务", "停止所有任务", "success")
+        return jsonify({"status": "success"})
+    elif task_id:
+        # 停止单个任务
+        task = next((t for t in TASKS if t["id"] == task_id), None)
+        if not task:
+            return jsonify({"status": "error", "message": "任务不存在"})
+
+        if task["status"] == "pending":
+            task["status"] = "stopped"
+        add_activity("停止任务", f"停止任务 #{task_id}", "success")
+        return jsonify({"status": "success"})
+
+    return jsonify({"status": "error", "message": "参数错误"})
+
+
+# 路由：刷新微信
+@app.route('/api/reload_wx', methods=['POST'])
+def reload_wx():
+    # 模拟刷新微信
+    for instance in WECHAT_INSTANCES:
+        instance["status"] = "连接中"
+        instance["last_active"] = datetime.datetime.now().isoformat()
+
+    # 模拟延迟
+    time.sleep(1)
+
+    for instance in WECHAT_INSTANCES:
+        instance["status"] = "已连接"
+
+    add_activity("系统操作", "刷新微信实例", "success")
+    return jsonify({
+        "status": "success",
+        "message": "微信已成功刷新",
+        "instances": WECHAT_INSTANCES
+    })
+
+
+# 路由：检查更新
+@app.route('/api/check_update', methods=['GET'])
+def check_update():
+    # 模拟检查更新
+    return jsonify({
+        "status": "success",
+        "is_latest": True,
+        "current_version": "v1.0.0",
+        "latest_version": "v1.0.0"
+    })
+
+
+# 路由：获取AI状态
+@app.route('/api/get_ai_status', methods=['GET'])
+def get_ai_status():
+    return jsonify(AI_STATUS)
+
+
+# 路由：更新AI设置
+@app.route('/api/update_ai_settings', methods=['POST'])
+def update_ai_settings():
+    data = request.json
+    AI_STATUS["settings"].update(data)
+    add_activity("系统操作", "更新AI设置", "success")
+    return jsonify({"status": "success"})
+
+
+# 路由：切换AI状态
+@app.route('/api/toggle_ai', methods=['POST'])
+def toggle_ai():
+    data = request.json
+    enable = data.get('enable', False)
+
+    if enable and not AI_STATUS["running"]:
+        AI_STATUS["running"] = True
+        AI_STATUS["start_time"] = datetime.datetime.now().isoformat()
+        add_activity("AI操作", "启动AI接管", "success")
+    elif not enable and AI_STATUS["running"]:
+        AI_STATUS["running"] = False
+        add_activity("AI操作", "停止AI接管", "success")
+
+    return jsonify({"status": "success", "running": AI_STATUS["running"]})
+
+
+# 路由：获取活动记录
+@app.route('/api/get_activities', methods=['GET'])
+def get_activities():
+    # 按时间倒序返回
+    return jsonify(sorted(ACTIVITIES, key=lambda x: x["time"], reverse=True))
+
+
+# 路由：清空活动记录
+@app.route('/api/clear_activities', methods=['POST'])
+def clear_activities():
+    global ACTIVITIES
+    ACTIVITIES = []
+    add_activity("系统操作", "清空活动记录", "success")
+    return jsonify({"status": "success"})
+
+
+# 路由：获取规则
+@app.route('/api/get_rules', methods=['GET'])
+def get_rules():
+    return jsonify(RULES)
+
+
+# 路由：添加规则
+@app.route('/api/add_rule', methods=['POST'])
+def add_rule():
+    data = request.json
+    rule = {
+        "id": len(RULES) + 1,
+        "keyword": data.get('keyword', ''),
+        "match_type": data.get('match_type', '包含'),
+        "reply_content": data.get('reply_content', ''),
+        "apply_to": data.get('apply_to', '全部')
+    }
+    RULES.append(rule)
+    add_activity("系统操作", f"添加AI规则: {rule['keyword']}", "success")
+    return jsonify({"status": "success", "rule": rule})
+
+
+# 路由：删除规则
+@app.route('/api/remove_rule', methods=['POST'])
+def remove_rule():
+    data = request.json
+    rule_id = data.get('id')
+    global RULES
+    RULES = [r for r in RULES if r["id"] != rule_id]
+    add_activity("系统操作", f"删除AI规则 #{rule_id}", "success")
+    return jsonify({"status": "success"})
+
+
+# 启动应用
 if __name__ == '__main__':
-    # 启动时加载任务
-    load_tasks()
-    # 禁用debug模式以在生产环境中使用
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    # 添加一些测试数据
+    if not TASKS:
+        test_time = (datetime.datetime.now() + datetime.timedelta(minutes=10)).isoformat()[:16]
+        TASKS.append({
+            "id": NEXT_TASK_ID,
+            "receiver": "测试好友",
+            "message": "这是一条测试消息",
+            "time": test_time,
+            "frequency": "once",
+            "status": "pending",
+            "created_at": datetime.datetime.now().isoformat(),
+            "last_executed": None
+        })
+        NEXT_TASK_ID += 1
+
+    app.run(debug=True, host='0.0.0.0', port=5000)
