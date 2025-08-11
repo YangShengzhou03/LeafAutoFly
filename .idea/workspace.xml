@@ -5,46 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d40be7c0-b5e9-442d-aacd-2bca0d1a5c45" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LeafAuto_version_info.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/extensions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/license.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ai.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/task.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/wechat.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/ai/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/ai/dialog.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/ai/nlp.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/scheduler.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/wechat.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/dark.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/element.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/lib/element-plus.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/lib/vue.global.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/modules/ai.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/modules/scheduler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/modules/settings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/ai_console.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/task_form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/time_picker.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layouts/admin.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layouts/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/ai.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/scheduler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/settings.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +86,7 @@
       <workItem from="1754908838300" duration="1322000" />
       <workItem from="1754912512881" duration="101000" />
       <workItem from="1754912654716" duration="3110000" />
-      <workItem from="1754916628584" duration="3125000" />
+      <workItem from="1754916628584" duration="3474000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -134,7 +96,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754908904073</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update">
+      <option name="closed" value="true" />
+      <created>1754920463937</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1754920463937</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +117,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LeafAuto_Web$application.coverage" NAME="application Coverage Results" MODIFIED="1754908927589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/LeafAuto_Web$Flask__application_py_.coverage" NAME="Flask (application.py) Coverage Results" MODIFIED="1754919169615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/LeafAuto_Web$Flask__application_py_.coverage" NAME="Flask (application.py) Coverage Results" MODIFIED="1754920605137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

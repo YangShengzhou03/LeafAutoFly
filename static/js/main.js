@@ -477,7 +477,7 @@ function initTaskFilters() {
             });
 
             this.classList.add('bg-primary', 'text-white');
-            this.classList.remove('text-light-textSecondary', 'dark:text-dark-textSecondary', 'hover:bg-light-bg', 'dark:hover
+            this.classList.remove('text-light-textSecondary', 'dark:text-dark-textSecondary', 'hover:bg-light-bg', 'dark:hover');
             this.classList.remove('text-light-textSecondary', 'dark:text-dark-textSecondary', 'hover:bg-light-bg', 'dark:hover:bg-dark-bg');
 
             // 这里可以添加实际筛选逻辑
