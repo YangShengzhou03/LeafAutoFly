@@ -1,421 +1,458 @@
-import os
-import json
-import time
 import random
-import datetime
-from flask import Flask, request, jsonify, render_template, send_from_directory
-import threading
+import uuid
+from datetime import datetime, timedelta
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+import pytz
+from flask import Flask, render_template, jsonify, request
+from flask_apscheduler import APScheduler
 
-# 模拟数据库 - 实际应用中应使用真实数据库
-TASKS = []
-ACTIVITIES = []
-RULES = []
-NEXT_TASK_ID = 1
-NEXT_ACTIVITY_ID = 1
+# 初始化Flask应用
+app = Flask(__name__)
+app.config.from_object('config')
 
-# 模拟微信实例
-WECHAT_INSTANCES = [
-    {"id": 1, "name": "当前微信", "status": "已连接", "last_active": datetime.datetime.now().isoformat()}
-]
+# 初始化调度器
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
-# 模拟AI状态
-AI_STATUS = {
-    "running": False,
-    "start_time": None,
-    "processed_count": 0,
-    "ai_reply_count": 0,
-    "rule_reply_count": 0,
-    "settings": {
-        "receiver": "",
-        "global_takeover": False,
-        "model": "moonshot",
-        "role": "",
-        "only_at": False
-    }
+# 内存数据库 - 存储任务
+tasks_db = []
+
+# 内存数据库 - 存储AI对话历史
+ai_conversations = []
+
+# 任务执行日志
+task_execution_logs = []
+
+# 系统设置
+system_settings = {
+    "theme": "auto",
+    "themeColor": "#409eff",
+    "notifications": True,
+    "timezone": "Asia/Shanghai"
 }
 
+# 辅助函数 - 获取时区
+def get_timezone():
+    return pytz.timezone(system_settings["timezone"])
 
-# 任务执行线程
-class TaskExecutor(threading.Thread):
-    def __init__(self):
-        super().__init__()
-        self.daemon = True
-        self.running = True
-        self.paused = False
+# 辅助函数 - 获取当前时间
+def get_current_time():
+    return datetime.now(get_timezone()).isoformat()
 
-    def run(self):
-        while self.running:
-            if not self.paused:
-                now = datetime.datetime.now()
-                # 检查并执行到期任务
-                for task in TASKS:
-                    if task["status"] == "pending":
-                        task_time = datetime.datetime.fromisoformat(task["time"])
-                        if now >= task_time:
-                            self.execute_task(task)
+# 任务执行函数
+def execute_task(task_id):
+    """执行任务的函数"""
+    task = next((t for t in tasks_db if t["id"] == task_id), None)
+    if task:
+        # 更新任务状态
+        task["status"] = "running"
+        
+        # 记录任务执行日志
+        execution_time = get_current_time()
+        task_execution_logs.append({
+            "id": str(uuid.uuid4()),
+            "task_id": task_id,
+            "task_name": task["name"],
+            "start_time": execution_time,
+            "status": "completed"
+        })
+        
+        print(f"任务 '{task['name']}' 执行中...")
 
-            time.sleep(1)  # 每秒检查一次
-
-    def execute_task(self, task):
-        # 模拟执行任务
-        success = random.random() > 0.2  # 80%成功率
-        task["status"] = "completed" if success else "failed"
-        task["last_executed"] = datetime.datetime.now().isoformat()
-
-        # 记录活动
-        add_activity(
-            "发送消息" if success else "发送失败",
-            f"向 {task['receiver']} 发送消息: {task['message']}",
-            "success" if success else "error"
-        )
-
-        # 处理重复任务
-        if task["frequency"] != "once" and success:
-            task["status"] = "pending"
-            # 更新下次执行时间
-            task_time = datetime.datetime.fromisoformat(task["time"])
-            if task["frequency"] == "daily":
-                next_time = task_time + datetime.timedelta(days=1)
-            elif task["frequency"] == "workdays":
-                days = 1
-                while True:
-                    next_day = task_time + datetime.timedelta(days=days)
-                    if next_day.weekday() < 5:  # 周一到周五
-                        break
-                    days += 1
-                next_time = next_day
-            elif task["frequency"] == "weekends":
-                days = 1
-                while True:
-                    next_day = task_time + datetime.timedelta(days=days)
-                    if next_day.weekday() >= 5:  # 周六和周日
-                        break
-                    days += 1
-                next_time = next_day
-            else:  # custom，这里简单处理为每天
-                next_time = task_time + datetime.timedelta(days=1)
-
-            task["time"] = next_time.isoformat()
-
-    def pause(self):
-        self.paused = True
-
-    def resume(self):
-        self.paused = False
-
-    def stop(self):
-        self.running = False
-
-
-# 启动任务执行器
-task_executor = TaskExecutor()
-task_executor.start()
-
-
-# 辅助函数：添加活动记录
-def add_activity(activity_type, content, status):
-    global NEXT_ACTIVITY_ID
-    activity = {
-        "id": NEXT_ACTIVITY_ID,
-        "time": datetime.datetime.now().isoformat(),
-        "type": activity_type,
-        "content": content,
-        "status": status
-    }
-    ACTIVITIES.append(activity)
-    NEXT_ACTIVITY_ID += 1
-    # 限制活动记录数量
-    if len(ACTIVITIES) > 1000:
-        ACTIVITIES.pop(0)
-    return activity
-
-
-# 路由：首页 - 提供前端页面
+# 路由 - 首页
 @app.route('/')
 def index():
-    # 尝试多种方式返回首页，增加容错性
-    try:
-        # 尝试从模板目录加载
-        return render_template('index.html')
-    except:
-        try:
-            # 尝试从静态目录加载
-            return send_from_directory(app.static_folder, 'index.html')
-        except:
-            # 如果都失败，返回简单的提示信息
-            return "服务器运行中，但未找到首页文件(index.html)", 200
+    return render_template('index.html')
 
+# 路由 - 任务调度页面
+@app.route('/scheduler')
+def scheduler_page():
+    return render_template('pages/scheduler.html')
 
-# 路由：获取所有任务
-@app.route('/api/get_tasks', methods=['GET'])
+# 路由 - AI助手页面
+@app.route('/ai')
+def ai_page():
+    return render_template('pages/ai.html')
+
+# 路由 - 设置页面
+@app.route('/settings')
+def settings_page():
+    return render_template('pages/settings.html')
+
+# API - 获取所有任务
+@app.route('/api/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify(TASKS)
+    return jsonify(tasks_db)
 
+# API - 获取任务执行日志
+@app.route('/api/tasks/logs', methods=['GET'])
+def get_task_logs():
+    return jsonify(task_execution_logs)
 
-# 路由：添加新任务
-@app.route('/api/add_task', methods=['POST'])
-def add_task():
-    global NEXT_TASK_ID
-    data = request.json
-
-    # 验证必要字段
-    if not all(k in data for k in ['receiver', 'message', 'time', 'frequency']):
-        return jsonify({"status": "error", "message": "缺少必要字段"})
-
-    task = {
-        "id": NEXT_TASK_ID,
-        "receiver": data['receiver'],
-        "message": data['message'],
-        "time": data['time'],
-        "frequency": data['frequency'],
+# API - 创建新任务
+@app.route('/api/tasks', methods=['POST'])
+def create_task():
+    data = request.get_json()
+    
+    # 生成任务ID
+    task_id = str(uuid.uuid4())
+    current_time = get_current_time()
+    
+    # 创建新任务
+    new_task = {
+        "id": task_id,
+        "name": data.get("name", f"任务_{len(tasks_db) + 1}"),
+        "description": data.get("description", ""),
+        "type": data.get("type", "once"),
+        "executionTime": data.get("executionTime"),
+        "cronExpression": data.get("cronExpression"),
+        "intervalValue": data.get("intervalValue", 1),
+        "intervalUnit": data.get("intervalUnit", "hours"),
         "status": "pending",
-        "created_at": datetime.datetime.now().isoformat(),
-        "last_executed": None
+        "progress": 0,
+        "createdAt": current_time,
+        "updatedAt": current_time
     }
+    
+    # 添加到数据库
+    tasks_db.append(new_task)
+    
+    # 根据任务类型添加到调度器
+    if new_task["type"] == "once":
+        # 一次性任务
+        exec_time = datetime.fromisoformat(new_task["executionTime"])
+        scheduler.add_job(
+            id=task_id,
+            func=execute_task,
+            args=[task_id],
+            run_date=exec_time,
+            timezone=get_timezone()
+        )
+    elif new_task["type"] == "scheduled":
+        # 定时任务 (Cron)
+        scheduler.add_job(
+            id=task_id,
+            func=execute_task,
+            args=[task_id],
+            trigger='cron',
+            expression=new_task["cronExpression"],
+            timezone=get_timezone()
+        )
+    elif new_task["type"] == "interval":
+        # 间隔任务
+        interval_args = {new_task["intervalUnit"]: new_task["intervalValue"]}
+        scheduler.add_job(
+            id=task_id,
+            func=execute_task,
+            args=[task_id],
+            trigger='interval',
+            **interval_args,
+            timezone=get_timezone()
+        )
+    
+    return jsonify(new_task), 201
 
-    TASKS.append(task)
-    NEXT_TASK_ID += 1
-
-    # 记录活动
-    add_activity("添加任务", f"新增任务: 向 {task['receiver']} 发送消息", "success")
-
-    return jsonify({"status": "success", "task_id": task["id"]})
-
-
-# 路由：更新任务
-@app.route('/api/update_task', methods=['POST'])
-def update_task():
-    data = request.json
-
-    # 查找任务
-    task = next((t for t in TASKS if t["id"] == data.get('id')), None)
+# API - 更新任务
+@app.route('/api/tasks/<task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = next((t for t in tasks_db if t["id"] == task_id), None)
     if not task:
-        return jsonify({"status": "error", "message": "任务不存在"})
+        return jsonify({"error": "任务不存在"}), 404
+    
+    data = request.get_json()
+    
+    # 更新任务信息
+    task["name"] = data.get("name", task["name"])
+    task["description"] = data.get("description", task["description"])
+    task["updatedAt"] = get_current_time()
+    
+    # 如果任务类型或时间参数改变，重新调度
+    type_changed = data.get("type") and data.get("type") != task["type"]
+    time_changed = False
+    
+    if data.get("type") == "once" and data.get("executionTime") != task["executionTime"]:
+        time_changed = True
+    elif data.get("type") == "scheduled" and data.get("cronExpression") != task["cronExpression"]:
+        time_changed = True
+    elif data.get("type") == "interval":
+        if (data.get("intervalValue") != task["intervalValue"] or 
+            data.get("intervalUnit") != task["intervalUnit"]):
+            time_changed = True
+    
+    # 如果类型或时间改变，重新设置任务
+    if type_changed or time_changed:
+        # 先移除旧任务
+        if scheduler.get_job(task_id):
+            scheduler.remove_job(task_id)
+        
+        # 更新任务类型和时间参数
+        task["type"] = data.get("type", task["type"])
+        task["executionTime"] = data.get("executionTime", task["executionTime"])
+        task["cronExpression"] = data.get("cronExpression", task["cronExpression"])
+        task["intervalValue"] = data.get("intervalValue", task["intervalValue"])
+        task["intervalUnit"] = data.get("intervalUnit", task["intervalUnit"])
+        
+        # 添加新任务调度
+        if task["type"] == "once":
+            exec_time = datetime.fromisoformat(task["executionTime"])
+            scheduler.add_job(
+                id=task_id,
+                func=execute_task,
+                args=[task_id],
+                run_date=exec_time,
+                timezone=get_timezone()
+            )
+        elif task["type"] == "scheduled":
+            scheduler.add_job(
+                id=task_id,
+                func=execute_task,
+                args=[task_id],
+                trigger='cron',
+                expression=task["cronExpression"],
+                timezone=get_timezone()
+            )
+        elif task["type"] == "interval":
+            interval_args = {task["intervalUnit"]: task["intervalValue"]}
+            scheduler.add_job(
+                id=task_id,
+                func=execute_task,
+                args=[task_id],
+                trigger='interval',** interval_args,
+                timezone=get_timezone()
+            )
+    
+    return jsonify(task)
 
-    # 更新任务字段
-    if 'receiver' in data:
-        task['receiver'] = data['receiver']
-    if 'message' in data:
-        task['message'] = data['message']
-    if 'time' in data:
-        task['time'] = data['time']
-    if 'frequency' in data:
-        task['frequency'] = data['frequency']
-
-    # 记录活动
-    add_activity("更新任务", f"更新任务 #{task['id']}", "success")
-
-    return jsonify({"status": "success"})
-
-
-# 路由：删除任务
-@app.route('/api/remove_task', methods=['POST'])
-def remove_task():
-    data = request.json
-    task_id = data.get('id')
-
-    global TASKS
-    # 查找并删除任务
-    task = next((t for t in TASKS if t["id"] == task_id), None)
+# API - 删除任务
+@app.route('/api/tasks/<task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    global tasks_db
+    task = next((t for t in tasks_db if t["id"] == task_id), None)
     if not task:
-        return jsonify({"status": "error", "message": "任务不存在"})
+        return jsonify({"error": "任务不存在"}), 404
+    
+    # 从调度器中移除任务
+    if scheduler.get_job(task_id):
+        scheduler.remove_job(task_id)
+    
+    # 从数据库中删除任务
+    tasks_db = [t for t in tasks_db if t["id"] != task_id]
+    
+    return jsonify({"message": "任务已删除"})
 
-    TASKS = [t for t in TASKS if t["id"] != task_id]
+# API - 开始任务
+@app.route('/api/tasks/<task_id>/start', methods=['POST'])
+def start_task(task_id):
+    task = next((t for t in tasks_db if t["id"] == task_id), None)
+    if not task:
+        return jsonify({"error": "任务不存在"}), 404
+    
+    # 更新任务状态
+    task["status"] = "running"
+    task["updatedAt"] = get_current_time()
+    
+    # 如果任务已暂停，重新添加到调度器
+    if not scheduler.get_job(task_id):
+        if task["type"] == "once":
+            exec_time = datetime.fromisoformat(task["executionTime"])
+            scheduler.add_job(
+                id=task_id,
+                func=execute_task,
+                args=[task_id],
+                run_date=exec_time,
+                timezone=get_timezone()
+            )
+        elif task["type"] == "scheduled":
+            scheduler.add_job(
+                id=task_id,
+                func=execute_task,
+                args=[task_id],
+                trigger='cron',
+                expression=task["cronExpression"],
+                timezone=get_timezone()
+            )
+        elif task["type"] == "interval":
+            interval_args = {task["intervalUnit"]: task["intervalValue"]}
+            scheduler.add_job(
+                id=task_id,
+                func=execute_task,
+                args=[task_id],
+                trigger='interval',
+                **interval_args,
+                timezone=get_timezone()
+            )
+    
+    return jsonify({"message": "任务已启动"})
 
-    # 记录活动
-    add_activity("删除任务", f"删除任务 #{task_id}", "success")
+# API - 暂停任务
+@app.route('/api/tasks/<task_id>/pause', methods=['POST'])
+def pause_task(task_id):
+    task = next((t for t in tasks_db if t["id"] == task_id), None)
+    if not task:
+        return jsonify({"error": "任务不存在"}), 404
+    
+    # 更新任务状态
+    task["status"] = "paused"
+    task["updatedAt"] = get_current_time()
+    
+    # 从调度器中移除但不删除任务
+    if scheduler.get_job(task_id):
+        scheduler.remove_job(task_id)
+    
+    return jsonify({"message": "任务已暂停"})
 
-    return jsonify({"status": "success"})
+# API - 标记任务为完成
+@app.route('/api/tasks/<task_id>/complete', methods=['POST'])
+def complete_task(task_id):
+    task = next((t for t in tasks_db if t["id"] == task_id), None)
+    if not task:
+        return jsonify({"error": "任务不存在"}), 404
+    
+    # 更新任务状态
+    task["status"] = "completed"
+    task["progress"] = 100
+    task["updatedAt"] = get_current_time()
+    
+    # 对于一次性任务，从调度器中移除
+    if task["type"] == "once" and scheduler.get_job(task_id):
+        scheduler.remove_job(task_id)
+    
+    return jsonify({"message": "任务已标记为完成"})
 
+# API - 获取AI对话历史
+@app.route('/api/ai/conversations', methods=['GET'])
+def get_ai_conversations():
+    return jsonify(ai_conversations)
 
-# 路由：启动任务
-@app.route('/api/start_task', methods=['POST'])
-def start_task():
-    data = request.json
-    task_id = data.get('id')
-    start_all = data.get('all', False)
-
-    if start_all:
-        # 启动所有任务
-        for task in TASKS:
-            task["status"] = "pending"
-        task_executor.resume()
-        add_activity("启动任务", "启动所有任务", "success")
-        return jsonify({"status": "success"})
-    elif task_id:
-        # 启动单个任务
-        task = next((t for t in TASKS if t["id"] == task_id), None)
-        if not task:
-            return jsonify({"status": "error", "message": "任务不存在"})
-
-        task["status"] = "pending"
-        add_activity("启动任务", f"启动任务 #{task_id}", "success")
-        return jsonify({"status": "success"})
-
-    return jsonify({"status": "error", "message": "参数错误"})
-
-
-# 路由：停止任务
-@app.route('/api/stop_task', methods=['POST'])
-def stop_task():
-    data = request.json
-    task_id = data.get('id')
-    stop_all = data.get('all', False)
-
-    if stop_all:
-        # 停止所有任务
-        for task in TASKS:
-            if task["status"] == "pending":
-                task["status"] = "stopped"
-        task_executor.pause()
-        add_activity("停止任务", "停止所有任务", "success")
-        return jsonify({"status": "success"})
-    elif task_id:
-        # 停止单个任务
-        task = next((t for t in TASKS if t["id"] == task_id), None)
-        if not task:
-            return jsonify({"status": "error", "message": "任务不存在"})
-
-        if task["status"] == "pending":
-            task["status"] = "stopped"
-        add_activity("停止任务", f"停止任务 #{task_id}", "success")
-        return jsonify({"status": "success"})
-
-    return jsonify({"status": "error", "message": "参数错误"})
-
-
-# 路由：刷新微信
-@app.route('/api/reload_wx', methods=['POST'])
-def reload_wx():
-    # 模拟刷新微信
-    for instance in WECHAT_INSTANCES:
-        instance["status"] = "连接中"
-        instance["last_active"] = datetime.datetime.now().isoformat()
-
-    # 模拟延迟
-    time.sleep(1)
-
-    for instance in WECHAT_INSTANCES:
-        instance["status"] = "已连接"
-
-    add_activity("系统操作", "刷新微信实例", "success")
-    return jsonify({
-        "status": "success",
-        "message": "微信已成功刷新",
-        "instances": WECHAT_INSTANCES
-    })
-
-
-# 路由：检查更新
-@app.route('/api/check_update', methods=['GET'])
-def check_update():
-    # 模拟检查更新
-    return jsonify({
-        "status": "success",
-        "is_latest": True,
-        "current_version": "v1.0.0",
-        "latest_version": "v1.0.0"
-    })
-
-
-# 路由：获取AI状态
-@app.route('/api/get_ai_status', methods=['GET'])
-def get_ai_status():
-    return jsonify(AI_STATUS)
-
-
-# 路由：更新AI设置
-@app.route('/api/update_ai_settings', methods=['POST'])
-def update_ai_settings():
-    data = request.json
-    AI_STATUS["settings"].update(data)
-    add_activity("系统操作", "更新AI设置", "success")
-    return jsonify({"status": "success"})
-
-
-# 路由：切换AI状态
-@app.route('/api/toggle_ai', methods=['POST'])
-def toggle_ai():
-    data = request.json
-    enable = data.get('enable', False)
-
-    if enable and not AI_STATUS["running"]:
-        AI_STATUS["running"] = True
-        AI_STATUS["start_time"] = datetime.datetime.now().isoformat()
-        add_activity("AI操作", "启动AI接管", "success")
-    elif not enable and AI_STATUS["running"]:
-        AI_STATUS["running"] = False
-        add_activity("AI操作", "停止AI接管", "success")
-
-    return jsonify({"status": "success", "running": AI_STATUS["running"]})
-
-
-# 路由：获取活动记录
-@app.route('/api/get_activities', methods=['GET'])
-def get_activities():
-    # 按时间倒序返回
-    return jsonify(sorted(ACTIVITIES, key=lambda x: x["time"], reverse=True))
-
-
-# 路由：清空活动记录
-@app.route('/api/clear_activities', methods=['POST'])
-def clear_activities():
-    global ACTIVITIES
-    ACTIVITIES = []
-    add_activity("系统操作", "清空活动记录", "success")
-    return jsonify({"status": "success"})
-
-
-# 路由：获取规则
-@app.route('/api/get_rules', methods=['GET'])
-def get_rules():
-    return jsonify(RULES)
-
-
-# 路由：添加规则
-@app.route('/api/add_rule', methods=['POST'])
-def add_rule():
-    data = request.json
-    rule = {
-        "id": len(RULES) + 1,
-        "keyword": data.get('keyword', ''),
-        "match_type": data.get('match_type', '包含'),
-        "reply_content": data.get('reply_content', ''),
-        "apply_to": data.get('apply_to', '全部')
+# API - 发送AI消息
+@app.route('/api/ai/message', methods=['POST'])
+def send_ai_message():
+    data = request.get_json()
+    user_message = data.get("message", "")
+    
+    if not user_message:
+        return jsonify({"error": "消息不能为空"}), 400
+    
+    # 生成消息ID和时间
+    message_id = str(uuid.uuid4())
+    current_time = get_current_time()
+    
+    # 添加用户消息到对话历史
+    user_msg = {
+        "id": message_id,
+        "sender": "user",
+        "content": user_message,
+        "timestamp": current_time
     }
-    RULES.append(rule)
-    add_activity("系统操作", f"添加AI规则: {rule['keyword']}", "success")
-    return jsonify({"status": "success", "rule": rule})
+    ai_conversations.append(user_msg)
+    
+    # 生成AI回复 (简单模拟)
+    ai_responses = [
+        "我理解你的需求，这是一个很好的想法。",
+        "根据你的问题，我建议你尝试以下方法...",
+        "这个问题有点复杂，让我仔细分析一下。",
+        "我已经记录了你的请求，会尽快处理。",
+        "关于这个主题，我可以提供更多详细信息。",
+        "你的问题很有价值，这是我对它的看法...",
+        "我建议你考虑其他可能性，比如..."
+    ]
+    
+    ai_message_id = str(uuid.uuid4())
+    ai_msg = {
+        "id": ai_message_id,
+        "sender": "ai",
+        "content": random.choice(ai_responses),
+        "timestamp": get_current_time()
+    }
+    ai_conversations.append(ai_msg)
+    
+    # 返回AI回复
+    return jsonify(ai_msg)
 
+# API - 清除AI对话历史
+@app.route('/api/ai/conversations', methods=['DELETE'])
+def clear_ai_conversations():
+    global ai_conversations
+    ai_conversations = []
+    return jsonify({"message": "对话历史已清除"})
 
-# 路由：删除规则
-@app.route('/api/remove_rule', methods=['POST'])
-def remove_rule():
-    data = request.json
-    rule_id = data.get('id')
-    global RULES
-    RULES = [r for r in RULES if r["id"] != rule_id]
-    add_activity("系统操作", f"删除AI规则 #{rule_id}", "success")
-    return jsonify({"status": "success"})
+# API - 获取系统设置
+@app.route('/api/settings', methods=['GET'])
+def get_settings():
+    return jsonify(system_settings)
 
+# API - 更新系统设置
+@app.route('/api/settings', methods=['PUT'])
+def update_settings():
+    data = request.get_json()
+    
+    # 更新设置
+    for key, value in data.items():
+        if key in system_settings:
+            system_settings[key] = value
+    
+    return jsonify(system_settings)
+
+# 创建示例任务
+def create_sample_tasks():
+    """创建示例任务用于演示"""
+    if not tasks_db:  # 仅当数据库为空时创建示例任务
+        current_time = get_current_time()
+        
+        # 示例1: 一次性任务
+        one_time = datetime.now(get_timezone()) + timedelta(minutes=30)
+        tasks_db.append({
+            "id": str(uuid.uuid4()),
+            "name": "系统备份",
+            "description": "备份系统重要数据",
+            "type": "once",
+            "executionTime": one_time.isoformat(),
+            "cronExpression": "",
+            "intervalValue": 1,
+            "intervalUnit": "hours",
+            "status": "pending",
+            "progress": 0,
+            "createdAt": current_time,
+            "updatedAt": current_time
+        })
+        
+        # 示例2: 定时任务
+        tasks_db.append({
+            "id": str(uuid.uuid4()),
+            "name": "日志清理",
+            "description": "清理30天前的系统日志",
+            "type": "scheduled",
+            "executionTime": "",
+            "cronExpression": "0 0 * * 0",  # 每周日凌晨执行
+            "intervalValue": 1,
+            "intervalUnit": "hours",
+            "status": "pending",
+            "progress": 0,
+            "createdAt": current_time,
+            "updatedAt": current_time
+        })
+        
+        # 示例3: 间隔任务
+        tasks_db.append({
+            "id": str(uuid.uuid4()),
+            "name": "性能监控",
+            "description": "定期检查系统性能",
+            "type": "interval",
+            "executionTime": "",
+            "cronExpression": "",
+            "intervalValue": 2,
+            "intervalUnit": "hours",  # 每2小时执行一次
+            "status": "pending",
+            "progress": 0,
+            "createdAt": current_time,
+            "updatedAt": current_time
+        })
+
+# 应用启动时创建示例任务
+with app.app_context():
+    create_sample_tasks()
 
 # 启动应用
 if __name__ == '__main__':
-    # 添加一些测试数据
-    if not TASKS:
-        test_time = (datetime.datetime.now() + datetime.timedelta(minutes=10)).isoformat()[:16]
-        TASKS.append({
-            "id": NEXT_TASK_ID,
-            "receiver": "测试好友",
-            "message": "这是一条测试消息",
-            "time": test_time,
-            "frequency": "once",
-            "status": "pending",
-            "created_at": datetime.datetime.now().isoformat(),
-            "last_executed": None
-        })
-        NEXT_TASK_ID += 1
-
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True)

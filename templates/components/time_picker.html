@@ -1,0 +1,95 @@
+<el-date-picker
+    v-model="date"
+    type="date"
+    placeholder="选择日期"
+    @change="updateDateTime">
+</el-date-picker>
+
+<el-time-picker
+    v-model="time"
+    placeholder="选择时间"
+    @change="updateDateTime">
+</el-time-picker>
+
+<script>
+// 注册时间选择器组件
+app.component('time-picker', {
+    props: {
+        value: {
+            type: [Date, String, null],
+            default: null
+        }
+    },
+    data() {
+        return {
+            date: null,
+            time: null
+        };
+    },
+    watch: {
+        value(val) {
+            if (val) {
+                const date = new Date(val);
+                this.date = date;
+                this.time = date;
+            } else {
+                this.date = null;
+                this.time = null;
+            }
+        }
+    },
+    methods: {
+        updateDateTime() {
+            if (this.date && this.time) {
+                // 合并日期和时间
+                const year = this.date.getFullYear();
+                const month = this.date.getMonth();
+                const day = this.date.getDate();
+                const hours = this.time.getHours();
+                const minutes = this.time.getMinutes();
+                const seconds = this.time.getSeconds();
+                
+                const combined = new Date(year, month, day, hours, minutes, seconds);
+                this.$emit('input', combined);
+            } else {
+                this.$emit('input', null);
+            }
+        }
+    },
+    mounted() {
+        if (this.value) {
+            const date = new Date(this.value);
+            this.date = date;
+            this.time = date;
+        }
+    },
+    template: `
+        <div class="time-picker-container">
+            <el-date-picker
+                v-model="date"
+                type="date"
+                placeholder="选择日期"
+                @change="updateDateTime">
+            </el-date-picker>
+            
+            <el-time-picker
+                v-model="time"
+                placeholder="选择时间"
+                @change="updateDateTime">
+            </el-time-picker>
+        </div>
+    `
+});
+</script>
+
+<style>
+.time-picker-container {
+    display: flex;
+    gap: 10px;
+}
+
+.time-picker-container .el-date-editor,
+.time-picker-container .el-time-editor {
+    flex: 1;
+}
+</style>

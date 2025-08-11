@@ -1,0 +1,234 @@
+<el-dialog
+    :title="dialogTitle"
+    :visible.sync="visible"
+    :width="dialogWidth"
+    :before-close="handleClose">
+    
+    <el-form
+        :model="task"
+        :rules="rules"
+        ref="taskForm"
+        label-width="100px">
+        
+        <el-form-item label="任务名称" prop="name">
+            <el-input v-model="task.name" placeholder="请输入任务名称"></el-input>
+        </el-form-item>
+        
+        <el-form-item label="任务描述" prop="description">
+            <el-input
+                v-model="task.description"
+                type="textarea"
+                :rows="3"
+                placeholder="请输入任务描述"></el-input>
+        </el-form-item>
+        
+        <el-form-item label="执行时间" prop="scheduleTime">
+            <time-picker v-model="task.scheduleTime"></time-picker>
+        </el-form-item>
+        
+        <el-form-item label="任务类型" prop="type">
+            <el-select v-model="task.type" placeholder="请选择任务类型">
+                <el-option label="脚本执行" value="script"></el-option>
+                <el-option label="API调用" value="api"></el-option>
+                <el-option label="邮件发送" value="email"></el-option>
+                <el-option label="数据备份" value="backup"></el-option>
+            </el-select>
+        </el-form-item>
+        
+        <el-form-item label="状态" prop="status">
+            <el-switch
+                v-model="task.status"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                active-text="启用"
+                inactive-text="禁用">
+            </el-switch>
+        </el-form-item>
+        
+        <el-form-item v-if="task.type === 'script'" label="脚本内容">
+            <el-input
+                v-model="task.scriptContent"
+                type="textarea"
+                :rows="5"
+                placeholder="请输入脚本内容"></el-input>
+        </el-form-item>
+        
+        <el-form-item v-if="task.type === 'api'" label="API地址">
+            <el-input v-model="task.apiUrl" placeholder="请输入API地址"></el-input>
+        </el-form-item>
+    </el-form>
+    
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="visible = false">取消</el-button>
+        <el-button type="primary" @click="submitForm">确定</el-button>
+    </div>
+</el-dialog>
+
+<script>
+// 注册任务表单组件
+app.component('task-form', {
+    props: {
+        visible: {
+            type: Boolean,
+            default: false
+        },
+        task: {
+            type: Object,
+            default: () => ({})
+        },
+        dialogWidth: {
+            type: String,
+            default: '600px'
+        }
+    },
+    data() {
+        return {
+            localTask: {},
+            rules: {
+                name: [
+                    { required: true, message: '请输入任务名称', trigger: 'blur' },
+                    { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
+                ],
+                scheduleTime: [
+                    { required: true, message: '请选择执行时间', trigger: 'change' }
+                ],
+                type: [
+                    { required: true, message: '请选择任务类型', trigger: 'change' }
+                ]
+            }
+        };
+    },
+    computed: {
+        dialogTitle() {
+            return this.localTask.id ? '编辑任务' : '新建任务';
+        }
+    },
+    watch: {
+        visible(val) {
+            if (val) {
+                // 深拷贝任务数据
+                this.localTask = JSON.parse(JSON.stringify(this.task)) || {
+                    status: true,
+                    type: 'script'
+                };
+            } else {
+                // 重置表单
+                this.$refs.taskForm && this.$refs.taskForm.resetFields();
+            }
+        },
+        task(val) {
+            if (this.visible) {
+                this.localTask = JSON.parse(JSON.stringify(val)) || {
+                    status: true,
+                    type: 'script'
+                };
+            }
+        }
+    },
+    methods: {
+        submitForm() {
+            this.$refs.taskForm.validate((valid) => {
+                if (valid) {
+                    // 为新任务添加ID和创建时间
+                    if (!this.localTask.id) {
+                        this.localTask.id = Date.now();
+                        this.localTask.createdAt = new Date().toISOString();
+                        this.localTask.lastRun = null;
+                        this.localTask.nextRun = this.calculateNextRun(this.localTask.scheduleTime);
+                    } else {
+                        this.localTask.nextRun = this.calculateNextRun(this.localTask.scheduleTime);
+                    }
+                    
+                    // 提交任务数据
+                    this.$emit('submit', this.localTask);
+                    this.visible = false;
+                } else {
+                    console.log('表单验证失败');
+                    return false;
+                }
+            });
+        },
+        handleClose() {
+            this.$emit('update:visible', false);
+        },
+        calculateNextRun(scheduleTime) {
+            // 简单计算下次运行时间，实际应用中会更复杂
+            const now = new Date();
+            const nextRun = new Date(scheduleTime);
+            
+            if (nextRun <= now) {
+                nextRun.setDate(nextRun.getDate() + 1);
+            }
+            
+            return nextRun.toISOString();
+        }
+    },
+    template: `
+        <el-dialog
+            :title="dialogTitle"
+            :visible.sync="visible"
+            :width="dialogWidth"
+            :before-close="handleClose">
+            
+            <el-form
+                :model="localTask"
+                :rules="rules"
+                ref="taskForm"
+                label-width="100px">
+                
+                <el-form-item label="任务名称" prop="name">
+                    <el-input v-model="localTask.name" placeholder="请输入任务名称"></el-input>
+                </el-form-item>
+                
+                <el-form-item label="任务描述" prop="description">
+                    <el-input
+                        v-model="localTask.description"
+                        type="textarea"
+                        :rows="3"
+                        placeholder="请输入任务描述"></el-input>
+                </el-form-item>
+                
+                <el-form-item label="执行时间" prop="scheduleTime">
+                    <time-picker v-model="localTask.scheduleTime"></time-picker>
+                </el-form-item>
+                
+                <el-form-item label="任务类型" prop="type">
+                    <el-select v-model="localTask.type" placeholder="请选择任务类型">
+                        <el-option label="脚本执行" value="script"></el-option>
+                        <el-option label="API调用" value="api"></el-option>
+                        <el-option label="邮件发送" value="email"></el-option>
+                        <el-option label="数据备份" value="backup"></el-option>
+                    </el-select>
+                </el-form-item>
+                
+                <el-form-item label="状态" prop="status">
+                    <el-switch
+                        v-model="localTask.status"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        active-text="启用"
+                        inactive-text="禁用">
+                    </el-switch>
+                </el-form-item>
+                
+                <el-form-item v-if="localTask.type === 'script'" label="脚本内容">
+                    <el-input
+                        v-model="localTask.scriptContent"
+                        type="textarea"
+                        :rows="5"
+                        placeholder="请输入脚本内容"></el-input>
+                </el-form-item>
+                
+                <el-form-item v-if="localTask.type === 'api'" label="API地址">
+                    <el-input v-model="localTask.apiUrl" placeholder="请输入API地址"></el-input>
+                </el-form-item>
+            </el-form>
+            
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="handleClose">取消</el-button>
+                <el-button type="primary" @click="submitForm">确定</el-button>
+            </div>
+        </el-dialog>
+    `
+});
+</script>

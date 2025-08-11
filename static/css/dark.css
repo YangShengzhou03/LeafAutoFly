@@ -1,0 +1,94 @@
+/* 深色模式样式 */
+.dark-mode {
+    --primary-color: #66b1ff;
+    --text-color: #e5e6eb;
+    --text-color-secondary: #c9cdD4;
+    --background-color: #1d1e23;
+    --card-background: #27282f;
+    --border-color: #38383f;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.dark-mode .el-card {
+    background-color: var(--card-background);
+    border-color: var(--border-color);
+}
+
+.dark-mode .welcome-header,
+.dark-mode .tasks-header,
+.dark-mode .el-dialog__header,
+.dark-mode .el-dialog__footer {
+    border-bottom-color: var(--border-color);
+}
+
+.dark-mode .stat-card {
+    background-color: var(--card-background);
+}
+
+.dark-mode .el-statistic__title,
+.dark-mode .welcome-description,
+.dark-mode .feature-card p,
+.dark-mode .el-table th {
+    color: var(--text-color-secondary);
+}
+
+.dark-mode .el-table {
+    background-color: var(--card-background);
+    border-color: var(--border-color);
+}
+
+.dark-mode .el-table th,
+.dark-mode .el-table tr {
+    background-color: var(--card-background);
+    border-bottom-color: var(--border-color);
+}
+
+.dark-mode .el-table__row:hover > td {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark-mode .el-input__inner,
+.dark-mode .el-textarea__inner,
+.dark-mode .el-select-dropdown {
+    background-color: #303139;
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.dark-mode .el-date-editor .el-input__inner {
+    background-color: #303139;
+    color: var(--text-color);
+}
+
+.dark-mode .el-dialog {
+    background-color: var(--card-background);
+}
+
+.dark-mode .el-menu {
+    background-color: var(--card-background);
+    border-bottom-color: var(--border-color);
+}
+
+.dark-mode .el-menu-item {
+    color: var(--text-color-secondary);
+}
+
+.dark-mode .el-menu-item:hover,
+.dark-mode .el-menu-item.is-active {
+    color: var(--primary-color);
+    background-color: rgba(102, 177, 255, 0.1);
+}
+
+.dark-mode .ai-messages {
+    background-color: #141414;
+}
+
+.dark-mode .ai-message.ai .message-bubble {
+    background-color: var(--card-background);
+    border-color: var(--border-color);
+}
