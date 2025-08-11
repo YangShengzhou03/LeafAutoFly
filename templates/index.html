@@ -1,613 +1,679 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能自动化平台</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 
-{% block title %}首页 - 智能管理系统{% endblock %}
-
-{% block content %}
-<!-- 欢迎卡片 -->
-<el-card class="welcome-card">
-    <div slot="header" class="welcome-header">
-        <h1>欢迎使用智能管理系统</h1>
-        <p class="system-status">
-            <span class="status-indicator"></span>
-            系统运行正常
-        </p>
-    </div>
-    
-    <div class="welcome-content">
-        <p class="welcome-description">
-            这是一个基于Element Plus和Vue的现代化管理系统，集成了任务调度、AI助手和系统设置等功能。
-        </p>
-        
-        <!-- 快捷数据概览 -->
-        <div class="stats-overview">
-            <el-statistic 
-                class="stat-card"
-                :value="activeTasks"
-                title="活跃任务"
-                :precision="0"
-            >
-                <template #prefix>
-                    <i class="fa fa-tasks"></i>
-                </template>
-            </el-statistic>
-            
-            <el-statistic 
-                class="stat-card"
-                :value="completedTasks"
-                title="已完成任务"
-                :precision="0"
-            >
-                <template #prefix>
-                    <i class="fa fa-check-circle"></i>
-                </template>
-            </el-statistic>
-            
-            <el-statistic 
-                class="stat-card"
-                :value="pendingTasks"
-                title="待处理任务"
-                :precision="0"
-            >
-                <template #prefix>
-                    <i class="fa fa-clock-o"></i>
-                </template>
-            </el-statistic>
-            
-            <el-statistic 
-                class="stat-card"
-                :value="aiInteractions"
-                title="AI交互次数"
-                :precision="0"
-            >
-                <template #prefix>
-                    <i class="fa fa-comments"></i>
-                </template>
-            </el-statistic>
-        </div>
-        
-        <!-- 功能卡片 -->
-        <div class="features-grid">
-            <el-card class="feature-card hover-lift">
-                <div class="feature-icon">
-                    <i class="fa fa-calendar-check-o"></i>
-                </div>
-                <h3>任务调度</h3>
-                <p>创建和管理定时任务，自动化执行重复性工作</p>
-                <el-button type="primary" @click="handleMenuSelect('scheduler')">
-                    查看详情
-                </el-button>
-            </el-card>
-            
-            <el-card class="feature-card hover-lift">
-                <div class="feature-icon">
-                    <i class="fa fa-comments-o"></i>
-                </div>
-                <h3>AI助手</h3>
-                <p>智能AI助手，帮助你解决问题和提供建议</p>
-                <el-button type="primary" @click="handleMenuSelect('ai')">
-                    开始对话
-                </el-button>
-            </el-card>
-            
-            <el-card class="feature-card hover-lift">
-                <div class="feature-icon">
-                    <i class="fa fa-sliders"></i>
-                </div>
-                <h3>系统设置</h3>
-                <p>自定义系统参数，个性化你的使用体验</p>
-                <el-button type="primary" @click="handleMenuSelect('settings')">
-                    进行设置
-                </el-button>
-            </el-card>
-        </div>
-    </div>
-</el-card>
-
-<!-- 任务管理区域 -->
-<el-card class="tasks-card">
-    <div slot="header" class="tasks-header">
-        <h2>任务管理</h2>
-        <el-button type="primary" size="small" @click="showTaskDialog = true; isEditing = false; resetTaskForm();">
-            <i class="fa fa-plus"></i> 添加任务
-        </el-button>
-    </div>
-    
-    <!-- 任务列表 -->
-    <el-table 
-        :data="tasks" 
-        border 
-        style="width: 100%"
-        :row-class-name="taskRowClassName"
-    >
-        <el-table-column 
-            prop="id" 
-            label="ID" 
-            width="80"
-            align="center"
-        ></el-table-column>
-        <el-table-column 
-            prop="name" 
-            label="任务名称" 
-            width="200"
-        ></el-table-column>
-        <el-table-column 
-            prop="description" 
-            label="描述"
-        ></el-table-column>
-        <el-table-column 
-            prop="status" 
-            label="状态" 
-            width="120"
-            align="center"
-        >
-            <template #default="scope">
-                <el-tag 
-                    :type="getStatusType(scope.row.status)"
-                >
-                    {{ getStatusText(scope.row.status) }}
-                </el-tag>
-            </template>
-        </el-table-column>
-        <el-table-column 
-            prop="createdAt" 
-            label="创建时间" 
-            width="180"
-            align="center"
-        ></el-table-column>
-        <el-table-column 
-            prop="progress" 
-            label="进度" 
-            width="180"
-        >
-            <template #default="scope">
-                <el-progress 
-                    :percentage="scope.row.progress" 
-                    :stroke-width="6"
-                    :status="scope.row.progress === 100 ? 'success' : null"
-                ></el-progress>
-            </template>
-        </el-table-column>
-        <el-table-column 
-            label="操作" 
-            width="280"
-            align="center"
-        >
-            <template #default="scope">
-                <el-button 
-                    size="small" 
-                    @click="handleStartTask(scope.row)"
-                    :disabled="!canStartTask(scope.row.status)"
-                >
-                    开始
-                </el-button>
-                <el-button 
-                    size="small" 
-                    @click="handlePauseTask(scope.row)"
-                    :disabled="!canPauseTask(scope.row.status)"
-                >
-                    暂停
-                </el-button>
-                <el-button 
-                    size="small" 
-                    @click="handleEditTask(scope.row)"
-                >
-                    编辑
-                </el-button>
-                <el-button 
-                    size="small" 
-                    type="danger" 
-                    @click="handleDeleteTask(scope.row.id)"
-                >
-                    删除
-                </el-button>
-            </template>
-        </el-table-column>
-    </el-table>
-</el-card>
-
-<!-- 任务对话框 -->
-<el-dialog 
-    :title="isEditing ? '编辑任务' : '添加新任务'" 
-    :visible.sync="showTaskDialog" 
-    width="500px"
->
-    <el-form 
-        :model="currentTask" 
-        ref="taskForm" 
-        :rules="taskRules"
-        label-width="100px"
-    >
-        <el-form-item label="任务名称" prop="name">
-            <el-input v-model="currentTask.name"></el-input>
-        </el-form-item>
-        <el-form-item label="任务描述" prop="description">
-            <el-input 
-                v-model="currentTask.description" 
-                type="textarea" 
-                rows="3"
-            ></el-input>
-        </el-form-item>
-        <el-form-item label="任务类型">
-            <el-select v-model="currentTask.type" placeholder="请选择任务类型" @change="handleTaskTypeChange">
-                <el-option label="一次性任务" value="once"></el-option>
-                <el-option label="定时任务" value="scheduled"></el-option>
-                <el-option label="间隔任务" value="interval"></el-option>
-            </el-select>
-        </el-form-item>
-        
-        <!-- 一次性任务设置 -->
-        <el-form-item label="执行时间" v-if="currentTask.type === 'once'">
-            <el-date-picker
-                v-model="currentTask.executionTime"
-                type="datetime"
-                placeholder="选择执行时间"
-                style="width: 100%;"
-            ></el-date-picker>
-        </el-form-item>
-        
-        <!-- 定时任务设置 -->
-        <el-form-item label="Cron表达式" v-if="currentTask.type === 'scheduled'">
-            <el-input v-model="currentTask.cronExpression" placeholder="例如: 0 0 * * * 表示每天凌晨执行"></el-input>
-            <el-tooltip class="item" effect="dark" content="Cron表达式格式: 分 时 日 月 周" placement="top">
-                <i class="fa fa-question-circle" style="margin-top: 5px;"></i>
-            </el-tooltip>
-        </el-form-item>
-        
-        <!-- 间隔任务设置 -->
-        <el-form-item label="间隔时间" v-if="currentTask.type === 'interval'">
-            <el-input-number 
-                v-model="currentTask.intervalValue" 
-                :min="1" 
-                label="数值">
-            </el-input-number>
-            <el-select v-model="currentTask.intervalUnit" style="margin-left: 10px; width: 120px;">
-                <el-option label="秒" value="seconds"></el-option>
-                <el-option label="分钟" value="minutes"></el-option>
-                <el-option label="小时" value="hours"></el-option>
-                <el-option label="天" value="days"></el-option>
-            </el-select>
-        </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-        <el-button @click="showTaskDialog = false">取消</el-button>
-        <el-button type="primary" @click="saveTask">
-            <template v-if="isEditing">确认修改</template>
-            <template v-else>确认添加</template>
-        </el-button>
-    </div>
-</el-dialog>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-// 在Vue实例中添加任务管理相关数据和方法
-app._context.config.globalProperties.data = function() {
-    return {
-        // 统计数据
-        activeTasks: 0,
-        completedTasks: 0,
-        pendingTasks: 0,
-        aiInteractions: 0,
-        
-        // 任务数据
-        tasks: [],
-        
-        // 对话框状态
-        showTaskDialog: false,
-        isEditing: false,
-        
-        // 当前任务表单数据
-        currentTask: {
-            id: null,
-            name: "",
-            description: "",
-            type: "once",
-            executionTime: new Date(),
-            cronExpression: "0 0 * * *",
-            intervalValue: 1,
-            intervalUnit: "hours",
-            status: "pending",
-            progress: 0,
-            createdAt: ""
-        },
-        
-        // 表单验证规则
-        taskRules: {
-            name: [
-                { required: true, message: '请输入任务名称', trigger: 'blur' },
-                { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
-            ],
-            description: [
-                { max: 200, message: '描述不能超过200个字符', trigger: 'blur' }
-            ],
-            cronExpression: [
-                { required: true, message: '请输入Cron表达式', trigger: 'blur' }
-            ]
-        }
-    };
-};
-
-// 添加方法
-app._context.config.globalProperties.methods = {
-    // 页面加载时获取任务列表
-    mounted() {
-        this.loadTasks();
-    },
-    
-    // 从API加载任务
-    async loadTasks() {
-        try {
-            const response = await fetch('/api/tasks');
-            if (response.ok) {
-                this.tasks = await response.json();
-                this.updateTaskStats();
-            }
-        } catch (error) {
-            console.error('加载任务失败:', error);
-            this.$message.error('加载任务失败');
-        }
-    },
-    
-    // 更新任务统计数据
-    updateTaskStats() {
-        this.activeTasks = this.tasks.filter(t => t.status === 'running').length;
-        this.completedTasks = this.tasks.filter(t => t.status === 'completed').length;
-        this.pendingTasks = this.tasks.filter(t => t.status === 'pending' || t.status === 'paused').length;
-    },
-    
-    // 菜单切换
-    handleMenuSelect(page) {
-        window.location.href = `/${page}`;
-    },
-    
-    // 任务行样式
-    taskRowClassName({ row }) {
-        if (row.status === 'completed') {
-            return 'task-completed';
-        }
-        return '';
-    },
-    
-    // 获取任务状态类型
-    getStatusType(status) {
-        switch(status) {
-            case 'running': return 'success';
-            case 'paused': return 'warning';
-            case 'completed': return 'info';
-            case 'failed': return 'danger';
-            default: return 'primary';
-        }
-    },
-    
-    // 获取任务状态文本
-    getStatusText(status) {
-        switch(status) {
-            case 'running': return '运行中';
-            case 'paused': return '已暂停';
-            case 'completed': return '已完成';
-            case 'failed': return '已失败';
-            case 'pending': return '未开始';
-            default: return '未知';
-        }
-    },
-    
-    // 判断是否可以开始任务
-    canStartTask(status) {
-        return status === 'pending' || status === 'paused' || status === 'failed';
-    },
-    
-    // 判断是否可以暂停任务
-    canPauseTask(status) {
-        return status === 'running';
-    },
-    
-    // 开始任务
-    async handleStartTask(task) {
-        try {
-            const response = await fetch(`/api/tasks/${task.id}/start`, {
-                method: 'POST'
-            });
-            
-            if (response.ok) {
-                task.status = 'running';
-                this.$message.success(`任务 "${task.name}" 已开始`);
-                this.updateTaskStats();
-                
-                // 模拟进度更新
-                if (task.progress < 100) {
-                    this.simulateTaskProgress(task);
-                }
-            } else {
-                this.$message.error('启动任务失败');
-            }
-        } catch (error) {
-            console.error('启动任务失败:', error);
-            this.$message.error('启动任务失败');
-        }
-    },
-    
-    // 暂停任务
-    async handlePauseTask(task) {
-        try {
-            const response = await fetch(`/api/tasks/${task.id}/pause`, {
-                method: 'POST'
-            });
-            
-            if (response.ok) {
-                task.status = 'paused';
-                this.$message.warning(`任务 "${task.name}" 已暂停`);
-                this.updateTaskStats();
-            } else {
-                this.$message.error('暂停任务失败');
-            }
-        } catch (error) {
-            console.error('暂停任务失败:', error);
-            this.$message.error('暂停任务失败');
-        }
-    },
-    
-    // 编辑任务
-    handleEditTask(task) {
-        // 深拷贝任务数据
-        this.currentTask = JSON.parse(JSON.stringify(task));
-        
-        // 处理日期格式
-        if (task.executionTime) {
-            this.currentTask.executionTime = new Date(task.executionTime);
-        }
-        
-        this.isEditing = true;
-        this.showTaskDialog = true;
-    },
-    
-    // 删除任务
-    async handleDeleteTask(taskId) {
-        this.$confirm('确定要删除这个任务吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-        }).then(async () => {
-            try {
-                const response = await fetch(`/api/tasks/${taskId}`, {
-                    method: 'DELETE'
-                });
-                
-                if (response.ok) {
-                    this.tasks = this.tasks.filter(task => task.id !== taskId);
-                    this.$message.success('任务已删除');
-                    this.updateTaskStats();
-                } else {
-                    this.$message.error('删除任务失败');
-                }
-            } catch (error) {
-                console.error('删除任务失败:', error);
-                this.$message.error('删除任务失败');
-            }
-        });
-    },
-    
-    // 重置任务表单
-    resetTaskForm() {
-        this.currentTask = {
-            id: null,
-            name: "",
-            description: "",
-            type: "once",
-            executionTime: new Date(),
-            cronExpression: "0 0 * * *",
-            intervalValue: 1,
-            intervalUnit: "hours",
-            status: "pending",
-            progress: 0,
-            createdAt: ""
-        };
-        
-        if (this.$refs.taskForm) {
-            this.$refs.taskForm.resetFields();
-        }
-    },
-    
-    // 任务类型改变时的处理
-    handleTaskTypeChange() {
-        // 根据任务类型重置相关字段
-        if (this.currentTask.type === 'once') {
-            this.currentTask.executionTime = new Date();
-        } else if (this.currentTask.type === 'scheduled') {
-            this.currentTask.cronExpression = "0 0 * * *";
-        } else if (this.currentTask.type === 'interval') {
-            this.currentTask.intervalValue = 1;
-            this.currentTask.intervalUnit = "hours";
-        }
-    },
-    
-    // 保存任务（新增或修改）
-    async saveTask() {
-        this.$refs.taskForm.validate(async (valid) => {
-            if (valid) {
-                try {
-                    let response;
-                    const taskData = {
-                        name: this.currentTask.name,
-                        description: this.currentTask.description,
-                        type: this.currentTask.type,
-                        executionTime: this.currentTask.executionTime ? this.currentTask.executionTime.toISOString() : null,
-                        cronExpression: this.currentTask.cronExpression,
-                        intervalValue: this.currentTask.intervalValue,
-                        intervalUnit: this.currentTask.intervalUnit
-                    };
-                    
-                    if (this.isEditing) {
-                        // 更新现有任务
-                        response = await fetch(`/api/tasks/${this.currentTask.id}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(taskData)
-                        });
-                    } else {
-                        // 创建新任务
-                        response = await fetch('/api/tasks', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(taskData)
-                        });
-                    }
-                    
-                    if (response.ok) {
-                        const result = await response.json();
-                        this.showTaskDialog = false;
-                        this.loadTasks(); // 重新加载任务列表
-                        
-                        if (this.isEditing) {
-                            this.$message.success('任务已更新');
-                        } else {
-                            this.$message.success('任务已添加');
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        accent: '#69b1ff',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        light: {
+                            bg: '#F2F3F5',
+                            card: '#FFFFFF',
+                            text: '#1D2129',
+                            textSecondary: '#4E5969',
+                            border: '#E5E6EB'
+                        },
+                        dark: {
+                            bg: '#1D2129',
+                            card: '#272E3B',
+                            text: '#F2F3F5',
+                            textSecondary: '#C9CDD4',
+                            border: '#4E5969'
                         }
-                    } else {
-                        this.$message.error(this.isEditing ? '更新任务失败' : '添加任务失败');
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 2px 8px rgba(0, 0, 0, 0.08)',
+                        'card-hover': '0 4px 16px rgba(0, 0, 0, 0.12)',
+                        'dropdown': '0 4px 16px rgba(0, 0, 0, 0.12)',
+                        'modal': '0 8px 24px rgba(0, 0, 0, 0.16)',
                     }
-                } catch (error) {
-                    console.error('保存任务失败:', error);
-                    this.$message.error('保存任务失败');
-                }
+                },
             }
-        });
-    },
-    
-    // 模拟任务进度更新
-    simulateTaskProgress(task) {
-        if (task.status !== 'running') return;
-        
-        const interval = setInterval(() => {
-            // 检查任务是否仍在运行
-            const currentTask = this.tasks.find(t => t.id === task.id);
-            if (!currentTask || currentTask.status !== 'running') {
-                clearInterval(interval);
-                return;
+        }
+    </script>
+
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
             }
-            
-            // 随机增加进度
-            currentTask.progress += Math.floor(Math.random() * 5) + 1;
-            
-            // 如果进度达到100%，标记为已完成
-            if (currentTask.progress >= 100) {
-                currentTask.progress = 100;
-                currentTask.status = 'completed';
-                clearInterval(interval);
-                
-                this.updateTaskStats();
-                this.$message.success(`任务 "${currentTask.name}" 已完成`);
-                
-                // 通知后端任务已完成
-                fetch(`/api/tasks/${currentTask.id}/complete`, {
-                    method: 'POST'
-                });
+            .sidebar-item {
+                @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer;
             }
-        }, 1000);
-    }
-};
-</script>
-{% endblock %}
+            .sidebar-item-active {
+                @apply bg-primary/10 text-primary font-medium;
+            }
+            .card {
+                @apply bg-light-card dark:bg-dark-card rounded-xl shadow-card p-5 transition-all duration-300 hover:shadow-card-hover;
+            }
+            .btn {
+                @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+            }
+            .btn-primary {
+                @apply bg-primary text-white hover:bg-primary/90 focus:ring-primary/50;
+            }
+            .btn-secondary {
+                @apply bg-light-border dark:bg-dark-border text-light-text dark:text-dark-text hover:bg-light-border/80 dark:hover:bg-dark-border/80 focus:ring-primary/30;
+            }
+            .input-field {
+                @apply w-full px-3 py-2 rounded-lg border border-light-border dark:border-dark-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200;
+            }
+            .badge {
+                @apply px-2 py-1 rounded-full text-xs font-medium;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body class="font-inter bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text min-h-screen flex overflow-hidden">
+    <!-- 左侧导航栏 -->
+    <aside id="sidebar" class="w-64 bg-light-card dark:bg-dark-card border-r border-light-border dark:border-dark-border h-screen flex flex-col transition-all duration-300 z-30">
+        <div class="p-5 border-b border-light-border dark:border-dark-border">
+            <h1 class="text-xl font-bold text-primary flex items-center gap-2">
+                <i class="fa fa-cogs"></i>
+                <span>智能自动化平台</span>
+            </h1>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3">
+                <li>
+                    <a href="#dashboard" class="sidebar-item sidebar-item-active" data-section="dashboard">
+                        <i class="fa fa-tachometer w-5 text-center"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#tasks" class="sidebar-item" data-section="tasks">
+                        <i class="fa fa-clock-o w-5 text-center"></i>
+                        <span>定时任务</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#ai" class="sidebar-item" data-section="ai">
+                        <i class="fa fa-robot w-5 text-center"></i>
+                        <span>AI 接管</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#profile" class="sidebar-item" data-section="profile">
+                        <i class="fa fa-user w-5 text-center"></i>
+                        <span>个人中心</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-4 border-t border-light-border dark:border-dark-border">
+            <button id="toggle-sidebar" class="sidebar-item w-full justify-center">
+                <i class="fa fa-angle-double-left"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 主内容区域 -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <!-- 顶部状态栏 -->
+        <header class="h-16 border-b border-light-border dark:border-dark-border bg-light-card dark:bg-dark-card flex items-center justify-between px-6 z-20">
+            <div class="flex items-center">
+                <button id="mobile-menu-btn" class="lg:hidden mr-4 text-light-textSecondary dark:text-dark-textSecondary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+                <h2 id="page-title" class="text-lg font-semibold">仪表盘</h2>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <button class="text-light-textSecondary dark:text-dark-textSecondary hover:text-primary dark:hover:text-primary transition-colors">
+                        <i class="fa fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger rounded-full text-white text-xs flex items-center justify-center">3</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-3 cursor-pointer hover:bg-light-bg dark:hover:bg-dark-bg p-1 rounded-full transition-colors">
+                    <img src="https://picsum.photos/id/1005/40/40" alt="用户头像" class="w-8 h-8 rounded-full object-cover border border-light-border dark:border-dark-border">
+                    <span class="hidden md:inline font-medium">管理员</span>
+                    <i class="fa fa-angle-down text-light-textSecondary dark:text-dark-textSecondary"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- 页面内容 -->
+        <div class="flex-1 overflow-y-auto p-6">
+            <!-- 仪表盘区域 -->
+            <section id="dashboard-section" class="space-y-6">
+                <!-- 系统状态 -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-xl font-bold">系统概览</h3>
+                        <span class="badge bg-success/10 text-success flex items-center gap-1">
+                            <i class="fa fa-circle text-[8px]"></i>
+                            系统运行中
+                        </span>
+                    </div>
+                    <div class="text-light-textSecondary dark:text-dark-textSecondary">
+                        <span id="current-date">2024年6月15日</span>
+                        <span id="current-time" class="ml-2">14:30:45</span>
+                    </div>
+                </div>
+
+                <!-- 数据卡片 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 今日已执行任务 -->
+                    <div class="card flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-light-textSecondary dark:text-dark-textSecondary text-sm">今日已执行任务</p>
+                                <h4 class="text-3xl font-bold mt-1" id="today-tasks">24</h4>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <i class="fa fa-check-square-o"></i>
+                            </div>
+                        </div>
+                        <div class="mt-auto flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>12% 较昨日</span>
+                        </div>
+                    </div>
+
+                    <!-- AI 已回复次数 -->
+                    <div class="card flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-light-textSecondary dark:text-dark-textSecondary text-sm">AI 已回复次数</p>
+                                <h4 class="text-3xl font-bold mt-1" id="ai-responses">89</h4>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                                <i class="fa fa-comments-o"></i>
+                            </div>
+                        </div>
+                        <div class="mt-auto flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>8% 较昨日</span>
+                        </div>
+                    </div>
+
+                    <!-- 24h 系统工作时长 -->
+                    <div class="card flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-light-textSecondary dark:text-dark-textSecondary text-sm">24h 系统工作时长</p>
+                                <h4 class="text-3xl font-bold mt-1" id="system-hours">23.5h</h4>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                        </div>
+                        <div class="mt-auto flex items-center text-danger text-sm">
+                            <i class="fa fa-arrow-down mr-1"></i>
+                            <span>2% 较昨日</span>
+                        </div>
+                    </div>
+
+                    <!-- 待执行任务 -->
+                    <div class="card flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-light-textSecondary dark:text-dark-textSecondary text-sm">待执行任务</p>
+                                <h4 class="text-3xl font-bold mt-1" id="pending-tasks">16</h4>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center text-warning">
+                                <i class="fa fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                        <div class="mt-auto flex items-center text-danger text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>5% 较昨日</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 图表区域 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- 任务执行趋势 -->
+                    <div class="card">
+                        <h4 class="font-semibold mb-4">任务执行趋势</h4>
+                        <div class="h-80">
+                            <canvas id="task-trend-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- AI 交互统计 -->
+                    <div class="card">
+                        <h4 class="font-semibold mb-4">AI 交互统计</h4>
+                        <div class="h-80">
+                            <canvas id="ai-interaction-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 定时任务管理区域 -->
+            <section id="tasks-section" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <h3 class="text-xl font-bold">定时任务管理</h3>
+                    <button id="add-task-btn" class="btn btn-primary flex items-center gap-2">
+                        <i class="fa fa-plus"></i>
+                        <span>添加任务</span>
+                    </button>
+                </div>
+
+                <!-- 标签式筛选栏 -->
+                <div class="bg-light-card dark:bg-dark-card rounded-xl p-1 flex overflow-x-auto gap-1">
+                    <button class="task-filter-btn whitespace-nowrap px-4 py-2 rounded-lg bg-primary text-white font-medium">全部</button>
+                    <button class="task-filter-btn whitespace-nowrap px-4 py-2 rounded-lg text-light-textSecondary dark:text-dark-textSecondary hover:bg-light-bg dark:hover:bg-dark-bg transition-colors">运行中</button>
+                    <button class="task-filter-btn whitespace-nowrap px-4 py-2 rounded-lg text-light-textSecondary dark:text-dark-textSecondary hover:bg-light-bg dark:hover:bg-dark-bg transition-colors">待执行</button>
+                    <button class="task-filter-btn whitespace-nowrap px-4 py-2 rounded-lg text-light-textSecondary dark:text-dark-textSecondary hover:bg-light-bg dark:hover:bg-dark-bg transition-colors">已完成</button>
+                </div>
+
+                <!-- 任务列表表格 -->
+                <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-card">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-light-border dark:border-dark-border">
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-light-textSecondary dark:text-dark-textSecondary">任务名称</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-light-textSecondary dark:text-dark-textSecondary">任务描述</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-light-textSecondary dark:text-dark-textSecondary">创建时间</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-light-textSecondary dark:text-dark-textSecondary">任务类型</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-light-textSecondary dark:text-dark-textSecondary">状态</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-light-textSecondary dark:text-dark-textSecondary">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-light-border dark:border-dark-border hover:bg-light-bg/50 dark:hover:bg-dark-bg/50 transition-colors">
+                                    <td class="px-6 py-4">数据备份</td>
+                                    <td class="px-6 py-4 max-w-xs truncate">每日自动备份系统关键数据到云端</td>
+                                    <td class="px-6 py-4">2024-06-10</td>
+                                    <td class="px-6 py-4">周期性</td>
+                                    <td class="px-6 py-4"><span class="badge bg-success/10 text-success">运行中</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-primary transition-colors" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-danger transition-colors" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-warning transition-colors" title="暂停">
+                                                <i class="fa fa-pause"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-light-border dark:border-dark-border hover:bg-light-bg/50 dark:hover:bg-dark-bg/50 transition-colors">
+                                    <td class="px-6 py-4">系统检查</td>
+                                    <td class="px-6 py-4 max-w-xs truncate">每周日进行系统健康检查并生成报告</td>
+                                    <td class="px-6 py-4">2024-06-05</td>
+                                    <td class="px-6 py-4">周期性</td>
+                                    <td class="px-6 py-4"><span class="badge bg-warning/10 text-warning">待执行</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-primary transition-colors" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-danger transition-colors" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-success transition-colors" title="立即执行">
+                                                <i class="fa fa-play"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-light-border dark:border-dark-border hover:bg-light-bg/50 dark:hover:bg-dark-bg/50 transition-colors">
+                                    <td class="px-6 py-4">日志清理</td>
+                                    <td class="px-6 py-4 max-w-xs truncate">清理30天前的系统日志文件</td>
+                                    <td class="px-6 py-4">2024-06-01</td>
+                                    <td class="px-6 py-4">一次性</td>
+                                    <td class="px-6 py-4"><span class="badge bg-info/10 text-info">已完成</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-primary transition-colors" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-danger transition-colors" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-success transition-colors" title="重新执行">
+                                                <i class="fa fa-repeat"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-light-bg/50 dark:hover:bg-dark-bg/50 transition-colors">
+                                    <td class="px-6 py-4">数据同步</td>
+                                    <td class="px-6 py-4 max-w-xs truncate">与远程服务器同步产品数据</td>
+                                    <td class="px-6 py-4">2024-05-28</td>
+                                    <td class="px-6 py-4">周期性</td>
+                                    <td class="px-6 py-4"><span class="badge bg-danger/10 text-danger">已停止</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-primary transition-colors" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-danger transition-colors" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-success transition-colors" title="启动">
+                                                <i class="fa fa-play"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 分页 -->
+                    <div class="px-6 py-4 border-t border-light-border dark:border-dark-border flex justify-between items-center">
+                        <div class="text-sm text-light-textSecondary dark:text-dark-textSecondary">
+                            显示 1 至 4 条，共 24 条
+                        </div>
+                        <div class="flex gap-1">
+                            <button class="w-8 h-8 flex items-center justify-center rounded border border-light-border dark:border-dark-border text-light-textSecondary dark:text-dark-textSecondary hover:border-primary hover:text-primary transition-colors">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                            <button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-white">1</button>
+                            <button class="w-8 h-8 flex items-center justify-center rounded border border-light-border dark:border-dark-border hover:border-primary hover:text-primary transition-colors">2</button>
+                            <button class="w-8 h-8 flex items-center justify-center rounded border border-light-border dark:border-dark-border hover:border-primary hover:text-primary transition-colors">3</button>
+                            <button class="w-8 h-8 flex items-center justify-center rounded border border-light-border dark:border-dark-border text-light-textSecondary dark:text-dark-textSecondary hover:border-primary hover:text-primary transition-colors">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI 智能助手区域 -->
+            <section id="ai-section" class="hidden space-y-6">
+                <h3 class="text-xl font-bold">AI 智能助手</h3>
+
+                <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-card h-[calc(100vh-240px)] flex flex-col">
+                    <!-- 对话区域 -->
+                    <div id="ai-chat-messages" class="flex-1 p-6 overflow-y-auto space-y-6">
+                        <!-- 系统提示 -->
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-light-bg dark:bg-dark-bg rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%]">
+                                <p>您好！我是您的 AI 助手，有什么可以帮助您的吗？</p>
+                            </div>
+                        </div>
+
+                        <!-- 用户消息 -->
+                        <div class="flex gap-3 justify-end">
+                            <div class="bg-primary text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-[80%]">
+                                <p>请帮我创建一个每日数据备份的任务</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                                <img src="https://picsum.photos/id/1005/40/40" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- AI 回复 -->
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-light-bg dark:bg-dark-bg rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%]">
+                                <p>我可以帮您创建一个每日数据备份任务。请问您希望：</p>
+                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                    <li>备份的具体时间？</li>
+                                    <li>需要备份的文件或目录路径？</li>
+                                    <li>备份存储的位置？</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 用户消息 -->
+                        <div class="flex gap-3 justify-end">
+                            <div class="bg-primary text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-[80%]">
+                                <p>每天凌晨2点，备份/var/data目录下的所有文件到云端存储</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                                <img src="https://picsum.photos/id/1005/40/40" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- AI 回复 -->
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-light-bg dark:bg-dark-bg rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%]">
+                                <p>已为您创建每日凌晨2点备份/var/data目录到云端的任务。</p>
+                                <p class="mt-2">您可以在"定时任务"页面查看和管理这个任务。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 输入区域 -->
+                    <div class="border-t border-light-border dark:border-dark-border p-4">
+                        <div class="flex gap-3">
+                            <input type="text" id="ai-input" placeholder="输入您的问题..." class="input-field flex-1">
+                            <button id="ai-send-btn" class="btn btn-primary">
+                                <i class="fa fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 个人中心区域 -->
+            <section id="profile-section" class="hidden space-y-6">
+                <h3 class="text-xl font-bold">个人中心</h3>
+
+                <!-- 用户信息 -->
+                <div class="card">
+                    <h4 class="font-semibold mb-4">用户信息</h4>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex flex-col items-center md:items-start">
+                            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-light-bg dark:border-dark-bg shadow-md mb-4">
+                                <img src="https://picsum.photos/id/1005/100/100" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                            <button class="btn btn-secondary text-sm">
+                                <i class="fa fa-upload mr-1"></i> 更换头像
+                            </button>
+                        </div>
+
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-light-textSecondary dark:text-dark-textSecondary mb-1">用户名</label>
+                                <p class="font-medium">管理员</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-light-textSecondary dark:text-dark-textSecondary mb-1">用户角色</label>
+                                <p class="font-medium">系统管理员</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-light-textSecondary dark:text-dark-textSecondary mb-1">注册时间</label>
+                                <p>2024-01-15 09:30:24</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-light-textSecondary dark:text-dark-textSecondary mb-1">最后登录</label>
+                                <p>2024-06-14 16:45:12</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 系统设置 -->
+                <div class="card">
+                    <h4 class="font-semibold mb-4">系统设置</h4>
+
+                    <form id="settings-form" class="space-y-6">
+                        <!-- 主题模式 -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">主题模式</label>
+                            <div class="flex items-center gap-4">
+                                <label class="inline-flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="theme-mode" value="light" checked class="text-primary focus:ring-primary">
+                                    <span>浅色模式</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="theme-mode" value="dark" class="text-primary focus:ring-primary">
+                                    <span>深色模式</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="theme-mode" value="auto" class="text-primary focus:ring-primary">
+                                    <span>跟随系统</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 主题色彩 -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">主题色彩</label>
+                            <div class="flex gap-3">
+                                <button type="button" class="w-8 h-8 rounded-full bg-primary border-2 border-transparent ring-2 ring-offset-2 ring-primary focus:outline-none" data-color="blue"></button>
+                                <button type="button" class="w-8 h-8 rounded-full bg-[#722ED1] border-2 border-transparent hover:ring-2 hover:ring-offset-2 hover:ring-[#722ED1]/50 focus:outline-none" data-color="purple"></button>
+                                <button type="button" class="w-8 h-8 rounded-full bg-[#F5319D] border-2 border-transparent hover:ring-2 hover:ring-offset-2 hover:ring-[#F5319D]/50 focus:outline-none" data-color="pink"></button>
+                                <button type="button" class="w-8 h-8 rounded-full bg-[#0FC6C2] border-2 border-transparent hover:ring-2 hover:ring-offset-2 hover:ring-[#0FC6C2]/50 focus:outline-none" data-color="teal"></button>
+                                <button type="button" class="w-8 h-8 rounded-full bg-[#FAAD14] border-2 border-transparent hover:ring-2 hover:ring-offset-2 hover:ring-[#FAAD14]/50 focus:outline-none" data-color="amber"></button>
+                            </div>
+                        </div>
+
+                        <!-- 通知设置 -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">通知设置</label>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium">任务执行通知</p>
+                                        <p class="text-sm text-light-textSecondary dark:text-dark-textSecondary">任务执行成功或失败时通知</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-light-border dark:bg-dark-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium">系统更新通知</p>
+                                        <p class="text-sm text-light-textSecondary dark:text-dark-textSecondary">有系统更新时通知</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-light-border dark:bg-dark-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium">AI 助手消息</p>
+                                        <p class="text-sm text-light-textSecondary dark:text-dark-textSecondary">AI 助手回复时通知</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-light-border dark:bg-dark-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 时区设置 -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">时区设置</label>
+                            <select class="input-field">
+                                <option selected>中国标准时间 (UTC+8)</option>
+                                <option>世界协调时间 (UTC)</option>
+                                <option>美国东部时间 (UTC-5)</option>
+                                <option>美国西部时间 (UTC-8)</option>
+                                <option>欧洲中部时间 (UTC+1)</option>
+                                <option>日本标准时间 (UTC+9)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save mr-1"></i> 保存设置
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="border-t border-light-border dark:border-dark-border bg-light-card dark:bg-dark-card py-4 px-6 text-center text-sm text-light-textSecondary dark:text-dark-textSecondary">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+                <div>© 2024 智能自动化平台 - 智能自动化平台</div>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-primary transition-colors">帮助中心</a>
+                    <a href="#" class="hover:text-primary transition-colors">隐私政策</a>
+                    <a href="#" class="hover:text-primary transition-colors">关于我们</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- 添加新任务弹窗 -->
+    <div id="add-task-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-light-card dark:bg-dark-card rounded-xl shadow-modal w-full max-w-md mx-4 transform scale-95 transition-transform duration-300">
+            <div class="p-5 border-b border-light-border dark:border-dark-border flex justify-between items-center">
+                <h3 class="text-lg font-semibold">添加新任务</h3>
+                <button id="close-modal-btn" class="text-light-textSecondary dark:text-dark-textSecondary hover:text-danger transition-colors">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+
+            <form id="add-task-form" class="p-5 space-y-4">
+                <div>
+                    <label for="task-name" class="block text-sm font-medium mb-1">任务名称</label>
+                    <input type="text" id="task-name" class="input-field" placeholder="请输入任务名称">
+                </div>
+
+                <div>
+                    <label for="task-desc" class="block text-sm font-medium mb-1">任务描述</label>
+                    <textarea id="task-desc" rows="3" class="input-field" placeholder="请输入任务描述"></textarea>
+                </div>
+
+                <div>
+                    <label for="task-type" class="block text-sm font-medium mb-1">执行类型</label>
+                    <select id="task-type" class="input-field">
+                        <option value="once" selected>一次性</option>
+                        <option value="daily">每日</option>
+                        <option value="weekly">每周</option>
+                        <option value="monthly">每月</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="task-time" class="block text-sm font-medium mb-1">执行时间</label>
+                    <input type="datetime-local" id="task-time" class="input-field">
+                </div>
+
+                <div class="flex gap-3 mt-6">
+                    <button type="button" id="cancel-task-btn" class="btn btn-secondary flex-1">取消</button>
+                    <button type="submit" class="btn btn-primary flex-1">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
