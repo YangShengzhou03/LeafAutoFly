@@ -24,7 +24,7 @@ system_settings = {
     "themeColor": "#409eff",
     "notifications": True,
     "timezone": "Asia/Shanghai",
-    "systemName": "LeafAuto·Web"
+    "systemName": "LeafAuto-Web"
 }
 
 # 辅助函数 - 获取时区
@@ -66,7 +66,7 @@ def settings_page():
         system_settings["themeColor"] = request.form.get('themeColor', '#409eff')
         system_settings["notifications"] = request.form.get('notifications') == 'on'
         system_settings["timezone"] = request.form.get('timezone', 'Asia/Shanghai')
-        system_settings["systemName"] = request.form.get('systemName', 'LeafAuto·Web')
+        system_settings["systemName"] = request.form.get('systemName', 'LeafAuto-Web')
         return redirect(url_for('settings_page'))
     
     return render_template('settings.html', settings=system_settings, now=datetime.now())

@@ -52,13 +52,8 @@
 }
 
 /* 卡片悬浮效果增强 */
-.card {
-    transform: translateY(0);
-}
-
-.card:hover {
-    transform: translateY(-4px);
-}
+.card { transform: translateY(0); backdrop-filter: blur(12px); }
+.card:hover { transform: translateY(-4px); }
 
 /* 按钮点击效果 */
 .btn:active {
@@ -89,36 +84,7 @@ tbody tr {
 
 /* 响应式调整 */
 @media (max-width: 768px) {
-    .sidebar-collapsed {
-        width: 0 !important;
-        overflow: hidden;
-    }
-
-    .sidebar-expanded {
-        width: 64px !important;
-    }
-
-    .sidebar-expanded span {
-        display: none;
-    }
-
-    .sidebar-expanded .sidebar-item {
-        justify-content: center;
-        padding: 12px;
-    }
-
-    .sidebar-expanded .sidebar-item i {
-        margin-right: 0;
-    }
-
-    .sidebar-expanded .p-5 {
-        padding: 1rem !important;
-        text-align: center;
-    }
-
-    .sidebar-expanded h1 span {
-        display: none;
-    }
+    /* 侧边栏移动端也保持可见宽度，但允许内容区域滚动 */
 }
 
 /* 深色模式切换过渡 */
@@ -129,4 +95,13 @@ html {
 /* 图表样式适配深色模式 */
 .dark .chart-container canvas {
     filter: brightness(0.9) contrast(1.1);
+}
+
+/* 玻璃拟态基础 */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: saturate(180%) blur(16px);
+}
+.dark .glass {
+    background: rgba(39, 46, 59, 0.7);
 }

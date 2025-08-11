@@ -1,4 +1,4 @@
-# LeafAuto Web - 智能自动化平台
+# LeafAuto-Web - 智能自动化平台
 
 一个现代化的智能自动化平台，采用半透明悬浮效果设计，提供任务管理、AI助手、系统监控等功能。
 
@@ -208,4 +208,4 @@ uwsgi --http :5000 --module application:app
 
 ---
 
-**LeafAuto Web** - 让自动化更智能，让工作更高效！ 🚀
+**LeafAuto-Web** - 让自动化更智能，让工作更高效！ 🚀

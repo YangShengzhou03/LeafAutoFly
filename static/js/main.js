@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化图表
     initCharts();
 
-    // 初始化导航功能
+    // 初始化导航功能（保持侧边栏常驻展开）
     initNavigation();
 
     // 初始化模态框功能
@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化主题切换功能
     initThemeSwitcher();
 
-    // 初始化侧边栏切换功能
-    initSidebarToggle();
+    // 移除侧边栏折叠开关，使其始终展开
+    disableSidebarToggle();
 
     // 初始化AI聊天功能
     initAiChat();
@@ -186,14 +186,7 @@ function initNavigation() {
     const sidebarItems = document.querySelectorAll('.sidebar-item[data-section]');
     const sections = document.querySelectorAll('section[id$="-section"]');
     const pageTitle = document.getElementById('page-title');
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
-
-    // 移动端菜单按钮点击事件
-    mobileMenuBtn.addEventListener('click', function() {
-        sidebar.classList.toggle('translate-x-0');
-        sidebar.classList.toggle('-translate-x-full');
-    });
 
     // 侧边栏项点击事件
     sidebarItems.forEach(item => {
@@ -219,11 +212,7 @@ function initNavigation() {
             // 更新页面标题
             pageTitle.textContent = this.querySelector('span').textContent;
 
-            // 在移动设备上点击后收起侧边栏
-            if (window.innerWidth < 1024) {
-                sidebar.classList.add('-translate-x-full');
-                sidebar.classList.remove('translate-x-0');
-            }
+            // 侧边栏始终保持展开，不收起
         });
     });
 }
@@ -272,26 +261,38 @@ function initModal() {
         }
     });
 
-    // 表单提交
+    // 表单提交 -> 调用后端创建任务
     addTaskForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // 获取表单数据
-        const taskName = document.getElementById('task-name').value;
-        const taskDesc = document.getElementById('task-desc').value;
+        const taskName = document.getElementById('task-name').value.trim();
+        const taskDesc = document.getElementById('task-desc').value.trim();
         const taskType = document.getElementById('task-type').value;
         const taskTime = document.getElementById('task-time').value;
 
-        // 简单验证
         if (!taskName || !taskTime) {
             alert('请填写任务名称和执行时间');
             return;
         }
 
-        // 模拟提交成功
-        alert(`任务 "${taskName}" 创建成功！`);
-        closeModal();
-        addTaskForm.reset();
+        fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: taskName,
+                description: taskDesc,
+                type: taskType,
+                executionTime: taskTime
+            })
+        })
+        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(() => {
+            closeModal();
+            addTaskForm.reset();
+            refreshStats();
+            loadTasks();
+        })
+        .catch(() => alert('创建任务失败，请稍后重试'));
     });
 }
 
@@ -340,59 +341,12 @@ function initThemeSwitcher() {
 }
 
 // 初始化侧边栏切换功能
-function initSidebarToggle() {
-    const toggleBtn = document.getElementById('toggle-sidebar');
+function disableSidebarToggle() {
     const sidebar = document.getElementById('sidebar');
-    const sidebarTexts = document.querySelectorAll('#sidebar span:not(.badge)');
-    const logoText = document.querySelector('#sidebar h1 span');
-
-    // 检查本地存储中的侧边栏状态
-    const sidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-    if (sidebarCollapsed) {
-        toggleSidebar();
-    }
-
-    // 侧边栏切换事件
-    toggleBtn.addEventListener('click', toggleSidebar);
-
-    function toggleSidebar() {
-        // 切换图标
-        const icon = toggleBtn.querySelector('i');
-        if (icon.classList.contains('fa-angle-double-left')) {
-            icon.classList.replace('fa-angle-double-left', 'fa-angle-double-right');
-        } else {
-            icon.classList.replace('fa-angle-double-right', 'fa-angle-double-left');
-        }
-
-        // 切换侧边栏宽度
-        if (window.innerWidth >= 1024) {
-            if (sidebar.classList.contains('w-64')) {
-                sidebar.classList.remove('w-64');
-                sidebar.classList.add('w-20');
-                // 隐藏文字
-                sidebarTexts.forEach(text => text.classList.add('hidden'));
-                logoText.classList.add('hidden');
-                localStorage.setItem('sidebarCollapsed', 'true');
-            } else {
-                sidebar.classList.remove('w-20');
-                sidebar.classList.add('w-64');
-                // 显示文字
-                sidebarTexts.forEach(text => text.classList.remove('hidden'));
-                logoText.classList.remove('hidden');
-                localStorage.setItem('sidebarCollapsed', 'false');
-            }
-        }
-    }
-
-    // 响应窗口大小变化
-    window.addEventListener('resize', function() {
-        if (window.innerWidth >= 1024) {
-            sidebar.classList.remove('-translate-x-full', 'translate-x-0');
-        } else {
-            sidebar.classList.add('-translate-x-full');
-            sidebar.classList.remove('translate-x-0');
-        }
-    });
+    // 始终可见与展开
+    sidebar.classList.remove('-translate-x-full');
+    sidebar.classList.add('translate-x-0');
+    sidebar.classList.add('w-64');
 }
 
 // 初始化AI聊天功能
@@ -425,32 +379,42 @@ function initAiChat() {
         // 滚动到底部
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // 模拟AI回复
-        setTimeout(() => {
-            const aiResponses = [
-                "感谢您的提问。我正在处理您的请求，请稍候...",
-                "您的问题很有价值。根据我的分析，建议您...",
-                "我理解您的需求了。这是相关的信息和解决方案...",
-                "这个问题需要进一步确认一些细节。请问您可以提供更多信息吗？",
-                "已收到您的请求，我会尽快处理并给您回复。"
-            ];
-            const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-
+        // 调用后端AI接口
+        fetch('/api/ai/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
+        })
+        .then(res => res.json())
+        .then(data => {
+            const text = data.response || '服务暂不可用';
             const aiMessageHTML = `
                 <div class="flex gap-3 slide-in">
                     <div class="w-10 h-10 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white">
-                        <i class="fa fa-robot"></i>
+                        <i class="fa fa-comments"></i>
                     </div>
                     <div class="bg-light-bg dark:bg-dark-bg rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%]">
-                        <p>${randomResponse}</p>
+                        <p>${text}</p>
                     </div>
                 </div>
             `;
             chatMessages.insertAdjacentHTML('beforeend', aiMessageHTML);
-
-            // 滚动到底部
             chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1000);
+        })
+        .catch(() => {
+            const aiMessageHTML = `
+                <div class="flex gap-3 slide-in">
+                    <div class="w-10 h-10 rounded-full bg-danger flex-shrink-0 flex items-center justify-center text-white">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    <div class="bg-light-bg dark:bg-dark-bg rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%]">
+                        <p>AI 服务请求失败，请稍后重试。</p>
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', aiMessageHTML);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
     }
 
     // 发送按钮点击事件
@@ -521,4 +485,91 @@ function initThemeColors() {
             // 这里可以添加实际切换主题色彩的逻辑
         });
     });
+}
+
+// 仪表盘与任务列表数据对接后端
+document.addEventListener('DOMContentLoaded', () => {
+    refreshStats();
+    loadTasks();
+});
+
+function refreshStats() {
+    fetch('/api/stats')
+        .then(res => res.json())
+        .then(stats => {
+            document.getElementById('running-tasks').textContent = stats.active_tasks ?? 0;
+            document.getElementById('pending-tasks').textContent = stats.pending_tasks ?? 0;
+            document.getElementById('ai-responses').textContent = stats.ai_interactions ?? 0;
+            document.getElementById('system-uptime').textContent = stats.system_uptime ?? '--';
+        })
+        .catch(() => {});
+}
+
+function loadTasks() {
+    const tbody = document.getElementById('tasks-tbody');
+    const summary = document.getElementById('tasks-summary');
+    fetch('/api/tasks')
+        .then(res => res.json())
+        .then(tasks => {
+            tbody.innerHTML = '';
+            if (!tasks || tasks.length === 0) {
+                summary.textContent = '暂无任务';
+                return;
+            }
+            summary.textContent = `共 ${tasks.length} 条`;
+            tasks.forEach(task => {
+                const statusMap = {
+                    running: { cls: 'bg-success/10 text-success', text: '运行中' },
+                    pending: { cls: 'bg-warning/10 text-warning', text: '待执行' },
+                    completed: { cls: 'bg-info/10 text-info', text: '已完成' },
+                    failed: { cls: 'bg-danger/10 text-danger', text: '失败' }
+                };
+                const badge = statusMap[task.status] || statusMap.pending;
+                const created = (task.createdAt || '').split('T')[0];
+                const row = document.createElement('tr');
+                row.className = 'border-b border-light-border dark:border-dark-border hover:bg-light-bg/50 dark:hover:bg-dark-bg/50 transition-colors';
+                row.innerHTML = `
+                    <td class="px-6 py-4">${task.name}</td>
+                    <td class="px-6 py-4 max-w-xs truncate" title="${task.description || ''}">${task.description || ''}</td>
+                    <td class="px-6 py-4">${created}</td>
+                    <td class="px-6 py-4">${task.type || '-'}</td>
+                    <td class="px-6 py-4"><span class="badge ${badge.cls}">${badge.text}</span></td>
+                    <td class="px-6 py-4">
+                        <div class="flex gap-2">
+                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-primary transition-colors" title="启动" data-action="start" data-id="${task.id}">
+                                <i class="fa fa-play"></i>
+                            </button>
+                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-danger transition-colors" title="删除" data-action="delete" data-id="${task.id}">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <button class="p-1.5 rounded hover:bg-light-bg dark:hover:bg-dark-bg text-light-textSecondary dark:text-dark-textSecondary hover:text-success transition-colors" title="完成" data-action="complete" data-id="${task.id}">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // 绑定操作
+            tbody.querySelectorAll('button[data-action]').forEach(btn => {
+                btn.addEventListener('click', () => handleTaskAction(btn.dataset.action, btn.dataset.id));
+            });
+        })
+        .catch(() => {
+            summary.textContent = '任务加载失败';
+        });
+}
+
+function handleTaskAction(action, id) {
+    let url = '';
+    let method = 'POST';
+    if (action === 'start') url = `/api/tasks/${id}/start`;
+    if (action === 'complete') url = `/api/tasks/${id}/complete`;
+    if (action === 'delete') { url = `/api/tasks/${id}`; method = 'DELETE'; }
+
+    fetch(url, { method })
+        .then(res => res.json())
+        .then(() => { refreshStats(); loadTasks(); })
+        .catch(() => {});
 }
