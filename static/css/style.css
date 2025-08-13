@@ -496,6 +496,109 @@ body {
     color: var(--error-color);
 }
 
+/* 系统状态面板 */
+.status-panel {
+    background-color: white;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+    margin-bottom: 30px;
+}
+
+.welcome-message {
+    margin-bottom: 24px;
+}
+
+.welcome-message h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.welcome-message p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.status-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.status-card {
+    background-color: white;
+    border-radius: var(--card-radius);
+    border: 1px solid #E5E7EB;
+    padding: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.status-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.status-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(123, 78, 243, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.status-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #F3F4F6;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.status-value {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 16px;
+    display: inline-block;
+}
+
+.status-value.normal {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+}
+
+.status-value.updated {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3B82F6;
+}
+
 /* 底部操作区 */
 .bottom-operation, .task-operation {
     background-color: white;
