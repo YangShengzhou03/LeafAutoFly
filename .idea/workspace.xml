@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b4edc7f0-db0b-4180-9e7e-ba7485314f15" name="Changes" comment="update">
+      <change afterPath="$PROJECT_DIR$/.idea/LeafAuto_Pro.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ActivitiesWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AiAssistant.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application.spec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AutoInfo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LICENSE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LeafAutoPRO封装脚本.iss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LeafAuto_version_info.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NicknameComboBox.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PSD/head.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PSD/年会价格.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PSD/枫叶价格.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Reply.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SettingWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Split.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/System_info.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Thread.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI_Reply.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI_Reply.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI_UpdateDialog.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI_UpdateDialog.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ui_Activities.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ui_Activities.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ui_MainWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ui_MainWindow.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ui_SettingWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ui_SettingWindow.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UpdateDialog.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cer/Y.cer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cer/Y.pfx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cer/Y.pvk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cer/Y.spc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cer/cert2spc.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cer/certmgr.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clickableComboBox.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/leafauto.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/List/List_0.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/List/List_1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/List/List_2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/List/List_3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/List/List_头像.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/List/下拉.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/Setup.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/AiVIP.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/Base.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/QQ_Act.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/QQ_Card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/VIP.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/bottom.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/head.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp19.9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp199.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp29.9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp36.9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/year.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/activity/兑换激活码.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/icon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_允许白钩.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_微信语言.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_提示音.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_枫叶版本.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_禁止白叉.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_累计发送.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_保存任务.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送失败.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送就绪.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送成功.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送表情.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_导入任务.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_打开文件.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_添加任务.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_视频通话.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page2/page2_智慧拆句.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_AI标志图标.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_停止接管.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_回复表情.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_开始接管.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/关于枫叶.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/其他设置.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/基本设置.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/完成设置.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/播放测试.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/setting/高级设置.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/tray.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-紫银高级会员.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-荣耀超级会员.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-铂金体验会员.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-银色体验会员.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-银色标准会员.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-免费试用版本.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-标准会员版本.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-超级会员版本.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-高级会员版本.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-关闭.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-最大化.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-最小化.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-联系作者.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-设置.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-还原.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_1.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_2.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_3.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_4.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_5.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/stylesheet/author.dialog.setStyleSheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/stylesheet/close_button.setStyleSheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/stylesheet/completer_QListView.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/stylesheet/dateTimeEdit.setStyleSheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/stylesheet/menu.setStyleSheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/stylesheet/pay_wechat.dialog.setStyleSheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wxautox-3.9.11.17.25b47-py3-none-any.whl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/empty-tasks.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/pause-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/play-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ai_takeover.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/auto_info.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/second_page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/task_list.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2vrHzRhl6FJ23fzAWtRHZBIMi0C" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Application.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Code/Python/LeafAuto_Web",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Code\Python\LeafAuto_Pro" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Application" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LeafAuto_Pro" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-PY-241.14494.241" />
+        <option value="bundled-python-sdk-0509580d9d50-28c9f5db9ffe-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.14494.241" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9f582b1-0867-44c4-bf15-0a860c69eb54" name="Changes" comment="" />
+      <created>1744896536109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744896536109</updated>
+      <workItem from="1744896537246" duration="1059000" />
+      <workItem from="1744897635705" duration="156000" />
+      <workItem from="1744897799974" duration="813000" />
+      <workItem from="1744938781399" duration="280000" />
+      <workItem from="1744939546731" duration="142000" />
+      <workItem from="1744939746922" duration="8000" />
+      <workItem from="1745159598589" duration="309000" />
+      <workItem from="1749462696288" duration="16395000" />
+      <workItem from="1749516797143" duration="19910000" />
+      <workItem from="1749556436764" duration="37000" />
+      <workItem from="1749556744659" duration="19000" />
+      <workItem from="1749556885534" duration="705000" />
+      <workItem from="1749558150948" duration="210000" />
+      <workItem from="1751094744253" duration="1512000" />
+      <workItem from="1751120307077" duration="15402000" />
+      <workItem from="1751178517646" duration="10382000" />
+      <workItem from="1751190825565" duration="646000" />
+      <workItem from="1751212940304" duration="195000" />
+      <workItem from="1751213189642" duration="684000" />
+      <workItem from="1751213932619" duration="656000" />
+      <workItem from="1751215721780" duration="238000" />
+      <workItem from="1751215967195" duration="5000" />
+      <workItem from="1751216212317" duration="1329000" />
+      <workItem from="1751217591031" duration="45000" />
+      <workItem from="1751289944266" duration="6000" />
+      <workItem from="1751290145690" duration="2821000" />
+      <workItem from="1751382202857" duration="265000" />
+      <workItem from="1751464652427" duration="475000" />
+      <workItem from="1751555065817" duration="823000" />
+      <workItem from="1751641132232" duration="681000" />
+      <workItem from="1751780077524" duration="13320000" />
+      <workItem from="1751794802039" duration="6000" />
+      <workItem from="1751795543320" duration="3033000" />
+      <workItem from="1751799759487" duration="463000" />
+      <workItem from="1751800709668" duration="127000" />
+      <workItem from="1751896422566" duration="2025000" />
+      <workItem from="1751899350611" duration="54000" />
+      <workItem from="1752324842395" duration="516000" />
+      <workItem from="1752338214802" duration="19000" />
+      <workItem from="1752338413027" duration="6000" />
+      <workItem from="1754142887876" duration="9813000" />
+      <workItem from="1754181236297" duration="14607000" />
+      <workItem from="1754196070722" duration="15000" />
+      <workItem from="1754196753458" duration="955000" />
+      <workItem from="1754197864268" duration="13000" />
+      <workItem from="1754198358980" duration="219000" />
+      <workItem from="1754199231288" duration="840000" />
+      <workItem from="1754232753375" duration="1127000" />
+      <workItem from="1754657358583" duration="806000" />
+    </task>
+    <task id="LOCAL-00049" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751783842866</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1751783842866</updated>
+    </task>
+    <task id="LOCAL-00050" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751784575479</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1751784575479</updated>
+    </task>
+    <task id="LOCAL-00051" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751785921035</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1751785921035</updated>
+    </task>
+    <task id="LOCAL-00052" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751786954702</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1751786954702</updated>
+    </task>
+    <task id="LOCAL-00053" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751788073164</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1751788073164</updated>
+    </task>
+    <task id="LOCAL-00054" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751789523052</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1751789523052</updated>
+    </task>
+    <task id="LOCAL-00055" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751789961493</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1751789961493</updated>
+    </task>
+    <task id="LOCAL-00056" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751792148232</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1751792148232</updated>
+    </task>
+    <task id="LOCAL-00057" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751792629898</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1751792629898</updated>
+    </task>
+    <task id="LOCAL-00058" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751792864662</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1751792864662</updated>
+    </task>
+    <task id="LOCAL-00059" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751793516163</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1751793516163</updated>
+    </task>
+    <task id="LOCAL-00060" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751797239522</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1751797239522</updated>
+    </task>
+    <task id="LOCAL-00061" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751797318540</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1751797318540</updated>
+    </task>
+    <task id="LOCAL-00062" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751799332424</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1751799332424</updated>
+    </task>
+    <task id="LOCAL-00063" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751800040372</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1751800040372</updated>
+    </task>
+    <task id="LOCAL-00064" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751800780066</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1751800780066</updated>
+    </task>
+    <task id="LOCAL-00065" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751898368578</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1751898368578</updated>
+    </task>
+    <task id="LOCAL-00066" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751898396481</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1751898396481</updated>
+    </task>
+    <task id="LOCAL-00067" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1751899360654</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1751899360654</updated>
+    </task>
+    <task id="LOCAL-00068" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1752325296720</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1752325296720</updated>
+    </task>
+    <task id="LOCAL-00069" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754149721553</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1754149721553</updated>
+    </task>
+    <task id="LOCAL-00070" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754150276026</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1754150276026</updated>
+    </task>
+    <task id="LOCAL-00071" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754150776658</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1754150776658</updated>
+    </task>
+    <task id="LOCAL-00072" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754181880562</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1754181880562</updated>
+    </task>
+    <task id="LOCAL-00073" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754183045137</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1754183045137</updated>
+    </task>
+    <task id="LOCAL-00074" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754184224644</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1754184224644</updated>
+    </task>
+    <task id="LOCAL-00075" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754184813306</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1754184813306</updated>
+    </task>
+    <task id="LOCAL-00076" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754189262239</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1754189262239</updated>
+    </task>
+    <task id="LOCAL-00077" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754191104504</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1754191104504</updated>
+    </task>
+    <task id="LOCAL-00078" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754192547474</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1754192547474</updated>
+    </task>
+    <task id="LOCAL-00079" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754193671081</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1754193671081</updated>
+    </task>
+    <task id="LOCAL-00080" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754194408157</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1754194408157</updated>
+    </task>
+    <task id="LOCAL-00081" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754194713218</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1754194713218</updated>
+    </task>
+    <task id="LOCAL-00082" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754194925422</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1754194925422</updated>
+    </task>
+    <task id="LOCAL-00083" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754195577415</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1754195577415</updated>
+    </task>
+    <task id="LOCAL-00084" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754195772240</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1754195772240</updated>
+    </task>
+    <task id="LOCAL-00085" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754195815159</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1754195815159</updated>
+    </task>
+    <task id="LOCAL-00086" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754196076776</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1754196076777</updated>
+    </task>
+    <task id="LOCAL-00087" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197077177</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197077177</updated>
+    </task>
+    <task id="LOCAL-00088" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197565506</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197565506</updated>
+    </task>
+    <task id="LOCAL-00089" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197660187</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197660187</updated>
+    </task>
+    <task id="LOCAL-00090" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197690442</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197690442</updated>
+    </task>
+    <task id="LOCAL-00091" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754197870482</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1754197870482</updated>
+    </task>
+    <task id="LOCAL-00092" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754198569913</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1754198569914</updated>
+    </task>
+    <task id="LOCAL-00093" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754199907302</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1754199907302</updated>
+    </task>
+    <task id="LOCAL-00094" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754199984075</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1754199984075</updated>
+    </task>
+    <task id="LOCAL-00095" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754233877749</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1754233877749</updated>
+    </task>
+    <task id="LOCAL-00096" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754657681833</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1754657681833</updated>
+    </task>
+    <task id="LOCAL-00097" summary="LeafAuto PRO更新">
+      <option name="closed" value="true" />
+      <created>1754657737051</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1754657737051</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="LeafAuto PRO" />
+    <MESSAGE value="LeafAuto PRO更新" />
+    <option name="LAST_COMMIT_MESSAGE" value="LeafAuto PRO更新" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754658154242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
