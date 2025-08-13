@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>自动信息</h1>
+    </div>
+
+    <!-- 顶部操作栏 -->
+    <div class="operation-bar">
+        <div class="input-group">
+            <input type="text" placeholder="消息内容 段落内容可粘贴" class="message-input">
+            <button class="icon-btn"><i class="emoji-icon"></i></button>
+            <button class="icon-btn"><i class="attachment-icon"></i></button>
+        </div>
+        <div class="timer-group">
+            <input type="datetime-local" value="2025-08-13T20:41" class="datetime-input">
+            <div class="repeat-dropdown">
+                <button class="repeat-btn">重复: <span class="current-repeat">仅一次</span></button>
+                <div class="repeat-options">
+                    <div class="repeat-option" data-value="once">仅一次</div>
+                    <div class="repeat-option" data-value="weekdays">周一到周五</div>
+                    <div class="repeat-option" data-value="workdays">法定工作日</div>
+                    <div class="repeat-option" data-value="weekends">法定节假日</div>
+                    <div class="repeat-option custom-repeat" data-value="custom">自定义...</div>
+                    <div class="custom-days" style="display: none;">
+                        <div class="day-selector">
+                            <label><input type="checkbox" data-day="mon"> 周一</label>
+                            <label><input type="checkbox" data-day="tue"> 周二</label>
+                            <label><input type="checkbox" data-day="wed"> 周三</label>
+                            <label><input type="checkbox" data-day="thu"> 周四</label>
+                            <label><input type="checkbox" data-day="fri"> 周五</label>
+                            <label><input type="checkbox" data-day="sat"> 周六</label>
+                            <label><input type="checkbox" data-day="sun"> 周日</label>
+                        </div>
+                        <button class="confirm-custom">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 任务提示区 -->
+    <div class="task-notification">
+        <div class="info-message">点击右上角将任务添加到左侧，再点击开始执行</div>
+        <div class="error-message">[08-13 20:41:53]: 微信未登录，请登录微信后重启枫叶</div>
+    </div>
+
+    <!-- 任务列表区域 -->
+    <div class="task-list-container">
+        <div class="task-list-header">
+            <h2>任务列表</h2>
+            <button id="add-task-btn" class="add-task-btn gradient-btn">添加任务</button>
+        </div>
+        <div class="task-list" id="taskList">
+            <!-- 任务项将通过JavaScript动态添加 -->
+            <div class="empty-task-state">
+                <img src="{{ url_for('static', filename='images/empty-tasks.svg') }}" alt="暂无任务">
+                <p>还没有添加任务，点击右上角添加按钮创建新任务</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部操作区 -->
+    <div class="bottom-operation">
+        <div class="ghost-buttons">
+            <button class="ghost-btn">保存任务</button>
+            <button class="ghost-btn">导入任务</button>
+        </div>
+        <div class="checkbox-group">
+            <label class="checkbox-item">
+                <input type="checkbox"> 阻止系统休眠
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox"> 任务完成关机
+            </label>
+        </div>
+        <button class="execute-btn gradient-btn">开始执行</button>
+    </div>
+{% endblock %}

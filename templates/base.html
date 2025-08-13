@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeafAuto Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧导航 -->
+        <aside class="sidebar">
+            <div class="avatar-area">
+                <div class="avatar"></div>
+                <div class="status">未登录 ▾</div>
+            </div>
+            <nav class="menu">
+                <a href="{{ url_for('home') }}" class="menu-item {% if request.endpoint == 'home' %}active{% endif %}">首页</a>
+                <a href="{{ url_for('auto_info') }}" class="menu-item {% if request.endpoint == 'auto_info' or request.endpoint == 'second_page' %}active{% endif %}">自动信息</a>
+                <a href="#split-send" class="menu-item">拆段发送</a>
+                <a href="{{ url_for('ai_takeover') }}" class="menu-item {% if request.endpoint == 'ai_takeover' %}active{% endif %}">AI接管</a>
+                <a href="{{ url_for('task_list') }}" class="menu-item {% if request.endpoint == 'task_list' %}active{% endif %}">任务列表</a>
+            </nav>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- 底部状态条 -->
+    <footer class="footer">
+        <div class="version-info">LeafAuto Pro v1.0.0</div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
