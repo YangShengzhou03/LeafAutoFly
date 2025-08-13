@@ -4,143 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4edc7f0-db0b-4180-9e7e-ba7485314f15" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/.idea/LeafAuto_Pro.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ActivitiesWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AiAssistant.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application.spec" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AutoInfo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LICENSE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LeafAutoPRO封装脚本.iss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LeafAuto_version_info.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NicknameComboBox.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PSD/head.psd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PSD/年会价格.psd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PSD/枫叶价格.psd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Reply.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SettingWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Split.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/System_info.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Thread.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI_Reply.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI_Reply.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI_UpdateDialog.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI_UpdateDialog.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ui_Activities.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ui_Activities.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ui_MainWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ui_MainWindow.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ui_SettingWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ui_SettingWindow.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UpdateDialog.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cer/Y.cer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cer/Y.pfx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cer/Y.pvk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cer/Y.spc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cer/cert2spc.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cer/certmgr.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clickableComboBox.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/leafauto.exe.manifest" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/license.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/List/List_0.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/List/List_1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/List/List_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/List/List_3.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/List/List_头像.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/List/下拉.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/Setup.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/AiVIP.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/Base.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/QQ_Act.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/QQ_Card.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/VIP.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/bottom.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/head.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp19.9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp199.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp29.9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/wp36.9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/year.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/activity/兑换激活码.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_允许白钩.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_微信语言.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_提示音.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_枫叶版本.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_禁止白叉.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page0/page0_累计发送.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_保存任务.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送失败.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送就绪.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送成功.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_发送表情.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_导入任务.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_打开文件.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_添加任务.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page1/page1_视频通话.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page2/page2_智慧拆句.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_AI标志图标.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_停止接管.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_回复表情.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/page3/page3_开始接管.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/关于枫叶.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/其他设置.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/基本设置.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/完成设置.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/播放测试.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/setting/高级设置.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/tray.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-紫银高级会员.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-荣耀超级会员.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-铂金体验会员.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-银色体验会员.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/头标/头标-银色标准会员.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-免费试用版本.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-标准会员版本.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-超级会员版本.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/小标/小标-高级会员版本.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-关闭.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-最大化.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-最小化.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-联系作者.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-设置.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/img/窗口控制/窗口控制-还原.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_1.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_2.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_3.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_4.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sound/error_sound_5.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/stylesheet/author.dialog.setStyleSheet.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/stylesheet/close_button.setStyleSheet.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/stylesheet/completer_QListView.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/stylesheet/dateTimeEdit.setStyleSheet.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/stylesheet/menu.setStyleSheet.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/stylesheet/pay_wechat.dialog.setStyleSheet.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wxautox-3.9.11.17.25b47-py3-none-any.whl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/empty-tasks.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/pause-icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/play-icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ai_takeover.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/auto_info.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/second_page.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/task_list.html" beforeDir="false" />
-    </list>
+    <list default="true" id="b4edc7f0-db0b-4180-9e7e-ba7485314f15" name="Changes" comment="update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -155,16 +19,19 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2vrHzRhl6FJ23fzAWtRHZBIMi0C" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.Application.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging master",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Code/Python/LeafAuto_Web",
     "node.js.detected.package.eslint": "true",
@@ -276,30 +143,6 @@
       <workItem from="1754199231288" duration="840000" />
       <workItem from="1754232753375" duration="1127000" />
       <workItem from="1754657358583" duration="806000" />
-    </task>
-    <task id="LOCAL-00049" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751783842866</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1751783842866</updated>
-    </task>
-    <task id="LOCAL-00050" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751784575479</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1751784575479</updated>
-    </task>
-    <task id="LOCAL-00051" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1751785921035</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1751785921035</updated>
     </task>
     <task id="LOCAL-00052" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
@@ -669,16 +512,42 @@
       <option name="project" value="LOCAL" />
       <updated>1754657737051</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="update">
+      <option name="closed" value="true" />
+      <created>1755093987871</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1755093987871</updated>
+    </task>
+    <task id="LOCAL-00099" summary="update">
+      <option name="closed" value="true" />
+      <created>1755094020306</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1755094020306</updated>
+    </task>
+    <task id="LOCAL-00100" summary="update">
+      <option name="closed" value="true" />
+      <created>1755094060921</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1755094060921</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="LeafAuto PRO" />
     <MESSAGE value="LeafAuto PRO更新" />
-    <option name="LAST_COMMIT_MESSAGE" value="LeafAuto PRO更新" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754658154242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
