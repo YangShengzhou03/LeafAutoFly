@@ -145,16 +145,307 @@ body {
 }
 
 .gradient-card {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: var(--card-radius);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    background-size: 150% 150%;
+    animation: gradientAnimation 8s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.free-plan {
+    background: linear-gradient(135deg, #7B4EF3, #9D65F9);
+}
+
+.monthly-plan {
+    background: linear-gradient(135deg, #4E6EF2, #6985F5);
+}
+
+.quarterly-plan {
+    background: linear-gradient(135deg, #36CFC9, #5AD8E6);
+}
+
+.yearly-plan {
+    background: linear-gradient(135deg, #FF7D00, #FFB74D);
+}
+
+.featured-card {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.featured-card::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+
+.gradient-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.featured-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.featured-badge {
+    background-color: #FFD700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.card-price {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.price-period {
+    font-size: 16px;
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+.card-date {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.card-saving {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.card-feature {
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.card-feature::before {
+    content: '✓';
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.card-btn {
+    padding: 12px 20px;
+    border-radius: var(--button-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.card-btn {
+    padding: 12px 20px;
+    border-radius: var(--button-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.card-btn-outline {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.free-plan .card-btn-outline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #7B4EF3, #9D65F9);
+    z-index: -1;
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.card-btn-outline:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.free-plan .card-btn-outline:hover::after {
+    transform: scaleX(1);
+}
+
+.card-btn-primary {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.monthly-plan .card-btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #4E6EF2, #6985F5);
+    z-index: -1;
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.yearly-plan .card-btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #FF7D00, #FFB74D);
+    z-index: -1;
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.card-btn-primary:hover,
+.monthly-plan .card-btn-primary:hover,
+.yearly-plan .card-btn-primary:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-btn-primary:hover::after {
+    transform: scaleX(1);
+}
+
+.card-btn-highlight {
+    background-color: white;
+    font-weight: 700;
+}
+
+/* 为不同套餐按钮设置与其卡片匹配的文字颜色 */
+.free-plan .card-btn-outline {
+    color: white;
+    border-color: white;
+}
+
+.monthly-plan .card-btn-primary {
+    color: #4E6EF2;
+}
+
+.quarterly-plan .card-btn-highlight {
+    color: #36CFC9;
+}
+
+.yearly-plan .card-btn-primary {
+    color: #FF7D00;
+}
+
+.card-btn-highlight::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #36CFC9, #5AD8E6);
+    z-index: -1;
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.card-btn-highlight:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-btn-highlight:hover::after {
+    transform: scaleX(1);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+}
+
+/* 全局变量补充 */
+:root {
+    --text-dark: #1F2937;
+    --text-muted: #6B7280;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* 高级卡片样式 */
@@ -163,6 +454,10 @@ body {
     overflow: hidden;
     transform: translateY(0);
     transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .premium-card:hover {
@@ -232,10 +527,46 @@ body {
     transform: translateY(-3px);
 }
 
+/* 进度条样式 */
+.progress-bar {
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: white;
+    border-radius: 3px;
+    transition: width 1s ease-in-out;
+}
+
+/* 卡片图标 */
+.card-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* 卡片标题 */
 .card-title {
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 10px;
+}
+
+/* 卡片数值 */
+.card-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* 卡片描述 */
+.card-desc {
+    font-size: 14px;
+    opacity: 0.8;
 }
 
 .card-subtitle {
@@ -263,12 +594,172 @@ body {
 }
 
 /* 统计卡片 */
-.stats-card {
-    background-color: var(--dark-bg);
-    color: white;
-    padding: 20px;
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: white;
     border-radius: var(--card-radius);
-    margin-bottom: 30px;
+    padding: 25px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-top-width: 6px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stat-card-1 {
+    border-top: 4px solid #7B4EF3;
+}
+
+.stat-card-2 {
+    border-top: 4px solid #4E6EF2;
+}
+
+.stat-card-3 {
+    border-top: 4px solid #36CFC9;
+}
+
+.stat-card-4 {
+    border-top: 4px solid #FF7D00;
+}
+
+.stat-icon {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+}
+
+.stat-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+    position: relative;
+    display: inline-block;
+}
+
+/* 添加数字增长动画效果 */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-value.animated {
+    animation: countUp 1s ease-out forwards;
+}
+
+.stat-card-3 .stat-value,
+.stat-card-4 .stat-value {
+    font-size: 22px;
+}
+
+/* 版本号特殊样式 */
+.stat-card-4 .stat-desc {
+    font-size: 14px;
+    color: var(--primary-color);
+    font-weight: 500;
+    background-color: rgba(123, 78, 243, 0.1);
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.stat-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.stat-progress {
+    height: 8px;
+    background-color: #F3F4F6;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 进度条动画 */
+@keyframes progressFill {
+    from { width: 0; }
+    to { width: var(--progress-width); }
+}
+
+.progress-bar {
+    height: 100%;
+    width: var(--progress-width);
+    border-radius: 4px;
+    transition: width 1s ease-in-out;
+    background-size: 200% 100%;
+    animation: progressFill 1.5s ease-out forwards, gradientShift 3s ease infinite;
+}
+
+/* 进度条渐变动画 */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.stat-card-1 .progress-bar {
+    background: linear-gradient(90deg, #7B4EF3, #9D65F9);
+}
+
+.stat-card-2 .progress-bar {
+    background: linear-gradient(90deg, #4E6EF2, #6985F5);
+}
+
+/* 添加统计卡片背景装饰 */
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    z-index: 0;
+}
+
+.stat-card-1::before {
+    background-color: rgba(123, 78, 243, 0.05);
+}
+
+.stat-card-2::before {
+    background-color: rgba(78, 110, 242, 0.05);
+}
+
+.stat-card-3::before {
+    background-color: rgba(54, 207, 201, 0.05);
+}
+
+.stat-card-4::before {
+    background-color: rgba(255, 125, 0, 0.05);
+}
+
+.stat-card > div {
+    position: relative;
+    z-index: 1;
 }
 
 .stats-row {
@@ -307,20 +798,62 @@ body {
 /* 欢迎语区域 */
 .welcome-section {
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: var(--card-radius);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 30px;
+}
+
+.welcome-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .welcome-section h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--text-dark);
 }
 
 .welcome-section p {
-    font-size: 14px;
-    color: #666;
+    font-size: 16px;
+    color: var(--text-muted);
     line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.welcome-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.welcome-stat {
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+    padding: 15px;
+    background-color: var(--card-bg-color);
+    border-radius: var(--card-radius);
+    transition: transform 0.3s ease;
+}
+
+.welcome-stat:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-muted);
 }
 
 /* 操作栏 */

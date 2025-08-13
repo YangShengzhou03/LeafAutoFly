@@ -7,66 +7,110 @@
 
     <!-- 套餐卡片区 -->
     <div class="card-container">
-        <div class="gradient-card" style="background: linear-gradient(135deg, #7B4EF3, #9D65F9);">
+        <div class="gradient-card free-plan">
+            <div class="card-badge">免费</div>
+
             <div class="card-title">免费版</div>
             <div class="card-subtitle">免费试用中</div>
-            <div class="card-date">2025-09-12</div>
+            <div class="card-date">有效期至: 2025-09-12</div>
             <div class="card-feature">基础功能</div>
             <div class="card-feature">每日限量</div>
+            <button class="card-btn card-btn-outline">继续使用</button>
         </div>
 
-        <div class="gradient-card" style="background: linear-gradient(135deg, #4E6EF2, #6985F5);">
+        <div class="gradient-card monthly-plan">
+            <div class="card-badge">限时特惠</div>
+
             <div class="card-title">月度会员</div>
-            <div class="card-subtitle">限时特惠</div>
-            <div class="card-price">¥19.9/月</div>
+            <div class="card-subtitle">灵活选择</div>
+            <div class="card-price">¥19.9<span class="price-period">/月</span></div>
             <div class="card-feature">全部功能</div>
             <div class="card-feature">优先级支持</div>
+            <button class="card-btn card-btn-primary">立即订阅</button>
         </div>
 
-        <div class="gradient-card" style="background: linear-gradient(135deg, #36CFC9, #5AD8E6);">
+        <div class="gradient-card quarterly-plan featured-card">
+            <div class="card-badge featured-badge">最受欢迎</div>
+
             <div class="card-title">季度会员</div>
             <div class="card-subtitle">超值优惠</div>
-            <div class="card-price">¥49.9/季</div>
+            <div class="card-price">¥49.9<span class="price-period">/季</span></div>
+            <div class="card-saving">省 ¥9.8</div>
             <div class="card-feature">全部功能</div>
             <div class="card-feature">数据导出</div>
+            <button class="card-btn card-btn-highlight">立即订阅</button>
         </div>
 
-        <div class="gradient-card" style="background: linear-gradient(135deg, #FF7D00, #FFB74D);">
+        <div class="gradient-card yearly-plan">
+            <div class="card-badge">年度</div>
+
             <div class="card-title">年度会员</div>
             <div class="card-subtitle">最划算</div>
-            <div class="card-price">¥199/年</div>
+            <div class="card-price">¥199<span class="price-period">/年</span></div>
+            <div class="card-saving">省 ¥38.8</div>
             <div class="card-feature">全部功能</div>
             <div class="card-feature">专属客服</div>
+            <button class="card-btn card-btn-primary">立即订阅</button>
         </div>
     </div>
 
-    <!-- 可用率统计区 -->
-    <div class="stats-card">
-        <div class="stats-row">
-            <div class="stats-item">
-                <div class="stats-label">自动化能力</div>
-                <div class="stats-value">12%</div>
-            </div>
-            <div class="stats-item">
-                <div class="stats-label">AI 能力</div>
-                <div class="stats-value">6%</div>
+    <!-- 系统状态统计区 -->
+    <div class="stats-container">
+        <div class="stat-card stat-card-1">
+
+            <div class="stat-title">自动化能力</div>
+            <div class="stat-value animated" style="--value: 12;">12%</div>
+            <div class="stat-desc">当前自动化任务完成率</div>
+            <div class="stat-progress">
+                <div class="progress-bar" style="--progress-width: 12%;"></div>
             </div>
         </div>
-        <div class="stats-row">
-            <div class="stats-item">
-                <div class="stats-label">系统状态</div>
-                <div class="stats-value with-check">正常运行</div>
+
+        <div class="stat-card stat-card-2">
+
+            <div class="stat-title">AI 能力</div>
+            <div class="stat-value animated" style="--value: 6;">6%</div>
+            <div class="stat-desc">AI 辅助功能使用率</div>
+            <div class="stat-progress">
+                <div class="progress-bar" style="--progress-width: 6%;"></div>
             </div>
-            <div class="stats-item">
-                <div class="stats-label">更新状态</div>
-                <div class="stats-value with-check">已是最新版本</div>
-            </div>
+        </div>
+
+        <div class="stat-card stat-card-3">
+
+            <div class="stat-title">系统状态</div>
+            <div class="stat-value animated">正常运行</div>
+            <div class="stat-desc">无异常，运行稳定</div>
+        </div>
+
+        <div class="stat-card stat-card-4">
+
+            <div class="stat-title">更新状态</div>
+            <div class="stat-value animated">已是最新版本</div>
+            <div class="stat-desc">版本号: v1.0.0</div>
         </div>
     </div>
 
     <!-- 欢迎语 -->
     <div class="welcome-section">
-        <h2>欢迎使用 LeafAuto Pro</h2>
-        <p>LeafAuto 是我在 2024 年大二时写的练习程序，主要用于自动化微信消息发送和管理。感谢您的使用和支持！</p>
+        <div class="welcome-content">
+            <h2>欢迎使用 LeafAuto Pro</h2>
+            <p>LeafAuto 是我在 2024 年大二时写的练习程序，主要用于自动化微信消息发送和管理。</p>
+            <div class="welcome-stats">
+                <div class="welcome-stat">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">活跃用户</div>
+                </div>
+                <div class="welcome-stat">
+                    <div class="stat-number">10k+</div>
+                    <div class="stat-label">自动化任务</div>
+                </div>
+                <div class="welcome-stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">系统稳定性</div>
+                </div>
+            </div>
+            <p>感谢您的使用和支持！</p>
+        </div>
     </div>
 {% endblock %}
