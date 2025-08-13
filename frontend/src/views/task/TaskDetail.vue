@@ -76,8 +76,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Edit, Delete, Message as MessageIcon }
-  from '@element-plus/icons-vue'
+import { Message as MessageIcon } from '@element-plus/icons-vue'
 
 // 响应式数据
 const task = ref({})
