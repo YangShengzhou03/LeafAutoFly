@@ -1,115 +1,111 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="page-header">
-        <h1>自动信息</h1>
-    </div>
+<div class="auto-info-container">
+    <header class="page-header">
+        <h1 class="page-title">新建定时消息</h1>
+    </header>
 
-    <!-- 系统状态面板 -->
-    <div class="status-panel">
-        <div class="welcome-message">
-            <h2>欢迎使用 LeafAuto Web</h2>
-            <p>LeafAuto 是我在 2024 年大二时写的练习程序，主要用于自动化微信消息发送和管理。感谢您的使用和支持！</p>
-        </div>
-        <div class="status-cards">
-            <div class="status-card">
-                <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
-                <h3>自动化能力</h3>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 12%;"></div>
-                </div>
-                <span class="progress-text">12%</span>
+    <main class="main-content">
+        <section class="task-creation-card animate-fade-in">
+            <div class="card-header">
+                <h2 class="card-title">创建新任务</h2>
             </div>
-            <div class="status-card">
-                <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" x2="12.01" y1="17" y2="17"></line></svg></div>
-                <h3>AI 能力</h3>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 6%;"></div>
-                </div>
-                <span class="progress-text">6%</span>
-            </div>
-            <div class="status-card">
-                <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
-                <h3>系统状态</h3>
-                <div class="status-value normal">正常运行</div>
-            </div>
-            <div class="status-card">
-                <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="6"></line><line x1="12" x2="12" y1="18" y2="22"></line><line x1="4.93" x2="7.76" y1="4.93" y2="7.76"></line><line x1="16.24" x2="19.07" y1="16.24" y2="19.07"></line><line x1="2" x2="6" y1="12" y2="12"></line><line x1="18" x2="22" y1="12" y2="12"></line><line x1="4.93" x2="7.76" y1="19.07" y2="16.24"></line><line x1="16.24" x2="19.07" y1="7.76" y2="4.93"></line></svg></div>
-                <h3>更新状态</h3>
-                <div class="status-value updated">已是最新版本</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 顶部操作栏 -->
-    <div class="operation-bar">
-        <div class="input-group">
-            <input type="text" placeholder="消息内容 段落内容可粘贴" class="message-input">
-            <button class="icon-btn"><i class="emoji-icon"></i></button>
-            <button class="icon-btn"><i class="attachment-icon"></i></button>
-        </div>
-        <div class="timer-group">
-            <input type="datetime-local" value="2025-08-13T20:41" class="datetime-input">
-            <div class="repeat-dropdown">
-                <button class="repeat-btn">重复: <span class="current-repeat">仅一次</span></button>
-                <div class="repeat-options">
-                    <div class="repeat-option" data-value="once">仅一次</div>
-                    <div class="repeat-option" data-value="weekdays">周一到周五</div>
-                    <div class="repeat-option" data-value="workdays">法定工作日</div>
-                    <div class="repeat-option" data-value="weekends">法定节假日</div>
-                    <div class="repeat-option custom-repeat" data-value="custom">自定义...</div>
-                    <div class="custom-days" style="display: none;">
-                        <div class="day-selector">
-                            <label><input type="checkbox" data-day="mon"> 周一</label>
-                            <label><input type="checkbox" data-day="tue"> 周二</label>
-                            <label><input type="checkbox" data-day="wed"> 周三</label>
-                            <label><input type="checkbox" data-day="thu"> 周四</label>
-                            <label><input type="checkbox" data-day="fri"> 周五</label>
-                            <label><input type="checkbox" data-day="sat"> 周六</label>
-                            <label><input type="checkbox" data-day="sun"> 周日</label>
-                        </div>
-                        <button class="confirm-custom">确认</button>
+            <div class="card-body">
+                <form id="taskCreationForm" class="form-grid">
+                    <!-- 消息内容输入 -->
+                    <div class="form-group full-width">
+                        <label for="messageContent" class="form-label">消息内容 <span class="required">*</span></label>
+                        <textarea id="messageContent" class="message-input form-control" placeholder="输入要发送的消息内容，可以粘贴段落文本" rows="4"></textarea>
+                        <div class="error-message" id="messageContentError"></div>
+                        <div class="char-count mt-1 text-right text-muted" id="charCount">0/500</div>
                     </div>
+
+                    <!-- 信息接收者 -->
+                    <div class="form-group full-width">
+                        <label for="recipient" class="form-label">信息接收者 <span class="required">*</span></label>
+                        <input type="text" id="recipient" class="form-control" placeholder="请输入接收者的手机号或姓名">
+                        <small class="form-text text-muted mt-1">支持输入已存联系人姓名或11位手机号</small>
+                        <div class="error-message" id="recipientError"></div>
+                    </div>
+
+                    <!-- 时间设置和重复选项 -->
+                    <div class="task-creation-row improved-row">
+                        <div class="time-setting">
+                            <label for="sendTime" class="form-label">发送时间</label>
+                            <input type="datetime-local" id="sendTime" class="form-control" value="2025-08-13T20:41">
+                        </div>
+                        <div class="repeat-setting">
+                            <label for="repeatOption" class="form-label">重复选项</label>
+                            <div class="repeat-dropdown improved-dropdown">
+                                <button class="repeat-btn">
+                                    <span>重复: <span class="current-repeat">不重复</span></span>
+                                    <i class="dropdown-icon"></i>
+                                </button>
+                                <div class="repeat-options">
+                                    <div class="repeat-option" data-value="once">不重复</div>
+                                    <div class="repeat-option" data-value="daily">每天</div>
+                                    <div class="repeat-option custom-repeat" data-value="custom">自定义...</div>
+                                    <div class="custom-days" style="display: none;">
+                                        <div class="day-selector">
+                                            <label><input type="checkbox" data-day="mon"> 周一</label>
+                                            <label><input type="checkbox" data-day="tue"> 周二</label>
+                                            <label><input type="checkbox" data-day="wed"> 周三</label>
+                                            <label><input type="checkbox" data-day="thu"> 周四</label>
+                                            <label><input type="checkbox" data-day="fri"> 周五</label>
+                                            <label><input type="checkbox" data-day="sat"> 周六</label>
+                                            <label><input type="checkbox" data-day="sun"> 周日</label>
+                                        </div>
+                                        <button class="confirm-custom btn btn-primary mt-2">确认</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button type="submit" id="addTaskBtn" class="add-task-btn btn btn-primary">
+                                <i class="plus-icon"></i> 添加任务
+                            </button>
+                            <button id="startAllTasksBtn" class="execute-btn btn-primary">
+                                <i class="play-icon"></i> 开始执行
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- 任务提示区 -->
+        <div class="notification-container mt-4" id="notificationContainer">
+            <div class="notification error animate-fade-in" style="display: none;">
+                <i class="error-icon"></i> <span id="errorMessage">微信未登录，请登录微信后重启枫叶</span>
+            </div>
+        </div>
+
+        <!-- 任务列表区域 -->
+        <section class="task-list-container mt-8 animate-slide-up" style="animation-delay: 0.2s;">
+            <div class="task-list-header">
+                <h2>任务列表</h2>
+                <div class="task-list-actions">
+                    <button class="btn btn-outline-primary" id="exportTasksBtn">
+                        <i class="export-icon"></i> 导出任务
+                    </button>
+                    <button class="btn btn-outline-secondary" id="importTasksBtn">
+                        <i class="import-icon"></i> 导入任务
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- 任务提示区 -->
-    <div class="task-notification">
-        <div class="info-message">点击右上角将任务添加到左侧，再点击开始执行</div>
-        <div class="error-message">[08-13 20:41:53]: 微信未登录，请登录微信后重启枫叶</div>
-    </div>
-
-    <!-- 任务列表区域 -->
-    <div class="task-list-container">
-        <div class="task-list-header">
-            <h2>任务列表</h2>
-            <button id="add-task-btn" class="add-task-btn gradient-btn">添加任务</button>
-        </div>
-        <div class="task-list" id="taskList">
-            <!-- 任务项将通过JavaScript动态添加 -->
-            <div class="empty-task-state">
-                <img src="{{ url_for('static', filename='images/empty-tasks.svg') }}" alt="暂无任务">
-                <p>还没有添加任务，点击右上角添加按钮创建新任务</p>
+            <div class="task-list" id="taskList">
+                <!-- 任务项将通过JavaScript动态添加 -->
+                <div class="empty-task-state">
+                    <img src="{{ url_for('static', filename='images/empty-tasks.svg') }}" alt="暂无任务" class="empty-state-image">
+                    <h3 class="empty-state-title">暂无任务</h3>
+                    <p class="empty-state-description">点击上方"添加任务"按钮创建新任务</p>
+                    <button class="btn btn-primary mt-3" id="createFirstTaskBtn">创建第一个任务</button>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- 底部操作区 -->
-    <div class="bottom-operation">
-        <div class="ghost-buttons">
-            <button class="ghost-btn">保存任务</button>
-            <button class="ghost-btn">导入任务</button>
-        </div>
-        <div class="checkbox-group">
-            <label class="checkbox-item">
-                <input type="checkbox"> 阻止系统休眠
-            </label>
-            <label class="checkbox-item">
-                <input type="checkbox"> 任务完成关机
-            </label>
-        </div>
-        <button class="execute-btn gradient-btn">开始执行</button>
-    </div>
+        </section>
+    </main>
+</div>
 {% endblock %}
+
+<script src="{{ url_for('static', filename='js/auto_info.js') }}"></script>

@@ -8,11 +8,33 @@
     --background-color: #F9FAFE;
     --card-bg-color: #ECECF9;
     --error-color: #FF6B6B;
+    --success-color: #4CAF50;
+    --info-color: #2196F3;
+    --warning-color: #FFC107;
     --dark-bg: #1E1E32;
     --sidebar-width: 220px;
     --content-padding: 24px;
     --card-radius: 12px;
     --button-radius: 8px;
+    --transition-speed: 0.3s;
+    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --form-control-height: 42px;
+    --input-border-color: #DDDDDD;
+    --input-focus-border-color: var(--primary-color);
+}
+
+/* 暗色模式变量 */
+body.dark-mode {
+    --primary-color: #9D65F9;
+    --primary-light: #B98CFC;
+    --gradient-primary: linear-gradient(135deg, #9D65F9 0%, #7B4EF3 100%);
+    --background-color: #1A1A2E;
+    --card-bg-color: #16213E;
+    --text-color: #F0F0F0;
+    --text-muted: #A0A0A0;
+    --dark-bg: #0F3460;
+    --input-border-color: #333344;
+    --input-focus-border-color: var(--primary-light);
 }
 
 * {
@@ -24,10 +46,672 @@
 
 body {
     background-color: var(--background-color);
-    color: #333;
+    color: var(--text-color, #333);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* 暗色模式样式 */
+body.dark-mode .sidebar {
+    background-color: var(--dark-bg);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .menu-item {
+    color: var(--text-muted);
+}
+
+body.dark-mode .menu-item:hover,
+body.dark-mode .menu-item.active {
+    color: var(--primary-light);
+    background-color: rgba(157, 101, 249, 0.1);
+}
+
+body.dark-mode .page-header h1 {
+    color: var(--text-color);
+}
+
+body.dark-mode .stat-desc {
+    color: var(--text-muted);
+}
+
+body.dark-mode .welcome-content h2,
+body.dark-mode .welcome-content p {
+    color: var(--text-color);
+}
+
+body.dark-mode .storage-info {
+    color: var(--text-muted);
+}
+
+/* 添加一些高级动画效果 */
+.gradient-card {
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gradient-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: var(--shadow-hover);
+    z-index: 10;
+}
+
+.featured-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* 状态卡片动画 */
+.stat-card {
+    transition: all var(--transition-speed);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* 按钮动画增强 */
+.card-btn {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.card-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 加载动画增强 */
+@keyframes pulse-soft {
+    0% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.6; transform: scale(1); }
+}
+
+.loading-pulse {
+    animation: pulse-soft 2s infinite;
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 骨架屏加载效果 */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* 数字滚动动画 */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.count-animation {
+    animation: countUp 0.5s ease-out forwards;
+}
+
+/* auto_info.html 页面样式 */
+.auto-info-container {
+    max-width: 100vw;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-color, #333);
+}
+
+.page-subtitle {
+    font-size: 16px;
+    color: var(--text-muted, #666);
+}
+
+.task-creation-card {
+    background-color: white;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 24px;
+    transition: all var(--transition-speed);
+}
+
+body.dark-mode .task-creation-card {
+    background-color: var(--card-bg-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+body.dark-mode .card-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-body {
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* 调整时间设置和重复选项区域的间距 */
+.row .form-group {
+    margin-bottom: 0;
+}
+
+/* 确保发送时间、重复选项和添加任务按钮在同一行 */
+@media (min-width: 768px) {
+    .row.align-items-end {
+        display: flex;
+        align-items: flex-end !important;
+    }
+
+    .row.align-items-end .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color, #333);
+}
+
+.form-control {
+    width: 100%;
+    height: var(--form-control-height);
+    padding: 0 16px;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--button-radius);
+    font-size: 15px;
+    transition: all var(--transition-speed);
+    background-color: white;
+    color: var(--text-color, #333);
+}
+
+body.dark-mode .form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 0 3px rgba(123, 78, 243, 0.15);
+}
+
+textarea.form-control {
+    height: auto;
+    min-height: 120px;
+    padding: 12px 16px;
+    resize: vertical;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -12px;
+}
+
+.form-row > .form-group {
+    padding: 0 12px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.message-input {
+    width: 100%;
+    resize: vertical;
+}
+
+.input-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+body.dark-mode .icon-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.icon-btn:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode .icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background-color: #333;
+    color: white;
+    font-size: 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    margin-bottom: 8px;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.repeat-dropdown {
+    position: relative;
+}
+
+.repeat-btn {
+    width: 100%;
+    height: var(--form-control-height);
+    padding: 0 16px;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--button-radius);
+    background-color: white;
+    color: var(--text-color, #333);
+    font-size: 15px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body.dark-mode .repeat-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.repeat-btn:hover {
+    border-color: var(--input-focus-border-color);
+}
+
+.repeat-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-radius: var(--button-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    z-index: 10;
+    display: none;
+}
+
+body.dark-mode .repeat-options {
+    background-color: var(--card-bg-color);
+}
+
+.repeat-dropdown:hover .repeat-options {
+    display: block;
+}
+
+.repeat-option {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    color: var(--text-color, #333);
+}
+
+.repeat-option:hover {
+    background-color: #f5f5f5;
+}
+
+body.dark-mode .repeat-option:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.custom-days {
+    padding: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+body.dark-mode .custom-days {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.day-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.day-selector label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-color, #333);
+}
+
+.checkbox-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-color, #333);
+}
+
+.checkbox-item input {
+    margin-right: 8px;
+}
+
+.advanced-settings {
+    margin-top: 24px;
+}
+
+.toggle-advanced-settings {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-icon {
+    margin-left: 8px;
+    transition: transform var(--transition-speed);
+}
+
+.advanced-settings.open .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.advanced-options {
+    margin-top: 16px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: var(--button-radius);
+}
+
+body.dark-mode .advanced-options {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.add-task-btn {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: var(--button-radius);
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-task-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(123, 78, 243, 0.2);
+}
+
+.task-notification-container {
+    margin-bottom: 24px;
+}
+
+.alert {
+    padding: 16px;
+    border-radius: var(--button-radius);
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.alert-info {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: var(--info-color);
+}
+
+.alert-error {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: var(--error-color);
+}
+
+.alert-success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+}
+
+.task-list-container {
+    margin-bottom: 24px;
+}
+
+.task-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.task-list-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: var(--button-radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    border: none;
+}
+
+.btn-outline-primary {
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-outline-secondary {
+    border: 1px solid #ddd;
+    background-color: transparent;
+    color: #666;
+}
+
+body.dark-mode .btn-outline-secondary {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-muted);
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f5f5f5;
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.task-list {
+    background-color: white;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 16px;
+    min-height: 300px;
+}
+
+body.dark-mode .task-list {
+    background-color: var(--card-bg-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.empty-task-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.empty-state-image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+
+.empty-state-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color, #333);
+}
+
+.empty-state-description {
+    color: var(--text-muted, #666);
+    margin-bottom: 24px;
+}
+
+.bottom-operation {
+    background-color: white;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .bottom-operation {
+    background-color: var(--card-bg-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.execute-btn {
+    background: var(--gradient-standard);
+    color: white;
+    border: none;
+    border-radius: var(--button-radius);
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.execute-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 159, 67, 0.2);
+}
+
+/* 动画效果 */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .form-row > .form-group {
+        min-width: 100%;
+        margin-bottom: 20px;
+    }
+    .form-row {
+        margin: 0;
+    }
+    .task-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .task-list-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .bottom-operation .row {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .bottom-operation .col-md-6 {
+        width: 100%;
+    }
+    .checkbox-group {
+        margin-bottom: 16px;
+    }
+    .execute-btn {
+        width: 100%;
+    }
 }
 
 .container {
@@ -49,6 +733,7 @@ body {
     top: 0;
     left: 0;
     z-index: 100;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 /* 右侧内容区 */
@@ -58,6 +743,7 @@ body {
     overflow-y: auto;
     margin-left: var(--sidebar-width);
     height: 100vh;
+    transition: background-color var(--transition-speed);
 }
 
 /* 左侧导航 */
