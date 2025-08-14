@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>任务管理</h1>
+    </div>
+
+    <!-- 批量操作栏 -->
+    <div class="batch-actions">
+        <label class="checkbox-item">
+            <input type="checkbox" class="select-all"> 全选
+        </label>
+        <button class="action-btn start-selected">批量启动</button>
+        <button class="action-btn delete-selected">批量删除</button>
+    </div>
+
+    <!-- 任务列表 -->
+    <div class="task-list">
+        <!-- 任务项 1 - 待执行 -->
+        <div class="task-item">
+            <input type="checkbox" class="task-checkbox">
+            <div class="task-type auto-info">自动信息</div>
+            <div class="task-content">
+                <h4 class="task-title">每日早安问候</h4>
+                <p class="task-desc">发送给「家人群」| 每天 07:30</p>
+            </div>
+            <div class="task-status">
+                <span class="status-icon">⏸️</span>
+                <span class="status-text status-pending">待执行</span>
+            </div>
+            <div class="task-actions">
+                <button class="action-btn">编辑</button>
+                <button class="action-btn">删除</button>
+            </div>
+        </div>
+
+        <!-- 任务详情 1 -->
+        <div class="task-detail" style="max-height: 0; overflow: hidden; transition: max-height 0.3s;">
+            <div class="task-notification">
+                <div class="info-message">任务详情</div>
+                <p>消息内容: 早上好！今天是美好的一天，记得吃早餐哦～</p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务项 2 - 执行中 -->
+        <div class="task-item">
+            <input type="checkbox" class="task-checkbox">
+            <div class="task-type ai-takeover">AI 接管</div>
+            <div class="task-content">
+                <h4 class="task-title">智能回复客户咨询</h4>
+                <p class="task-desc">监控「客户群」| 实时响应</p>
+            </div>
+            <div class="task-status">
+                <span class="status-icon" style="animation: spin 1s linear infinite;">🔄</span>
+                <span class="status-text status-running">执行中</span>
+            </div>
+            <div class="task-actions">
+                <button class="action-btn">编辑</button>
+                <button class="action-btn">暂停</button>
+            </div>
+        </div>
+
+        <!-- 任务详情 2 -->
+        <div class="task-detail" style="max-height: 0; overflow: hidden; transition: max-height 0.3s;">
+            <div class="task-notification">
+                <div class="info-message">任务详情</div>
+                <p>AI 模型: GPT-4</p>
+                <p>已处理消息: 12/20</p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 60%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务项 3 - 已完成 -->
+        <div class="task-item">
+            <input type="checkbox" class="task-checkbox">
+            <div class="task-type timed-send">定时发送</div>
+            <div class="task-content">
+                <h4 class="task-title">项目进度报告</h4>
+                <p class="task-desc">发送给「项目群」| 昨天 18:00</p>
+            </div>
+            <div class="task-status">
+                <span class="status-icon">✓</span>
+                <span class="status-text status-completed">已完成</span>
+            </div>
+            <div class="task-actions">
+                <button class="action-btn">编辑</button>
+                <button class="action-btn">删除</button>
+            </div>
+        </div>
+
+        <!-- 任务详情 3 -->
+        <div class="task-detail" style="max-height: 0; overflow: hidden; transition: max-height 0.3s;">
+            <div class="task-notification">
+                <div class="info-message">任务详情</div>
+                <p>发送状态: 成功发送给 5 位群成员</p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 100%; background: linear-gradient(90deg, #10B981, #34D399);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务项 4 - 执行失败 -->
+        <div class="task-item">
+            <input type="checkbox" class="task-checkbox">
+            <div class="task-type auto-info">自动信息</div>
+            <div class="task-content">
+                <h4 class="task-title">每周报告提醒</h4>
+                <p class="task-desc">发送给「部门群」| 昨天 17:00</p>
+            </div>
+            <div class="task-status">
+                <span class="status-icon">⚠️</span>
+                <span class="status-text status-failed">执行失败</span>
+            </div>
+            <div class="task-actions">
+                <button class="action-btn">编辑</button>
+                <button class="action-btn">重试</button>
+            </div>
+        </div>
+
+        <!-- 任务详情 4 -->
+        <div class="task-detail" style="max-height: 0; overflow: hidden; transition: max-height 0.3s;">
+            <div class="task-notification">
+                <div class="error-message">错误原因: 微信未登录，请登录微信后重试</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 45%; background: linear-gradient(90deg, #EF4444, #F87171);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务项 5 - 已暂停 -->
+        <div class="task-item">
+            <input type="checkbox" class="task-checkbox">
+            <div class="task-type ai-takeover">AI 接管</div>
+            <div class="task-content">
+                <h4 class="task-title">自动回复评论</h4>
+                <p class="task-desc">监控「公众号」| 已暂停</p>
+            </div>
+            <div class="task-status">
+                <span class="status-icon">⏹️</span>
+                <span class="status-text status-paused">已暂停</span>
+            </div>
+            <div class="task-actions">
+                <button class="action-btn">编辑</button>
+                <button class="action-btn">启动</button>
+            </div>
+        </div>
+
+        <!-- 任务详情 5 -->
+        <div class="task-detail" style="max-height: 0; overflow: hidden; transition: max-height 0.3s;">
+            <div class="task-notification">
+                <div class="info-message">任务详情</div>
+                <p>暂停原因: 手动暂停</p>
+                <p>上次运行: 2025-08-12 15:30</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 空状态示例 (默认隐藏) -->
+    <div class="empty-state" style="display: none;">
+        <div class="empty-state-icon">📝</div>
+        <div class="empty-state-text">点击「+」添加第一个自动任务吧～</div>
+        <button class="execute-btn gradient-btn">新建任务</button>
+    </div>
+
+    <!-- 悬浮按钮 -->
+    <button class="floating-btn">+</button>
+{% endblock %}
