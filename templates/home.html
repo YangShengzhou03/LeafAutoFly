@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>LeafAuto Pro</h1>
+        <h1>LeafAuto Web</h1>
     </div>
 
     <!-- 套餐卡片区 -->
@@ -56,37 +56,37 @@
 
     <!-- 系统状态统计区 -->
     <div class="stats-container">
-        <div class="stat-card stat-card-1">
-
-            <div class="stat-title">自动化能力</div>
-            <div class="stat-value animated" style="--value: 12;">12%</div>
+        <div class="stat-card status-card automation">
+            <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+            <h3>自动化能力</h3>
+            <div class="status-value percentage animated" style="--value: 12;">12%</div>
             <div class="stat-desc">当前自动化任务完成率</div>
             <div class="stat-progress">
                 <div class="progress-bar" style="--progress-width: 12%;"></div>
             </div>
         </div>
 
-        <div class="stat-card stat-card-2">
-
-            <div class="stat-title">AI 能力</div>
-            <div class="stat-value animated" style="--value: 6;">6%</div>
+        <div class="stat-card status-card ai">
+            <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" x2="6" y1="1" y2="4"></line><line x1="10" x2="10" y1="1" y2="4"></line><line x1="14" x2="14" y1="1" y2="4"></line></svg></div>
+            <h3>AI 能力</h3>
+            <div class="status-value percentage animated" style="--value: 6;">6%</div>
             <div class="stat-desc">AI 辅助功能使用率</div>
             <div class="stat-progress">
                 <div class="progress-bar" style="--progress-width: 6%;"></div>
             </div>
         </div>
 
-        <div class="stat-card stat-card-3">
-
-            <div class="stat-title">系统状态</div>
-            <div class="stat-value animated">正常运行</div>
+        <div class="stat-card status-card system">
+            <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+            <h3>系统状态</h3>
+            <div class="status-value normal">正常运行</div>
             <div class="stat-desc">无异常，运行稳定</div>
         </div>
 
-        <div class="stat-card stat-card-4">
-
-            <div class="stat-title">更新状态</div>
-            <div class="stat-value animated">已是最新版本</div>
+        <div class="stat-card status-card update">
+            <div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="6"></line><line x1="12" x2="12" y1="18" y2="22"></line><line x1="4.93" x2="7.76" y1="4.93" y2="7.76"></line><line x1="16.24" x2="19.07" y1="16.24" y2="19.07"></line><line x1="2" x2="6" y1="12" y2="12"></line><line x1="18" x2="22" y1="12" y2="12"></line><line x1="4.93" x2="7.76" y1="19.07" y2="16.24"></line><line x1="16.24" x2="19.07" y1="7.76" y2="4.93"></line></svg></div>
+            <h3>更新状态</h3>
+            <div class="status-value updated">已是最新版本</div>
             <div class="stat-desc">版本号: v1.0.0</div>
         </div>
     </div>
@@ -94,7 +94,7 @@
     <!-- 欢迎语 -->
     <div class="welcome-section">
         <div class="welcome-content">
-            <h2>欢迎使用 LeafAuto Pro</h2>
+            <h2>欢迎使用 LeafAuto Web</h2>
             <p>LeafAuto 是我在 2024 年大二时写的练习程序，主要用于自动化微信消息发送和管理。</p>
             <div class="welcome-stats">
                 <div class="welcome-stat">

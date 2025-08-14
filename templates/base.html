@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeafAuto Pro</title>
+    <title>LeafAuto Web</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         /* 基础优化样式 */
@@ -183,10 +183,10 @@
 
         // 全局URL映射配置
         const URL_MAP = {
-            'home': '{{ url_for('home') }}',
-            'auto_info': '{{ url_for('auto_info') }}',
-            'ai_takeover': '{{ url_for('ai_takeover') }}',
-            'task_list': '{{ url_for('task_list') }}',
+            'home': "{{ url_for('home') }}",
+            'auto_info': "{{ url_for('auto_info') }}",
+            'ai_takeover': "{{ url_for('ai_takeover') }}",
+            'task_list': "{{ url_for('task_list') }}",
             'split-send': '#split-send'
         };
 
@@ -250,7 +250,7 @@
                 else if (path.includes('split-send')) page = 'split-send';
 
                 // 使用全局URL_MAP
-                let url = URL_MAP[page] || '{{ url_for('home') }}';
+                let url = URL_MAP[page] || "{{ url_for('home') }}";
 
                 // 加载对应页面
                 loadPageContent(page, url);

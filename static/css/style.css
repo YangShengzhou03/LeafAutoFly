@@ -618,22 +618,6 @@ body {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.stat-card-1 {
-    border-top: 4px solid #7B4EF3;
-}
-
-.stat-card-2 {
-    border-top: 4px solid #4E6EF2;
-}
-
-.stat-card-3 {
-    border-top: 4px solid #36CFC9;
-}
-
-.stat-card-4 {
-    border-top: 4px solid #FF7D00;
-}
-
 .stat-icon {
     font-size: 28px;
     margin-bottom: 15px;
@@ -687,6 +671,41 @@ body {
     font-size: 14px;
     color: var(--text-muted);
     margin-bottom: 15px;
+    text-align: center;
+}
+
+/* 进度条样式调整 */
+.stat-progress {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    height: 8px;
+    background-color: #F3F4F6;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 进度条颜色与卡片边框颜色匹配 */
+.status-card.automation .progress-bar {
+    background-color: #7B4EF3;
+}
+
+.status-card.ai .progress-bar {
+    background-color: #4E6EF2;
+}
+
+/* 进度条动画 */
+@keyframes progressFill {
+    from { width: 0; }
+    to { width: var(--progress-width); }
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 4px;
+    width: var(--progress-width);
+    animation: progressFill 1.5s ease-in-out forwards;
 }
 
 .stat-progress {
@@ -698,6 +717,108 @@ body {
 }
 
 /* 进度条动画 */
+
+/* 系统状态卡片样式 */
+.status-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.status-icon {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+}
+
+.status-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.status-value {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+/* 百分比状态值样式 */
+.status-value.percentage {
+    background-color: rgba(123, 78, 243, 0.1);
+    color: #7B4EF3;
+    position: relative;
+    display: inline-block;
+}
+
+/* 添加数字增长动画效果 */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.status-value.animated {
+    animation: countUp 1s ease-out forwards;
+}
+
+/* 确保所有状态卡片样式统一 */
+.status-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+/* 不同状态卡片的顶部边框颜色 */
+.status-card.automation {
+    border-top: 4px solid #7B4EF3;
+}
+
+.status-card.ai {
+    border-top: 4px solid #4E6EF2;
+}
+
+.status-card.system {
+    border-top: 4px solid #36CFC9;
+}
+
+.status-card.update {
+    border-top: 4px solid #FF7D00;
+}
+
+.status-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-top-width: 6px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 系统状态颜色 */
+.status-value.normal {
+    background-color: rgba(0, 200, 83, 0.1);
+    color: #00C853;
+}
+
+.status-value.updated {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3B82F6;
+}
+
+/* 异常状态样式 */
+.status-value.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+}
 @keyframes progressFill {
     from { width: 0; }
     to { width: var(--progress-width); }

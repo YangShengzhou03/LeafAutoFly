@@ -6,19 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 处理按钮点击态
 
-    // 处理按钮点击态
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.style.transform = 'translateY(2px)';
-        });
-        button.addEventListener('mouseup', function() {
-            this.style.transform = 'translateY(0)';
-        });
-        button.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
+    // 处理按钮点击态，排除升级专业版按钮
+const buttons = document.querySelectorAll('button:not(.upgrade-btn)');
+buttons.forEach(button => {
+    button.addEventListener('mousedown', function() {
+        this.style.transform = 'translateY(2px)';
     });
+    button.addEventListener('mouseup', function() {
+        this.style.transform = 'translateY(0)';
+    });
+    button.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
 
     // 处理执行按钮的加载态
     const executeButtons = document.querySelectorAll('.execute-btn');
