@@ -4,47 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4edc7f0-db0b-4180-9e7e-ba7485314f15" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/LeafAuto_Pro.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/auto_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auto_info.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
-    <envs>
-      <env key="FLASK_APP" value="app" />
-    </envs>
-    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
-    <option name="myEnvs">
-      <map>
-        <entry key="FLASK_APP" value="app" />
-      </map>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2vrHzRhl6FJ23fzAWtRHZBIMi0C" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -54,12 +26,9 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.Application.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Code/Python/LeafAuto_Web&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -70,13 +39,8 @@
   }
 }</component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Code\Python\LeafAuto_Pro" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LeafAuto_Pro" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -89,7 +53,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -100,7 +63,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
   </component>
@@ -115,458 +77,51 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b4edc7f0-db0b-4180-9e7e-ba7485314f15" name="Changes" comment="update" />
-      <created>1744896536109</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1744896536109</updated>
-      <workItem from="1744896537246" duration="1059000" />
-      <workItem from="1744897635705" duration="156000" />
-      <workItem from="1744897799974" duration="813000" />
-      <workItem from="1744938781399" duration="280000" />
-      <workItem from="1744939546731" duration="142000" />
-      <workItem from="1744939746922" duration="8000" />
-      <workItem from="1745159598589" duration="309000" />
-      <workItem from="1749462696288" duration="16395000" />
-      <workItem from="1749516797143" duration="19910000" />
-      <workItem from="1749556436764" duration="37000" />
-      <workItem from="1749556744659" duration="19000" />
-      <workItem from="1749556885534" duration="705000" />
-      <workItem from="1749558150948" duration="210000" />
-      <workItem from="1751094744253" duration="1512000" />
-      <workItem from="1751120307077" duration="15402000" />
-      <workItem from="1751178517646" duration="10382000" />
-      <workItem from="1751190825565" duration="646000" />
-      <workItem from="1751212940304" duration="195000" />
-      <workItem from="1751213189642" duration="684000" />
-      <workItem from="1751213932619" duration="656000" />
-      <workItem from="1751215721780" duration="238000" />
-      <workItem from="1751215967195" duration="5000" />
-      <workItem from="1751216212317" duration="1329000" />
-      <workItem from="1751217591031" duration="45000" />
-      <workItem from="1751289944266" duration="6000" />
-      <workItem from="1751290145690" duration="2821000" />
-      <workItem from="1751382202857" duration="265000" />
-      <workItem from="1751464652427" duration="475000" />
-      <workItem from="1751555065817" duration="823000" />
-      <workItem from="1751641132232" duration="681000" />
-      <workItem from="1751780077524" duration="13320000" />
-      <workItem from="1751794802039" duration="6000" />
-      <workItem from="1751795543320" duration="3033000" />
-      <workItem from="1751799759487" duration="463000" />
-      <workItem from="1751800709668" duration="127000" />
-      <workItem from="1751896422566" duration="2025000" />
-      <workItem from="1751899350611" duration="54000" />
-      <workItem from="1752324842395" duration="516000" />
-      <workItem from="1752338214802" duration="19000" />
-      <workItem from="1752338413027" duration="6000" />
-      <workItem from="1754142887876" duration="9813000" />
-      <workItem from="1754181236297" duration="14607000" />
-      <workItem from="1754196070722" duration="15000" />
-      <workItem from="1754196753458" duration="955000" />
-      <workItem from="1754197864268" duration="13000" />
-      <workItem from="1754198358980" duration="219000" />
-      <workItem from="1754199231288" duration="840000" />
-      <workItem from="1754232753375" duration="1127000" />
-      <workItem from="1754657358583" duration="806000" />
-      <workItem from="1755096883530" duration="70000" />
-      <workItem from="1755096959202" duration="102000" />
-      <workItem from="1755129747471" duration="136000" />
-      <workItem from="1755129888183" duration="9000" />
     </task>
-    <task id="LOCAL-00054" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751789523052</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
       <option name="project" value="LOCAL" />
-      <updated>1751789523052</updated>
     </task>
-    <task id="LOCAL-00055" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751789961493</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
       <option name="project" value="LOCAL" />
-      <updated>1751789961493</updated>
     </task>
-    <task id="LOCAL-00056" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751792148232</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
       <option name="project" value="LOCAL" />
-      <updated>1751792148232</updated>
     </task>
-    <task id="LOCAL-00057" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751792629898</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
       <option name="project" value="LOCAL" />
-      <updated>1751792629898</updated>
     </task>
-    <task id="LOCAL-00058" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751792864662</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
       <option name="project" value="LOCAL" />
-      <updated>1751792864662</updated>
     </task>
-    <task id="LOCAL-00059" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751793516163</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
       <option name="project" value="LOCAL" />
-      <updated>1751793516163</updated>
     </task>
-    <task id="LOCAL-00060" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751797239522</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
       <option name="project" value="LOCAL" />
-      <updated>1751797239522</updated>
     </task>
-    <task id="LOCAL-00061" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751797318540</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
       <option name="project" value="LOCAL" />
-      <updated>1751797318540</updated>
     </task>
-    <task id="LOCAL-00062" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751799332424</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
       <option name="project" value="LOCAL" />
-      <updated>1751799332424</updated>
     </task>
-    <task id="LOCAL-00063" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751800040372</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
       <option name="project" value="LOCAL" />
-      <updated>1751800040372</updated>
     </task>
-    <task id="LOCAL-00064" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751800780066</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
       <option name="project" value="LOCAL" />
-      <updated>1751800780066</updated>
     </task>
-    <task id="LOCAL-00065" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751898368578</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
       <option name="project" value="LOCAL" />
-      <updated>1751898368578</updated>
     </task>
-    <task id="LOCAL-00066" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751898396481</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
       <option name="project" value="LOCAL" />
-      <updated>1751898396481</updated>
     </task>
-    <task id="LOCAL-00067" summary="LeafAuto PRO更新">
       <option name="closed" value="true" />
-      <created>1751899360654</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
       <option name="project" value="LOCAL" />
-      <updated>1751899360654</updated>
     </task>
-    <task id="LOCAL-00068" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1752325296720</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1752325296720</updated>
-    </task>
-    <task id="LOCAL-00069" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754149721553</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1754149721553</updated>
-    </task>
-    <task id="LOCAL-00070" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754150276026</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1754150276026</updated>
-    </task>
-    <task id="LOCAL-00071" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754150776658</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1754150776658</updated>
-    </task>
-    <task id="LOCAL-00072" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754181880562</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1754181880562</updated>
-    </task>
-    <task id="LOCAL-00073" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754183045137</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1754183045137</updated>
-    </task>
-    <task id="LOCAL-00074" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754184224644</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1754184224644</updated>
-    </task>
-    <task id="LOCAL-00075" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754184813306</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1754184813306</updated>
-    </task>
-    <task id="LOCAL-00076" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754189262239</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1754189262239</updated>
-    </task>
-    <task id="LOCAL-00077" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754191104504</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1754191104504</updated>
-    </task>
-    <task id="LOCAL-00078" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754192547474</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1754192547474</updated>
-    </task>
-    <task id="LOCAL-00079" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754193671081</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1754193671081</updated>
-    </task>
-    <task id="LOCAL-00080" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754194408157</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1754194408157</updated>
-    </task>
-    <task id="LOCAL-00081" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754194713218</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1754194713218</updated>
-    </task>
-    <task id="LOCAL-00082" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754194925422</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1754194925422</updated>
-    </task>
-    <task id="LOCAL-00083" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754195577415</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1754195577415</updated>
-    </task>
-    <task id="LOCAL-00084" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754195772240</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1754195772240</updated>
-    </task>
-    <task id="LOCAL-00085" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754195815159</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1754195815159</updated>
-    </task>
-    <task id="LOCAL-00086" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754196076776</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1754196076777</updated>
-    </task>
-    <task id="LOCAL-00087" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754197077177</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1754197077177</updated>
-    </task>
-    <task id="LOCAL-00088" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754197565506</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1754197565506</updated>
-    </task>
-    <task id="LOCAL-00089" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754197660187</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1754197660187</updated>
-    </task>
-    <task id="LOCAL-00090" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754197690442</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1754197690442</updated>
-    </task>
-    <task id="LOCAL-00091" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754197870482</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1754197870482</updated>
-    </task>
-    <task id="LOCAL-00092" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754198569913</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1754198569914</updated>
-    </task>
-    <task id="LOCAL-00093" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754199907302</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1754199907302</updated>
-    </task>
-    <task id="LOCAL-00094" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754199984075</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1754199984075</updated>
-    </task>
-    <task id="LOCAL-00095" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754233877749</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1754233877749</updated>
-    </task>
-    <task id="LOCAL-00096" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754657681833</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1754657681833</updated>
-    </task>
-    <task id="LOCAL-00097" summary="LeafAuto PRO更新">
-      <option name="closed" value="true" />
-      <created>1754657737051</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1754657737051</updated>
-    </task>
-    <task id="LOCAL-00098" summary="update">
-      <option name="closed" value="true" />
-      <created>1755093987871</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1755093987871</updated>
-    </task>
-    <task id="LOCAL-00099" summary="update">
-      <option name="closed" value="true" />
-      <created>1755094020306</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1755094020306</updated>
-    </task>
-    <task id="LOCAL-00100" summary="update">
-      <option name="closed" value="true" />
-      <created>1755094060921</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1755094060921</updated>
-    </task>
-    <task id="LOCAL-00101" summary="update">
-      <option name="closed" value="true" />
-      <created>1755096945924</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1755096945924</updated>
-    </task>
-    <task id="LOCAL-00102" summary="update">
-      <option name="closed" value="true" />
-      <created>1755097021948</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1755097021948</updated>
-    </task>
-    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -574,13 +129,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="LeafAuto PRO" />
-    <MESSAGE value="LeafAuto PRO更新" />
     <MESSAGE value="update" />
     <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LeafAuto_Pro$Application.coverage" NAME="Application Coverage Results" MODIFIED="1754658154242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/LeafAuto_Web$app.coverage" NAME="app Coverage Results" MODIFIED="1755097034503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
