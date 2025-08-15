@@ -120,9 +120,6 @@ function handleUrlParams() {
         document.getElementById('customDays').style.display = 
             taskData.repeatType === 'custom' ? 'block' : 'none';
     }}
-    console.log('初始化表单');
-    // 初始渲染空任务列表
-    renderTaskList(tasks);
     
     // 设置默认时间为当前时间
     const now = new Date();
