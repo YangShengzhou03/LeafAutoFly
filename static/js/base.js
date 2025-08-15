@@ -1,18 +1,15 @@
 // 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化自动信息任务列表
-    initAutoInfoTaskList();
-
     // 初始化欢迎区域动画
-    initWelcomeAnimation();
+initWelcomeAnimation();
 
-    // 检查是否存在任务列表元素再初始化
-    if (document.getElementById('taskList')) {
-        // 加载本地存储中的任务
-        loadAutoInfoTasks();
-        // 设置表单验证
-        setupFormValidation();
-    }
+// 仅在首页加载自动信息任务列表
+if (window.location.pathname === '/' && document.getElementById('taskList')) {
+    // 加载本地存储中的任务
+    loadAutoInfoTasks();
+    // 设置表单验证
+    setupFormValidation();
+}
 
     // 按钮点击态处理
     const buttons = document.querySelectorAll('button');

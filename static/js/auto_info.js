@@ -205,11 +205,31 @@ function initCharCount() {
 }
 
 /**
+ * 保存任务到本地存储
+ */
+function saveTasks() {
+    try {
+        localStorage.setItem('autoInfoTasks', JSON.stringify(tasks));
+        console.log('Tasks saved to localStorage');
+    } catch (error) {
+        console.error('Error saving tasks:', error);
+        showNotification('保存任务失败: ' + error.message, 'error');
+    }
+}
+
+/**
  * 加载任务
  */
 function loadTasks() {
     try {
-        console.log('Loaded tasks from memory:', tasks);
+        const savedTasks = localStorage.getItem('autoInfoTasks');
+        if (savedTasks) {
+            tasks = JSON.parse(savedTasks);
+            console.log('Loaded tasks from localStorage:', tasks);
+        } else {
+            tasks = [];
+            console.log('No saved tasks found, initialized empty array');
+        }
         renderTaskList(tasks);
     } catch (error) {
         console.error('Error loading tasks:', error);
@@ -357,6 +377,8 @@ function addTask(taskData) {
     try {
         tasks.push(taskData);
         console.log('Task added successfully:', taskData);
+        // 保存到本地存储
+        saveTasks();
         // 通过重新加载任务来确保DOM更新
         loadTasks();
     } catch (error) {
@@ -370,7 +392,6 @@ function addTask(taskData) {
  * @param {string} taskId - 任务ID
  */
 function editTask(taskId) {
-    const tasks = JSON.parse(localStorage.getItem('autoInfoTasks')) || [];
     const task = tasks.find(t => t.id === taskId);
 
     if (!task) return;
@@ -425,12 +446,16 @@ function deleteTask(taskId) {
             // 等待动画完成后再更新列表
             setTimeout(() => {
                 tasks = tasks.filter(task => task.id !== taskId);
+                // 保存到本地存储
+                saveTasks();
                 renderTaskList(tasks);
                 showNotification('任务已删除', 'info');
             }, 300);
         } else {
             // 如果找不到元素，直接更新列表
             tasks = tasks.filter(task => task.id !== taskId);
+            // 保存到本地存储
+            saveTasks();
             renderTaskList(tasks);
             showNotification('任务已删除', 'info');
         }
