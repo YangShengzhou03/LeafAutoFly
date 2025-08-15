@@ -141,27 +141,29 @@ body {
     align-items: center;
     gap: var(--spacing-sm);
     transform: translateX(120%);
-    animation: slideIn 0.4s ease forwards;
+    opacity: 0;
+    transition: all 0.4s ease;
     background-color: var(--card-bg-color);
 }
 
-@keyframes slideIn {
-    to { transform: translateX(0); }
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
 }
 
-.notification-success {
+.notification.success {
     border-left: 4px solid var(--success-color);
 }
 
-.notification-error {
+.notification.error {
     border-left: 4px solid var(--error-color);
 }
 
-.notification-warning {
+.notification.warning {
     border-left: 4px solid var(--warning-color);
 }
 
-.notification-info {
+.notification.info {
     border-left: 4px solid var(--info-color);
 }
 
@@ -595,7 +597,7 @@ textarea.form-control {
     }
 }
 
-/* 在CSS文件中添加 */
+/* 任务项样式 */
 .task-item {
     padding: var(--spacing-md);
     border-bottom: 1px solid var(--border-color);
@@ -617,20 +619,45 @@ textarea.form-control {
     flex: 1;
 }
 
-.task-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--spacing-xs);
-}
-
-.task-title {
+.task-recipient {
     font-weight: 500;
-    margin-right: var(--spacing-md);
+    margin-bottom: 4px;
 }
 
-.task-body {
+.task-message {
     font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    font-size: 0.85rem;
     color: var(--text-muted);
+}
+
+.task-time, .task-repeat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.task-status {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.task-status.pending {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning-color);
+}
+
+.task-status.completed {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
 }
 
 .task-actions {
@@ -638,24 +665,46 @@ textarea.form-control {
     gap: var(--spacing-xs);
 }
 
-.status {
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.status-pending {
-    background-color: rgba(245, 158, 11, 0.1);
-    color: var(--warning-color);
-}
-
-.status-completed {
-    background-color: rgba(16, 185, 129, 0.1);
-    color: var(--success-color);
-}
-
-.status-failed {
-    background-color: rgba(239, 68, 68, 0.1);
+.delete-btn {
+    background: none;
+    border: 1px solid var(--error-color);
     color: var(--error-color);
+    padding: 4px 10px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--transition);
+}
+
+.delete-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* 任务项动画 */
+.task-transition {
+    transition: all 0.3s ease;
+}
+
+.task-remove-animation {
+    animation: taskRemove 0.3s ease forwards;
+}
+
+@keyframes taskRemove {
+    from { 
+        opacity: 1;
+        transform: translateX(0);
+        height: auto;
+        margin: 0;
+        padding: var(--spacing-md);
+    }
+    to { 
+        opacity: 0;
+        transform: translateX(20px);
+        height: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
 }

@@ -83,7 +83,8 @@
                                 <label for="messageContent" class="form-label">
                                     信息内容 <span class="required">*</span>
                                 </label>
-                                <textarea id="messageContent" name="messageContent" class="form-control" placeholder="输入信息内容" required></textarea>
+                                <textarea id="messageContent" name="messageContent" class="form-control" placeholder="输入信息内容" required
+                                          oninput="document.getElementById('charCount').textContent = this.value.length + '/500'"></textarea>
                                 <div class="char-count" id="charCount">0/500</div>
                                 <div class="error-message" id="messageContentError"></div>
                             </div>
@@ -108,18 +109,19 @@
                         <p class="list-description">当前共有 <span id="taskCount">0</span> 个任务</p>
                     </div>
                     <div class="task-list-actions">
-                        <button type="button" class="btn btn-outline-primary" id="importBtn">
+                        <button type="button" class="btn btn-outline-primary" id="importBtn" disabled>
                             <span class="import-icon"></span> 导入
                         </button>
-                        <button type="button" class="btn btn-outline-primary" id="exportBtn">
+                        <button type="button" class="btn btn-outline-primary" id="exportBtn" disabled>
                             <span class="export-icon"></span> 导出
                         </button>
-                        <button type="button" class="btn btn-primary" id="executeBtn">
+                        <button type="button" class="btn btn-primary" id="executeBtn" disabled>
                             <span class="play-icon"></span> 开始执行
                         </button>
                     </div>
                 </div>
-                <div class="task-list" id="taskList">
+                <!-- 改为ul元素更符合语义化要求 -->
+                <ul class="task-list" id="taskList">
                     <div class="empty-task-state" id="emptyTaskState">
                         <div class="empty-state-image animate-fade-in">
                             <img src="{{ url_for('static', filename='images/empty-tasks.svg') }}" alt="暂无任务" class="empty-state-icon">
@@ -128,7 +130,7 @@
                         <p class="empty-state-description">点击上方的"创建新任务"按钮，开始创建您的第一个自动信息任务</p>
                     </div>
                     <!-- 任务项将通过JavaScript动态添加 -->
-                </div>
+                </ul>
             </div>
         </main>
     </div>
