@@ -1,4 +1,4 @@
-// 确保表单元素存在并绑定事件的轮询函数
+// 表单元素绑定轮询函数
 function ensureFormBinding() {
     const taskForm = document.getElementById('taskForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -6,7 +6,7 @@ function ensureFormBinding() {
     if (taskForm && submitBtn) {
         console.log('表单元素已找到，开始绑定事件');
         
-        // 移除可能存在的旧事件监听器，防止重复绑定
+        // 移除旧事件监听器
         taskForm.removeEventListener('submit', handleFormSubmit);
         submitBtn.removeEventListener('click', handleSubmitClick);
         
@@ -22,7 +22,7 @@ function ensureFormBinding() {
     }
 }
 
-// 提交按钮点击处理函数
+// 提交按钮点击处理
 function handleSubmitClick(e) {
     console.log('提交按钮点击事件触发');
     e.preventDefault();
@@ -36,7 +36,7 @@ function handleSubmitClick(e) {
     }
 }
 
-// 初始化表单函数
+// 初始化表单和事件监听
 function initForm() {
     console.log('初始化表单');
     
@@ -62,10 +62,8 @@ function initForm() {
     // 处理URL参数
     handleUrlParams();
     
-    // 设置默认时间为当前时间
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
-    document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+    // 设置默认时间
+    setDefaultTime();
 }
 
 // 加载任务列表
@@ -119,41 +117,19 @@ function handleUrlParams() {
         // 显示/隐藏自定义日期
         document.getElementById('customDays').style.display = 
             taskData.repeatType === 'custom' ? 'block' : 'none';
-    }}
-    
-    // 设置默认时间为当前时间
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
-    document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
-    
-    // 确保表单提交事件正确绑定（关键修复）
-    const taskForm = document.getElementById('taskForm');
-    if (taskForm) {
-        // 移除可能存在的旧事件监听器，防止重复绑定
-        taskForm.removeEventListener('submit', handleFormSubmit);
-        // 添加新的事件监听器
-        taskForm.addEventListener('submit', handleFormSubmit);
-        console.log('表单提交事件已绑定');
-    } else {
-        console.error('未找到taskForm元素，表单提交功能无法使用');
     }
+}
 
 // 当DOM加载完成时初始化表单
 document.addEventListener('DOMContentLoaded', initForm);
 
-// 同时监听页面刷新事件，确保表单始终正确绑定
+// 监听页面刷新事件，确保表单绑定
 window.addEventListener('load', initForm);
 
-// 全局任务数组 - 不再需要，任务从后端获取
-// let tasks = [];
-// let taskIdCounter = 1;
-
-// 专门的表单提交处理函数（关键修复）
+// 表单提交处理函数
 function handleFormSubmit(e) {
     console.log('表单提交事件触发');
-    // 首先阻止表单默认提交行为，这会导致页面刷新
     e.preventDefault();
-    // 阻止事件冒泡
     e.stopPropagation();
     
     // 收集表单数据
@@ -197,7 +173,7 @@ function handleFormSubmit(e) {
     addTask(formData);
 }
 
-// 添加任务函数 - 调用后端API
+// 添加任务到列表
 function addTask(taskData) {
     try {
         // 发送POST请求到后端API
@@ -234,10 +210,8 @@ function addTask(taskData) {
             document.getElementById('repeatBtn').firstChild.textContent = '不重复 ';
             document.getElementById('customDays').style.display = 'none';
             
-            // 重新设置默认时间
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
-            document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+            // 设置默认时间
+        setDefaultTime();
         })
         .catch(error => {
             console.error('添加任务时出错:', error);
@@ -249,7 +223,7 @@ function addTask(taskData) {
     }
 }
 
-// 删除任务函数 - 调用后端API
+// 删除指定ID的任务
 function deleteTask(taskId) {
     if (confirm('确定要删除这个任务吗？')) {
         try {
@@ -293,7 +267,7 @@ function deleteTask(taskId) {
     }
 }
 
-// 创建单个任务项元素
+// 创建任务项DOM元素
 function createTaskItem(task) {
     const li = document.createElement('li');
     li.className = 'task-item task-transition';
@@ -351,7 +325,7 @@ function createTaskItem(task) {
     return li;
 }
 
-// 渲染任务列表
+// 渲染完整任务列表
 function renderTaskList(tasks) {
     try {
         const taskList = document.getElementById('taskList');
@@ -387,12 +361,12 @@ function renderTaskList(tasks) {
     }
 }
 
-// 辅助函数：数字补零
+// 数字补零(小于10加前导零)
 function padZero(num) {
     return num < 10 ? '0' + num : num;
 }
 
-// 辅助函数：防止XSS攻击
+// 转义HTML特殊字符(防止XSS攻击)
 function escapeHtml(unsafe) {
     if (!unsafe) return '';
     return unsafe
@@ -403,7 +377,7 @@ function escapeHtml(unsafe) {
         .replace(/'/g, "&#039;");
 }
 
-// 显示通知提示
+// 显示通知消息
 function showNotification(message, type = 'info') {
     // 创建通知元素
     const notification = document.createElement('div');
@@ -430,6 +404,13 @@ function showNotification(message, type = 'info') {
             notification.remove();
         }, 300);
     }, 3000);
+}
+
+// 设置默认时间函数
+function setDefaultTime() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
+    document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
 }
 
 // 重复选项切换逻辑
@@ -476,10 +457,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('repeatBtn').firstChild.textContent = '不重复 ';
             document.getElementById('customDays').style.display = 'none';
             
-            // 重新设置默认时间
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
-            document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+            // 设置默认时间
+            setDefaultTime();
         });
     }
     
