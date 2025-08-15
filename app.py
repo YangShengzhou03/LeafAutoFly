@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import uuid
 import datetime
+import json
+import os
 
 app = Flask(__name__)
 
@@ -8,9 +10,47 @@ app = Flask(__name__)
 # 格式: {task_id: task_data}
 tasks = {}
 
+# 数据持久化 - 使用JSON文件
+DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
+
+# 加载任务数据
+def load_tasks():
+    global tasks
+    try:
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                tasks = json.load(f)
+    except Exception as e:
+        print(f'加载任务数据失败: {e}')
+        tasks = {}
+
+# 保存任务数据
+def save_tasks():
+    try:
+        with open(DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(tasks, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f'保存任务数据失败: {e}')
+
+# 初始化加载任务
+load_tasks()
+
+# 删除了错误的SQL代码行
+
+# 从数据库删除任务
+def delete_task_from_db(task_id):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM tasks WHERE id = ?', (task_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+
+# 内存存储任务
+tasks = {}
+
 # 主页路由
 @app.route('/')
-def home():    
+def home():
     return render_template('home.html')
 
 # 自动信息页面路由
@@ -40,6 +80,8 @@ def add_task():
     task_data['createdAt'] = datetime.datetime.now().isoformat()
     # 保存到字典
     tasks[task_id] = task_data
+    # 保存到文件
+    save_tasks()
     return jsonify(task_data), 201
 
 # API接口: 删除任务
@@ -47,8 +89,37 @@ def add_task():
 def delete_task(task_id):
     if task_id in tasks:
         del tasks[task_id]
+        # 保存到文件
+        save_tasks()
         return jsonify({'success': True}), 200
     return jsonify({'error': 'Task not found'}), 404
+
+# API接口: 更新任务状态
+@app.route('/api/tasks/<task_id>/status', methods=['PATCH'])
+def update_task_status(task_id):
+    if task_id not in tasks:
+        return jsonify({'error': 'Task not found'}), 404
+    
+    data = request.json
+    if 'status' not in data:
+        return jsonify({'error': 'Status field is required'}), 400
+    
+    # 更新任务状态
+    tasks[task_id]['status'] = data['status']
+    tasks[task_id]['updatedAt'] = datetime.datetime.now().isoformat()
+    
+    # 保存到文件
+    save_tasks()
+    
+    return jsonify(tasks[task_id]), 200
+
+# API接口: 清空所有任务
+@app.route('/api/tasks', methods=['DELETE'])
+def clear_tasks():
+    tasks.clear()
+    # 保存到文件
+    save_tasks()
+    return jsonify({'success': True}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

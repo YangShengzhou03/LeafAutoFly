@@ -3,8 +3,8 @@ let tasks = [];
 let taskIdCounter = 1;
 
 // 确保DOM完全加载后再执行代码
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded and parsed');
+function initForm() {
+    console.log('初始化表单');
     // 初始渲染空任务列表
     renderTaskList(tasks);
     
@@ -20,13 +20,21 @@ document.addEventListener('DOMContentLoaded', function() {
         taskForm.removeEventListener('submit', handleFormSubmit);
         // 添加新的事件监听器
         taskForm.addEventListener('submit', handleFormSubmit);
+        console.log('表单提交事件已绑定');
     } else {
         console.error('未找到taskForm元素，表单提交功能无法使用');
     }
-});
+}
+
+// 当DOM加载完成时初始化表单
+document.addEventListener('DOMContentLoaded', initForm);
+
+// 同时监听页面刷新事件，确保表单始终正确绑定
+window.addEventListener('load', initForm);
 
 // 专门的表单提交处理函数（关键修复）
 function handleFormSubmit(e) {
+    console.log('表单提交事件触发');
     // 首先阻止表单默认提交行为，这会导致页面刷新
     e.preventDefault();
     // 阻止事件冒泡
