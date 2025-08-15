@@ -1,6 +1,61 @@
-// 确保DOM完全加载后再执行代码
+// 确保表单元素存在并绑定事件的轮询函数
+function ensureFormBinding() {
+    const taskForm = document.getElementById('taskForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (taskForm && submitBtn) {
+        console.log('表单元素已找到，开始绑定事件');
+        
+        // 移除可能存在的旧事件监听器，防止重复绑定
+        taskForm.removeEventListener('submit', handleFormSubmit);
+        submitBtn.removeEventListener('click', handleSubmitClick);
+        
+        // 添加新的事件监听器
+        taskForm.addEventListener('submit', handleFormSubmit);
+        submitBtn.addEventListener('click', handleSubmitClick);
+        
+        console.log('表单提交事件已绑定');
+        return true;
+    } else {
+        console.log('表单元素尚未准备好，将重试...');
+        return false;
+    }
+}
+
+// 提交按钮点击处理函数
+function handleSubmitClick(e) {
+    console.log('提交按钮点击事件触发');
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const taskForm = document.getElementById('taskForm');
+    if (taskForm) {
+        // 手动触发表单提交事件，确保处理逻辑统一
+        const submitEvent = new Event('submit', {cancelable: true, bubbles: true});
+        taskForm.dispatchEvent(submitEvent);
+    }
+}
+
+// 初始化表单函数
 function initForm() {
     console.log('初始化表单');
+    
+    // 尝试立即绑定表单事件，如果失败则轮询重试
+    if (!ensureFormBinding()) {
+        // 设置轮询，每100毫秒尝试一次，最多尝试10次
+        let attempts = 0;
+        const maxAttempts = 10;
+        const pollInterval = setInterval(() => {
+            attempts++;
+            if (ensureFormBinding() || attempts >= maxAttempts) {
+                clearInterval(pollInterval);
+                if (attempts >= maxAttempts) {
+                    console.error('超过最大尝试次数，无法绑定表单事件');
+                }
+            }
+        }, 100);
+    }
+    
     // 加载任务列表
     loadTasks();
     
@@ -11,18 +66,6 @@ function initForm() {
     const now = new Date();
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
     document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
-    
-    // 确保表单提交事件正确绑定（关键修复）
-    const taskForm = document.getElementById('taskForm');
-    if (taskForm) {
-        // 移除可能存在的旧事件监听器，防止重复绑定
-        taskForm.removeEventListener('submit', handleFormSubmit);
-        // 添加新的事件监听器
-        taskForm.addEventListener('submit', handleFormSubmit);
-        console.log('表单提交事件已绑定');
-    } else {
-        console.error('未找到taskForm元素，表单提交功能无法使用');
-    }
 }
 
 // 加载任务列表
