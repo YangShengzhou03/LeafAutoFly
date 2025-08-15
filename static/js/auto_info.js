@@ -1,4 +1,4 @@
-// 全局任务数组 - 仅在内存中存储，不使用localStorage
+// 全局任务数组 - 仅在内存中存储
 let tasks = [];
 let taskIdCounter = 1;
 
@@ -10,10 +10,68 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 设置默认时间为当前时间
     const now = new Date();
-    // 取整到分钟
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
     document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+    
+    // 确保表单提交事件正确绑定（关键修复）
+    const taskForm = document.getElementById('taskForm');
+    if (taskForm) {
+        // 移除可能存在的旧事件监听器，防止重复绑定
+        taskForm.removeEventListener('submit', handleFormSubmit);
+        // 添加新的事件监听器
+        taskForm.addEventListener('submit', handleFormSubmit);
+    } else {
+        console.error('未找到taskForm元素，表单提交功能无法使用');
+    }
 });
+
+// 专门的表单提交处理函数（关键修复）
+function handleFormSubmit(e) {
+    // 首先阻止表单默认提交行为，这会导致页面刷新
+    e.preventDefault();
+    // 阻止事件冒泡
+    e.stopPropagation();
+    
+    // 收集表单数据
+    const formData = {
+        recipient: document.getElementById('recipient').value,
+        sendTime: document.getElementById('sendTime').value,
+        repeatType: document.getElementById('repeatType').value,
+        messageContent: document.getElementById('messageContent').value
+    };
+    
+    // 简单验证
+    if (!formData.recipient.trim()) {
+        showNotification('请输入接收者', 'error');
+        return;
+    }
+    
+    if (!formData.sendTime) {
+        showNotification('请选择发送时间', 'error');
+        return;
+    }
+    
+    if (!formData.messageContent.trim()) {
+        showNotification('请输入消息内容', 'error');
+        return;
+    }
+    
+    // 处理重复日期
+    if (formData.repeatType === 'custom') {
+        const repeatDays = Array.from(
+            document.querySelectorAll('input[name="repeatDays"]:checked')
+        ).map(checkbox => checkbox.value);
+        
+        if (repeatDays.length === 0) {
+            showNotification('请至少选择一个重复日期', 'error');
+            return;
+        }
+        
+        formData.repeatDays = repeatDays;
+    }
+    
+    addTask(formData);
+}
 
 // 添加任务函数 - 仅操作内存数据
 function addTask(taskData) {
@@ -34,7 +92,9 @@ function addTask(taskData) {
         showNotification('任务创建成功', 'success');
         
         // 清空表单
-        document.getElementById('taskForm').reset();
+        const taskForm = document.getElementById('taskForm');
+        if (taskForm) taskForm.reset();
+        
         document.getElementById('repeatType').value = 'none';
         document.getElementById('repeatBtn').firstChild.textContent = '不重复 ';
         document.getElementById('customDays').style.display = 'none';
@@ -89,8 +149,20 @@ function createTaskItem(task) {
     if (task.repeatType === 'daily') repeatText = '每天';
     else if (task.repeatType === 'weekly') repeatText = '每周';
     else if (task.repeatType === 'monthly') repeatText = '每月';
+    else if (task.repeatType === 'workday') repeatText = '法定工作日';
+    else if (task.repeatType === 'holiday') repeatText = '法定节假日';
     else if (task.repeatType === 'custom') {
-        repeatText = `自定义: ${task.repeatDays?.join(', ') || ''}`;
+        // 转换数字为星期几
+        const dayMap = {
+            '0': '周日',
+            '1': '周一',
+            '2': '周二',
+            '3': '周三',
+            '4': '周四',
+            '5': '周五',
+            '6': '周六'
+        };
+        repeatText = `自定义: ${task.repeatDays?.map(day => dayMap[day]).join(', ') || ''}`;
     }
     
     li.innerHTML = `
@@ -125,7 +197,7 @@ function renderTaskList(tasks) {
     try {
         const taskList = document.getElementById('taskList');
         const taskCount = document.getElementById('taskCount');
-        const emptyState = document.getElementById('emptyState');
+        const emptyState = document.getElementById('emptyTaskState');
 
         if (!(taskList && taskCount && emptyState)) {
             console.error('缺少必要的DOM元素: taskList, taskCount或emptyState');
@@ -180,7 +252,12 @@ function showNotification(message, type = 'info') {
     notification.textContent = message;
     
     // 添加到页面
-    document.body.appendChild(notification);
+    const notificationContainer = document.getElementById('notificationContainer');
+    if (notificationContainer) {
+        notificationContainer.appendChild(notification);
+    } else {
+        document.body.appendChild(notification);
+    }
     
     // 显示通知（触发动画）
     setTimeout(() => {
@@ -191,61 +268,13 @@ function showNotification(message, type = 'info') {
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => {
-            document.body.removeChild(notification);
+            notification.remove();
         }, 300);
     }, 3000);
 }
 
-// 表单提交事件监听
+// 重复选项切换逻辑
 document.addEventListener('DOMContentLoaded', function() {
-    // 添加表单提交处理
-    const taskForm = document.getElementById('taskForm');
-    if (taskForm) {
-        taskForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 收集表单数据
-            const formData = {
-                recipient: document.getElementById('recipient').value,
-                sendTime: document.getElementById('sendTime').value,
-                repeatType: document.getElementById('repeatType').value,
-                messageContent: document.getElementById('messageContent').value
-            };
-            
-            // 简单验证
-            if (!formData.recipient.trim()) {
-                showNotification('请输入接收者', 'error');
-                return;
-            }
-            
-            if (!formData.sendTime) {
-                showNotification('请选择发送时间', 'error');
-                return;
-            }
-            
-            if (!formData.messageContent.trim()) {
-                showNotification('请输入消息内容', 'error');
-                return;
-            }
-            
-            // 处理重复日期
-            if (formData.repeatType === 'custom') {
-                const repeatDays = Array.from(
-                    document.querySelectorAll('input[name="repeatDays"]:checked')
-                ).map(checkbox => checkbox.value);
-                
-                if (repeatDays.length === 0) {
-                    showNotification('请至少选择一个重复日期', 'error');
-                    return;
-                }
-                
-                formData.repeatDays = repeatDays;
-            }
-            
-            addTask(formData);
-        });
-    }
-    
     // 添加重复选项切换逻辑
     const repeatBtn = document.getElementById('repeatBtn');
     const repeatOptions = document.getElementById('repeatOptions');
@@ -281,7 +310,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetBtn = document.getElementById('resetBtn');
     if (resetBtn) {
         resetBtn.addEventListener('click', function() {
-            document.getElementById('taskForm').reset();
+            const taskForm = document.getElementById('taskForm');
+            if (taskForm) taskForm.reset();
+            
             document.getElementById('repeatType').value = 'none';
             document.getElementById('repeatBtn').firstChild.textContent = '不重复 ';
             document.getElementById('customDays').style.display = 'none';
@@ -290,6 +321,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const now = new Date();
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
             document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+        });
+    }
+    
+    // 字符计数实时更新
+    const messageContent = document.getElementById('messageContent');
+    const charCount = document.getElementById('charCount');
+    if (messageContent && charCount) {
+        messageContent.addEventListener('input', function() {
+            charCount.textContent = `${this.value.length}/500`;
+            // 超过字数限制时给出视觉提示
+            if (this.value.length > 500) {
+                this.value = this.value.substring(0, 500);
+                charCount.textContent = `500/500`;
+            } else {
+                charCount.style.color = '';
+            }
         });
     }
 });
