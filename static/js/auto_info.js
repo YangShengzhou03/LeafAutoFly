@@ -3,6 +3,9 @@
  * 提供任务创建、列表管理、表单验证等功能
  */
 
+// 内存中的任务存储数组
+let tasks = [];
+
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化所有功能
     initApp();
@@ -205,8 +208,13 @@ function initCharCount() {
  * 加载任务
  */
 function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem('autoInfoTasks')) || [];
-    renderTaskList(tasks);
+    try {
+        console.log('Loaded tasks from memory:', tasks);
+        renderTaskList(tasks);
+    } catch (error) {
+        console.error('Error loading tasks:', error);
+        showNotification('加载任务失败: ' + error.message, 'error');
+    }
 }
 
 /**
@@ -214,38 +222,54 @@ function loadTasks() {
  * @param {Array} tasks - 任务数组
  */
 function renderTaskList(tasks) {
-    // 检查DOM元素是否存在
-    const taskList = document.getElementById('taskList');
-    const taskCount = document.getElementById('taskCount');
-    const emptyTaskState = document.getElementById('emptyTaskState');
+    try {
+        // 检查DOM元素是否存在
+        const taskList = document.getElementById('taskList');
+        const taskCount = document.getElementById('taskCount');
+        const emptyTaskState = document.getElementById('emptyTaskState');
 
-    if (!(taskList && taskCount && emptyTaskState)) {
-        console.error('One or more required DOM elements are missing');
-        return;
+        if (!(taskList && taskCount && emptyTaskState)) {
+            const errorMsg = 'One or more required DOM elements are missing';
+            console.error(errorMsg);
+            showNotification(errorMsg, 'error');
+            return;
+        }
+
+        console.log('Rendering tasks:', tasks);
+
+        // 清空任务列表
+        taskList.innerHTML = '';
+
+        // 更新任务计数
+        taskCount.textContent = tasks.length;
+
+        // 显示/隐藏空状态
+        if (tasks.length === 0) {
+            emptyTaskState.style.display = 'block';
+            return;
+        } else {
+            emptyTaskState.style.display = 'none';
+        }
+
+        // 按发送时间排序（升序）
+        tasks.sort((a, b) => new Date(a.sendTime) - new Date(b.sendTime));
+
+        // 渲染每个任务
+        tasks.forEach(task => {
+            const taskItem = createTaskItem(task);
+            // 确保任务项被添加到DOM
+            taskList.appendChild(taskItem);
+            console.log('Task item added to DOM:', task.id);
+        });
+
+        // 强制浏览器重绘 - 更可靠的方法
+        void taskList.offsetWidth;
+        taskList.classList.add('force-redraw');
+        setTimeout(() => taskList.classList.remove('force-redraw'), 10);
+    } catch (error) {
+        console.error('Error rendering tasks:', error);
+        showNotification('渲染任务失败: ' + error.message, 'error');
     }
-
-    // 清空任务列表
-    taskList.innerHTML = '';
-
-    // 更新任务计数
-    taskCount.textContent = tasks.length;
-
-    // 显示/隐藏空状态
-    if (tasks.length === 0) {
-        emptyTaskState.style.display = 'block';
-        return;
-    } else {
-        emptyTaskState.style.display = 'none';
-    }
-
-    // 按发送时间排序（升序）
-    tasks.sort((a, b) => new Date(a.sendTime) - new Date(b.sendTime));
-
-    // 渲染每个任务
-    tasks.forEach(task => {
-        const taskItem = createTaskItem(task);
-        taskList.appendChild(taskItem);
-    });
 }
 
 /**
@@ -255,8 +279,10 @@ function renderTaskList(tasks) {
  */
 function createTaskItem(task) {
     const taskItem = document.createElement('div');
-    taskItem.className = 'task-item animate-fade-in';
+    taskItem.className = 'task-item';
     taskItem.setAttribute('data-task-id', task.id);
+    // 立即添加动画类，不使用setTimeout
+    taskItem.classList.add('animate-fade-in');
 
     // 格式化日期
     const sendTime = new Date(task.sendTime);
@@ -328,10 +354,15 @@ function createTaskItem(task) {
  * @param {Object} taskData - 任务数据
  */
 function addTask(taskData) {
-    const tasks = JSON.parse(localStorage.getItem('autoInfoTasks')) || [];
-    tasks.push(taskData);
-    localStorage.setItem('autoInfoTasks', JSON.stringify(tasks));
-    renderTaskList(tasks);
+    try {
+        tasks.push(taskData);
+        console.log('Task added successfully:', taskData);
+        // 通过重新加载任务来确保DOM更新
+        loadTasks();
+    } catch (error) {
+        console.error('Error adding task:', error);
+        showNotification('添加任务失败: ' + error.message, 'error');
+    }
 }
 
 /**
@@ -386,11 +417,27 @@ function editTask(taskId) {
  * @param {string} taskId - 任务ID
  */
 function deleteTask(taskId) {
-    let tasks = JSON.parse(localStorage.getItem('autoInfoTasks')) || [];
-    tasks = tasks.filter(task => task.id !== taskId);
-    localStorage.setItem('autoInfoTasks', JSON.stringify(tasks));
-    renderTaskList(tasks);
-    showNotification('任务已删除', 'info');
+    try {
+        // 找到要删除的任务元素并添加删除动画
+        const taskElement = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
+        if (taskElement) {
+            taskElement.classList.add('animate-fade-out');
+            // 等待动画完成后再更新列表
+            setTimeout(() => {
+                tasks = tasks.filter(task => task.id !== taskId);
+                renderTaskList(tasks);
+                showNotification('任务已删除', 'info');
+            }, 300);
+        } else {
+            // 如果找不到元素，直接更新列表
+            tasks = tasks.filter(task => task.id !== taskId);
+            renderTaskList(tasks);
+            showNotification('任务已删除', 'info');
+        }
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        showNotification('删除任务失败: ' + error.message, 'error');
+    }
 }
 
 /**

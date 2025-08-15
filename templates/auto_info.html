@@ -35,8 +35,7 @@
                                 </label>
                                 <div class="recipient-input-wrapper">
                                     <input type="text" id="recipient" name="recipient" class="form-control" placeholder="输入接收者信息" required>
-                                        <span class="contact-icon"></span>
-                                    </button>
+                                    <span class="contact-icon"></span>
                                 </div>
                                 <div class="error-message" id="recipientError"></div>
                             </div>
@@ -122,14 +121,8 @@
                 </div>
                 <div class="task-list" id="taskList">
                     <div class="empty-task-state" id="emptyTaskState">
-                        <div class="empty-state-image">
-                            <!-- 这里放一个空状态图标 -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
+                        <div class="empty-state-image animate-fade-in">
+                            <img src="{{ url_for('static', filename='images/empty-tasks.svg') }}" alt="暂无任务" class="empty-state-icon">
                         </div>
                         <h3 class="empty-state-title">暂无任务</h3>
                         <p class="empty-state-description">点击上方的"创建新任务"按钮，开始创建您的第一个自动信息任务</p>
