@@ -1,9 +1,82 @@
-// 全局任务数组 - 仅在内存中存储
-let tasks = [];
-let taskIdCounter = 1;
-
 // 确保DOM完全加载后再执行代码
 function initForm() {
+    console.log('初始化表单');
+    // 加载任务列表
+    loadTasks();
+    
+    // 处理URL参数
+    handleUrlParams();
+    
+    // 设置默认时间为当前时间
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
+    document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+    
+    // 确保表单提交事件正确绑定（关键修复）
+    const taskForm = document.getElementById('taskForm');
+    if (taskForm) {
+        // 移除可能存在的旧事件监听器，防止重复绑定
+        taskForm.removeEventListener('submit', handleFormSubmit);
+        // 添加新的事件监听器
+        taskForm.addEventListener('submit', handleFormSubmit);
+        console.log('表单提交事件已绑定');
+    } else {
+        console.error('未找到taskForm元素，表单提交功能无法使用');
+    }
+}
+
+// 加载任务列表
+function loadTasks() {
+    fetch('/api/tasks')
+    .then(response => response.json())
+    .then(tasks => {
+        renderTaskList(tasks);
+    })
+    .catch(error => {
+        console.error('加载任务列表时出错:', error);
+        showNotification('加载任务失败: ' + error.message, 'error');
+    });
+}
+
+// 处理URL参数
+function handleUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('recipient') && params.has('sendTime') && params.has('messageContent')) {
+        const taskData = {
+            recipient: params.get('recipient'),
+            sendTime: params.get('sendTime'),
+            repeatType: params.get('repeatType') || 'none',
+            messageContent: params.get('messageContent')
+        };
+        
+        // 填充表单
+        document.getElementById('recipient').value = taskData.recipient;
+        document.getElementById('sendTime').value = taskData.sendTime;
+        document.getElementById('repeatType').value = taskData.repeatType;
+        document.getElementById('messageContent').value = taskData.messageContent;
+        
+        // 如果有repeatDays参数
+        if (params.has('repeatDays')) {
+            const repeatDays = params.get('repeatDays').split(',');
+            repeatDays.forEach(day => {
+                const checkbox = document.querySelector(`input[name="repeatDays"][value="${day}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
+        
+        // 更新重复按钮显示
+        const repeatBtn = document.getElementById('repeatBtn');
+        const repeatOptions = document.querySelectorAll('.repeat-option');
+        repeatOptions.forEach(option => {
+            if (option.getAttribute('data-repeat') === taskData.repeatType) {
+                repeatBtn.firstChild.textContent = option.textContent + ' ';
+            }
+        });
+        
+        // 显示/隐藏自定义日期
+        document.getElementById('customDays').style.display = 
+            taskData.repeatType === 'custom' ? 'block' : 'none';
+    }}
     console.log('初始化表单');
     // 初始渲染空任务列表
     renderTaskList(tasks);
@@ -24,13 +97,16 @@ function initForm() {
     } else {
         console.error('未找到taskForm元素，表单提交功能无法使用');
     }
-}
 
 // 当DOM加载完成时初始化表单
 document.addEventListener('DOMContentLoaded', initForm);
 
 // 同时监听页面刷新事件，确保表单始终正确绑定
 window.addEventListener('load', initForm);
+
+// 全局任务数组 - 不再需要，任务从后端获取
+// let tasks = [];
+// let taskIdCounter = 1;
 
 // 专门的表单提交处理函数（关键修复）
 function handleFormSubmit(e) {
@@ -81,43 +157,59 @@ function handleFormSubmit(e) {
     addTask(formData);
 }
 
-// 添加任务函数 - 仅操作内存数据
+// 添加任务函数 - 调用后端API
 function addTask(taskData) {
     try {
-        // 生成唯一ID
-        const newTask = {
-            id: taskIdCounter++,
-            ...taskData,
-            status: 'pending', // 默认状态
-            createdAt: new Date().toISOString()
-        };
-        
-        tasks.push(newTask);
-        console.log('任务已添加:', newTask);
-        
-        // 刷新任务列表（无页面刷新）
-        renderTaskList([...tasks]);
-        showNotification('任务创建成功', 'success');
-        
-        // 清空表单
-        const taskForm = document.getElementById('taskForm');
-        if (taskForm) taskForm.reset();
-        
-        document.getElementById('repeatType').value = 'none';
-        document.getElementById('repeatBtn').firstChild.textContent = '不重复 ';
-        document.getElementById('customDays').style.display = 'none';
-        
-        // 重新设置默认时间
-        const now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
-        document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+        // 发送POST请求到后端API
+        fetch('/api/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(taskData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('网络响应错误: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(newTask => {
+            console.log('任务已添加:', newTask);
+            
+            // 获取最新任务列表
+            fetch('/api/tasks')
+            .then(response => response.json())
+            .then(tasks => {
+                // 刷新任务列表
+                renderTaskList(tasks);
+                showNotification('任务创建成功', 'success');
+            });
+            
+            // 清空表单
+            const taskForm = document.getElementById('taskForm');
+            if (taskForm) taskForm.reset();
+            
+            document.getElementById('repeatType').value = 'none';
+            document.getElementById('repeatBtn').firstChild.textContent = '不重复 ';
+            document.getElementById('customDays').style.display = 'none';
+            
+            // 重新设置默认时间
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
+            document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
+        })
+        .catch(error => {
+            console.error('添加任务时出错:', error);
+            showNotification('添加任务失败: ' + error.message, 'error');
+        });
     } catch (error) {
         console.error('添加任务时出错:', error);
         showNotification('添加任务失败: ' + error.message, 'error');
     }
 }
 
-// 删除任务函数 - 仅操作内存数据
+// 删除任务函数 - 调用后端API
 function deleteTask(taskId) {
     if (confirm('确定要删除这个任务吗？')) {
         try {
@@ -126,13 +218,32 @@ function deleteTask(taskId) {
             if (taskElement) {
                 taskElement.classList.add('task-remove-animation');
                 
-                // 等待动画完成后再移除数据
+                // 等待动画完成后再调用API
                 setTimeout(() => {
-                    // 从内存数组中删除任务
-                    tasks = tasks.filter(task => task.id !== taskId);
-                    // 刷新任务列表
-                    renderTaskList([...tasks]);
-                    showNotification('任务删除成功', 'success');
+                    // 发送DELETE请求到后端API
+                    fetch(`/api/tasks/${taskId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('网络响应错误: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // 获取最新任务列表
+                        fetch('/api/tasks')
+                        .then(response => response.json())
+                        .then(tasks => {
+                            // 刷新任务列表
+                            renderTaskList(tasks);
+                            showNotification('任务删除成功', 'success');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('删除任务时出错:', error);
+                        showNotification('删除任务失败: ' + error.message, 'error');
+                    });
                 }, 300);
             }
         } catch (error) {

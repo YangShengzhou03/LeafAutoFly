@@ -35,18 +35,8 @@ def save_tasks():
 # 初始化加载任务
 load_tasks()
 
-# 删除了错误的SQL代码行
-
-# 从数据库删除任务
-def delete_task_from_db(task_id):
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute('DELETE FROM tasks WHERE id = ?', (task_id,))
-        conn.commit()
-        return cursor.rowcount > 0
-
-# 内存存储任务
-tasks = {}
+# 确保tasks字典只被定义一次
+# 初始化加载任务已在前面完成
 
 # 主页路由
 @app.route('/')
