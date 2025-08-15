@@ -24,6 +24,7 @@
         }
     </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block extra_css %}{% endblock %}
     <style>
         /* 基础优化样式 */
         .sidebar {
@@ -62,10 +63,11 @@
             left: -10px;
             right: -10px;
             bottom: -10px;
-            background: linear-gradient(135deg, var(--primary-color), transparent);
-            opacity: 0.2;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            opacity: 0.5;
             border-radius: 50%;
-            animation: pulse 3s infinite;
+            animation: pulse 2s infinite;
+            z-index: -1;
         }
         
         .status {
@@ -164,15 +166,15 @@
         @keyframes pulse {
             0% {
                 transform: scale(0.95);
-                opacity: 0.2;
+                opacity: 0.5;
             }
             50% {
-                transform: scale(1.1);
-                opacity: 0;
+                transform: scale(1.2);
+                opacity: 0.2;
             }
             100% {
                 transform: scale(0.95);
-                opacity: 0.2;
+                opacity: 0.5;
             }
         }
     </style>
@@ -287,7 +289,7 @@
         <!-- 左侧导航 -->
         <aside class="sidebar">
             <div class="avatar-area">
-                <div class="avatar">L</div>
+                <div class="avatar">枫</div>
                 <div class="status">未登录</div>
             </div>
             <nav class="menu">
@@ -319,7 +321,8 @@
         <main class="content" id="content-area">
                 {% block content %}{% endblock %}
             </main>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% block scripts %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+{% block scripts %}{% endblock %}
 </body>
 </html>

@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auto_info.css') }}">
+{% endblock %}
+
 {% block content %}
     <div class="page-header">
         <h1>LeafAuto Web</h1>

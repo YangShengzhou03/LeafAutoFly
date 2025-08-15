@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auto_info.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/auto_info.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="page-header">
-        <h1>LeafAuto INFO</h1>
+        <h1>LeafAuto Info</h1>
     </div>
     <div class="auto-info-container">
         <!-- 主内容区 -->
@@ -27,7 +35,6 @@
                                 </label>
                                 <div class="recipient-input-wrapper">
                                     <input type="text" id="recipient" name="recipient" class="form-control" placeholder="输入接收者信息" required>
-                                    <button type="button" class="contact-picker-btn" id="contactPickerBtn">
                                         <span class="contact-icon"></span>
                                     </button>
                                 </div>

@@ -1,12 +1,14 @@
 :root {
-    --primary-color: #7B4EF3;
-    --primary-light: #9D65F9;
-    --gradient-primary: linear-gradient(135deg, #7B4EF3 0%, #5C2DD5 100%);
+    --primary-color: #4f46e5; /* 主色调 - 现代蓝紫色 */
+    --primary-light: #818cf8; /* 亮主色调 */
+    --primary-dark: #3730a3; /* 暗主色调 */
+    --primary-glow: rgba(79, 70, 229, 0.15); /* 主色调发光效果 */
+    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); /* 主色调渐变 */
     --gradient-standard: linear-gradient(135deg, #FF9F43 0%, #F56565 100%);
     --gradient-premium: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
     --gradient-vip: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
     --background-color: #F9FAFE;
-    --card-bg-color: #ECECF9;
+    --card-bg-color: #0000fe;
     --error-color: #FF6B6B;
     --success-color: #4CAF50;
     --info-color: #2196F3;
@@ -186,7 +188,7 @@ html {
     color: var(--text-muted, #666);
 }
 
-.task-creation-card {
+.home-task-creation-card {
     background-color: white;
     border-radius: var(--card-radius);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -195,7 +197,7 @@ html {
     transition: all var(--transition-speed);
 }
 
-body.dark-mode .task-creation-card {
+body.dark-mode .home-task-creation-card {
     background-color: var(--card-bg-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
@@ -214,7 +216,7 @@ body.dark-mode .card-header {
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 /* 调整时间设置和重复选项区域的间距 */
@@ -685,7 +687,7 @@ body.dark-mode .bottom-operation {
 @media (max-width: 768px) {
     .form-row > .form-group {
         min-width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
     .form-row {
         margin: 0;
