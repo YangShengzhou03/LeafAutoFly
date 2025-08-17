@@ -389,8 +389,284 @@ function handleUrlParams() {
 </script>
 
 <style scoped>
-/* 这里可以添加组件特定样式 */
-/* 大部分样式已经在auto_info.css中定义，这里只需要添加必要的覆盖样式 */
+:root {
+    --primary-color: #4f46e5; /* 主色调 - 现代蓝紫色 */
+    --primary-light: #818cf8; /* 亮主色调 */
+    --primary-dark: #3730a3; /* 暗主色调 */
+    --primary-glow: rgba(79, 70, 229, 0.15); /* 主色调发光效果 */
+    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); /* 主色调渐变 */
+    --text-color: #1e293b; /* 文本颜色 */
+    --text-muted: #64748b; /* 次要文本颜色 */
+    --background-color: #f8fafc; /* 背景色 */
+    --card-bg-color: #ffffff; /* 卡片背景色 */
+    --border-color: #e2e8f0; /* 边框颜色 */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 阴影 */
+    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08); /* 悬停阴影 */
+    --spacing-xs: 8px; /* 超小间距 */
+    --spacing-sm: 12px; /* 小间距 */
+    --spacing-md: 16px; /* 中等间距 */
+    --spacing-lg: 24px; /* 大间距 */
+    --spacing-xl: 32px; /* 超大间距 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 过渡效果 */
+    --border-radius: 12px; /* 边框圆角 */
+    --border-radius-sm: 8px; /* 小边框圆角 */
+    --error-color: #ef4444; /* 错误颜色 */
+    --success-color: #10b981; /* 成功颜色 */
+    --warning-color: #f59e0b; /* 警告颜色 */
+    --info-color: #3b82f6; /* 信息颜色 */
+}
+
+/* 暗色模式 */
+body.dark-mode {
+    --primary-color: #818cf8; /* 暗色主色调 */
+    --primary-light: #a5b4fc; /* 暗色亮主色调 */
+    --primary-dark: #4f46e5; /* 暗色暗主色调 */
+    --primary-glow: rgba(129, 140, 248, 0.15); /* 暗色主色调发光效果 */
+    --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%); /* 暗色主色调渐变 */
+    --text-color: #f1f5f9; /* 暗色文本颜色 */
+    --text-muted: #94a3b8; /* 暗色次要文本颜色 */
+    --background-color: #0f172a; /* 暗色背景色 */
+    --card-bg-color: #1e293b; /* 暗色卡片背景色 */
+    --border-color: #334155; /* 暗色边框 */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 暗色模式阴影 */
+}
+
+/* 动画效果 */
+.animate-fade-in { animation: fadeIn 0.5s ease forwards; }
+.animate-fade-out { animation: fadeOut 0.3s ease forwards; }
+.animate-slide-up { animation: slideUp 0.4s ease forwards; }
+.animate-pulse { animation: pulse 2s infinite; }
+.animate-scale { transition: transform 0.3s ease; }
+.animate-scale:hover { transform: scale(1.02); }
+
+@keyframes fadeIn {
+    from { opacity: 0; }    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }    to { opacity: 0; transform: scale(0.95); }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }    50% { opacity: 0.7; }
+}
+
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 0;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+/* 主容器样式 */
+.auto-info-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 页面标题区域 */
+.page-header {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 任务创建卡片 */
+.task-creation-card {
+    background-color: var(--card-bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+}
+
+.card-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+}
+
+.card-subtitle {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* 表单样式 */
+.el-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: 0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.actions-separator {
+    flex-grow: 1;
+}
+
+.field-hint {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: var(--spacing-xs);
+}
+
+/* 任务列表区域 */
+.task-list-container {
+    background-color: var(--card-bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+}
+
+.task-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.task-list-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.task-list {
+    list-style: none;
+}
+
+.task-item {
+    background-color: var(--card-bg-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+}
+
+.task-item:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+    border-color: var(--primary-light);
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-recipient {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.task-message {
+    color: var(--text-color);
+    margin-bottom: var(--spacing-xs);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.task-status {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+
+.task-status.pending {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--info-color);
+}
+
+.task-status.completed {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+
+/* 空状态样式 */
+.empty-task-state {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.empty-state-image {
+    margin-bottom: var(--spacing-lg);
+}
+
+.empty-state-icon {
+    width: 120px;
+    height: 120px;
+    opacity: 0.5;
+}
+
+.empty-state-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.empty-state-description {
+    color: var(--text-muted);
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* 通知容器样式 */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 300px;
+}
 
 /* 确保Element Plus组件样式与原项目一致 */
 .el-input__inner,
@@ -402,46 +678,4 @@ function handleUrlParams() {
 .el-button {
   padding: var(--spacing-sm) var(--spacing-md);
 }
-
-/* 调整表单布局 */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
-  margin-bottom: 0;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
-}
-
-.actions-separator {
-  flex-grow: 1;
-}
-
-/* 任务项样式 */
-.task-item {
-  background-color: var(--card-bg-color);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: var(--transition);
-  border: 1px solid var(--border-color);
-}
-
-.task-item:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-  border-color: var(--primary-light);
-}
-
-/* 其他样式保持与原项目一致 */
 </style>

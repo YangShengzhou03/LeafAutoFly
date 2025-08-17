@@ -1,313 +1,431 @@
 <template>
   <div class="home-container">
-    <!-- 会员卡片区域 -->
+    <!-- 会员套餐卡片区域 -->
     <div class="membership-cards">
-      <div class="membership-card purple-card">
-        <div class="card-title">充值版</div>
-        <div class="card-subtitle">有效期至: 2025-09-12</div>
+      <div class="membership-card free-card">
+        <div class="card-tag">免费</div>
+        <div class="card-title">免费版（beta 中）</div>
+        <div class="card-subtitle">有效期至 2025-09-12</div>
         <div class="card-features">
-          <div class="feature">• 基础版</div>
-          <div class="feature">• 每周限</div>
+          <div class="feature">基础功能</div>
+          <div class="feature">每日限量</div>
         </div>
-        <el-button class="card-button" type="primary" size="small">查看详情</el-button>
+        <button class="card-button free-button">继续使用</button>
       </div>
       
-      <div class="membership-card blue-card">
+      <div class="membership-card monthly-card">
+        <div class="card-tag">限时优惠</div>
         <div class="card-title">月度会员</div>
-        <div class="card-subtitle">¥28.00/月</div>
+        <div class="card-subtitle">¥29.9 / 月</div>
         <div class="card-features">
-          <div class="feature">• 基础版</div>
-          <div class="feature">• 优先处理</div>
-          <div class="feature">• 优惠券</div>
+          <div class="feature">全部功能</div>
+          <div class="feature">优先支持</div>
         </div>
-        <el-button class="card-button" type="primary" size="small">立即订阅</el-button>
+        <button class="card-button monthly-button">立即订阅</button>
       </div>
       
-      <div class="membership-card green-card">
+      <div class="membership-card quarterly-card">
+        <div class="card-tag">限时优惠</div>
         <div class="card-title">季度会员</div>
-        <div class="card-subtitle">¥68.00/季</div>
+        <div class="card-subtitle">¥269.9 / 季</div>
+        <div class="card-discount">省 ¥9.8</div>
         <div class="card-features">
-          <div class="feature">• 专业版</div>
-          <div class="feature">• 无限制</div>
-          <div class="feature">• 高级支持</div>
+          <div class="feature">全部功能</div>
+          <div class="feature">数据导出</div>
         </div>
-        <el-button class="card-button" type="primary" size="small">立即订阅</el-button>
+        <button class="card-button quarterly-button">立即订阅</button>
       </div>
       
-      <div class="membership-card orange-card">
+      <div class="membership-card yearly-card">
+        <div class="card-tag">年度</div>
         <div class="card-title">年度会员</div>
-        <div class="card-subtitle">¥198.00/年</div>
+        <div class="card-subtitle">¥899 / 年</div>
+        <div class="card-discount">省 ¥338.8</div>
         <div class="card-features">
-          <div class="feature">• 企业版</div>
-          <div class="feature">• 专属功能</div>
-          <div class="feature">• 专属客服</div>
+          <div class="feature">全部功能</div>
+          <div class="feature">专属客服</div>
         </div>
-        <el-button class="card-button" type="primary" size="small">立即订阅</el-button>
+        <button class="card-button yearly-button">立即订阅</button>
       </div>
     </div>
     
-    <!-- 功能卡片区域 -->
-    <div class="feature-cards">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="el-icon-s-promotion"></i>
+    <!-- 数据统计卡片区域 -->
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-icon purple-icon">
+          <i class="el-icon-line-chart"></i>
         </div>
-        <div class="feature-title">API接口</div>
-        <div class="feature-desc">标准化的API接口文档</div>
+        <div class="stat-title">自动化能力</div>
+        <div class="stat-desc"><span class="stat-value">12%</span> 当前自动化任务完成率</div>
       </div>
       
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="el-icon-s-robot"></i>
+      <div class="stat-card">
+        <div class="stat-icon purple-icon">
+          <i class="el-icon-coffee-cup"></i>
         </div>
-        <div class="feature-title">AI能力</div>
-        <div class="feature-desc">AI辅助内容生成系统</div>
+        <div class="stat-title">AI 能力</div>
+        <div class="stat-desc"><span class="stat-value">6%</span> AI 辅助功能使用率</div>
       </div>
       
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="el-icon-s-timer"></i>
+      <div class="stat-card">
+        <div class="stat-icon purple-icon">
+          <i class="el-icon-check"></i>
         </div>
-        <div class="feature-title">定时任务</div>
-        <div class="feature-desc">支持每日、每周、每月定时</div>
+        <div class="stat-title">系统状态</div>
+        <div class="stat-desc"><span class="status-normal">正常运行</span> 无异常，运行稳定</div>
       </div>
       
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="el-icon-s-check"></i>
+      <div class="stat-card">
+        <div class="stat-icon purple-icon">
+          <i class="el-icon-sun"></i>
         </div>
-        <div class="feature-title">版本检查</div>
-        <div class="feature-desc">当前版本: v1.0.0</div>
+        <div class="stat-title">更新状态</div>
+        <div class="stat-desc"><span class="status-latest">已是最新版本</span> 版本号: v1.0.0</div>
       </div>
     </div>
     
-    <!-- 欢迎区域 -->
+    <!-- 欢迎信息区域 -->
     <div class="welcome-section">
+      <div class="welcome-decoration"></div>
       <div class="welcome-title">欢迎使用 LeafAuto Web</div>
-      <div class="welcome-desc">LeafAuto 是2024年人工智能学习项目，主要用于自动化信息发送及管理。</div>
+      <div class="welcome-desc">LeafAuto 是我在 2024 年大二时写的练习程序，主要用于自动化微信消息发送和管理。</div>
       
       <div class="welcome-stats">
         <div class="welcome-stat">
           <div class="stat-number">500+</div>
-          <div class="stat-label">成功发送的信息</div>
+          <div class="stat-label">活跃用户</div>
         </div>
         
         <div class="welcome-stat">
           <div class="stat-number">10k+</div>
-          <div class="stat-label">满意用户</div>
+          <div class="stat-label">自动化任务</div>
         </div>
         
         <div class="welcome-stat">
-          <div class="stat-number">99%</div>
+          <div class="stat-number">98%</div>
           <div class="stat-label">系统稳定性</div>
         </div>
       </div>
+      
+      <div class="welcome-thanks">感谢您的使用和支持！</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { ElButton } from 'element-plus'
+import { ref, onMounted } from 'vue';
 
-const router = useRouter()
+// 添加统计卡片图标动画效果
+onMounted(() => {
+  const statIcons = document.querySelectorAll('.stat-icon');
+  statIcons.forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      icon.classList.add('shake');
+    });
+    icon.addEventListener('mouseleave', () => {
+      icon.classList.remove('shake');
+    });
+  });
 
-// 导航到自动信息页面
-function navigateToAutoInfo() {
-  router.push('/auto_info')
-}
-
-// 导航到AI接管页面
-function navigateToAITakeover() {
-  router.push('/ai_takeover')
-}
+  // 添加会员卡片按钮hover效果
+  const cardButtons = document.querySelectorAll('.card-button');
+  cardButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      button.classList.add('hover');
+    });
+    button.addEventListener('mouseleave', () => {
+      button.classList.remove('hover');
+    });
+  });
+});
 </script>
 
 <style scoped>
-:root {
-  --primary-color: #1890ff;
-  --purple-color: #722ed1;
-  --blue-color: #1e88e5;
-  --green-color: #388e3c;
-  --orange-color: #ff7043;
-  --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
-}
-
 .home-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
-/* 会员卡片样式 */
+/* 会员套餐卡片区域样式 */
 .membership-cards {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  gap: 24px;
 }
 
 .membership-card {
   flex: 1;
-  min-width: 250px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
   position: relative;
-  overflow: hidden;
-  transition: var(--transition);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .membership-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-hover);
 }
 
-.purple-card {
-  background: linear-gradient(135deg, #9c27b0 0%, #722ed1 100%);
+.free-card {
+  background: linear-gradient(135deg, rgba(233, 213, 255, 0.8), rgba(251, 233, 255, 0.8));
+  box-shadow: 0 4px 15px rgba(216, 180, 254, 0.2);
 }
 
-.blue-card {
-  background: linear-gradient(135deg, #2196f3 0%, #1e88e5 100%);
+.monthly-card {
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.8), rgba(216, 240, 254, 0.8));
+  box-shadow: 0 4px 15px rgba(191, 219, 254, 0.2);
 }
 
-.green-card {
-  background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+.quarterly-card {
+  background: linear-gradient(135deg, rgba(216, 240, 254, 0.8), rgba(217, 249, 235, 0.8));
+  box-shadow: 0 4px 15px rgba(191, 242, 219, 0.2);
 }
 
-.orange-card {
-  background: linear-gradient(135deg, #ff9800 0%, #ff7043 100%);
+.yearly-card {
+  background: linear-gradient(135deg, rgba(254, 236, 217, 0.8), rgba(254, 243, 199, 0.8));
+  box-shadow: 0 4px 15px rgba(252, 231, 178, 0.2);
+}
+
+.card-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #d0d3d9;
+  background-color: white;
+  color: #666;
+  font-size: 12px;
+}
+
+.monthly-card .card-tag, .quarterly-card .card-tag {
+  left: auto;
+  right: 16px;
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  margin-top: 40px;
 }
 
 .card-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.card-discount {
   font-size: 14px;
-  opacity: 0.9;
-  margin-bottom: 15px;
+  color: #10b981;
+  margin-bottom: 16px;
 }
 
 .card-features {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  flex-grow: 1;
 }
 
 .feature {
-  font-size: 13px;
-  margin-bottom: 5px;
-  opacity: 0.9;
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 14px;
 }
 
 .card-button {
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
   color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.card-button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.6);
-  color: white;
+.card-button.hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* 功能卡片样式 */
-.feature-cards {
+.free-button {
+  background: linear-gradient(to right, #9333ea, #c084fc);
+}
+
+.monthly-button {
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+}
+
+.quarterly-button {
+  background: linear-gradient(to right, #14b8a6, #2dd4bf);
+}
+
+.yearly-button {
+  background: linear-gradient(to right, #f97316, #fb923c);
+}
+
+/* 数据统计卡片区域样式 */
+.stat-cards {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  gap: 24px;
 }
 
-.feature-card {
+.stat-card {
   flex: 1;
-  min-width: 200px;
-  padding: 25px 20px;
+  padding: 24px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: var(--shadow);
-  text-align: center;
-  transition: var(--transition);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
 }
 
-.feature-card:hover {
+.stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-hover);
 }
 
-.feature-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 15px;
-  background-color: #f0f7ff;
+.stat-icon {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 16px;
   font-size: 24px;
-  color: var(--primary-color);
+  color: white;
+  transition: all 0.3s;
 }
 
-.feature-title {
-  font-size: 16px;
+.purple-icon {
+  background: linear-gradient(135deg, #9333ea, #c084fc);
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.stat-title {
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  color: #333;
 }
 
-.feature-desc {
+.stat-desc {
   font-size: 14px;
   color: #666;
 }
 
-/* 欢迎区域样式 */
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #9333ea;
+}
+
+.status-normal {
+  color: #10b981;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.status-latest {
+  color: #3b82f6;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* 欢迎信息区域样式 */
 .welcome-section {
+  padding: 32px;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  padding: 30px;
-  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.welcome-decoration {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, #9333ea, transparent);
+  margin-bottom: 16px;
 }
 
 .welcome-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
+  color: #333;
 }
 
 .welcome-desc {
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
-  margin-bottom: 25px;
+  line-height: 1.6;
+  margin-bottom: 24px;
 }
 
 .welcome-stats {
   display: flex;
-  justify-content: center;
-  gap: 50px;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 24px;
 }
 
 .welcome-stat {
+  flex: 1;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
   text-align: center;
 }
 
 .stat-number {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 5px;
+  color: #9333ea;
+  margin-bottom: 8px;
 }
 
 .stat-label {
   font-size: 14px;
   color: #666;
+}
+
+.welcome-thanks {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.welcome-thanks::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, #9333ea, transparent);
 }
 </style>

@@ -1,23 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AppLayout from '../views/AppLayout.vue'
 import HomeView from '../views/HomeView.vue'
 import AutoInfoView from '../views/AutoInfoView.vue'
 import AITakeoverView from '../views/AITakeoverView.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/auto_info',
-    name: 'auto_info',
-    component: AutoInfoView
-  },
-  {
-    path: '/ai_takeover',
-    name: 'ai_takeover',
-    component: AITakeoverView
+  { 
+    path: '/', 
+    component: AppLayout, 
+    children: [
+      { path: '', name: 'home', component: HomeView },
+      { path: 'auto_info', name: 'auto_info', component: AutoInfoView },
+      { path: 'ai_takeover', name: 'ai_takeover', component: AITakeoverView }
+    ]
   }
 ]
 
