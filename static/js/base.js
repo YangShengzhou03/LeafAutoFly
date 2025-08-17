@@ -667,21 +667,27 @@ function loadPageContent(page, url) {
 function initPageScripts(page) {
     // 根据页面类型执行不同的初始化
     if (page === 'auto_info') {
-        // 强制加载auto_info.js文件，确保初始化函数可用
-        loadScript('/static/js/auto_info.js', function() {
+        // 检查auto_info.js是否已经加载
+        if (typeof window.initForm !== 'function') {
+            // 未加载则动态加载
+            loadScript('/static/js/auto_info.js', function() {
+                initAutoInfoPage();
+            });
+        } else {
+            // 已加载则直接初始化
+            initAutoInfoPage();
+        }
+
+        function initAutoInfoPage() {
             // 初始化任务列表
             if (document.getElementById('taskList')) {
                 initAutoInfoTaskList();
             }
             
             // 初始化表单
-            if (typeof window.initForm === 'function') {
-                window.initForm();
-                console.log('auto_info.js初始化函数已调用');
-            } else {
-                console.error('无法找到initForm函数');
-            }
-        });
+            window.initForm();
+            console.log('auto_info.js初始化函数已调用');
+        }
     } else if (page === 'ai_takeover') {
         // 这里可以添加AI接管页面的初始化代码
     }

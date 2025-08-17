@@ -31,7 +31,8 @@ function handleSubmitClick(e) {
     }
 }
 
-function initForm() {
+// 确保initForm函数暴露到全局作用域
+window.initForm = function() {
     console.log('初始化表单');
     
     if (!ensureFormBinding()) {
@@ -82,6 +83,14 @@ function loadTasks() {
         console.error('加载任务列表时出错:', error);
         showNotification('加载任务失败: ' + error.message, 'error');
     });
+}
+
+// 页面加载完成时自动初始化表单
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.initForm);
+} else {
+    // 如果DOM已经加载完成，直接初始化
+    window.initForm();
 }
 
 function handleUrlParams() {
