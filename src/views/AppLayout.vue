@@ -54,12 +54,14 @@ onBeforeRouteUpdate((to) => {
 <style scoped>
 .app-layout {
   display: flex;
+  min-height: 100vh;
 }
 
 /* 左侧导航栏样式 */
 .sidebar {
-  width: calc(100% / 8);
-  background: linear-gradient(to bottom, #f5f7fa, #e4e6eb);
+  width: 220px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   padding: 24px 0;
   box-sizing: border-box;
   display: flex;
@@ -67,9 +69,13 @@ onBeforeRouteUpdate((to) => {
   align-items: center;
   justify-content: space-between;
   height: 100vh;
-  position: fixed;
-  left: 0;
+  position: sticky;
   top: 0;
+  left: 0;
+  z-index: 10;
+  transition: all 0.3s ease;
+  border-right: 1px solid #f0f0f0;
+  border-radius: 0 12px 12px 0;
 }
 
 .user-info {
@@ -77,24 +83,48 @@ onBeforeRouteUpdate((to) => {
   flex-direction: column;
   align-items: center;
   margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
 }
 
 .avatar {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background-color: #e4e6eb;
-  border: 2px solid #d0d3d9;
-  margin-bottom: 8px;
+  background-color: #f5f7fa;
+  border: 2px solid #e4e6eb;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.avatar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.05), rgba(192, 132, 252, 0.05));
 }
 
 .unlogin {
   color: #666;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .menu {
   width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .menu ul {
@@ -109,22 +139,25 @@ onBeforeRouteUpdate((to) => {
   padding: 12px 0;
   position: relative;
   cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+  background-color: #f9fafb;
+  transform: translateX(3px);
 }
 
 .menu-item:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 15%;
-  width: 70%;
-  height: 1px;
-  background-color: #d0d3d9;
+  display: none;
 }
 
 .menu-item a {
   text-decoration: none;
-  color: #999;
+  color: #666;
   font-size: 16px;
+  font-weight: 500;
   transition: color 0.3s;
   display: block;
   width: 100%;
@@ -132,11 +165,22 @@ onBeforeRouteUpdate((to) => {
 }
 
 .menu-item.active {
-  background: linear-gradient(to right, rgba(216, 180, 254, 0.5), rgba(216, 180, 254, 0));
+  background: linear-gradient(to right, rgba(216, 180, 254, 0.2), rgba(216, 180, 254, 0));
 }
 
 .menu-item.active a {
-  color: #333;
+  color: #9333ea;
+}
+
+.menu-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: linear-gradient(to bottom, #9333ea, #c084fc);
+  border-radius: 0 4px 4px 0;
 }
 
 .sidebar-footer {
@@ -146,42 +190,64 @@ onBeforeRouteUpdate((to) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
 }
 
 .dev-info {
   color: #666;
   font-size: 12px;
   text-align: center;
+  line-height: 1.4;
 }
 
 .upgrade-btn {
   background: linear-gradient(to right, #9333ea, #c084fc);
   color: white;
   border: none;
-  padding: 6px 16px;
+  padding: 8px 20px;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 2px 5px rgba(147, 51, 234, 0.2);
+  box-shadow: 0 2px 8px rgba(147, 51, 234, 0.25);
   font-size: 14px;
+  font-weight: 500;
   width: 100%;
-  max-width: 140px;
+  max-width: 160px;
 }
 
 .upgrade-btn:hover {
   background: linear-gradient(to right, #c084fc, #9333ea);
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(147, 51, 234, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
 }
 
 /* 右侧主体内容区样式 */
 .main-content {
-  width: calc(100% * 7 / 8);
+  flex: 1;
   padding: 24px;
   box-sizing: border-box;
   overflow-y: auto;
-  margin-left: calc(100% / 8);
+  background-color: #fafafa;
   min-height: 100vh;
+}
+
+/* 响应式调整 */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 160px;
+  }
+  
+  .menu-item a {
+    font-size: 14px;
+  }
 }
 </style>
