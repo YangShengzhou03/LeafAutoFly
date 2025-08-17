@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 import uuid
 import datetime
 import json
 import os
+import subprocess
+import platform
+import time
 
 app = Flask(__name__)
 
@@ -30,15 +33,16 @@ load_tasks()
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    # 重定向到Vue开发服务器
+    return redirect('http://localhost:8080')
 
 @app.route('/auto-info')
 def auto_info():
-    return render_template('auto_info.html')
+    return redirect('http://localhost:8080/auto_info')
 
 @app.route('/ai-takeover')
 def ai_takeover():
-    return render_template('ai_takeover.html')
+    return redirect('http://localhost:8080/ai_takeover')
 
 @app.route('/api/tasks', methods=['GET'])
 def get_tasks():
@@ -83,5 +87,43 @@ def clear_tasks():
     save_tasks()
     return jsonify({'success': True}), 200
 
+def start_vue_server():
+    # 启动Vue开发服务器
+    try:
+        print('正在启动Vue开发服务器...')
+        # 根据操作系统使用不同的命令
+        if platform.system() == 'Windows':
+            cmd = ['npm', 'run', 'serve']
+        else:
+            cmd = ['npm', 'run', 'serve']
+        
+        # 在后台启动Vue服务器
+        subprocess.Popen(
+            cmd,
+            cwd=os.path.dirname(os.path.abspath(__file__)),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True
+        )
+        print('Vue开发服务器已启动')
+        # 等待Vue服务器启动完成
+        time.sleep(3)
+    except Exception as e:
+        print(f'启动Vue开发服务器失败: {e}')
+
+def open_browser():
+    # 自动打开浏览器
+    try:
+        import webbrowser
+        print('正在打开浏览器...')
+        webbrowser.open('http://localhost:8080')
+    except Exception as e:
+        print(f'打开浏览器失败: {e}')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # 启动Vue开发服务器
+    start_vue_server()
+    # 自动打开浏览器
+    open_browser()
+    # 启动Flask服务器
+    app.run(debug=True, port=5000)
