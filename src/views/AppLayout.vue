@@ -2,23 +2,25 @@
   <div class="app-layout">
     <!-- 左侧导航栏 -->
     <aside class="sidebar">
-      <div class="user-info">
-        <div class="avatar"></div>
-        <span class="unlogin">未登录</span>
+      <div class="top-section">
+        <div class="user-info">
+          <div class="avatar"></div>
+          <span class="unlogin">未登录</span>
+        </div>
+        <nav class="menu">
+          <ul>
+            <li class="menu-item" :class="{ active: currentRoute === '/' }">
+              <a href="#" @click.prevent="navigateTo('/')">首页</a>
+            </li>
+            <li class="menu-item" :class="{ active: currentRoute === '/auto_info' }">
+              <a href="#" @click.prevent="navigateTo('/auto_info')">自动信息</a>
+            </li>
+            <li class="menu-item" :class="{ active: currentRoute === '/ai_takeover' }">
+              <a href="#" @click.prevent="navigateTo('/ai_takeover')">AI 运营</a>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <nav class="menu">
-        <ul>
-          <li class="menu-item" :class="{ active: currentRoute === '/' }">
-            <a href="#" @click.prevent="navigateTo('/')">首页</a>
-          </li>
-          <li class="menu-item" :class="{ active: currentRoute === '/auto_info' }">
-            <a href="#" @click.prevent="navigateTo('/auto_info')">自动信息</a>
-          </li>
-          <li class="menu-item" :class="{ active: currentRoute === '/ai_takeover' }">
-            <a href="#" @click.prevent="navigateTo('/ai_takeover')">AI 运营</a>
-          </li>
-        </ul>
-      </nav>
       <div class="sidebar-footer">
         <div class="dev-info">开发时间 2.458 / 10GB</div>
         <button class="upgrade-btn">升级专业版</button>
@@ -62,7 +64,7 @@ onBeforeRouteUpdate((to) => {
   width: 220px;
   background: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-  padding: 16px 0; /* 减少顶部内边距 */
+  padding: 8px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -78,13 +80,22 @@ onBeforeRouteUpdate((to) => {
   border-radius: 0 12px 12px 0;
 }
 
+.top-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
 .user-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 16px; /* 减少底部外边距 */
-  padding-bottom: 16px; /* 减少底部内边距 */
-  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: none;
   width: 100%;
 }
 
@@ -94,7 +105,7 @@ onBeforeRouteUpdate((to) => {
   border-radius: 50%;
   background-color: #f5f7fa;
   border: 2px solid #e4e6eb;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -124,6 +135,7 @@ onBeforeRouteUpdate((to) => {
 .menu {
   width: 100%;
   padding: 0 16px;
+  margin-top: 0;
   box-sizing: border-box;
 }
 
