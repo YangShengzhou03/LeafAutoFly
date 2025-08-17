@@ -354,11 +354,6 @@ body {
     transition: var(--transition);
 }
 
-.empty-state-image:hover .empty-state-icon {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
 /* 强制重绘类 */
 .force-redraw {
     transform: translateX(0);
