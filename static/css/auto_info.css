@@ -270,74 +270,7 @@ body {
     opacity: 0.7;
 }
 
-textarea.form-control {
-    min-height: 120px;
-    resize: vertical;
-}
 
-/* 按钮样式 */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 16px;
-    border: none;
-    border-radius: var(--border-radius-sm);
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    gap: 8px;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-}
-
-.btn-primary:hover::before {
-    transform: translateX(100%);
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
-}
-
-.btn-outline-secondary {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-}
-
-.btn-outline-secondary:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.btn-outline-primary {
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--primary-glow);
-}
 
 /* 表单操作区域 */
 .form-actions {

@@ -8,7 +8,7 @@
     --gradient-premium: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
     --gradient-vip: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
     --background-color: #F9FAFE;
-    --card-bg-color: #0000fe;
+    --card-bg-color: #ffffff;
     --error-color: #FF6B6B;
     --success-color: #4CAF50;
     --info-color: #2196F3;
@@ -23,6 +23,8 @@
     --form-control-height: 42px;
     --input-border-color: #DDDDDD;
     --input-focus-border-color: var(--primary-color);
+    --text-color: #333;
+    --text-muted: #666;
 }
 
 /* 暗色模式变量 */
@@ -165,83 +167,16 @@ html {
     animation: countUp 0.5s ease-out forwards;
 }
 
-/* auto_info.html 页面样式 */
-.auto-info-container {
-    max-width: 100vw;
-    margin: 0 auto;
-    padding: 0;
-}
-
-.page-header {
-    margin-bottom: 30px;
-}
-
-.page-title {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--text-color, #333);
-}
-
-.page-subtitle {
-    font-size: 16px;
-    color: var(--text-muted, #666);
-}
-
-.home-task-creation-card {
-    background-color: white;
-    border-radius: var(--card-radius);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    margin-bottom: 24px;
-    transition: all var(--transition-speed);
-}
-
-body.dark-mode .home-task-creation-card {
-    background-color: var(--card-bg-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-body.dark-mode .card-header {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
-.card-body {
-    padding: 24px;
-}
-
+/* 基础表单样式 - 通用 */
 .form-group {
-    margin-bottom: 0px;
-}
-
-/* 调整时间设置和重复选项区域的间距 */
-.row .form-group {
-    margin-bottom: 0;
-}
-
-/* 确保发送时间、重复选项和添加任务按钮在同一行 */
-@media (min-width: 768px) {
-    .row.align-items-end {
-        display: flex;
-        align-items: flex-end !important;
-    }
-
-    .row.align-items-end .col-md-4 {
-        flex: 0 0 33.333333%;
-        max-width: 33.333333%;
-    }
+    margin-bottom: 16px;
 }
 
 .form-label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--text-color, #333);
+    color: var(--text-color);
 }
 
 .form-control {
@@ -253,7 +188,7 @@ body.dark-mode .card-header {
     font-size: 15px;
     transition: all var(--transition-speed);
     background-color: white;
-    color: var(--text-color, #333);
+    color: var(--text-color);
 }
 
 body.dark-mode .form-control {
@@ -284,21 +219,7 @@ textarea.form-control {
     padding: 0 12px;
     flex: 1;
     min-width: 200px;
-}
-
-.message-input {
-    width: 100%;
-    resize: vertical;
-}
-
-.input-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.icon-btn {
-    width: 36px;
+}    width: 36px;
     height: 36px;
     border-radius: 50%;
     border: none;

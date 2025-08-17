@@ -120,9 +120,12 @@ function handleUrlParams() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', initForm);
-
-window.addEventListener('load', initForm);
+// 只在DOM内容加载完成后初始化一次
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initForm);
+} else {
+    initForm();
+}
 
 function handleFormSubmit(e) {
     console.log('表单提交事件触发');
@@ -371,11 +374,7 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-function setDefaultTime() {
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset(), 0, 0);
-    document.getElementById('sendTime').value = now.toISOString().slice(0, 16);
-}
+// 移除重复定义的setDefaultTime函数 - 已在initForm中定义
 
 document.addEventListener('DOMContentLoaded', function() {
     const repeatBtn = document.getElementById('repeatBtn');
