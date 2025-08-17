@@ -42,12 +42,8 @@ const router = useRouter();
 const route = useRoute();
 const currentRoute = ref(route.path);
 
-// 导航到指定路由
-const navigateTo = (path) => {
-  router.push(path);
-};
+const navigateTo = (path) => router.push(path);
 
-// 监听路由变化
 onBeforeRouteUpdate((to) => {
   currentRoute.value = to.path;
 });
@@ -159,10 +155,6 @@ onBeforeRouteUpdate((to) => {
 .menu-item:hover {
   background-color: #f9fafb;
   transform: translateX(3px);
-}
-
-.menu-item:not(:last-child)::after {
-  display: none;
 }
 
 .menu-item a {

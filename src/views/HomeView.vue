@@ -1,6 +1,5 @@
 <template>
   <div class="home-container">
-    <!-- 会员套餐卡片区域 -->
     <div class="membership-cards">
       <div class="membership-card free-card">
         <div class="card-tag">免费</div>
@@ -49,7 +48,6 @@
       </div>
     </div>
     
-    <!-- 数据统计卡片区域 -->
     <div class="stat-cards">
       <div class="stat-card">
         <div class="stat-icon purple-icon">
@@ -84,7 +82,6 @@
       </div>
     </div>
     
-    <!-- 欢迎信息区域 -->
     <div class="welcome-section">
       <div class="welcome-decoration"></div>
       <div class="welcome-title">欢迎使用 LeafAuto Web</div>
@@ -113,29 +110,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 
-// 添加统计卡片图标动画效果
 onMounted(() => {
   const statIcons = document.querySelectorAll('.stat-icon');
   statIcons.forEach(icon => {
-    icon.addEventListener('mouseenter', () => {
-      icon.classList.add('shake');
-    });
-    icon.addEventListener('mouseleave', () => {
-      icon.classList.remove('shake');
-    });
+    icon.addEventListener('mouseenter', () => icon.classList.add('shake'));
+    icon.addEventListener('mouseleave', () => icon.classList.remove('shake'));
   });
 
-  // 添加会员卡片按钮hover效果
   const cardButtons = document.querySelectorAll('.card-button');
   cardButtons.forEach(button => {
-    button.addEventListener('mouseenter', () => {
-      button.classList.add('hover');
-    });
-    button.addEventListener('mouseleave', () => {
-      button.classList.remove('hover');
-    });
+    button.addEventListener('mouseenter', () => button.classList.add('hover'));
+    button.addEventListener('mouseleave', () => button.classList.remove('hover'));
   });
 });
 </script>
@@ -146,7 +133,6 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-/* 会员套餐卡片区域样式 */
 .membership-cards {
   display: flex;
   justify-content: space-between;
@@ -269,7 +255,6 @@ onMounted(() => {
   background: linear-gradient(to right, #f97316, #fb923c);
 }
 
-/* 数据统计卡片区域样式 */
 .stat-cards {
   display: flex;
   justify-content: space-between;
@@ -351,7 +336,6 @@ onMounted(() => {
   background-color: rgba(59, 130, 246, 0.1);
 }
 
-/* 欢迎信息区域样式 */
 .welcome-section {
   padding: 32px;
   background-color: white;

@@ -4,10 +4,8 @@
       <h1>LeafAuto Info</h1>
     </div>
 
-    <!-- 通知提示区域 -->
     <div class="notification-container" ref="notificationContainer"></div>
 
-    <!-- 任务创建卡片 -->
     <div class="task-creation-card animate-fade-in">
       <div class="card-header">
         <h2 class="card-title">
@@ -104,7 +102,6 @@
       </div>
     </div>
 
-    <!-- 任务列表区域 -->
     <div class="task-list-container">
       <div class="task-list-header">
         <div class="header-content">
@@ -162,7 +159,6 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 
-// 表单数据
 const formData = reactive({
   recipient: '',
   sendTime: '',
@@ -171,7 +167,6 @@ const formData = reactive({
   messageContent: ''
 })
 
-// 表单验证规则
 const rules = {
   recipient: [
     { required: true, message: '请输入接收者', trigger: 'blur' },
@@ -186,20 +181,16 @@ const rules = {
   ]
 }
 
-// 验证接收者格式
-function validateRecipient(rule, value, callback) {
+const validateRecipient = (rule, value, callback) => {
   if (!value.trim()) {
     callback(new Error('请输入接收者'))
     return
   }
-  // 简单验证，实际应用中可能需要更复杂的验证
   callback()
 }
 
-// 任务列表数据
 const tasks = ref([])
 
-// 重复选项数据
 const repeatOptions = [
   { label: '不重复', value: 'none' },
   { label: '每天', value: 'daily' },
@@ -208,7 +199,6 @@ const repeatOptions = [
   { label: '自定义', value: 'custom' }
 ]
 
-// 星期几数据
 const daysOfWeek = [
   { label: '周一', value: '1' },
   { label: '周二', value: '2' },
@@ -219,43 +209,35 @@ const daysOfWeek = [
   { label: '周日', value: '0' }
 ]
 
-// 重复按钮文本
 const repeatBtnText = computed(() => {
   const option = repeatOptions.find(opt => opt.value === formData.repeatType)
   return option ? option.label : '不重复'
 })
 
-// 显示重复选项下拉菜单
 const showRepeatOptions = ref(false)
 
-// 字符计数
 const charCount = ref(0)
 
-// 默认日期时间
 const defaultDateTime = computed(() => {
   const now = new Date()
   now.setMinutes(now.getMinutes() + 30)
   return now
 })
 
-// 排序后的任务列表
 const sortedTasks = computed(() => {
   return [...tasks.value].sort((a, b) => new Date(a.sendTime) - new Date(b.sendTime))
 })
 
-// 切换重复选项下拉菜单
-function toggleRepeatOptions() {
+const toggleRepeatOptions = () => {
   showRepeatOptions.value = !showRepeatOptions.value
 }
 
-// 选择重复选项
-function selectRepeatOption(option) {
+const selectRepeatOption = (option) => {
   formData.repeatType = option.value
   showRepeatOptions.value = false
 }
 
-// 更新字符计数
-function updateCharCount() {
+const updateCharCount = () => {
   charCount.value = formData.messageContent.length
   if (charCount.value > 500) {
     formData.messageContent = formData.messageContent.substring(0, 500)
@@ -263,8 +245,7 @@ function updateCharCount() {
   }
 }
 
-// 重置表单
-function resetForm() {
+const resetForm = () => {
   formData.recipient = ''
   formData.sendTime = ''
   formData.repeatType = 'none'
@@ -273,8 +254,7 @@ function resetForm() {
   charCount.value = 0
 }
 
-// 提交表单
-function submitForm() {
+const submitForm = () => {
   const taskForm = document.querySelector('#taskForm')
   if (taskForm) {
     if (!formData.recipient.trim()) {
@@ -294,7 +274,6 @@ function submitForm() {
       return
     }
 
-    // 模拟API请求
     setTimeout(() => {
       const newTask = {
         id: Date.now(),
@@ -312,8 +291,7 @@ function submitForm() {
   }
 }
 
-// 删除任务
-function deleteTask(taskId) {
+const deleteTask = (taskId) => {
   ElMessage.confirm('确定要删除这个任务吗？', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
@@ -321,24 +299,19 @@ function deleteTask(taskId) {
   }).then(() => {
     tasks.value = tasks.value.filter(task => task.id !== taskId)
     ElMessage.success('任务删除成功')
-  }).catch(() => {
-    // 用户取消删除
-  })
+  }).catch(() => {})
 }
 
-// 格式化日期时间
-function formatDateTime(dateString) {
+const formatDateTime = (dateString) => {
   const date = new Date(dateString)
   return `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`
 }
 
-// 补零函数
-function padZero(num) {
+const padZero = (num) => {
   return num < 10 ? '0' + num : num
 }
 
-// 获取重复文本
-function getRepeatText(repeatType, repeatDays) {
+const getRepeatText = (repeatType, repeatDays) => {
   if (repeatType === 'none') return '不重复'
   if (repeatType === 'daily') return '每天'
   if (repeatType === 'workday') return '法定工作日'
@@ -358,21 +331,17 @@ function getRepeatText(repeatType, repeatDays) {
   return '不重复'
 }
 
-// 页面加载时执行
 onMounted(() => {
-  // 模拟加载任务数据
   setTimeout(() => {
     tasks.value = [
       // 这里可以添加示例任务数据
     ]
   }, 500)
 
-  // 处理URL参数
   handleUrlParams()
 })
 
-// 处理URL参数
-function handleUrlParams() {
+const handleUrlParams = () => {
   const params = new URLSearchParams(window.location.search)
   if (params.has('recipient') && params.has('sendTime') && params.has('messageContent')) {
     formData.recipient = params.get('recipient')
@@ -390,48 +359,46 @@ function handleUrlParams() {
 
 <style scoped>
 :root {
-    --primary-color: #4f46e5; /* 主色调 - 现代蓝紫色 */
-    --primary-light: #818cf8; /* 亮主色调 */
-    --primary-dark: #3730a3; /* 暗主色调 */
-    --primary-glow: rgba(79, 70, 229, 0.15); /* 主色调发光效果 */
-    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); /* 主色调渐变 */
-    --text-color: #1e293b; /* 文本颜色 */
-    --text-muted: #64748b; /* 次要文本颜色 */
-    --background-color: #f8fafc; /* 背景色 */
-    --card-bg-color: #ffffff; /* 卡片背景色 */
-    --border-color: #e2e8f0; /* 边框颜色 */
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 阴影 */
-    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08); /* 悬停阴影 */
-    --spacing-xs: 8px; /* 超小间距 */
-    --spacing-sm: 12px; /* 小间距 */
-    --spacing-md: 16px; /* 中等间距 */
-    --spacing-lg: 24px; /* 大间距 */
-    --spacing-xl: 32px; /* 超大间距 */
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 过渡效果 */
-    --border-radius: 12px; /* 边框圆角 */
-    --border-radius-sm: 8px; /* 小边框圆角 */
-    --error-color: #ef4444; /* 错误颜色 */
-    --success-color: #10b981; /* 成功颜色 */
-    --warning-color: #f59e0b; /* 警告颜色 */
-    --info-color: #3b82f6; /* 信息颜色 */
+    --primary-color: #4f46e5;
+    --primary-light: #818cf8;
+    --primary-dark: #3730a3;
+    --primary-glow: rgba(79, 70, 229, 0.15);
+    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --text-color: #1e293b;
+    --text-muted: #64748b;
+    --background-color: #f8fafc;
+    --card-bg-color: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
 }
 
-/* 暗色模式 */
 body.dark-mode {
-    --primary-color: #818cf8; /* 暗色主色调 */
-    --primary-light: #a5b4fc; /* 暗色亮主色调 */
-    --primary-dark: #4f46e5; /* 暗色暗主色调 */
-    --primary-glow: rgba(129, 140, 248, 0.15); /* 暗色主色调发光效果 */
-    --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%); /* 暗色主色调渐变 */
-    --text-color: #f1f5f9; /* 暗色文本颜色 */
-    --text-muted: #94a3b8; /* 暗色次要文本颜色 */
-    --background-color: #0f172a; /* 暗色背景色 */
-    --card-bg-color: #1e293b; /* 暗色卡片背景色 */
-    --border-color: #334155; /* 暗色边框 */
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 暗色模式阴影 */
+    --primary-color: #818cf8;
+    --primary-light: #a5b4fc;
+    --primary-dark: #4f46e5;
+    --primary-glow: rgba(129, 140, 248, 0.15);
+    --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+    --text-color: #f1f5f9;
+    --text-muted: #94a3b8;
+    --background-color: #0f172a;
+    --card-bg-color: #1e293b;
+    --border-color: #334155;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* 动画效果 */
 .animate-fade-in { animation: fadeIn 0.5s ease forwards; }
 .animate-fade-out { animation: fadeOut 0.3s ease forwards; }
 .animate-slide-up { animation: slideUp 0.4s ease forwards; }
@@ -455,7 +422,6 @@ body.dark-mode {
     0%, 100% { opacity: 1; }    50% { opacity: 0.7; }
 }
 
-/* 基础样式重置 */
 * {
     margin: 0;
     padding: 0;
@@ -471,21 +437,18 @@ body {
     transition: background-color var(--transition), color var(--transition);
 }
 
-/* 主容器样式 */
 .auto-info-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* 页面标题区域 */
 .page-header {
     margin-bottom: var(--spacing-xl);
     padding: var(--spacing-lg) 0;
     border-bottom: 1px solid var(--border-color);
 }
 
-/* 任务创建卡片 */
 .task-creation-card {
     background-color: var(--card-bg-color);
     border-radius: var(--border-radius);
@@ -513,7 +476,6 @@ body {
     font-size: 0.875rem;
 }
 
-/* 表单样式 */
 .el-form {
     width: 100%;
 }
@@ -543,7 +505,6 @@ body {
     margin-top: var(--spacing-xs);
 }
 
-/* 任务列表区域 */
 .task-list-container {
     background-color: var(--card-bg-color);
     border-radius: var(--border-radius);
@@ -631,7 +592,6 @@ body {
     color: var(--success-color);
 }
 
-/* 空状态样式 */
 .empty-task-state {
     text-align: center;
     padding: var(--spacing-xl) 0;
@@ -659,7 +619,6 @@ body {
     margin: 0 auto;
 }
 
-/* 通知容器样式 */
 .notification-container {
     position: fixed;
     top: 20px;
@@ -668,7 +627,6 @@ body {
     width: 300px;
 }
 
-/* 确保Element Plus组件样式与原项目一致 */
 .el-input__inner,
 .el-textarea__inner,
 .el-button {

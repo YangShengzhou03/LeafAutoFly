@@ -101,7 +101,6 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 
-// 表单数据
 const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
@@ -111,7 +110,6 @@ const formData = reactive({
   replyTemplate: '感谢您的消息：{content}。此消息由AI自动回复，时间：{time}。'
 })
 
-// 表单验证规则
 const rules = {
   replyDelay: [
     { required: true, message: '请输入回复延迟', trigger: 'blur' },
@@ -131,7 +129,6 @@ const rules = {
   ]
 }
 
-// AI回复历史数据
 const replyHistory = ref([
   {
     id: 1,
@@ -147,16 +144,13 @@ const replyHistory = ref([
   }
 ])
 
-// 提交表单
-function submitForm() {
-  // 模拟API请求保存设置
+const submitForm = () => {
   setTimeout(() => {
     ElMessage.success('AI设置保存成功')
   }, 500)
 }
 
-// 重置表单
-function resetForm() {
+const resetForm = () => {
   formData.aiStatus = false
   formData.replyDelay = 5
   formData.replyStyle = 'friendly'
@@ -165,8 +159,7 @@ function resetForm() {
   formData.replyTemplate = '感谢您的消息：{content}。此消息由AI自动回复，时间：{time}。'
 }
 
-// 查看详情
-function viewDetails(row) {
+const viewDetails = (row) => {
   ElMessage({
     message: `原始消息: ${row.originalMessage}\nAI回复: ${row.aiReply}`,
     type: 'info',
@@ -174,9 +167,7 @@ function viewDetails(row) {
   })
 }
 
-// 页面加载时执行
 onMounted(() => {
-  // 模拟加载AI设置
   setTimeout(() => {
     // 这里可以添加从API加载设置的逻辑
   }, 500)
@@ -213,7 +204,6 @@ onMounted(() => {
   border-bottom: 1px solid var(--border-color);
 }
 
-/* 调整Element Plus表格样式 */
 .el-table th,
 .el-table td {
   padding: 12px;
