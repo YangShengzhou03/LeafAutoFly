@@ -1,17 +1,11 @@
-// 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化欢迎区域动画
-initWelcomeAnimation();
+    initWelcomeAnimation();
 
-// 仅在首页加载自动信息任务列表
-if (window.location.pathname === '/' && document.getElementById('taskList')) {
-    // 加载本地存储中的任务
-    loadAutoInfoTasks();
-    // 设置表单验证
-    setupFormValidation();
-}
+    if (window.location.pathname === '/' && document.getElementById('taskList')) {
+        loadAutoInfoTasks();
+        setupFormValidation();
+    }
 
-    // 按钮点击态处理
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
         button.addEventListener('mousedown', function() {
@@ -25,7 +19,6 @@ if (window.location.pathname === '/' && document.getElementById('taskList')) {
         });
     });
 
-    // 执行按钮加载态
     const executeBtn = document.querySelector('.execute-btn');
     if (executeBtn) {
         executeBtn.addEventListener('click', function() {
@@ -35,7 +28,6 @@ if (window.location.pathname === '/' && document.getElementById('taskList')) {
             this.innerHTML = '<span class="spinner"></span> 执行中...';
             this.disabled = true;
 
-            // 模拟执行完成
             setTimeout(() => {
                 this.classList.remove('loading');
                 this.innerHTML = '执行';
@@ -44,7 +36,6 @@ if (window.location.pathname === '/' && document.getElementById('taskList')) {
         });
     }
 
-    // 重复周期选择器
     const repeatBtn = document.querySelector('.repeat-btn');
     const currentRepeat = repeatBtn ? repeatBtn.querySelector('.current-repeat') : null;
     const repeatOptions = document.querySelector('.repeat-options');
@@ -72,7 +63,6 @@ if (window.location.pathname === '/' && document.getElementById('taskList')) {
     }
 });
 
-// 自动信息任务列表初始化
 function initAutoInfoTaskList() {
     const taskList = document.getElementById('taskList');
     const addTaskBtn = document.getElementById('add-task-btn');
@@ -85,10 +75,8 @@ function initAutoInfoTaskList() {
     const executeAllBtn = document.getElementById('execute-all-btn');
     const sortSelect = document.getElementById('sort-select');
 
-    // 检查任务列表是否存在
     if (!taskList) return;
 
-    // 高级设置展开/收起
     if (toggleAdvancedSettings && advancedOptions) {
         toggleAdvancedSettings.addEventListener('click', function() {
             const parent = this.closest('.advanced-settings');
@@ -97,13 +85,9 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 加载本地存储中的任务
     loadAutoInfoTasks();
-
-    // 表单验证
     setupFormValidation();
 
-    // 添加任务按钮事件
     if (addTaskBtn) {
         addTaskBtn.addEventListener('click', function() {
             const messageInput = document.querySelector('.message-input');
@@ -120,7 +104,6 @@ function initAutoInfoTaskList() {
                 return;
             }
 
-            // 检查时间是否在当前时间之后
             const currentTime = new Date();
             const selectedTime = new Date(taskTime);
             if (selectedTime <= currentTime) {
@@ -128,7 +111,6 @@ function initAutoInfoTaskList() {
                 return;
             }
 
-            // 创建新任务
             const task = {
                 id: Date.now(),
                 text: taskText,
@@ -138,13 +120,9 @@ function initAutoInfoTaskList() {
                 status: 'pending'
             };
 
-            // 添加任务到列表
             addAutoInfoTask(task);
-
-            // 保存任务到本地存储
             saveAutoInfoTasks();
 
-            // 清空输入框
             messageInput.value = '';
             datetimeInput.value = '';
             if (currentRepeat) {
@@ -155,7 +133,6 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 保存按钮事件
     if (saveBtn) {
         saveBtn.addEventListener('click', function() {
             saveAutoInfoTasks();
@@ -163,7 +140,6 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 导出按钮事件
     if (exportBtn) {
         exportBtn.addEventListener('click', function() {
             const tasks = JSON.parse(localStorage.getItem('autoInfoTasks') || '[]');
@@ -181,7 +157,6 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 导入按钮事件
     if (importBtn) {
         importBtn.addEventListener('click', function() {
             const input = document.createElement('input');
@@ -195,13 +170,10 @@ function initAutoInfoTaskList() {
                         try {
                             const importedTasks = JSON.parse(event.target.result);
                             if (Array.isArray(importedTasks)) {
-                                // 清空当前任务
                                 const taskItems = document.querySelectorAll('.task-item');
                                 taskItems.forEach(item => item.remove());
 
-                                // 添加导入的任务
                                 importedTasks.forEach(task => {
-                                    // 确保任务有必要的属性
                                     if (task.text && task.time) {
                                         task.id = Date.now() + Math.floor(Math.random() * 1000);
                                         task.status = task.status || 'pending';
@@ -209,10 +181,8 @@ function initAutoInfoTaskList() {
                                     }
                                 });
 
-                                // 保存并更新视图
                                 saveAutoInfoTasks();
 
-                                // 隐藏空状态
                                 if (emptyState && importedTasks.length > 0) {
                                     emptyState.style.display = 'none';
                                 }
@@ -232,7 +202,6 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 执行所有任务按钮事件
     if (executeAllBtn) {
         executeAllBtn.addEventListener('click', function() {
             if (this.classList.contains('loading')) return;
@@ -241,7 +210,6 @@ function initAutoInfoTaskList() {
             this.textContent = '执行中...';
             this.disabled = true;
 
-            // 获取所有任务
             const taskItems = document.querySelectorAll('.task-item');
             if (taskItems.length === 0) {
                 showNotification('没有任务可执行', 'info');
@@ -251,11 +219,9 @@ function initAutoInfoTaskList() {
                 return;
             }
 
-            // 模拟执行所有任务
             let completedCount = 0;
             taskItems.forEach((item, index) => {
                 setTimeout(() => {
-                    // 添加执行动画
                     item.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
                     item.style.transition = 'all 0.3s';
 
@@ -273,33 +239,27 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 排序选择事件
     if (sortSelect) {
         sortSelect.addEventListener('change', function() {
             sortTasks(this.value);
         });
     }
 
-    // 添加任务到列表
     function addAutoInfoTask(task) {
-        // 隐藏空状态
         if (emptyState) {
             emptyState.style.display = 'none';
         }
 
-        // 创建任务项
         const taskItem = document.createElement('div');
         taskItem.className = 'task-item animate-fade-in';
         taskItem.dataset.id = task.id;
         taskItem.dataset.time = task.time;
         taskItem.dataset.status = task.status;
 
-        // 格式化时间
         const date = new Date(task.time);
         const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
 
-        // 设置状态样式
         let statusClass = '';
         let statusIcon = '';
 
@@ -321,7 +281,6 @@ function initAutoInfoTaskList() {
                 statusIcon = '⏱️';
         }
 
-        // 设置任务项内容
         taskItem.innerHTML = `
             <div class="task-info">
                 <div class="task-title">${task.text}</div>
@@ -340,10 +299,8 @@ function initAutoInfoTaskList() {
             </div>
         `;
 
-        // 添加删除按钮事件
         const deleteBtn = taskItem.querySelector('.task-action-btn.delete');
         deleteBtn.addEventListener('click', function() {
-            // 添加删除动画
             taskItem.style.height = taskItem.offsetHeight + 'px';
             taskItem.style.overflow = 'hidden';
             taskItem.style.transition = 'all 0.3s';
@@ -354,7 +311,6 @@ function initAutoInfoTaskList() {
                 taskItem.remove();
                 saveAutoInfoTasks();
 
-                // 检查是否还有任务
                 const taskItems = document.querySelectorAll('.task-item');
                 if (taskItems.length === 0 && emptyState) {
                     emptyState.style.display = 'flex';
@@ -364,7 +320,6 @@ function initAutoInfoTaskList() {
             }, 300);
         });
 
-        // 添加编辑按钮事件
         const editBtn = taskItem.querySelector('.task-action-btn.edit');
         editBtn.addEventListener('click', function() {
             const messageInput = document.querySelector('.message-input');
@@ -373,16 +328,13 @@ function initAutoInfoTaskList() {
             const currentRepeat = repeatBtn ? repeatBtn.querySelector('.current-repeat') : null;
 
             if (messageInput && datetimeInput && currentRepeat) {
-                // 填充表单
                 messageInput.value = task.text;
                 datetimeInput.value = task.time;
                 currentRepeat.textContent = task.repeat;
 
-                // 删除原任务
                 taskItem.remove();
                 saveAutoInfoTasks();
 
-                // 检查是否还有任务
                 const taskItems = document.querySelectorAll('.task-item');
                 if (taskItems.length === 0 && emptyState) {
                     emptyState.style.display = 'flex';
@@ -390,24 +342,20 @@ function initAutoInfoTaskList() {
             }
         });
 
-        // 添加执行按钮事件
         const executeBtn = taskItem.querySelector('.task-action-btn.execute');
         executeBtn.addEventListener('click', function() {
             if (task.status === 'running') return;
 
-            // 更新任务状态
             task.status = 'running';
             const statusElement = taskItem.querySelector('.task-status');
             const statusIcon = taskItem.querySelector('.status-icon');
             const statusText = taskItem.querySelector('.status-text');
 
-            // 更新样式
             statusElement.className = 'task-status status-running';
             statusIcon.textContent = '🔄';
             statusIcon.style.animation = 'spin 1s linear infinite';
             statusText.textContent = '执行中';
 
-            // 模拟执行完成
             setTimeout(() => {
                 task.status = 'completed';
                 statusElement.className = 'task-status status-completed';
@@ -419,10 +367,8 @@ function initAutoInfoTaskList() {
             }, 2000);
         });
 
-        // 添加到任务列表
         taskList.insertBefore(taskItem, emptyState);
 
-        // 添加悬停效果
         taskItem.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-3px)';
             this.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.1)';
@@ -434,7 +380,6 @@ function initAutoInfoTaskList() {
         });
     }
 
-    // 保存任务到本地存储
     function saveAutoInfoTasks() {
         const tasks = [];
         const taskItems = document.querySelectorAll('.task-item');
@@ -452,17 +397,14 @@ function initAutoInfoTaskList() {
         localStorage.setItem('autoInfoTasks', JSON.stringify(tasks));
     }
 
-    // 从本地存储加载任务
     function loadAutoInfoTasks() {
         const tasks = JSON.parse(localStorage.getItem('autoInfoTasks') || '[]');
 
         if (tasks.length > 0) {
-            // 隐藏空状态
             if (emptyState) {
                 emptyState.style.display = 'none';
             }
 
-            // 添加任务到列表
             tasks.forEach(task => {
                 addAutoInfoTask(task);
             });
