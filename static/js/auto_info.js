@@ -63,7 +63,29 @@ function initForm() {
     handleUrlParams();
     
     // 设置默认时间
-    setDefaultTime();
+function setDefaultTime() {
+    // 获取当前日期时间
+    const now = new Date();
+
+    console.log("加载啦")
+    
+    // 格式化日期为 YYYY-MM-DD
+    const date = now.toISOString().split('T')[0];
+    
+    // 格式化时间为 HH:MM
+    const time = now.toTimeString().split(' ')[0].slice(0, 5);
+    
+    // 组合成 datetime-local 格式
+    const defaultDateTime = `${date}T${time}`;
+    
+    // 设置输入框的值
+    const sendTimeInput = document.getElementById('sendTime');
+    if (sendTimeInput) {
+        sendTimeInput.value = defaultDateTime;
+    }
+}
+
+setDefaultTime();
 }
 
 // 加载任务列表

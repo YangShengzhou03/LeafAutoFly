@@ -613,6 +613,101 @@ function animateNumbers() {
     });
 }
 
+// 加载页面内容
+function loadPageContent(page, url) {
+    // 显示加载状态
+    const contentArea = document.getElementById('content-area');
+    if (!contentArea) return;
+
+    contentArea.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100%;"><div class="loader-spinner" style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite;"></div></div>';
+
+    // 模拟异步加载
+    setTimeout(() => {
+        // 根据不同页面加载不同内容
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                // 提取页面主体内容
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const newContent = tempDiv.querySelector('#content-area').innerHTML;
+                contentArea.innerHTML = newContent;
+
+                // 重新初始化页面特定的JavaScript
+                initPageScripts(page);
+            })
+            .catch(error => {
+                contentArea.innerHTML = '<div style="padding: 20px; text-align: center; color: #ff4d4f;">加载失败: ' + error.message + '</div>';
+            });
+    }, 300);
+}
+
+// 初始化页面特定的脚本
+function initPageScripts(page) {
+    // 根据页面类型执行不同的初始化
+    if (page === 'auto_info') {
+        // 强制加载auto_info.js文件，确保初始化函数可用
+        loadScript('/static/js/auto_info.js', function() {
+            // 初始化任务列表
+            if (document.getElementById('taskList')) {
+                initAutoInfoTaskList();
+            }
+            
+            // 初始化表单
+            if (typeof window.initForm === 'function') {
+                window.initForm();
+                console.log('auto_info.js初始化函数已调用');
+            } else {
+                console.error('无法找到initForm函数');
+            }
+        });
+    } else if (page === 'ai_takeover') {
+        // 这里可以添加AI接管页面的初始化代码
+    }
+
+    // 重新绑定按钮点击态
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.classList.add('button-pressed');
+        });
+        button.addEventListener('mouseup', function() {
+            this.classList.remove('button-pressed');
+        });
+        button.addEventListener('mouseleave', function() {
+            this.classList.remove('button-pressed');
+        });
+    });
+
+    // 重新初始化执行按钮加载态
+    const executeBtn = document.querySelector('.execute-btn');
+    if (executeBtn) {
+        executeBtn.addEventListener('click', function() {
+            if (this.classList.contains('loading')) return;
+
+            this.classList.add('loading');
+            this.innerHTML = '<span class="spinner"></span> 执行中...';
+            this.disabled = true;
+
+            // 模拟执行完成
+            setTimeout(() => {
+                this.classList.remove('loading');
+                this.innerHTML = '执行';
+                this.disabled = false;
+            }, 1500);
+        });
+    }
+}
+
+// 动态加载脚本
+function loadScript(url, callback) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    script.onload = callback;
+    document.head.appendChild(script);
+}
+
 // 添加CSS动画
 const style = document.createElement('style');
 style.textContent = `
