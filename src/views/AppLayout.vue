@@ -62,7 +62,7 @@ onBeforeRouteUpdate((to) => {
   width: 220px;
   background: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-  padding: 24px 0;
+  padding: 16px 0; /* 减少顶部内边距 */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -82,8 +82,8 @@ onBeforeRouteUpdate((to) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
+  margin-bottom: 16px; /* 减少底部外边距 */
+  padding-bottom: 16px; /* 减少底部内边距 */
   border-bottom: 1px solid #f0f0f0;
   width: 100%;
 }
