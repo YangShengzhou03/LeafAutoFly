@@ -33,7 +33,6 @@ load_tasks()
 
 @app.route('/')
 def home():
-    # 重定向到Vue开发服务器
     return redirect('http://localhost:8080')
 
 @app.route('/auto-info')
@@ -88,10 +87,8 @@ def clear_tasks():
     return jsonify({'success': True}), 200
 
 def start_vue_server():
-    # 启动Vue开发服务器
     try:
         print('正在启动Vue开发服务器...')
-        # 根据操作系统使用不同的命令
         if platform.system() == 'Windows':
             cmd = ['npm', 'run', 'serve']
         else:

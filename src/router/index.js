@@ -5,9 +5,9 @@ import AutoInfoView from '../views/AutoInfoView.vue'
 import AITakeoverView from '../views/AITakeoverView.vue'
 
 const routes = [
-  { 
-    path: '/', 
-    component: AppLayout, 
+  {
+    path: '/',
+    component: AppLayout,
     children: [
       { path: '', name: 'home', component: HomeView },
       { path: 'auto_info', name: 'auto_info', component: AutoInfoView },
@@ -22,7 +22,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // 可以在这里添加路由守卫逻辑
   next()
 })
 

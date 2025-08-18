@@ -1,22 +1,21 @@
 <template>
   <div class="app-layout">
-    <!-- 左侧导航栏 -->
     <aside class="sidebar">
       <div class="top-section">
         <div class="user-info">
-          <div class="avatar"></div>
+          <div class="avatar">枫</div>
           <span class="unlogin">未登录</span>
         </div>
         <nav class="menu">
           <ul>
             <li class="menu-item" :class="{ active: currentRoute === '/' }">
-              <a href="#" @click.prevent="navigateTo('/')">首页</a>
+              <router-link to="/">首页</router-link>
             </li>
             <li class="menu-item" :class="{ active: currentRoute === '/auto_info' }">
-              <a href="#" @click.prevent="navigateTo('/auto_info')">自动信息</a>
+              <router-link to="/auto_info">自动信息</router-link>
             </li>
             <li class="menu-item" :class="{ active: currentRoute === '/ai_takeover' }">
-              <a href="#" @click.prevent="navigateTo('/ai_takeover')">AI 运营</a>
+              <router-link to="/ai_takeover">AI 运营</router-link>
             </li>
           </ul>
         </nav>
@@ -27,7 +26,6 @@
       </div>
     </aside>
 
-    <!-- 右侧主体内容区 -->
     <main class="main-content">
       <router-view />
     </main>
@@ -35,14 +33,11 @@
 </template>
 
 <script setup>
-import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { ref } from 'vue';
 
-const router = useRouter();
 const route = useRoute();
 const currentRoute = ref(route.path);
-
-const navigateTo = (path) => router.push(path);
 
 onBeforeRouteUpdate((to) => {
   currentRoute.value = to.path;
@@ -55,7 +50,6 @@ onBeforeRouteUpdate((to) => {
   min-height: 100vh;
 }
 
-/* 左侧导航栏样式 */
 .sidebar {
   width: 220px;
   background: white;
@@ -99,17 +93,25 @@ onBeforeRouteUpdate((to) => {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background-color: #f5f7fa;
-  border: 2px solid #e4e6eb;
+  background-color: #4361ee;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   margin-bottom: 8px;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
 }
 
 .avatar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 6px 16px rgba(67, 97, 238, 0.25);
+  background-color: #3a56d4;
 }
 
 .avatar::after {
@@ -123,57 +125,60 @@ onBeforeRouteUpdate((to) => {
 }
 
 .unlogin {
-  color: #666;
-  font-size: 14px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .menu {
   width: 100%;
-  padding: 0 16px;
-  margin-top: 0;
-  box-sizing: border-box;
+  padding: 0 1rem;
 }
 
 .menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
 .menu-item {
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  transition: var(--transition);
   width: 100%;
   text-align: center;
-  padding: 12px 0;
   position: relative;
   cursor: pointer;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
-}
-
-.menu-item:hover {
-  background-color: #f9fafb;
-  transform: translateX(3px);
 }
 
 .menu-item a {
+  color: var(--text-primary);
   text-decoration: none;
-  color: #666;
-  font-size: 16px;
-  font-weight: 500;
-  transition: color 0.3s;
   display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: var(--transition);
+  font-size: 16px;
   width: 100%;
   height: 100%;
 }
 
+.menu-item:hover {
+  background-color: rgba(67, 97, 238, 0.08);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.1);
+}
+
 .menu-item.active {
-  background: linear-gradient(to right, rgba(216, 180, 254, 0.2), rgba(216, 180, 254, 0));
+  background-color: rgba(67, 97, 238, 0.12);
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.15);
 }
 
 .menu-item.active a {
-  color: #9333ea;
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 .menu-item.active::before {
@@ -183,62 +188,61 @@ onBeforeRouteUpdate((to) => {
   top: 0;
   height: 100%;
   width: 4px;
-  background: linear-gradient(to bottom, #9333ea, #c084fc);
+  background: var(--primary-color);
   border-radius: 0 4px 4px 0;
 }
 
 .sidebar-footer {
   width: 100%;
-  padding: 16px;
+  padding: 1rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
   margin-top: 24px;
   padding-top: 24px;
   border-top: 1px solid #f0f0f0;
+  text-align: center;
 }
 
 .dev-info {
-  color: #666;
-  font-size: 12px;
-  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
   line-height: 1.4;
 }
 
 .upgrade-btn {
-  background: linear-gradient(to right, #9333ea, #c084fc);
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 8px 20px;
-  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(147, 51, 234, 0.25);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
+  transition: var(--transition);
   width: 100%;
   max-width: 160px;
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.25);
 }
 
 .upgrade-btn:hover {
-  background: linear-gradient(to right, #c084fc, #9333ea);
+  background-color: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
 }
 
-/* 右侧主体内容区样式 */
 .main-content {
   flex: 1;
-  padding: 24px;
+  padding: 12px;
   box-sizing: border-box;
   overflow-y: auto;
   background-color: #fafafa;
   min-height: 100vh;
 }
 
-/* 响应式调整 */
 @media (max-width: 1024px) {
   .sidebar {
     width: 180px;

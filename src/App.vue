@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-// 主应用组件只包含路由出口
 </script>
 
 <style scoped>

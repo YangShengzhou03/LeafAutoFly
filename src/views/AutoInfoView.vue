@@ -167,6 +167,14 @@ const formData = reactive({
   messageContent: ''
 })
 
+const validateRecipient = (rule, value, callback) => {
+  if (!value.trim()) {
+    callback(new Error('请输入接收者'))
+    return
+  }
+  callback()
+}
+
 const rules = {
   recipient: [
     { required: true, message: '请输入接收者', trigger: 'blur' },
@@ -179,14 +187,6 @@ const rules = {
     { required: true, message: '请输入消息内容', trigger: 'blur' },
     { max: 500, message: '消息内容不能超过500个字符', trigger: 'input' }
   ]
-}
-
-const validateRecipient = (rule, value, callback) => {
-  if (!value.trim()) {
-    callback(new Error('请输入接收者'))
-    return
-  }
-  callback()
 }
 
 const tasks = ref([])
@@ -358,52 +358,15 @@ const handleUrlParams = () => {
 </script>
 
 <style scoped>
-:root {
-    --primary-color: #4f46e5;
-    --primary-light: #818cf8;
-    --primary-dark: #3730a3;
-    --primary-glow: rgba(79, 70, 229, 0.15);
-    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-    --text-color: #1e293b;
-    --text-muted: #64748b;
-    --background-color: #f8fafc;
-    --card-bg-color: #ffffff;
-    --border-color: #e2e8f0;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08);
-    --spacing-xs: 8px;
-    --spacing-sm: 12px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --border-radius: 12px;
-    --border-radius-sm: 8px;
-    --error-color: #ef4444;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --info-color: #3b82f6;
-}
+/* 使用全局CSS变量，不再重复定义 */
 
-body.dark-mode {
-    --primary-color: #818cf8;
-    --primary-light: #a5b4fc;
-    --primary-dark: #4f46e5;
-    --primary-glow: rgba(129, 140, 248, 0.15);
-    --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-    --text-color: #f1f5f9;
-    --text-muted: #94a3b8;
-    --background-color: #0f172a;
-    --card-bg-color: #1e293b;
-    --border-color: #334155;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+/* 暗色模式相关样式将在全局样式中统一处理 */
 
 .animate-fade-in { animation: fadeIn 0.5s ease forwards; }
 .animate-fade-out { animation: fadeOut 0.3s ease forwards; }
 .animate-slide-up { animation: slideUp 0.4s ease forwards; }
 .animate-pulse { animation: pulse 2s infinite; }
-.animate-scale { transition: transform 0.3s ease; }
+.animate-scale { transition: var(--transition); }
 .animate-scale:hover { transform: scale(1.02); }
 
 @keyframes fadeIn {
