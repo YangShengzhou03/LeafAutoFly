@@ -1,9 +1,7 @@
 <template>
   <div class="auto-info-container">
-    <!-- 通知容器 -->
     <div class="notification-container" ref="notificationContainer"></div>
 
-    <!-- 任务创建卡片 -->
     <section class="task-creation-section">
       <div class="section-header">
         <h2>创建新任务</h2>
@@ -90,7 +88,6 @@
       </div>
     </section>
 
-    <!-- 任务列表区域 -->
     <section class="task-list-section">
       <div class="section-header">
         <h2>任务列表</h2>
@@ -167,7 +164,6 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-// 导入所有需要的Element Plus组件
 import { ElMessage, ElTag, ElForm, ElFormItem, ElInput, ElDatePicker, ElSelect, ElOption, ElCheckboxGroup, ElCheckbox, ElButton, ElTable, ElTableColumn, ElIcon } from 'element-plus'
 import { User, Send, Play, Import, Export, Delete } from '@element-plus/icons-vue'
 
@@ -248,7 +244,6 @@ const resetForm = () => {
   formData.repeatDays = []
   formData.messageContent = ''
   charCount.value = 0
-  // 获取表单实例并重置验证状态
   const taskForm = document.querySelector('[ref="taskForm"]')
   if (taskForm && taskForm.resetFields) {
     taskForm.resetFields()
@@ -256,7 +251,6 @@ const resetForm = () => {
 }
 
 const submitForm = () => {
-  // 使用表单的验证方法进行验证
   const taskForm = document.querySelector('[ref="taskForm"]')
   if (taskForm && taskForm.validate) {
     taskForm.validate((valid) => {
@@ -283,7 +277,6 @@ const submitForm = () => {
       }
     })
   } else {
-    // 手动验证逻辑
     if (!formData.recipient.trim()) {
       ElMessage.error('请输入接收者')
       return
@@ -301,7 +294,6 @@ const submitForm = () => {
       return
     }
 
-    // 手动验证通过后创建任务
     setTimeout(() => {
       const newTask = {
         id: Date.now(),
@@ -333,7 +325,6 @@ const deleteTask = (taskId) => {
 const formatDateTime = (dateString) => {
   if (!dateString) return ''
   const date = new Date(dateString)
-  // 检查日期是否有效
   if (isNaN(date.getTime())) return dateString
   return `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`
 }
@@ -368,7 +359,6 @@ const taskRowClassName = ({ rowIndex }) => {
 
 onMounted(() => {
   setTimeout(() => {
-    // 添加示例任务数据以展示效果
     tasks.value = [
       {
         id: Date.now() - 3600000,
@@ -398,7 +388,6 @@ const handleUrlParams = () => {
   try {
     const params = new URLSearchParams(window.location.search)
     if (params.has('recipient') && params.has('sendTime') && params.has('messageContent')) {
-      // 解码URL参数，处理特殊字符
       formData.recipient = decodeURIComponent(params.get('recipient') || '')
       formData.sendTime = params.get('sendTime') || ''
       formData.repeatType = params.get('repeatType') || 'none'
@@ -416,7 +405,6 @@ const handleUrlParams = () => {
 </script>
 
 <style scoped>
-/* 基础变量定义 */
 :root {
   --primary-color: #1e40af;
   --secondary-color: #3b82f6;
@@ -435,7 +423,6 @@ const handleUrlParams = () => {
   --transition: all 0.3s ease;
 }
 
-/* 动画效果 */
 .animate-fade-in { animation: fadeIn 0.5s ease forwards; }
 .animate-slide-up { animation: slideUp 0.5s ease forwards; }
 
@@ -449,7 +436,6 @@ const handleUrlParams = () => {
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* 全局样式 */
 * {
   margin: 0; padding: 0; box-sizing: border-box;
 }
@@ -461,7 +447,6 @@ const handleUrlParams = () => {
   min-height: 100vh;
 }
 
-/* 区块标题样式 */
 .section-header {
   text-align: center; margin-bottom: 2rem;
 }
@@ -476,7 +461,6 @@ const handleUrlParams = () => {
   max-width: 700px; margin: 0 auto;
 }
 
-/* 任务创建区域样式 */
 .task-creation-section {
   margin-bottom: 3rem;
 }
@@ -494,7 +478,6 @@ const handleUrlParams = () => {
   box-shadow: var(--shadow-hover);
 }
 
-/* 表单样式 */
 .form-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem; margin-bottom: 1.5rem;
@@ -504,102 +487,37 @@ const handleUrlParams = () => {
   grid-column: 1 / -1;
 }
 
-.form-input {
-  width: 100%;
-  border-radius: 6px !important;
-  transition: var(--transition) !important;
-}
-
-.form-input:focus-within {
-  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2) !important;
-}
-
-.field-hint {
-  color: var(--text-secondary); font-size: 0.75rem;
-  margin-top: 0.25rem;
-}
-
-.custom-days {
-  padding: 0.75rem; background-color: #f8fafc;
-  border-radius: 6px; border: 1px solid var(--border-color);
-}
-
-.day-selector {
-  display: flex; flex-wrap: wrap;
+.form-actions {
+  display: flex; justify-content: flex-end; gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .char-count {
-  text-align: right; font-size: 0.75rem; color: var(--text-secondary);
-  margin-top: 0.25rem;
+  text-align: right; font-size: 0.875rem; color: var(--text-secondary);
+  margin-top: 0.5rem;
 }
 
-.form-actions {
-  display: flex; justify-content: flex-end; gap: 1rem;
-  margin-top: 2rem;
-}
-
-.reset-btn {
-  border-radius: 6px !important;
-  transition: var(--transition) !important;
-}
-
-.submit-btn {
-  border-radius: 6px !important;
-  background-color: var(--primary-color) !important;
-  transition: var(--transition) !important;
-}
-
-.submit-btn:hover {
-  background-color: var(--accent-color) !important;
-  transform: translateY(-2px) !important;
-}
-
-/* 任务列表区域样式 */
 .task-list-section {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .task-list-actions {
-  display: flex; justify-content: flex-end;
+  display: flex;
 }
 
 .task-table {
   background-color: var(--card-bg);
   border-radius: 8px;
-  overflow: hidden;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
-}
-
-.el-table__row {
-  transition: var(--transition);
-}
-
-.el-table__row:hover {
-  background-color: rgba(30, 64, 175, 0.03);
-}
-
-.even-row {
-  background-color: #f8fafc;
-}
-
-.odd-row {
-  background-color: var(--card-bg);
 }
 
 .message-content {
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  display: box; line-clamp: 2; box-orient: vertical;
-  overflow: hidden; max-width: 100%;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* 空状态样式 */
 .empty-task-state {
   text-align: center; padding: 3rem 0;
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
 }
 
 .empty-state-image {
@@ -607,7 +525,7 @@ const handleUrlParams = () => {
 }
 
 .empty-state-icon {
-  width: 120px; height: 120px; opacity: 0.5;
+  max-width: 150px; opacity: 0.7;
 }
 
 .empty-state-title {
@@ -616,24 +534,34 @@ const handleUrlParams = () => {
 }
 
 .empty-state-description {
-  color: var(--text-secondary); max-width: 300px;
-  margin: 0 auto;
+  color: var(--text-secondary); max-width: 400px; margin: 0 auto;
 }
 
-/* 通知容器 */
-.notification-container {
-  position: fixed; top: 20px; right: 20px; z-index: 9999; width: 300px;
+.even-row {
+  background-color: rgba(248, 250, 252, 0.5);
 }
 
-/* 图标样式 */
-.contact-icon {
-  color: var(--primary-color);
+.odd-row {
+  background-color: var(--card-bg);
 }
 
-/* 响应式调整 */
+.field-hint {
+  font-size: 0.875rem; color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .task-list-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .task-list-actions .el-button {
+    width: 100%;
   }
 }
 </style>
