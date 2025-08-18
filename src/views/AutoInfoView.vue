@@ -1,33 +1,28 @@
 <template>
   <div class="auto-info-container">
-    <div class="page-header">
-      <h1>LeafAuto Info</h1>
-    </div>
-
+    <!-- 通知容器 -->
     <div class="notification-container" ref="notificationContainer"></div>
 
-    <div class="task-creation-card animate-fade-in">
-      <div class="card-header">
-        <h2 class="card-title">
-          <span class="plus-icon"></span>创建新任务
-        </h2>
-        <p class="card-subtitle">设置自动发送的信息内容、接收者和发送时间</p>
+    <!-- 任务创建卡片 -->
+    <section class="task-creation-section">
+      <div class="section-header">
+        <h2>创建新任务</h2>
+        <p>设置自动发送的信息内容、接收者和发送时间</p>
       </div>
-      <div class="card-body">
+      <div class="task-creation-card animate-fade-in">
         <el-form ref="taskForm" :model="formData" :rules="rules" label-width="100px">
           <div class="form-grid">
             <el-form-item label="接收者" prop="recipient" required>
-              <div class="recipient-input-wrapper">
-                <el-input
-                  v-model="formData.recipient"
-                  placeholder="输入接收者信息"
-                  clearable
-                >
-                  <template #suffix>
-                    <span class="contact-icon"></span>
-                  </template>
-                </el-input>
-              </div>
+              <el-input
+                v-model="formData.recipient"
+                placeholder="输入接收者信息"
+                clearable
+                class="form-input"
+              >
+                <template #suffix>
+                  <el-icon class="contact-icon"><User /></el-icon>
+                </template>
+              </el-input>
               <div class="field-hint">多个接收者用逗号分隔</div>
             </el-form-item>
 
@@ -38,43 +33,36 @@
                 placeholder="选择发送时间"
                 value-format="YYYY-MM-DDTHH:mm"
                 :default-value="defaultDateTime"
+                class="form-input"
               ></el-date-picker>
             </el-form-item>
 
             <el-form-item label="重复选项">
-              <div class="repeat-dropdown">
-                <el-button
-                  type="default"
-                  class="repeat-btn"
-                  @click="toggleRepeatOptions"
-                >
-                  {{ repeatBtnText }} <span class="dropdown-icon"></span>
-                </el-button>
-                <div
-                  class="repeat-options"
-                  v-show="showRepeatOptions"
-                >
-                  <div
-                    class="repeat-option"
-                    v-for="option in repeatOptions"
-                    :key="option.value"
-                    @click="selectRepeatOption(option)"
-                  >
-                    {{ option.label }}
-                  </div>
-                  <div class="custom-days" v-show="formData.repeatType === 'custom'
-">
-                    <p class="form-text mb-2">选择重复日期：</p>
-                    <div class="day-selector">
-                      <label v-for="day in daysOfWeek" :key="day.value">
-                        <el-checkbox
-                          v-model="formData.repeatDays"
-                          :label="day.value"
-                        ></el-checkbox>
-                        <span>{{ day.label }}</span>
-                      </label>
-                    </div>
-                  </div>
+              <el-select
+                v-model="formData.repeatType"
+                placeholder="选择重复类型"
+                class="form-input"
+              >
+                <el-option
+                  v-for="option in repeatOptions"
+                  :key="option.value"
+                  :label="option.label"
+                  :value="option.value"
+                ></el-option>
+              </el-select>
+              <div v-if="formData.repeatType === 'custom'" class="custom-days mt-2">
+                <p class="form-text mb-1">选择重复日期：</p>
+                <div class="day-selector">
+                  <el-checkbox-group v-model="formData.repeatDays" class="flex-wrap gap-2">
+                    <el-checkbox
+                      v-for="day in daysOfWeek"
+                      :key="day.value"
+                      :label="day.value"
+                      class="mr-2"
+                    >
+                      {{ day.label }}
+                    </el-checkbox>
+                  </el-checkbox-group>
                 </div>
               </div>
             </el-form-item>
@@ -86,63 +74,85 @@
                 placeholder="输入信息内容"
                 :rows="4"
                 @input="updateCharCount"
+                class="form-input"
               ></el-input>
               <div class="char-count">{{ charCount }}/500</div>
             </el-form-item>
           </div>
 
           <div class="form-actions">
-            <el-button type="default" @click="resetForm">重置</el-button>
-            <span class="actions-separator"></span>
-            <el-button type="primary" @click="submitForm">
-              <span class="play-icon"></span> 创建任务
+            <el-button type="default" @click="resetForm" class="reset-btn">重置</el-button>
+            <el-button type="primary" @click="submitForm" class="submit-btn">
+              <el-icon class="mr-1"><Send /></el-icon> 创建任务
             </el-button>
           </div>
         </el-form>
       </div>
-    </div>
+    </section>
 
-    <div class="task-list-container">
-      <div class="task-list-header">
-        <div class="header-content">
-          <h2>任务列表</h2>
-          <p class="list-description">当前共有 {{ tasks.length }} 个任务</p>
-        </div>
-        <div class="task-list-actions">
-          <el-button type="primary" plain :disabled="tasks.length === 0">导入</el-button>
-          <el-button type="primary" plain :disabled="tasks.length === 0">导出</el-button>
-          <el-button type="primary" :disabled="tasks.length === 0">开始执行</el-button>
-        </div>
+    <!-- 任务列表区域 -->
+    <section class="task-list-section">
+      <div class="section-header">
+        <h2>任务列表</h2>
+        <p>当前共有 {{ tasks.length }} 个任务</p>
+      </div>
+      <div class="task-list-actions mb-4">
+        <el-button type="primary" plain :disabled="tasks.length === 0" class="mr-2">
+          <el-icon class="mr-1"><Import /></el-icon> 导入
+        </el-button>
+        <el-button type="primary" plain :disabled="tasks.length === 0" class="mr-2">
+          <el-icon class="mr-1"><Export /></el-icon> 导出
+        </el-button>
+        <el-button type="primary" :disabled="tasks.length === 0">
+          <el-icon class="mr-1"><Play /></el-icon> 开始执行
+        </el-button>
       </div>
 
-      <ul class="task-list" v-if="tasks.length > 0">
-        <li
-          v-for="task in sortedTasks"
-          :key="task.id"
-          class="task-item task-transition"
-          :data-task-id="task.id"
-        >
-          <div class="task-content">
-            <h3 class="task-recipient">接收者: {{ task.recipient }}</h3>
-            <p class="task-message">内容: {{ task.messageContent }}</p>
-            <div class="task-meta">
-              <span class="task-time"><i class="fa fa-clock-o"></i> {{ formatDateTime(task.sendTime) }}</span>
-              <span class="task-repeat"><i class="fa fa-refresh"></i> {{ getRepeatText(task.repeatType, task.repeatDays) }}</span>
-              <span :class="['task-status', task.status]">{{ task.status === 'pending' ? '待执行' : '已完成' }}</span>
-            </div>
-          </div>
-          <div class="task-actions">
+      <el-table
+        v-if="tasks.length > 0"
+        :data="sortedTasks"
+        style="width: 100%"
+        class="task-table"
+        :row-class-name="taskRowClassName"
+      >
+        <el-table-column prop="recipient" label="接收者" width="180"></el-table-column>
+        <el-table-column prop="messageContent" label="内容" width="300">
+          <template #default="{ row }">
+            <div class="message-content" :title="row.messageContent">{{ row.messageContent }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="sendTime" label="发送时间" width="180">
+          <template #default="{ row }">
+            {{ formatDateTime(row.sendTime) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="重复类型" width="150">
+          <template #default="{ row }">
+            {{ getRepeatText(row.repeatType, row.repeatDays) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" width="100">
+          <template #default="{ row }">
+            <el-tag
+              :type="row.status === 'pending' ? 'info' : 'success'"
+              size="small"
+            >
+              {{ row.status === 'pending' ? '待执行' : '已完成' }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="100" fixed="right">
+          <template #default="{ row }">
             <el-button
               type="danger"
               size="small"
-              @click="deleteTask(task.id)"
-              icon="Delete"
+              @click="deleteTask(row.id)"
             >
-              删除
+              <el-icon><Delete /></el-icon>
             </el-button>
-          </div>
-        </li>
-      </ul>
+          </template>
+        </el-table-column>
+      </el-table>
 
       <div class="empty-task-state" v-else>
         <div class="empty-state-image animate-fade-in">
@@ -151,13 +161,15 @@
         <h3 class="empty-state-title">暂无任务</h3>
         <p class="empty-state-description">点击上方的"创建新任务"按钮，开始创建您的第一个自动信息任务</p>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-import { ElMessage } from 'element-plus'
+// 导入所有需要的Element Plus组件
+import { ElMessage, ElTag, ElForm, ElFormItem, ElInput, ElDatePicker, ElSelect, ElOption, ElCheckboxGroup, ElCheckbox, ElButton, ElTable, ElTableColumn, ElIcon } from 'element-plus'
+import { User, Send, Play, Import, Export, Delete } from '@element-plus/icons-vue'
 
 const formData = reactive({
   recipient: '',
@@ -209,13 +221,6 @@ const daysOfWeek = [
   { label: '周日', value: '0' }
 ]
 
-const repeatBtnText = computed(() => {
-  const option = repeatOptions.find(opt => opt.value === formData.repeatType)
-  return option ? option.label : '不重复'
-})
-
-const showRepeatOptions = ref(false)
-
 const charCount = ref(0)
 
 const defaultDateTime = computed(() => {
@@ -227,15 +232,6 @@ const defaultDateTime = computed(() => {
 const sortedTasks = computed(() => {
   return [...tasks.value].sort((a, b) => new Date(a.sendTime) - new Date(b.sendTime))
 })
-
-const toggleRepeatOptions = () => {
-  showRepeatOptions.value = !showRepeatOptions.value
-}
-
-const selectRepeatOption = (option) => {
-  formData.repeatType = option.value
-  showRepeatOptions.value = false
-}
 
 const updateCharCount = () => {
   charCount.value = formData.messageContent.length
@@ -252,11 +248,42 @@ const resetForm = () => {
   formData.repeatDays = []
   formData.messageContent = ''
   charCount.value = 0
+  // 获取表单实例并重置验证状态
+  const taskForm = document.querySelector('[ref="taskForm"]')
+  if (taskForm && taskForm.resetFields) {
+    taskForm.resetFields()
+  }
 }
 
 const submitForm = () => {
-  const taskForm = document.querySelector('#taskForm')
-  if (taskForm) {
+  // 使用表单的验证方法进行验证
+  const taskForm = document.querySelector('[ref="taskForm"]')
+  if (taskForm && taskForm.validate) {
+    taskForm.validate((valid) => {
+      if (valid) {
+        if (formData.repeatType === 'custom' && formData.repeatDays.length === 0) {
+          ElMessage.error('请至少选择一个重复日期')
+          return
+        }
+
+        setTimeout(() => {
+          const newTask = {
+            id: Date.now(),
+            recipient: formData.recipient,
+            sendTime: formData.sendTime,
+            repeatType: formData.repeatType,
+            repeatDays: formData.repeatDays,
+            messageContent: formData.messageContent,
+            status: 'pending'
+          }
+          tasks.value.push(newTask)
+          ElMessage.success('任务创建成功')
+          resetForm()
+        }, 500)
+      }
+    })
+  } else {
+    // 手动验证逻辑
     if (!formData.recipient.trim()) {
       ElMessage.error('请输入接收者')
       return
@@ -274,6 +301,7 @@ const submitForm = () => {
       return
     }
 
+    // 手动验证通过后创建任务
     setTimeout(() => {
       const newTask = {
         id: Date.now(),
@@ -303,7 +331,10 @@ const deleteTask = (taskId) => {
 }
 
 const formatDateTime = (dateString) => {
+  if (!dateString) return ''
   const date = new Date(dateString)
+  // 检查日期是否有效
+  if (isNaN(date.getTime())) return dateString
   return `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`
 }
 
@@ -331,10 +362,32 @@ const getRepeatText = (repeatType, repeatDays) => {
   return '不重复'
 }
 
+const taskRowClassName = ({ rowIndex }) => {
+  return rowIndex % 2 === 0 ? 'even-row' : 'odd-row'
+}
+
 onMounted(() => {
   setTimeout(() => {
+    // 添加示例任务数据以展示效果
     tasks.value = [
-      // 这里可以添加示例任务数据
+      {
+        id: Date.now() - 3600000,
+        recipient: '张三, 李四',
+        sendTime: new Date(Date.now() + 3600000).toISOString().slice(0, 16),
+        repeatType: 'daily',
+        repeatDays: [],
+        messageContent: '这是一条每日提醒消息，请注意查收。',
+        status: 'pending'
+      },
+      {
+        id: Date.now() - 7200000,
+        recipient: '王五',
+        sendTime: new Date(Date.now() + 7200000).toISOString().slice(0, 16),
+        repeatType: 'custom',
+        repeatDays: ['1', '3', '5'],
+        messageContent: '每周一、三、五的工作汇报提醒，请按时提交。',
+        status: 'pending'
+      }
     ]
   }, 500)
 
@@ -342,261 +395,245 @@ onMounted(() => {
 })
 
 const handleUrlParams = () => {
-  const params = new URLSearchParams(window.location.search)
-  if (params.has('recipient') && params.has('sendTime') && params.has('messageContent')) {
-    formData.recipient = params.get('recipient')
-    formData.sendTime = params.get('sendTime')
-    formData.repeatType = params.get('repeatType') || 'none'
-    formData.messageContent = params.get('messageContent')
-    charCount.value = formData.messageContent.length
+  try {
+    const params = new URLSearchParams(window.location.search)
+    if (params.has('recipient') && params.has('sendTime') && params.has('messageContent')) {
+      // 解码URL参数，处理特殊字符
+      formData.recipient = decodeURIComponent(params.get('recipient') || '')
+      formData.sendTime = params.get('sendTime') || ''
+      formData.repeatType = params.get('repeatType') || 'none'
+      formData.messageContent = decodeURIComponent(params.get('messageContent') || '')
+      charCount.value = formData.messageContent.length
 
-    if (params.has('repeatDays')) {
-      formData.repeatDays = params.get('repeatDays').split(',')
+      if (params.has('repeatDays')) {
+        formData.repeatDays = params.get('repeatDays').split(',')
+      }
     }
+  } catch (error) {
+    console.error('处理URL参数时出错:', error)
   }
 }
 </script>
 
 <style scoped>
-/* 使用全局CSS变量，不再重复定义 */
-
-/* 暗色模式相关样式将在全局样式中统一处理 */
-
-.animate-fade-in { animation: fadeIn 0.5s ease forwards; }
-.animate-fade-out { animation: fadeOut 0.3s ease forwards; }
-.animate-slide-up { animation: slideUp 0.4s ease forwards; }
-.animate-pulse { animation: pulse 2s infinite; }
-.animate-scale { transition: var(--transition); }
-.animate-scale:hover { transform: scale(1.02); }
-
-@keyframes fadeIn {
-    from { opacity: 0; }    to { opacity: 1; }
+/* 基础变量定义 */
+:root {
+  --primary-color: #1e40af;
+  --secondary-color: #3b82f6;
+  --accent-color: #2563eb;
+  --light-color: #f8fafc;
+  --dark-color: #1e293b;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
 }
 
-@keyframes fadeOut {
-    from { opacity: 1; transform: scale(1); }    to { opacity: 0; transform: scale(0.95); }
+/* 动画效果 */
+.animate-fade-in { animation: fadeIn 0.5s ease forwards; }
+.animate-slide-up { animation: slideUp 0.5s ease forwards; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }    to { transform: translateY(0); opacity: 1; }
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }    50% { opacity: 0.7; }
-}
-
+/* 全局样式 */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    padding: 0;
-    transition: background-color var(--transition), color var(--transition);
+  margin: 0; padding: 0; box-sizing: border-box;
 }
 
 .auto-info-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1200px; margin: 0 auto; padding: 20px;
+  font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background-color: var(--light-color);
+  min-height: 100vh;
 }
 
-.page-header {
-    margin-bottom: var(--spacing-xl);
-    padding: var(--spacing-lg) 0;
-    border-bottom: 1px solid var(--border-color);
+/* 区块标题样式 */
+.section-header {
+  text-align: center; margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 1.8rem; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  font-size: 1rem; color: var(--text-secondary);
+  max-width: 700px; margin: 0 auto;
+}
+
+/* 任务创建区域样式 */
+.task-creation-section {
+  margin-bottom: 3rem;
 }
 
 .task-creation-card {
-    background-color: var(--card-bg-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-    border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
-.card-header {
-    margin-bottom: var(--spacing-lg);
+.task-creation-card:hover {
+  box-shadow: var(--shadow-hover);
 }
 
-.card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: var(--spacing-xs);
-    display: flex;
-    align-items: center;
-}
-
-.card-subtitle {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-}
-
-.el-form {
-    width: 100%;
-}
-
+/* 表单样式 */
 .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--spacing-lg);
-    margin-bottom: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem; margin-bottom: 1.5rem;
 }
 
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
+.full-width {
+  grid-column: 1 / -1;
 }
 
-.actions-separator {
-    flex-grow: 1;
+.form-input {
+  width: 100%;
+  border-radius: 6px !important;
+  transition: var(--transition) !important;
+}
+
+.form-input:focus-within {
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2) !important;
 }
 
 .field-hint {
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    margin-top: var(--spacing-xs);
+  color: var(--text-secondary); font-size: 0.75rem;
+  margin-top: 0.25rem;
 }
 
-.task-list-container {
-    background-color: var(--card-bg-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: var(--spacing-lg);
-    border: 1px solid var(--border-color);
+.custom-days {
+  padding: 0.75rem; background-color: #f8fafc;
+  border-radius: 6px; border: 1px solid var(--border-color);
 }
 
-.task-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid var(--border-color);
+.day-selector {
+  display: flex; flex-wrap: wrap;
+}
+
+.char-count {
+  text-align: right; font-size: 0.75rem; color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.form-actions {
+  display: flex; justify-content: flex-end; gap: 1rem;
+  margin-top: 2rem;
+}
+
+.reset-btn {
+  border-radius: 6px !important;
+  transition: var(--transition) !important;
+}
+
+.submit-btn {
+  border-radius: 6px !important;
+  background-color: var(--primary-color) !important;
+  transition: var(--transition) !important;
+}
+
+.submit-btn:hover {
+  background-color: var(--accent-color) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 任务列表区域样式 */
+.task-list-section {
+  margin-bottom: 3rem;
 }
 
 .task-list-actions {
-    display: flex;
-    gap: var(--spacing-sm);
+  display: flex; justify-content: flex-end;
 }
 
-.task-list {
-    list-style: none;
+.task-table {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
 }
 
-.task-item {
-    background-color: var(--card-bg-color);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    box-shadow: var(--shadow);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: var(--transition);
-    border: 1px solid var(--border-color);
+.el-table__row {
+  transition: var(--transition);
 }
 
-.task-item:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
-    border-color: var(--primary-light);
+.el-table__row:hover {
+  background-color: rgba(30, 64, 175, 0.03);
 }
 
-.task-content {
-    flex: 1;
+.even-row {
+  background-color: #f8fafc;
 }
 
-.task-recipient {
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
+.odd-row {
+  background-color: var(--card-bg);
 }
 
-.task-message {
-    color: var(--text-color);
-    margin-bottom: var(--spacing-xs);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+.message-content {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  display: box; line-clamp: 2; box-orient: vertical;
+  overflow: hidden; max-width: 100%;
 }
 
-.task-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    font-size: 0.875rem;
-    color: var(--text-muted);
-}
-
-.task-status {
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
-}
-
-.task-status.pending {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: var(--info-color);
-}
-
-.task-status.completed {
-    background-color: rgba(16, 185, 129, 0.1);
-    color: var(--success-color);
-}
-
+/* 空状态样式 */
 .empty-task-state {
-    text-align: center;
-    padding: var(--spacing-xl) 0;
+  text-align: center; padding: 3rem 0;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
 }
 
 .empty-state-image {
-    margin-bottom: var(--spacing-lg);
+  margin-bottom: 1.5rem;
 }
 
 .empty-state-icon {
-    width: 120px;
-    height: 120px;
-    opacity: 0.5;
+  width: 120px; height: 120px; opacity: 0.5;
 }
 
 .empty-state-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
+  font-size: 1.25rem; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 0.5rem;
 }
 
 .empty-state-description {
-    color: var(--text-muted);
-    max-width: 300px;
-    margin: 0 auto;
+  color: var(--text-secondary); max-width: 300px;
+  margin: 0 auto;
 }
 
+/* 通知容器 */
 .notification-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    width: 300px;
+  position: fixed; top: 20px; right: 20px; z-index: 9999; width: 300px;
 }
 
-.el-input__inner,
-.el-textarea__inner,
-.el-button {
-  border-radius: var(--border-radius-sm);
+/* 图标样式 */
+.contact-icon {
+  color: var(--primary-color);
 }
 
-.el-button {
-  padding: var(--spacing-sm) var(--spacing-md);
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
