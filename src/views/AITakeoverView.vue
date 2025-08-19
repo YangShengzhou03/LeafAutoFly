@@ -9,12 +9,8 @@
           <el-card class="config-card-inner" shadow="hover">
             <template #header>
               <div class="card-header">
-                <div class="card-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                </div>
-                <div class="card-title-group">
-                  <h2 class="card-title">AI 自动回复配置</h2>
-                  <p class="card-subtitle">设置AI接管消息回复的相关参数和策略</p>
+                <div class="header-title">
+                  <span>AI 自动回复配置</span>
                 </div>
               </div>
             </template>
@@ -58,12 +54,8 @@
           <el-card shadow="hover">
             <template #header>
               <div class="card-header">
-                <div class="card-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 6 13.5 15.5 8.5 10.5 1 18"></polygon><polyline points="17 6 23 6 23 12"></polyline></svg>
-                </div>
-                <div class="card-title-group">
-                  <h2 class="card-title">AI 性能洞察</h2>
-                  <p class="card-subtitle">AI回复的统计数据和趋势分析</p>
+                <div class="header-title">
+                  <span>AI 性能洞察</span>
                 </div>
               </div>
             </template>
@@ -109,16 +101,12 @@
       <!-- AI自定义回复规则 -->
       <el-card class="rules-card" shadow="hover">
         <template #header>
-          <div class="card-header">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <div class="card-title-group">
-              <h2 class="card-title">AI 自定义回复规则</h2>
-              <p class="card-subtitle">设置AI回复的具体规则和匹配模式</p>
-            </div>
-          </div>
-        </template>
+              <div class="card-header">
+                <div class="header-title">
+                  <span>AI 自定义回复规则</span>
+                </div>
+              </div>
+            </template>
 
         <div class="custom-rules-container">
           <div class="rule-actions">
@@ -157,29 +145,26 @@
       <!-- AI回复历史 -->
       <el-card class="history-card" shadow="hover">
         <template #header>
-          <div class="card-header">
-            <div class="card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            </div>
-            <div class="card-title-group">
-              <h2 class="card-title">AI 回复历史</h2>
-              <div class="history-controls">
-                <el-input
-                  v-model="searchQuery"
-                  placeholder="搜索消息内容..."
-                  :prefix-icon="Search"
-                  size="small"
-                  class="search-input"
-                ></el-input>
-                <el-select v-model="filterStatus" placeholder="筛选状态" size="small" class="status-filter">
-                  <el-option label="全部" value="all"></el-option>
-                  <el-option label="已回复" value="replied"></el-option>
-                  <el-option label="待回复" value="pending"></el-option>
-                </el-select>
+              <div class="card-header">
+                <div class="header-title">
+                  <span>AI 回复历史</span>
+                </div>
+                <div class="history-controls">
+                  <el-input
+                    v-model="searchQuery"
+                    placeholder="搜索消息内容..."
+                    :prefix-icon="Search"
+                    size="small"
+                    class="search-input"
+                  ></el-input>
+                  <el-select v-model="filterStatus" placeholder="筛选状态" size="small" class="status-filter">
+                    <el-option label="全部" value="all"></el-option>
+                    <el-option label="已回复" value="replied"></el-option>
+                    <el-option label="待回复" value="pending"></el-option>
+                  </el-select>
+                </div>
               </div>
-            </div>
-          </div>
-        </template>
+            </template>
 
         <el-table
           v-loading="isLoadingHistory"
@@ -735,15 +720,20 @@ onMounted(() => {
 /* 统一卡片头部样式 */
 .card-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
   border-bottom: 1px solid var(--border-color);
-  background-color: rgba(59, 130, 246, 0.03);
+  background-color: white;
 }
 
-.card-title-group {
-  flex: 1;
-  min-width: 0;
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-primary);
 }
 
 /* 统一表单行间距 */
@@ -836,7 +826,8 @@ onMounted(() => {
 /* 统一表格操作按钮 */
 .el-table .el-button {
   margin: 0 4px;
-  padding: 6px 8px;
+  padding: 4px 8px;
+  font-size: 12px;
 }
 
 /* 自定义输入框样式 */
@@ -858,18 +849,17 @@ onMounted(() => {
 }
 
 /* 按钮样式增强 */
-.gradient-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  border: none;
-  color: white;
-  transition: var(--transition);
+/* 移除渐变按钮样式，使用标准按钮样式 */
+.el-button--primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-.gradient-btn:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+.el-button--primary:hover {
+  background-color: #1e3a8a;
+  border-color: #1e3a8a;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-  color: white;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
 }
 
 .delete-btn {
@@ -887,49 +877,22 @@ onMounted(() => {
 
 /* 卡片样式 */
 .el-card {
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
-  transition: var(--transition);
+  transition: all 0.3s ease;
   overflow: hidden;
   background-color: white;
   margin-bottom: 24px;
 }
 
 .el-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
   border-color: var(--primary-light);
 }
 
-.card-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba(59, 130, 246, 0.1);
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-}
+/* 卡片相关样式已与AutoInfoView统一 */
 
-.card-title-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.card-subtitle {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin: 0;
-}
+/* 移除了.card-icon、.card-title-group、.card-title和.card-subtitle类，使用.header-title替代 */
 
 /* 表单样式 */
 .el-form-item {
@@ -953,16 +916,16 @@ onMounted(() => {
   padding: 5px 0;
 }
 
-/* 表格样式增强 */
+/* 表格样式增强 - 与AutoInfoView统一 */
 .el-table {
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
 }
 
 .el-table th {
-  background-color: rgba(59, 130, 246, 0.05);
+  background-color: rgba(30, 64, 175, 0.05);
   font-weight: 600;
   color: var(--text-primary);
   padding: 12px 0;
@@ -978,7 +941,7 @@ onMounted(() => {
 }
 
 .el-table--enable-row-hover .el-table__body tr:hover > td {
-  background-color: rgba(59, 130, 246, 0.08);
+  background-color: var(--light-color);
 }
 
 /* 标签样式 */

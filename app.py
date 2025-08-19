@@ -86,22 +86,56 @@ def clear_tasks():
     save_tasks()
     return jsonify({'success': True}), 200
 
+def is_vue_server_running():
+    """检查Vue开发服务器是否已经在运行"""
+    try:
+        # 尝试连接到Vue服务器
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex(('localhost', 8080))
+        sock.close()
+        return result == 0
+    except Exception:
+        return False
+
 def start_vue_server():
     try:
-        print('正在启动Vue开发服务器...')
-        if platform.system() == 'Windows':
-            cmd = ['npm', 'run', 'serve']
-        else:
-            cmd = ['npm', 'run', 'serve']
+        # 检查Vue服务器是否已经在运行
+        if is_vue_server_running():
+            print('Vue开发服务器已经在运行')
+            return
         
-        # 在后台启动Vue服务器
-        subprocess.Popen(
-            cmd,
-            cwd=os.path.dirname(os.path.abspath(__file__)),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            shell=True
-        )
+        print('正在启动Vue开发服务器...')
+        
+        # 根据操作系统设置正确的命令格式
+        if platform.system() == 'Windows':
+            # 在Windows上使用shell=True时，命令应该是字符串
+            cmd = 'npm run serve'
+            # 不使用列表形式，因为shell=True会在cmd.exe中执行
+            process = subprocess.Popen(
+                cmd,
+                cwd=os.path.dirname(os.path.abspath(__file__)),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                shell=True
+            )
+        else:
+            # 在非Windows系统上，可以使用列表形式
+            cmd = ['npm', 'run', 'serve']
+            process = subprocess.Popen(
+                cmd,
+                cwd=os.path.dirname(os.path.abspath(__file__)),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                shell=False
+            )
+        
+        # 输出命令执行的信息
+        stdout, stderr = process.communicate()
+        print(f'Vue服务器输出: {stdout.decode() if stdout else "无"}')
+        if stderr:
+            print(f'Vue服务器错误: {stderr.decode()}')
+            
         print('Vue开发服务器已启动')
         # 等待Vue服务器启动完成
         time.sleep(3)
