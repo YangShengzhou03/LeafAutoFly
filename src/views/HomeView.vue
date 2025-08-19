@@ -222,32 +222,27 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-
 const animationActive = ref(false);
 
 onMounted(() => {
-  
   const counters = document.querySelectorAll('.counter');
   if (counters.length && !animationActive.value) {
     animationActive.value = true;
     counters.forEach(counter => {
-      
       counter.style.opacity = '0';
       counter.style.transform = 'translateY(20px)';
       counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
-      
       setTimeout(() => {
         counter.style.opacity = '1';
         counter.style.transform = 'translateY(0)';
 
         const target = +counter.dataset.target;
-        const duration = 2500; // 稍微延长动画时间，使效果更平滑
-        const frameDuration = 1000 / 60; // 60fps
+        const duration = 2500;
+        const frameDuration = 1000 / 60;
         const totalFrames = Math.round(duration / frameDuration);
         let frame = 0;
 
-        
         const easeOutQuad = (t) => t * (2 - t);
 
         const updateCounter = () => {
@@ -265,14 +260,12 @@ onMounted(() => {
         };
 
         updateCounter();
-      }, Math.random() * 300); // 随机延迟，创造错落有致的效果
+      }, Math.random() * 300);
     });
   }
 
-  
   setTimeout(() => {
     document.querySelectorAll('.pricing-card, .dashboard-card, .testimonial-card, .metric-card').forEach((el, index) => {
-      
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -280,7 +273,7 @@ onMounted(() => {
       setTimeout(() => {
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
-      }, index * 100 + Math.random() * 100); 
+      }, index * 100 + Math.random() * 100);
     });
   }, 100);
 });

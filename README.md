@@ -10,6 +10,9 @@
   <a href="https://github.com/YangShengzhou03/LeafAutoWeb">
     <img src="https://img.shields.io/github/forks/YangShengzhou03/LeafAutoWeb?style=for-the-badge&logo=github" alt="GitHub Forks">
   </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Theme-%231e40af-blue?style=for-the-badge" alt="Theme Color: Klein Blue">
+  </a>
 </div>
 
 📌 **专业领域**：微信消息自动化 | 任务调度 | AI 自动回复
@@ -41,12 +44,16 @@
 - 📊 **任务管理**：直观查看、编辑和删除自动化任务
 - 🔒 **数据安全**：本地部署，数据完全掌控在自己手中
 - 💼 **会员体系**：提供不同层级的会员服务，满足不同需求
+- 🎨 **现代界面设计**：采用克莱因蓝(#1e40af)作为主题色，界面美观且风格一致
+- ⚡ **优化性能**：清理冗余代码，提升系统响应速度和运行效率
 
 无论是个人用户用于生日提醒、定期问候，还是企业用户用于客户维护、活动通知，LeafAuto Web 都能显著提升消息发送效率，降低人工成本。
 
 ---
 
 ## 🚀 核心功能
+
+系统采用前后端分离架构，所有数据交互通过 RESTful API 实现，前端不再使用写死的示例数据。
 
 ### 1. 消息自动化发送
 - **定时发送**：设置具体的发送时间，精确到分钟
@@ -124,7 +131,7 @@ cd LeafAutoWeb
 python -m venv venv
 # 激活虚拟环境
 # Windows
-env\Scripts\activate
+venv\Scripts\activate
 # macOS/Linux
 source venv/bin/activate
 # 安装依赖
@@ -135,6 +142,18 @@ pip install -r requirements.txt
 ```bash
 # 安装 Node.js 依赖
 npm install
+```
+
+4. 初始化数据文件
+```bash
+# 创建数据目录
+mkdir -p data
+# 初始化任务数据文件
+echo '[]' > data/tasks.json
+# 初始化AI设置数据文件
+echo '{"ai_takeover_enabled": false, "reply_delay": 1, "reply_style": "friendly", "max_reply_length": 200, "keywords": [], "reply_template": ""}' > data/ai_settings.json
+# 初始化AI历史记录数据文件
+echo '[]' > data/ai_history.json
 ```
 
 ### 方法二：Docker 容器安装
@@ -197,7 +216,6 @@ LeafAutoWeb/
 ├── README.md               # 项目说明文档
 ├── LICENSE                 # 许可证文件
 ├── app.py                  # Flask 后端入口
-├── data.json               # 任务数据存储文件
 ├── requirements.txt        # 后端依赖列表
 ├── package.json            # 前端依赖配置
 ├── package-lock.json       # 前端依赖锁定文件
@@ -214,6 +232,10 @@ LeafAutoWeb/
 │   ├── assets/             # 静态资源
 │   │   ├── css/            # 样式文件
 │   │   └── images/         # 图片资源
+├── data/                   # 数据存储目录
+│   ├── tasks.json          # 任务数据存储文件
+│   ├── ai_settings.json    # AI设置数据存储文件
+│   └── ai_history.json     # AI历史记录数据存储文件
 └── test_server.bat         # Windows 测试服务器脚本
 ```
 
@@ -233,6 +255,58 @@ LeafAutoWeb/
 - 若通过网络提供本软件的服务，必须公开对应的源代码
 
 详情请参阅 [LICENSE](LICENSE) 文件。
+
+## 🔄 API 文档
+
+### 任务管理 API
+
+#### 获取所有任务
+- **URL**: `/api/tasks`
+- **方法**: `GET`
+- **响应**: 返回任务列表
+
+#### 创建新任务
+- **URL**: `/api/tasks`
+- **方法**: `POST`
+- **请求体**: 任务信息
+- **响应**: 返回创建的任务
+
+#### 删除任务
+- **URL**: `/api/tasks/<task_id>`
+- **方法**: `DELETE`
+- **响应**: 成功状态
+
+#### 更新任务状态
+- **URL**: `/api/tasks/<task_id>/status`
+- **方法**: `PATCH`
+- **请求体**: 新状态信息
+- **响应**: 返回更新后的任务
+
+### AI 设置 API
+
+#### 获取 AI 设置
+- **URL**: `/api/ai-settings`
+- **方法**: `GET`
+- **响应**: 返回 AI 设置信息
+
+#### 更新 AI 设置
+- **URL**: `/api/ai-settings`
+- **方法**: `POST`
+- **请求体**: 新的 AI 设置
+- **响应**: 返回更新后的 AI 设置
+
+### AI 历史记录 API
+
+#### 获取 AI 回复历史
+- **URL**: `/api/ai-history`
+- **方法**: `GET`
+- **响应**: 返回 AI 回复历史列表
+
+#### 添加 AI 回复记录
+- **URL**: `/api/ai-history`
+- **方法**: `POST`
+- **请求体**: 新的回复记录
+- **响应**: 返回添加的记录
 
 ---
 

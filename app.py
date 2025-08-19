@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, request, jsonify, redirect
 import uuid
 import datetime
 import json
@@ -12,6 +12,10 @@ app = Flask(__name__)
 tasks = {}
 DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
 
+aio_settings = {}
+AI_DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ai_data.json')
+reply_history = []
+
 def load_tasks():
     global tasks
     try:
@@ -22,6 +26,7 @@ def load_tasks():
         print(f'加载任务数据失败: {e}')
         tasks = {}
 
+
 def save_tasks():
     try:
         with open(DATA_FILE, 'w', encoding='utf-8') as f:
@@ -29,7 +34,35 @@ def save_tasks():
     except Exception as e:
         print(f'保存任务数据失败: {e}')
 
+
+def load_ai_data():
+    global ai_settings, reply_history
+    try:
+        if os.path.exists(AI_DATA_FILE):
+            with open(AI_DATA_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                ai_settings = data.get('settings', {})
+                reply_history = data.get('history', [])
+    except Exception as e:
+        print(f'加载AI数据失败: {e}')
+        ai_settings = {}
+        reply_history = []
+
+
+def save_ai_data():
+    try:
+        data = {
+            'settings': ai_settings,
+            'history': reply_history
+        }
+        with open(AI_DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f'保存AI数据失败: {e}')
+
+
 load_tasks()
+load_ai_data()
 
 @app.route('/')
 def home():
@@ -86,10 +119,34 @@ def clear_tasks():
     save_tasks()
     return jsonify({'success': True}), 200
 
+
+@app.route('/api/ai-settings', methods=['POST'])
+def save_ai_settings():
+    global ai_settings
+    settings_data = request.json
+    ai_settings = settings_data
+    ai_settings['updatedAt'] = datetime.datetime.now().isoformat()
+    save_ai_data()
+    return jsonify(ai_settings), 200
+
+
+@app.route('/api/ai-history', methods=['GET'])
+def get_ai_history():
+    return jsonify(reply_history)
+
+
+@app.route('/api/ai-history', methods=['POST'])
+def add_ai_history():
+    global reply_history
+    history_data = request.json
+    history_data['id'] = str(uuid.uuid4())
+    history_data['time'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    reply_history.append(history_data)
+    save_ai_data()
+    return jsonify(history_data), 201
+
 def is_vue_server_running():
-    """检查Vue开发服务器是否已经在运行"""
     try:
-        # 尝试连接到Vue服务器
         import socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex(('localhost', 8080))
@@ -100,18 +157,14 @@ def is_vue_server_running():
 
 def start_vue_server():
     try:
-        # 检查Vue服务器是否已经在运行
         if is_vue_server_running():
             print('Vue开发服务器已经在运行')
             return
         
         print('正在启动Vue开发服务器...')
         
-        # 根据操作系统设置正确的命令格式
         if platform.system() == 'Windows':
-            # 在Windows上使用shell=True时，命令应该是字符串
             cmd = 'npm run serve'
-            # 不使用列表形式，因为shell=True会在cmd.exe中执行
             process = subprocess.Popen(
                 cmd,
                 cwd=os.path.dirname(os.path.abspath(__file__)),
@@ -120,7 +173,6 @@ def start_vue_server():
                 shell=True
             )
         else:
-            # 在非Windows系统上，可以使用列表形式
             cmd = ['npm', 'run', 'serve']
             process = subprocess.Popen(
                 cmd,
@@ -130,20 +182,17 @@ def start_vue_server():
                 shell=False
             )
         
-        # 输出命令执行的信息
         stdout, stderr = process.communicate()
         print(f'Vue服务器输出: {stdout.decode() if stdout else "无"}')
         if stderr:
             print(f'Vue服务器错误: {stderr.decode()}')
             
         print('Vue开发服务器已启动')
-        # 等待Vue服务器启动完成
         time.sleep(3)
     except Exception as e:
         print(f'启动Vue开发服务器失败: {e}')
 
 def open_browser():
-    # 自动打开浏览器
     try:
         import webbrowser
         print('正在打开浏览器...')
@@ -152,9 +201,6 @@ def open_browser():
         print(f'打开浏览器失败: {e}')
 
 if __name__ == '__main__':
-    # 启动Vue开发服务器
     start_vue_server()
-    # 自动打开浏览器
     open_browser()
-    # 启动Flask服务器
     app.run(debug=True, port=5000)

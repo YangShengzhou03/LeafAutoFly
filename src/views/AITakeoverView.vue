@@ -115,7 +115,7 @@
 
           <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm" row-key="id">
             <el-table-column prop="matchType" label="匹配类型" width="180">
-              <template #default="{ row }"><!-- 移除未使用的$index变量 -->
+              <template #default="{ row }">
                 <el-select v-model="row.matchType" placeholder="选择匹配类型" size="small" class="custom-select">
                   <el-option label="包含关键词" value="contains"></el-option>
                   <el-option label="完全匹配" value="equals"></el-option>
@@ -245,8 +245,8 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus' // 移除未使用的ElLoading
-import { View, Search } from '@element-plus/icons-vue' // 移除未使用的Plus
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { View, Search } from '@element-plus/icons-vue'
 
 
 const aiForm = ref(null)
@@ -292,13 +292,11 @@ const formattedTakeoverTime = computed(() => {
 
 const toggleTakeover = () => {
   if (formData.aiStatus) {
-
     formData.aiStatus = false
     clearInterval(timerInterval.value)
     timerInterval.value = null
     ElMessage.info('AI已停止接管消息回复')
   } else {
-
     formData.aiStatus = true
     startTime.value = Date.now()
     timerInterval.value = setInterval(() => {
@@ -338,7 +336,7 @@ const rules = {
 
 const addRule = () => {
   formData.customRules.push({
-    id: Date.now(), // 添加唯一ID作为row-key
+    id: Date.now(),
     matchType: 'contains',
     keyword: '',
     reply: ''
@@ -351,50 +349,7 @@ const removeRule = (index) => {
 }
 
 
-const replyHistory = ref([
-  {
-    id: 1,
-    time: '2023-11-15 10:30:25',
-    originalMessage: '你好，请问什么时候发货？',
-    aiReply: '我们的商品通常会在下单后1-3个工作日内发货。',
-    status: 'replied'
-  },
-  {
-    id: 2,
-    time: '2023-11-15 09:15:42',
-    originalMessage: '我要退款',
-    aiReply: '您可以在订单详情页面申请退款，我们会在24小时内处理。',
-    status: 'replied'
-  },
-  {
-    id: 3,
-    time: '2023-11-14 16:42:18',
-    originalMessage: '如何申请退款？',
-    aiReply: '您可以在订单详情页面申请退款，我们会在24小时内处理。',
-    status: 'replied'
-  },
-  {
-    id: 4,
-    time: '2023-11-14 14:25:33',
-    originalMessage: '你们支持哪些支付方式？',
-    aiReply: '感谢您的消息：你们支持哪些支付方式？。我们支持微信支付、支付宝、银联和信用卡等多种支付方式。此消息由AI自动回复，时间：2023-11-14 14:25:33。',
-    status: 'replied'
-  },
-  {
-    id: 5,
-    time: '2023-11-14 11:08:57',
-    originalMessage: '商品质量有问题怎么办？',
-    aiReply: '感谢您的消息：商品质量有问题怎么办？。如果您收到的商品存在质量问题，请在收货后7天内联系我们的客服，并提供相关照片证明。我们将为您安排退换货或退款。此消息由AI自动回复，时间：2023-11-14 11:08:57。',
-    status: 'replied'
-  },
-  {
-    id: 6,
-    time: '2023-11-15 11:20:15',
-    originalMessage: '请问你们的工作时间是什么时候？',
-    aiReply: '',
-    status: 'pending'
-  }
-])
+const replyHistory = ref([])
 
 
 const searchQuery = ref('')
@@ -441,13 +396,22 @@ const handleCurrentChange = (current) => {
 const submitForm = async () => {
   isSubmitting.value = true
   try {
-
     await aiForm.value.validate()
     await rulesForm.value.validate()
-    
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    ElMessage.success('AI设置保存成功')
+    const response = await fetch('/api/ai-settings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+    if (response.ok) {
+      ElMessage.success('AI设置保存成功')
+    } else {
+      ElMessage.error('保存失败，请稍后重试')
+    }
   } catch (error) {
     console.error('表单验证失败:', error)
     ElMessage.error('保存失败，请检查表单填写是否正确')
@@ -587,10 +551,30 @@ const animateCounters = () => {
 }
 
 onMounted(() => {
-  loadHistory();
-  setTimeout(() => {
-    animateCounters();
-  }, 500);
+  // 从API加载AI回复历史
+  const fetchReplyHistory = async () => {
+    isLoadingHistory.value = true
+    try {
+      const response = await fetch('/api/ai-history')
+      if (response.ok) {
+        const data = await response.json()
+        replyHistory.value = data
+      } else {
+        ElMessage.error('获取回复历史失败')
+      }
+    } catch (error) {
+      console.error('获取回复历史失败:', error)
+      ElMessage.error('获取回复历史失败')
+    } finally {
+      isLoadingHistory.value = false
+      // 加载完成后执行动画
+      setTimeout(() => {
+        animateCounters();
+      }, 500);
+    }
+  }
+
+  fetchReplyHistory()
 });
 </script>
 
