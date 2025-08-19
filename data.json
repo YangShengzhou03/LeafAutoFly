@@ -1,1 +1,29 @@
-{}
+{
+  "069b0b42-cf4a-4167-8318-e9157e77b14b": {
+    "recipient": "杨圣洲",
+    "sendTime": "",
+    "repeatType": "none",
+    "repeatDays": [],
+    "messageContent": "你好 世界 祝你一起顺利！",
+    "id": "069b0b42-cf4a-4167-8318-e9157e77b14b",
+    "createdAt": "2025-08-19T22:18:07.148049"
+  },
+  "53b36d13-3627-4bbe-b3d5-cf387baf4abf": {
+    "recipient": "",
+    "sendTime": "",
+    "repeatType": "none",
+    "repeatDays": [],
+    "messageContent": "",
+    "id": "53b36d13-3627-4bbe-b3d5-cf387baf4abf",
+    "createdAt": "2025-08-19T22:18:22.607120"
+  },
+  "3b15fa63-da8e-4be8-ba0c-b50d339fe340": {
+    "recipient": "",
+    "sendTime": "",
+    "repeatType": "none",
+    "repeatDays": [],
+    "messageContent": "",
+    "id": "3b15fa63-da8e-4be8-ba0c-b50d339fe340",
+    "createdAt": "2025-08-19T22:18:24.624469"
+  }
+}
