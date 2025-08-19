@@ -164,6 +164,7 @@
             </template>
 
         <el-table
+          v-if="filteredHistory.length > 0"
           v-loading="isLoadingHistory"
           :data="paginatedHistory"
           style="width: 100%"
@@ -234,7 +235,7 @@
           ></el-pagination>
         </div>
 
-        <el-empty v-else description="暂无回复历史" />
+        <el-empty v-else-if="!isLoadingHistory" description="暂无回复历史" />
       </el-card>
     </div>
   </div>
@@ -493,16 +494,6 @@ const truncateText = (text, length) => {
 const tableRowClassName = ({ row }) => {
   return row.status === 'pending' ? 'task-pending' : 'task-completed';
 }
-
-
-const loadHistory = () => {
-  isLoadingHistory.value = true
-  // 模拟API请求
-  setTimeout(() => {
-    isLoadingHistory.value = false
-  }, 800)
-}
-
 
 const animateCounters = () => {
   const counters = document.querySelectorAll('.counter');
