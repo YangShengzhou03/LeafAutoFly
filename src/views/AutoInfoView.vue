@@ -192,7 +192,7 @@ import {
   ElButton, ElButtonGroup, ElTable, ElTableColumn, ElTag, 
   ElTooltip, ElEmpty, ElIcon 
 } from 'element-plus'
-import { User, Upload, Download, Delete, Refresh, Edit } from '@element-plus/icons-vue'
+import { User, Delete, Refresh, Edit } from '@element-plus/icons-vue'
 
 const formData = reactive({
   recipient: '',
@@ -289,9 +289,7 @@ const resetForm = () => {
 }
 
 const submitForm = async () => {
-  try {
-    await taskForm.value.validate()
-    
+  try {    
     if (formData.repeatType === 'custom' && formData.repeatDays.length === 0) {
       ElMessage.error('请至少选择一个重复日期')
       return

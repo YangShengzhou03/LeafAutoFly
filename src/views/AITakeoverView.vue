@@ -115,7 +115,7 @@
 
           <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm" row-key="id">
             <el-table-column prop="matchType" label="匹配类型" width="180">
-              <template #default="{ row, $index }">
+              <template #default="{ row }"><!-- 移除未使用的$index变量 -->
                 <el-select v-model="row.matchType" placeholder="选择匹配类型" size="small" class="custom-select">
                   <el-option label="包含关键词" value="contains"></el-option>
                   <el-option label="完全匹配" value="equals"></el-option>
@@ -124,12 +124,12 @@
               </template>
             </el-table-column>
             <el-table-column prop="keyword" label="关键词/规则" width="240">
-              <template #default="{ row, $index }">
+              <template #default="{ row }"><!-- 移除未使用的$index变量 -->
                 <el-input v-model="row.keyword" placeholder="输入关键词或规则" size="small" class="custom-input"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="reply" label="回复内容">
-              <template #default="{ row, $index }">
+              <template #default="{ row }"><!-- 移除未使用的$index变量 -->
                 <el-input v-model="row.reply" type="textarea" placeholder="输入回复内容" size="small" :rows="2" class="custom-input"></el-input>
               </template>
             </el-table-column>
@@ -159,11 +159,6 @@
                     size="small"
                     class="search-input"
                   ></el-input>
-                  <el-select v-model="filterStatus" placeholder="筛选状态" size="small" class="status-filter">
-                    <el-option label="全部" value="all"></el-option>
-                    <el-option label="已回复" value="replied"></el-option>
-                    <el-option label="待回复" value="pending"></el-option>
-                  </el-select>
                 </div>
               </div>
             </template>
@@ -250,8 +245,8 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { ElMessage, ElMessageBox, ElLoading } from 'element-plus'
-import { View, Search, Plus } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus' // 移除未使用的ElLoading
+import { View, Search } from '@element-plus/icons-vue' // 移除未使用的Plus
 
 
 const aiForm = ref(null)
