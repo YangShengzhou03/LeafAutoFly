@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <!-- 会员计划区域 -->
+    
     <section class="pricing">
       <div class="section-header">
         <h2>选择适合您企业的方案</h2>
@@ -101,7 +101,7 @@
       </div>
     </section>
 
-        <!-- 核心数据区域 -->
+        
     <section class="key-metrics">
       <div class="metrics-container">
         <div class="metric-card">
@@ -123,7 +123,7 @@
       </div>
     </section>
 
-    <!-- 系统概览区域 -->
+    
     <section class="dashboard">
       <div class="section-header">
         <h2>系统概览</h2>
@@ -175,7 +175,7 @@
       </div>
     </section>
 
-    <!-- 客户评价区域 -->
+    
     <section class="testimonials">
       <div class="section-header">
         <h2>客户评价</h2>
@@ -222,21 +222,21 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-// 使用ref来跟踪动画状态，避免重复触发
+
 const animationActive = ref(false);
 
 onMounted(() => {
-  // 数字计数动画 - 优化版
+  
   const counters = document.querySelectorAll('.counter');
   if (counters.length && !animationActive.value) {
     animationActive.value = true;
     counters.forEach(counter => {
-      // 初始化样式
+      
       counter.style.opacity = '0';
       counter.style.transform = 'translateY(20px)';
       counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
-      // 延迟显示，创造层次感
+      
       setTimeout(() => {
         counter.style.opacity = '1';
         counter.style.transform = 'translateY(0)';
@@ -247,7 +247,7 @@ onMounted(() => {
         const totalFrames = Math.round(duration / frameDuration);
         let frame = 0;
 
-        // 使用easing函数使动画更自然
+        
         const easeOutQuad = (t) => t * (2 - t);
 
         const updateCounter = () => {
@@ -269,10 +269,10 @@ onMounted(() => {
     });
   }
 
-  // 页面载入动画 - 增强版
+  
   setTimeout(() => {
     document.querySelectorAll('.pricing-card, .dashboard-card, .testimonial-card, .metric-card').forEach((el, index) => {
-      // 初始状态
+      
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -280,7 +280,7 @@ onMounted(() => {
       setTimeout(() => {
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
-      }, index * 100 + Math.random() * 100); // 增加随机延迟，使动画更生动
+      }, index * 100 + Math.random() * 100); 
     });
   }, 100);
 });

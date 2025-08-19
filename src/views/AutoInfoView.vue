@@ -192,7 +192,7 @@ import {
   ElButton, ElButtonGroup, ElTable, ElTableColumn, ElTag, 
   ElTooltip, ElEmpty, ElIcon 
 } from 'element-plus'
-import { User, Import, Export, Delete, Refresh, Edit } from '@element-plus/icons-vue'
+import { User, Upload, Download, Delete, Refresh, Edit } from '@element-plus/icons-vue'
 
 const formData = reactive({
   recipient: '',
@@ -221,7 +221,7 @@ const rules = {
   ]
 }
 
-// 添加示例任务数据
+
 const tasks = ref([
   {
     id: 1,
@@ -315,7 +315,7 @@ const submitForm = async () => {
   }
 }
 
-// 表格行样式函数
+
 const tableRowClassName = ({ row }) => {
   return row.status === 'pending' ? 'task-pending' : 'task-completed';
 }
@@ -360,7 +360,7 @@ const padZero = (num) => {
   return num < 10 ? '0' + num : num
 }
 
-// 刷新任务列表
+
 const refreshTasks = () => {
   // 这里可以添加实际的刷新逻辑，例如从服务器获取最新任务
   ElMessage({ message: '任务列表已刷新', type: 'success', duration: 1000 });

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <!-- 主要内容区域 -->
+    
     <div class="main-content">
-      <!-- 上方左右排列区域 -->
+      
       <div class="top-row">
-        <!-- 左侧：AI自动回复配置 -->
+        
         <div class="config-card">
           <el-card class="config-card-inner" shadow="hover">
             <template #header>
@@ -49,7 +49,7 @@
           </el-card>
         </div>
 
-        <!-- 右侧：AI性能洞察 -->
+        
         <div class="insights-card">
           <el-card shadow="hover">
             <template #header>
@@ -98,7 +98,7 @@
       </div>
 
       <!-- 下方依次排列区域 -->
-      <!-- AI自定义回复规则 -->
+      
       <el-card class="rules-card" shadow="hover">
         <template #header>
               <div class="card-header">
@@ -144,7 +144,7 @@
         </div>
       </el-card>
 
-      <!-- AI回复历史 -->
+      
       <el-card class="history-card" shadow="hover">
         <template #header>
               <div class="card-header">
@@ -253,11 +253,11 @@ import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { ElMessage, ElMessageBox, ElLoading } from 'element-plus'
 import { View, Search, Plus } from '@element-plus/icons-vue'
 
-// 表单引用
+
 const aiForm = ref(null)
 const rulesForm = ref(null)
 
-// 表单数据
+
 const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
@@ -281,15 +281,12 @@ const formData = reactive({
   ]
 })
 
-// 图表范围
-const chartRange = ref('7d')
 
-// 接管计时相关
 const startTime = ref(null)
 const takeoverDuration = ref(0)
 const timerInterval = ref(null)
 
-// 格式化接管时间
+
 const formattedTakeoverTime = computed(() => {
   const seconds = Math.floor(takeoverDuration.value / 1000)
   const minutes = Math.floor(seconds / 60)
@@ -297,16 +294,16 @@ const formattedTakeoverTime = computed(() => {
   return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
 })
 
-// 切换接管状态
+
 const toggleTakeover = () => {
   if (formData.aiStatus) {
-    // 停止接管
+
     formData.aiStatus = false
     clearInterval(timerInterval.value)
     timerInterval.value = null
     ElMessage.info('AI已停止接管消息回复')
   } else {
-    // 开始接管
+
     formData.aiStatus = true
     startTime.value = Date.now()
     timerInterval.value = setInterval(() => {
@@ -316,7 +313,7 @@ const toggleTakeover = () => {
   }
 }
 
-// 组件卸载时清除计时器
+
 onUnmounted(() => {
   if (timerInterval.value) {
     clearInterval(timerInterval.value)
@@ -343,7 +340,7 @@ const rules = {
   ]
 }
 
-// 添加自定义规则
+
 const addRule = () => {
   formData.customRules.push({
     id: Date.now(), // 添加唯一ID作为row-key
@@ -353,12 +350,12 @@ const addRule = () => {
   })
 }
 
-// 移除自定义规则
+
 const removeRule = (index) => {
   formData.customRules.splice(index, 1)
 }
 
-// 模拟数据 - 实际应用中应从API获取
+
 const replyHistory = ref([
   {
     id: 1,
@@ -404,7 +401,7 @@ const replyHistory = ref([
   }
 ])
 
-// 搜索和筛选
+
 const searchQuery = ref('')
 const filterStatus = ref('all')
 const currentPage = ref(1)
@@ -412,14 +409,14 @@ const pageSize = ref(5)
 const isLoadingHistory = ref(false)
 const isSubmitting = ref(false)
 
-// AI性能统计数据
+
 const stats = reactive({
   replyRate: 95,
   averageTime: 2.8,
   satisfactionRate: 92
 })
 
-// 计算过滤后的历史记录
+
 const filteredHistory = computed(() => {
   return replyHistory.value
     .filter(item => {
@@ -430,7 +427,7 @@ const filteredHistory = computed(() => {
     })
 })
 
-// 分页处理
+
 const paginatedHistory = computed(() => {
   const startIndex = (currentPage.value - 1) * pageSize.value
   return filteredHistory.value.slice(startIndex, startIndex + pageSize.value)
@@ -445,15 +442,15 @@ const handleCurrentChange = (current) => {
   currentPage.value = current
 }
 
-// 提交表单
+
 const submitForm = async () => {
   isSubmitting.value = true
   try {
-    // 验证两个表单
+
     await aiForm.value.validate()
     await rulesForm.value.validate()
     
-    // 模拟API请求
+
     await new Promise(resolve => setTimeout(resolve, 1000))
     ElMessage.success('AI设置保存成功')
   } catch (error) {
@@ -464,7 +461,7 @@ const submitForm = async () => {
   }
 }
 
-// 重置表单
+
 const resetForm = () => {
   ElMessageBox.confirm('确定要重置所有设置吗？', '提示', {
     confirmButtonText: '确定',
@@ -492,7 +489,7 @@ const resetForm = () => {
   }).catch(() => {})
 }
 
-// 查看详情
+
 const viewDetails = (row) => {
   ElMessageBox({
     title: '消息详情',
@@ -519,7 +516,7 @@ const viewDetails = (row) => {
   })
 }
 
-// 格式化日期和时间
+
 const formatDate = (dateTime) => {
   const date = new Date(dateTime)
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
@@ -530,18 +527,18 @@ const formatTime = (dateTime) => {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
-// 截断文本
+
 const truncateText = (text, length) => {
   if (!text) return ''
   return text.length > length ? `${text.substring(0, length)}...` : text
 }
 
-// 表格行样式函数
+
 const tableRowClassName = ({ row }) => {
   return row.status === 'pending' ? 'task-pending' : 'task-completed';
 }
 
-// 模拟加载历史记录
+
 const loadHistory = () => {
   isLoadingHistory.value = true
   // 模拟API请求
@@ -550,17 +547,17 @@ const loadHistory = () => {
   }, 800)
 }
 
-// 数字计数动画
+
 const animateCounters = () => {
   const counters = document.querySelectorAll('.counter');
   if (counters.length) {
     counters.forEach(counter => {
-      // 初始化样式
+      
       counter.style.opacity = '0';
       counter.style.transform = 'translateY(20px)';
       counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
-      // 延迟显示，创造层次感
+      
       setTimeout(() => {
         counter.style.opacity = '1';
         counter.style.transform = 'translateY(0)';
@@ -571,7 +568,7 @@ const animateCounters = () => {
         const totalFrames = Math.round(duration / frameDuration);
         let frame = 0;
 
-        // 使用easing函数使动画更自然
+        
         const easeOutQuad = (t) => t * (2 - t);
 
         const updateCounter = () => {
