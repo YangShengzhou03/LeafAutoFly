@@ -110,7 +110,7 @@
 
         <div class="custom-rules-container">
           <div class="rule-actions">
-            <el-button type="primary" icon="Plus" @click="addRule" class="gradient-btn">添加规则</el-button>
+            <el-button type="primary" @click="addRule" class="gradient-btn">添加规则</el-button>
           </div>
 
           <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm" row-key="id">
