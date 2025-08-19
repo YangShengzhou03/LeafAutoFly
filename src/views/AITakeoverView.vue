@@ -356,6 +356,7 @@ const currentPage = ref(1)
 const pageSize = ref(5)
 const isLoadingHistory = ref(false)
 const isSubmitting = ref(false)
+const chartRange = ref('7d')
 
 
 const stats = reactive({
