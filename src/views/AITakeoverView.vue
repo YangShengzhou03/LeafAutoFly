@@ -113,7 +113,7 @@
             <el-button type="primary" icon="Plus" @click="addRule" class="gradient-btn">添加规则</el-button>
           </div>
 
-          <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm">
+          <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm" row-key="id">
             <el-table-column prop="matchType" label="匹配类型" width="180">
               <template #default="{ row, $index }">
                 <el-select v-model="row.matchType" placeholder="选择匹配类型" size="small" class="custom-select">
@@ -135,7 +135,9 @@
             </el-table-column>
             <el-table-column label="操作" width="100" fixed="right">
               <template #default="{ $index }">
-                <el-button type="danger" size="small" @click="removeRule($index)" class="delete-btn">删除</el-button>
+                <div class="operation-buttons">
+                  <el-button type="danger" size="small" @click="removeRule($index)" class="delete-btn">删除</el-button>
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -210,15 +212,16 @@
           </el-table-column>
           <el-table-column label="操作" width="120" fixed="right">
             <template #default="{ row }">
-              <el-button
-                type="primary"
-                size="small"
-                @click="viewDetails(row)"
-                :icon="View"
-                class="gradient-btn"
-              >
-                查看
-              </el-button>
+              <div class="operation-buttons">
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="viewDetails(row)"
+                  :icon="View"
+                >
+                  查看
+                </el-button>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -264,11 +267,13 @@ const formData = reactive({
   aiPersona: '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
   customRules: [
     {
+      id: 1,
       matchType: 'contains',
       keyword: '发货',
       reply: '我们的商品通常会在下单后1-3个工作日内发货。'
     },
     {
+      id: 2,
       matchType: 'equals',
       keyword: '退款',
       reply: '您可以在订单详情页面申请退款，我们会在24小时内处理。'
@@ -341,6 +346,7 @@ const rules = {
 // 添加自定义规则
 const addRule = () => {
   formData.customRules.push({
+    id: Date.now(), // 添加唯一ID作为row-key
     matchType: 'contains',
     keyword: '',
     reply: ''
@@ -848,8 +854,12 @@ onMounted(() => {
   border: 1px solid var(--border-color);
 }
 
-/* 按钮样式增强 */
+/* 按钮样式增强 - 与AutoInfoView统一 */
 /* 移除渐变按钮样式，使用标准按钮样式 */
+.el-button {
+  transition: all 0.2s ease;
+}
+
 .el-button--primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -862,11 +872,22 @@ onMounted(() => {
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
 }
 
+.operation-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.operation-buttons .el-button {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
 .delete-btn {
   background-color: #fee2e2;
   border-color: #fecaca;
   color: #dc2626;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .delete-btn:hover {
