@@ -1,113 +1,336 @@
 <template>
-  <div class="ai-takeover-container">
-    <div class="page-header">
-      <h1>AI 接管设置</h1>
-    </div>
+  <div class="app-container">
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+      <!-- 上方左右排列区域 -->
+      <div class="top-row">
+        <!-- 左侧：AI自动回复配置 -->
+        <div class="config-card">
+          <el-card class="config-card-inner" shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <div class="card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <div class="card-title-group">
+                  <h2 class="card-title">AI 自动回复配置</h2>
+                  <p class="card-subtitle">设置AI接管消息回复的相关参数和策略</p>
+                </div>
+              </div>
+            </template>
 
-    <div class="ai-settings-card animate-fade-in">
-      <div class="card-header">
-        <h2 class="card-title">
-          <span class="ai-icon"></span>AI 自动回复配置
-        </h2>
-        <p class="card-subtitle">设置AI接管消息回复的相关参数和策略</p>
+            <el-form ref="aiForm" :model="formData" :rules="rules" class="custom-input">
+              <el-form-item label="AI接管状态" prop="aiStatus">
+                <div class="status-toggle">
+                  <el-switch v-model="formData.aiStatus" active-color="#3b82f6" inactive-color="#d1d5db" @change="toggleTakeover"></el-switch>
+                  <div v-if="formData.aiStatus" class="takeover-time ml-3">
+                    已接管: <span class="text-primary">{{ formattedTakeoverTime }}</span>
+                  </div>
+                </div>
+              </el-form-item>
+
+              <el-form-item label="回复延迟(秒)" prop="replyDelay">
+                <el-input v-model.number="formData.replyDelay" placeholder="输入回复延迟时间"></el-input>
+              </el-form-item>
+
+              <el-form-item label="最小回复间隔(秒)" prop="minReplyInterval">
+                <el-input v-model.number="formData.minReplyInterval" placeholder="输入最小回复间隔时间"></el-input>
+              </el-form-item>
+
+              <el-form-item label="接管联系人" prop="contactPerson">
+                <el-input v-model="formData.contactPerson" placeholder="输入接管联系人姓名"></el-input>
+              </el-form-item>
+
+              <el-form-item label="AI人设" prop="aiPersona">
+                <el-input v-model="formData.aiPersona" type="textarea" placeholder="描述AI的性格和回复风格" :rows="4"></el-input>
+              </el-form-item>
+
+              <div class="action-buttons">
+                <el-button type="primary" :loading="isSubmitting" @click="submitForm" class="gradient-btn">保存设置</el-button>
+                <el-button @click="resetForm">重置</el-button>
+              </div>
+            </el-form>
+          </el-card>
+        </div>
+
+        <!-- 右侧：AI性能洞察 -->
+        <div class="insights-card">
+          <el-card shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <div class="card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 6 13.5 15.5 8.5 10.5 1 18"></polygon><polyline points="17 6 23 6 23 12"></polyline></svg>
+                </div>
+                <div class="card-title-group">
+                  <h2 class="card-title">AI 性能洞察</h2>
+                  <p class="card-subtitle">AI回复的统计数据和趋势分析</p>
+                </div>
+              </div>
+            </template>
+
+            <div class="card-body">
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-value counter" data-target="{{ stats.replyRate }}">{{ stats.replyRate }}%</div>
+                  <div class="stat-label">回复率</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value counter" data-target="{{ stats.averageTime }}">{{ stats.averageTime }}s</div>
+                  <div class="stat-label">平均响应时间</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value counter" data-target="{{ stats.satisfactionRate }}">{{ stats.satisfactionRate }}%</div>
+                  <div class="stat-label">满意度</div>
+                </div>
+              </div>
+              <div class="chart-container">
+                <div class="chart-card">
+                  <div class="chart-header">
+                    <h3>近7天AI回复数量趋势</h3>
+                    <div class="chart-actions">
+                      <el-select v-model="chartRange" placeholder="选择范围" size="small" class="chart-select">
+                        <el-option label="7天" value="7d"></el-option>
+                        <el-option label="30天" value="30d"></el-option>
+                        <el-option label="90天" value="90d"></el-option>
+                      </el-select>
+                    </div>
+                  </div>
+                  <div class="chart-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="180" viewBox="0 0 400 180"><defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs><path d="M0,150 Q50,120 100,130 T200,100 T300,120 T400,90" fill="url(#areaGradient)" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/><path d="M0,150 L400,150" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4"/><circle cx="100" cy="130" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/><circle cx="200" cy="100" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/><circle cx="300" cy="120" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/><circle cx="400" cy="90" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </el-card>
+        </div>
       </div>
-      <div class="card-body">
-        <el-form ref="aiForm" :model="formData" :rules="rules" label-width="150px">
-          <el-form-item label="AI 接管状态" prop="aiStatus">
-            <el-switch
-              v-model="formData.aiStatus"
-              active-color="var(--primary-color)"
-              inactive-color="#ccc"
-              active-text="启用"
-              inactive-text="禁用"
-            ></el-switch>
-          </el-form-item>
 
-          <el-form-item label="回复延迟 (秒)" prop="replyDelay">
-            <el-input-number
-              v-model="formData.replyDelay"
-              :min="0"
-              :max="30"
-              :step="1"
-              placeholder="输入回复延迟时间"
-            ></el-input-number>
-          </el-form-item>
+      <!-- 下方依次排列区域 -->
+      <!-- AI自定义回复规则 -->
+      <el-card class="rules-card" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="card-title-group">
+              <h2 class="card-title">AI 自定义回复规则</h2>
+              <p class="card-subtitle">设置AI回复的具体规则和匹配模式</p>
+            </div>
+          </div>
+        </template>
 
-          <el-form-item label="回复风格" prop="replyStyle">
-            <el-select v-model="formData.replyStyle" placeholder="选择回复风格">
-              <el-option label="正式" value="formal"></el-option>
-              <el-option label="友好" value="friendly"></el-option>
-              <el-option label="幽默" value="humorous"></el-option>
-              <el-option label="专业" value="professional"></el-option>
-            </el-select>
-          </el-form-item>
+        <div class="custom-rules-container">
+          <div class="rule-actions">
+            <el-button type="primary" icon="Plus" @click="addRule" class="gradient-btn">添加规则</el-button>
+          </div>
 
-          <el-form-item label="最大回复长度" prop="maxReplyLength">
-            <el-input-number
-              v-model="formData.maxReplyLength"
-              :min="10"
-              :max="500"
-              :step="10"
-              placeholder="输入最大回复长度"
-            ></el-input-number>
-          </el-form-item>
+          <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm">
+            <el-table-column prop="matchType" label="匹配类型" width="180">
+              <template #default="{ row, $index }">
+                <el-select v-model="row.matchType" placeholder="选择匹配类型" size="small" class="custom-select">
+                  <el-option label="包含关键词" value="contains"></el-option>
+                  <el-option label="完全匹配" value="equals"></el-option>
+                  <el-option label="正则表达式" value="regex"></el-option>
+                </el-select>
+              </template>
+            </el-table-column>
+            <el-table-column prop="keyword" label="关键词/规则" width="240">
+              <template #default="{ row, $index }">
+                <el-input v-model="row.keyword" placeholder="输入关键词或规则" size="small" class="custom-input"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="reply" label="回复内容">
+              <template #default="{ row, $index }">
+                <el-input v-model="row.reply" type="textarea" placeholder="输入回复内容" size="small" :rows="2" class="custom-input"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="100" fixed="right">
+              <template #default="{ $index }">
+                <el-button type="danger" size="small" @click="removeRule($index)" class="delete-btn">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-card>
 
-          <el-form-item label="关键词过滤" prop="keywordFilter">
-            <el-input
-              v-model="formData.keywordFilter"
-              placeholder="输入关键词，多个关键词用逗号分隔"
-            ></el-input>
-            <div class="field-hint">包含这些关键词的消息将被AI优先处理</div>
-          </el-form-item>
+      <!-- AI回复历史 -->
+      <el-card class="history-card" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <div class="card-title-group">
+              <h2 class="card-title">AI 回复历史</h2>
+              <div class="history-controls">
+                <el-input
+                  v-model="searchQuery"
+                  placeholder="搜索消息内容..."
+                  :prefix-icon="Search"
+                  size="small"
+                  class="search-input"
+                ></el-input>
+                <el-select v-model="filterStatus" placeholder="筛选状态" size="small" class="status-filter">
+                  <el-option label="全部" value="all"></el-option>
+                  <el-option label="已回复" value="replied"></el-option>
+                  <el-option label="待回复" value="pending"></el-option>
+                </el-select>
+              </div>
+            </div>
+          </div>
+        </template>
 
-          <el-form-item label="AI 回复模板" prop="replyTemplate">
-            <el-input
-              v-model="formData.replyTemplate"
-              type="textarea"
-              :rows="4"
-              placeholder="输入AI回复模板"
-            ></el-input>
-            <div class="field-hint">使用 {content} 表示原始消息内容，{time} 表示当前时间</div>
-          </el-form-item>
+        <el-table
+          v-loading="isLoadingHistory"
+          :data="paginatedHistory"
+          style="width: 100%"
+          class="custom-table"
+          border
+          stripe
+          :row-class-name="tableRowClassName"
+        >
+          <el-table-column prop="time" label="时间" width="180" sortable>
+            <template #default="{ row }">
+              <div class="time-cell">
+                <div class="date">{{ formatDate(row.time) }}</div>
+                <div class="time">{{ formatTime(row.time) }}</div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="originalMessage" label="原始消息" width="180">
+            <template #default="{ row }">
+              <el-tooltip :content="row.originalMessage" placement="top">
+                <div class="message-content">{{ truncateText(row.originalMessage, 20) }}</div>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column prop="aiReply" label="AI 回复">
+            <template #default="{ row }">
+              <el-tooltip :content="row.aiReply" placement="top">
+                <div class="reply-cell">{{ truncateText(row.aiReply, 30) }}</div>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="状态" width="100">
+            <template #default="{ row }">
+              <el-tag
+                :type="row.status === 'replied' ? 'success' : 'info'"
+                size="small"
+                class="status-tag"
+              >
+                {{ row.status === 'replied' ? '已回复' : '待回复' }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="120" fixed="right">
+            <template #default="{ row }">
+              <el-button
+                type="primary"
+                size="small"
+                @click="viewDetails(row)"
+                :icon="View"
+                class="gradient-btn"
+              >
+                查看
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
 
-          <el-form-item>
-            <el-button type="primary" @click="submitForm">保存设置</el-button>
-            <el-button @click="resetForm">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
+        <div class="pagination-container" v-if="filteredHistory.length > 0">
+          <el-pagination
+            v-model:current-page="currentPage"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="filteredHistory.length"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            class="custom-pagination"
+          ></el-pagination>
+        </div>
 
-    <div class="ai-history-container">
-      <div class="history-header">
-        <h2>AI 回复历史</h2>
-      </div>
-
-      <el-table :data="replyHistory" style="width: 100%">
-        <el-table-column prop="time" label="时间" width="180"></el-table-column>
-        <el-table-column prop="originalMessage" label="原始消息" width="300"></el-table-column>
-        <el-table-column prop="aiReply" label="AI 回复"></el-table-column>
-        <el-table-column label="操作" width="100" fixed="right">
-          <template #default="scope">
-            <el-button size="small" @click="viewDetails(scope.row)">查看</el-button>
+        <el-empty v-else description="暂无回复历史">
+          <template #image>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </template>
-        </el-table-column>
-      </el-table>
+        </el-empty>
+      </el-card>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
+import { ElMessage, ElMessageBox, ElLoading } from 'element-plus'
+import { View, Search, Plus } from '@element-plus/icons-vue'
 
+// 表单引用
+const aiForm = ref(null)
+const rulesForm = ref(null)
+
+// 表单数据
 const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
-  replyStyle: 'friendly',
-  maxReplyLength: 200,
-  keywordFilter: '',
-  replyTemplate: '感谢您的消息：{content}。此消息由AI自动回复，时间：{time}。'
+  minReplyInterval: 60,
+  replyTemplate: '感谢您的消息：{content}。此消息由AI自动回复，时间：{time}。',
+  contactPerson: '',
+  aiPersona: '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
+  customRules: [
+    {
+      matchType: 'contains',
+      keyword: '发货',
+      reply: '我们的商品通常会在下单后1-3个工作日内发货。'
+    },
+    {
+      matchType: 'equals',
+      keyword: '退款',
+      reply: '您可以在订单详情页面申请退款，我们会在24小时内处理。'
+    }
+  ]
+})
+
+// 图表范围
+const chartRange = ref('7d')
+
+// 接管计时相关
+const startTime = ref(null)
+const takeoverDuration = ref(0)
+const timerInterval = ref(null)
+
+// 格式化接管时间
+const formattedTakeoverTime = computed(() => {
+  const seconds = Math.floor(takeoverDuration.value / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const remainingSeconds = seconds % 60
+  return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
+})
+
+// 切换接管状态
+const toggleTakeover = () => {
+  if (formData.aiStatus) {
+    // 停止接管
+    formData.aiStatus = false
+    clearInterval(timerInterval.value)
+    timerInterval.value = null
+    ElMessage.info('AI已停止接管消息回复')
+  } else {
+    // 开始接管
+    formData.aiStatus = true
+    startTime.value = Date.now()
+    timerInterval.value = setInterval(() => {
+      takeoverDuration.value = Date.now() - startTime.value
+    }, 1000)
+    ElMessage.success('AI已开始接管消息回复')
+  }
+}
+
+// 组件卸载时清除计时器
+onUnmounted(() => {
+  if (timerInterval.value) {
+    clearInterval(timerInterval.value)
+  }
 })
 
 const rules = {
@@ -116,96 +339,714 @@ const rules = {
     { type: 'number', message: '回复延迟必须是数字', trigger: 'blur' },
     { min: 0, max: 30, message: '回复延迟必须在0-30秒之间', trigger: 'blur' }
   ],
-  replyStyle: [
-    { required: true, message: '请选择回复风格', trigger: 'change' }
+  minReplyInterval: [
+    { required: true, message: '请输入最小回复间隔时间', trigger: 'blur' },
+    { type: 'number', message: '间隔时间必须是数字', trigger: 'blur' },
+    { min: 0, max: 3600, message: '间隔时间必须在0-3600秒之间', trigger: 'blur' }
   ],
-  maxReplyLength: [
-    { required: true, message: '请输入最大回复长度', trigger: 'blur' },
-    { type: 'number', message: '最大回复长度必须是数字', trigger: 'blur' },
-    { min: 10, max: 500, message: '最大回复长度必须在10-500之间', trigger: 'blur' }
+  contactPerson: [
+    { required: true, message: '请输入接管联系人', trigger: 'blur' }
   ],
-  replyTemplate: [
-    { required: true, message: '请输入AI回复模板', trigger: 'blur' }
+  aiPersona: [
+    { required: true, message: '请输入AI人设', trigger: 'blur' },
+    { min: 10, max: 500, message: 'AI人设长度必须在10-500个字符之间', trigger: 'blur' }
   ]
 }
 
+// 添加自定义规则
+const addRule = () => {
+  formData.customRules.push({
+    matchType: 'contains',
+    keyword: '',
+    reply: ''
+  })
+}
+
+// 移除自定义规则
+const removeRule = (index) => {
+  formData.customRules.splice(index, 1)
+}
+
+// 模拟数据 - 实际应用中应从API获取
 const replyHistory = ref([
   {
     id: 1,
     time: '2023-11-15 10:30:25',
     originalMessage: '你好，请问什么时候发货？',
-    aiReply: '感谢您的消息：你好，请问什么时候发货？。此消息由AI自动回复，时间：2023-11-15 10:30:25。'
+    aiReply: '我们的商品通常会在下单后1-3个工作日内发货。',
+    status: 'replied'
   },
   {
     id: 2,
     time: '2023-11-15 09:15:42',
-    originalMessage: '订单#12345什么时候能到？',
-    aiReply: '感谢您的消息：订单#12345什么时候能到？。此消息由AI自动回复，时间：2023-11-15 09:15:42。'
+    originalMessage: '我要退款',
+    aiReply: '您可以在订单详情页面申请退款，我们会在24小时内处理。',
+    status: 'replied'
+  },
+  {
+    id: 3,
+    time: '2023-11-14 16:42:18',
+    originalMessage: '如何申请退款？',
+    aiReply: '您可以在订单详情页面申请退款，我们会在24小时内处理。',
+    status: 'replied'
+  },
+  {
+    id: 4,
+    time: '2023-11-14 14:25:33',
+    originalMessage: '你们支持哪些支付方式？',
+    aiReply: '感谢您的消息：你们支持哪些支付方式？。我们支持微信支付、支付宝、银联和信用卡等多种支付方式。此消息由AI自动回复，时间：2023-11-14 14:25:33。',
+    status: 'replied'
+  },
+  {
+    id: 5,
+    time: '2023-11-14 11:08:57',
+    originalMessage: '商品质量有问题怎么办？',
+    aiReply: '感谢您的消息：商品质量有问题怎么办？。如果您收到的商品存在质量问题，请在收货后7天内联系我们的客服，并提供相关照片证明。我们将为您安排退换货或退款。此消息由AI自动回复，时间：2023-11-14 11:08:57。',
+    status: 'replied'
+  },
+  {
+    id: 6,
+    time: '2023-11-15 11:20:15',
+    originalMessage: '请问你们的工作时间是什么时候？',
+    aiReply: '',
+    status: 'pending'
   }
 ])
 
-const submitForm = () => {
-  setTimeout(() => {
+// 搜索和筛选
+const searchQuery = ref('')
+const filterStatus = ref('all')
+const currentPage = ref(1)
+const pageSize = ref(5)
+const isLoadingHistory = ref(false)
+const isSubmitting = ref(false)
+
+// AI性能统计数据
+const stats = reactive({
+  replyRate: 95,
+  averageTime: 2.8,
+  satisfactionRate: 92
+})
+
+// 计算过滤后的历史记录
+const filteredHistory = computed(() => {
+  return replyHistory.value
+    .filter(item => {
+      const matchesSearch = item.originalMessage.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                          item.aiReply.toLowerCase().includes(searchQuery.value.toLowerCase())
+      const matchesStatus = filterStatus.value === 'all' || item.status === filterStatus.value
+      return matchesSearch && matchesStatus
+    })
+})
+
+// 分页处理
+const paginatedHistory = computed(() => {
+  const startIndex = (currentPage.value - 1) * pageSize.value
+  return filteredHistory.value.slice(startIndex, startIndex + pageSize.value)
+})
+
+const handleSizeChange = (size) => {
+  pageSize.value = size
+  currentPage.value = 1
+}
+
+const handleCurrentChange = (current) => {
+  currentPage.value = current
+}
+
+// 提交表单
+const submitForm = async () => {
+  isSubmitting.value = true
+  try {
+    // 验证两个表单
+    await aiForm.value.validate()
+    await rulesForm.value.validate()
+    
+    // 模拟API请求
+    await new Promise(resolve => setTimeout(resolve, 1000))
     ElMessage.success('AI设置保存成功')
-  }, 500)
+  } catch (error) {
+    console.error('表单验证失败:', error)
+    ElMessage.error('保存失败，请检查表单填写是否正确')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
+// 重置表单
 const resetForm = () => {
-  formData.aiStatus = false
-  formData.replyDelay = 5
-  formData.replyStyle = 'friendly'
-  formData.maxReplyLength = 200
-  formData.keywordFilter = ''
-  formData.replyTemplate = '感谢您的消息：{content}。此消息由AI自动回复，时间：{time}。'
+  ElMessageBox.confirm('确定要重置所有设置吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    formData.aiStatus = false
+    formData.replyDelay = 5
+    formData.minReplyInterval = 60
+    formData.contactPerson = ''
+    formData.aiPersona = '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。'
+    formData.customRules = [
+      {
+        matchType: 'contains',
+        keyword: '发货',
+        reply: '我们的商品通常会在下单后1-3个工作日内发货。'
+      },
+      {
+        matchType: 'equals',
+        keyword: '退款',
+        reply: '您可以在订单详情页面申请退款，我们会在24小时内处理。'
+      }
+    ]
+    ElMessage.success('设置已重置')
+  }).catch(() => {})
 }
 
+// 查看详情
 const viewDetails = (row) => {
-  ElMessage({
-    message: `原始消息: ${row.originalMessage}\nAI回复: ${row.aiReply}`,
-    type: 'info',
-    duration: 5000
+  ElMessageBox({
+    title: '消息详情',
+    message: `
+      <div class="detail-item">
+        <div class="detail-label">时间:</div>
+        <div class="detail-value">${row.time}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">原始消息:</div>
+        <div class="detail-value">${row.originalMessage}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">AI回复:</div>
+        <div class="detail-value">${row.aiReply || '暂无回复'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">状态:</div>
+        <div class="detail-value">${row.status === 'replied' ? '已回复' : '待回复'}</div>
+      </div>
+    `,
+    dangerouslyUseHTMLString: true,
+    confirmButtonText: '关闭'
   })
 }
 
-onMounted(() => {
+// 格式化日期和时间
+const formatDate = (dateTime) => {
+  const date = new Date(dateTime)
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+}
+
+const formatTime = (dateTime) => {
+  const date = new Date(dateTime)
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+}
+
+// 截断文本
+const truncateText = (text, length) => {
+  if (!text) return ''
+  return text.length > length ? `${text.substring(0, length)}...` : text
+}
+
+// 表格行样式函数
+const tableRowClassName = ({ row }) => {
+  return row.status === 'pending' ? 'task-pending' : 'task-completed';
+}
+
+// 模拟加载历史记录
+const loadHistory = () => {
+  isLoadingHistory.value = true
+  // 模拟API请求
   setTimeout(() => {
-    // 这里可以添加从API加载设置的逻辑
-  }, 500)
-})
+    isLoadingHistory.value = false
+  }, 800)
+}
+
+// 数字计数动画
+const animateCounters = () => {
+  const counters = document.querySelectorAll('.counter');
+  if (counters.length) {
+    counters.forEach(counter => {
+      // 初始化样式
+      counter.style.opacity = '0';
+      counter.style.transform = 'translateY(20px)';
+      counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+      // 延迟显示，创造层次感
+      setTimeout(() => {
+        counter.style.opacity = '1';
+        counter.style.transform = 'translateY(0)';
+
+        const target = +counter.dataset.target;
+        const duration = 2500;
+        const frameDuration = 1000 / 60;
+        const totalFrames = Math.round(duration / frameDuration);
+        let frame = 0;
+
+        // 使用easing函数使动画更自然
+        const easeOutQuad = (t) => t * (2 - t);
+
+        const updateCounter = () => {
+          frame++;
+          const progress = easeOutQuad(frame / totalFrames);
+          const current = Math.round(target * progress);
+
+          counter.innerText = current.toLocaleString();
+
+          if ( frame < totalFrames) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
+        };
+
+        updateCounter();
+      }, Math.random() * 300);
+    });
+  }
+}
+
+onMounted(() => {
+  loadHistory();
+  setTimeout(() => {
+    animateCounters();
+  }, 500);
+});
 </script>
 
 <style scoped>
-.ai-takeover-container {
-  max-width: 1200px;
+:root {
+  --primary-color: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-light: #93c5fd;
+  --secondary-color: #60a5fa;
+  --accent-color: #2563eb;
+  --light-color: #f8fafc;
+  --dark-color: #1e293b;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* 顶部导航 */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: white;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* 页面标题区域 */
+.page-header-section {
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  padding: 32px 0;
+  color: white;
+}
+
+.page-header {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 20px;
 }
 
-.ai-settings-card {
-  background-color: var(--card-bg-color);
-  border-radius: var(--border-radius);
+/* 主要内容区域 */
+.main-content {
+  padding: 0 24px 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* 上方左右排列区域 */
+.top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.config-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.config-card-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 统一卡片头部样式 */
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(59, 130, 246, 0.03);
+}
+
+.card-title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 统一表单行间距 */
+.el-row {
+  margin-bottom: 20px;
+}
+
+/* 状态切换样式优化 */
+.status-controls {
+  display: flex;
+  align-items: center;
+}
+
+.takeover-time {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.takeover-time.text-primary {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* 统一统计卡片样式 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.stat-item {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: white;
   box-shadow: var(--shadow);
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  transition: var(--transition);
   border: 1px solid var(--border-color);
 }
 
-.ai-history-container {
-  background-color: var(--card-bg-color);
-  border-radius: var(--border-radius);
+.stat-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* 图表样式 */
+.chart-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
   box-shadow: var(--shadow);
-  padding: var(--spacing-lg);
   border: 1px solid var(--border-color);
 }
 
-.history-header {
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.chart-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.chart-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chart-select {
+  width: 100px;
+}
+
+/* 统一表格操作按钮 */
+.el-table .el-button {
+  margin: 0 4px;
+  padding: 6px 8px;
+}
+
+/* 自定义输入框样式 */
+.custom-input .el-input__wrapper {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.custom-input .el-input__wrapper:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* 自定义选择框样式 */
+.custom-select .el-input__wrapper {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* 按钮样式增强 */
+.gradient-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border: none;
+  color: white;
+  transition: var(--transition);
+}
+
+.gradient-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.delete-btn {
+  background-color: #fee2e2;
+  border-color: #fecaca;
+  color: #dc2626;
+  transition: var(--transition);
+}
+
+.delete-btn:hover {
+  background-color: #fecaca;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+/* 卡片样式 */
+.el-card {
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  overflow: hidden;
+  background-color: white;
+  margin-bottom: 24px;
+}
+
+.el-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* 表单样式 */
+.el-form-item {
+  margin-bottom: 24px;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.status-toggle .el-form-item__content {
+  flex: 1;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 5px 0;
+}
+
+/* 表格样式增强 */
+.el-table {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.el-table th {
+  background-color: rgba(59, 130, 246, 0.05);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 12px 0;
+}
+
+.el-table td {
+  padding: 12px 0;
   border-bottom: 1px solid var(--border-color);
 }
 
-.el-table th,
-.el-table td {
-  padding: 12px;
+.el-table tr:last-child td {
+  border-bottom: none;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+/* 标签样式 */
+.el-tag--info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--secondary-color);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 6px;
+}
+
+.el-tag--success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 6px;
+}
+
+/* 分页样式 */
+.custom-pagination {
+  padding: 16px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 自定义规则样式 */
+.custom-rules-container {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 15px;
+  background-color: white;
+}
+
+.rule-actions {
+  margin-bottom: 16px;
+}
+
+.rules-table {
+  margin-top: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .logo span {
+    display: none;
+  }
 }
 </style>
