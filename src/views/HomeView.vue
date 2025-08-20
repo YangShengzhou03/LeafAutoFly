@@ -12,7 +12,7 @@
             <h3>基础版</h3>
             <div class="price">
               <span class="amount">¥299</span>
-              <span class="period">/月</span>
+              <span class="period">/年</span>
             </div>
           </div>
           <div class="card-features">
@@ -42,7 +42,7 @@
             <h3>企业版</h3>
             <div class="price">
               <span class="amount">¥899</span>
-              <span class="period">/月</span>
+              <span class="period">/年</span>
             </div>
           </div>
           <div class="card-features">
