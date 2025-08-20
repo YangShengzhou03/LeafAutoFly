@@ -276,8 +276,8 @@ const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
   minReplyInterval: 60,
-  contactPerson: '管理员', // 设置默认值，避免空字符串
-  aiPersona: '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
+  contactPerson: '文件传输助手', // 设置默认值，避免空字符串
+  aiPersona: '你是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
   customRules: []
 })
 

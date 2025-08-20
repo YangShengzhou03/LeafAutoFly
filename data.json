@@ -1,12 +1,1 @@
-{
-  "e4a7afdd-08b7-436e-912e-48670da67de6": {
-    "recipient": "1111111111111111111",
-    "sendTime": "2025-08-21T00:00",
-    "repeatType": "none",
-    "repeatDays": [],
-    "messageContent": "11111111111111",
-    "status": "pending",
-    "createdAt": "2025-08-20T20:14:59.155397",
-    "id": "e4a7afdd-08b7-436e-912e-48670da67de6"
-  }
-}
+{}
