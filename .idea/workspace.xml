@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4177cc9f-c194-485a-a7f5-3b0d2b9c4722" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/src/assets/css/modern-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/modern-theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/AITakeoverView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AITakeoverView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/AutoInfoView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AutoInfoView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/ai_data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +88,7 @@
       <workItem from="1755215892348" duration="16000" />
       <workItem from="1755397956249" duration="1551000" />
       <workItem from="1755423197267" duration="221000" />
-      <workItem from="1755691818804" duration="4334000" />
+      <workItem from="1755691818804" duration="4672000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -152,6 +150,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LeafAuto_Web$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1755693597735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/LeafAuto_Web$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1755697289917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
