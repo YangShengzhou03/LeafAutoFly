@@ -22,11 +22,11 @@
             </div>
             <div class="feature">
               <i class="el-icon-check"></i>
-              <span>每日1000条消息限额</span>
+              <span>每日1000条发送限额</span>
             </div>
             <div class="feature">
               <i class="el-icon-check"></i>
-              <span>基础数据分析</span>
+              <span>无数据分析功能</span>
             </div>
             <div class="feature">
               <i class="el-icon-check"></i>
