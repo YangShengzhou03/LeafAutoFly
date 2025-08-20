@@ -16,18 +16,23 @@ def load_tasks():
         if os.path.exists(DATA_FILE):
             with open(DATA_FILE, 'r', encoding='utf-8') as f:
                 tasks = json.load(f)
+        else:
+            tasks = {}
+    except json.JSONDecodeError as e:
+        tasks = {}
     except Exception as e:
-        print(f'加载任务数据失败: {e}')
         tasks = {}
     return tasks
 
 
 def save_tasks():
     try:
+        os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
         with open(DATA_FILE, 'w', encoding='utf-8') as f:
             json.dump(tasks, f, ensure_ascii=False, indent=2)
     except Exception as e:
-        print(f'保存任务数据失败: {e}')
+        import traceback
+        traceback.print_exc()
 
 
 def load_ai_data():
@@ -39,7 +44,6 @@ def load_ai_data():
                 ai_settings = data.get('settings', {})
                 reply_history = data.get('history', [])
     except Exception as e:
-        print(f'加载AI数据失败: {e}')
         ai_settings = {}
         reply_history = []
     return ai_settings, reply_history
@@ -93,6 +97,23 @@ def clear_tasks():
 
 def save_ai_settings(settings_data):
     global ai_settings
+    required_fields = ['aiStatus', 'replyDelay', 'minReplyInterval', 'contactPerson', 'aiPersona', 'customRules']
+    for field in required_fields:
+        if field not in settings_data:
+            print(f'警告: 设置数据中缺少字段 {field}')
+            if field == 'aiStatus':
+                settings_data[field] = False
+            elif field == 'replyDelay':
+                settings_data[field] = 5
+            elif field == 'minReplyInterval':
+                settings_data[field] = 60
+            elif field == 'contactPerson':
+                settings_data[field] = ''
+            elif field == 'aiPersona':
+                settings_data[field] = '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。'
+            elif field == 'customRules':
+                settings_data[field] = []
+
     ai_settings = settings_data
     ai_settings['updatedAt'] = datetime.datetime.now().isoformat()
     save_ai_data()
@@ -107,6 +128,5 @@ def add_ai_history(history_data):
     save_ai_data()
     return history_data
 
-# 初始化数据
 load_tasks()
 load_ai_data()

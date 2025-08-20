@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, redirect
+from flask_cors import CORS
 from data_manager import (
     load_tasks, save_tasks, load_ai_data, save_ai_data,
     add_task, delete_task, update_task_status, clear_tasks,
@@ -8,6 +9,8 @@ from server_manager import start_vue_server, open_browser
 
 # 初始化数据
 app = Flask(__name__)
+# 启用CORS支持
+CORS(app)
 
 # 初始化数据
 load_tasks()
@@ -27,7 +30,7 @@ def ai_takeover():
 
 @app.route('/api/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify(list(tasks.values()))
+    return jsonify(list(load_tasks().values()))
 
 @app.route('/api/tasks', methods=['POST'])
 def add_task_route():
@@ -59,6 +62,11 @@ def clear_tasks_route():
     return jsonify({'success': True}), 200
 
 
+@app.route('/api/ai-settings', methods=['GET'])
+def get_ai_settings():
+    load_ai_data()
+    return jsonify(ai_settings)
+
 @app.route('/api/ai-settings', methods=['POST'])
 def save_ai_settings_route():
     settings_data = request.json
@@ -80,7 +88,5 @@ def add_ai_history_route():
 
 
 if __name__ == '__main__':
-    # 注意：单独运行app.py只会启动Flask后端服务器
-    # 若要同时启动前后端，请使用start_app.py脚本
     print('正在启动Flask后端服务器...')
     app.run(debug=True)

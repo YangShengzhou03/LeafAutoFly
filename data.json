@@ -1,29 +1,42 @@
 {
-  "069b0b42-cf4a-4167-8318-e9157e77b14b": {
-    "recipient": "杨圣洲",
-    "sendTime": "",
+  "d1cb7865-67cb-417c-8f0a-f377a33dff9a": {
+    "recipient": "你好啊",
+    "sendTime": "2025-08-20T16:55",
     "repeatType": "none",
     "repeatDays": [],
-    "messageContent": "你好 世界 祝你一起顺利！",
-    "id": "069b0b42-cf4a-4167-8318-e9157e77b14b",
-    "createdAt": "2025-08-19T22:18:07.148049"
+    "messageContent": "测试一下",
+    "status": "pending",
+    "createdAt": "2025-08-20T16:55:15.502688",
+    "id": "d1cb7865-67cb-417c-8f0a-f377a33dff9a"
   },
-  "53b36d13-3627-4bbe-b3d5-cf387baf4abf": {
-    "recipient": "",
-    "sendTime": "",
+  "dd52b6d8-27b1-4cc5-9de4-55c3cab80555": {
+    "recipient": "11111",
+    "sendTime": "2025-08-20T17:00",
     "repeatType": "none",
     "repeatDays": [],
-    "messageContent": "",
-    "id": "53b36d13-3627-4bbe-b3d5-cf387baf4abf",
-    "createdAt": "2025-08-19T22:18:22.607120"
+    "messageContent": "1111",
+    "status": "pending",
+    "createdAt": "2025-08-20T17:00:58.991411",
+    "id": "dd52b6d8-27b1-4cc5-9de4-55c3cab80555"
   },
-  "3b15fa63-da8e-4be8-ba0c-b50d339fe340": {
-    "recipient": "",
-    "sendTime": "",
+  "f3ee92c1-921b-4350-a786-aefe721d16e5": {
+    "recipient": "11111",
+    "sendTime": "2025-08-20T17:00",
     "repeatType": "none",
     "repeatDays": [],
-    "messageContent": "",
-    "id": "3b15fa63-da8e-4be8-ba0c-b50d339fe340",
-    "createdAt": "2025-08-19T22:18:24.624469"
+    "messageContent": "1111",
+    "status": "pending",
+    "createdAt": "2025-08-20T17:01:00.617769",
+    "id": "f3ee92c1-921b-4350-a786-aefe721d16e5"
+  },
+  "51288a2a-2b46-4fea-b144-c30cf9bbc1e7": {
+    "recipient": "11111",
+    "sendTime": "2025-08-20T17:00",
+    "repeatType": "none",
+    "repeatDays": [],
+    "messageContent": "1111",
+    "status": "pending",
+    "createdAt": "2025-08-20T17:01:01.642942",
+    "id": "51288a2a-2b46-4fea-b144-c30cf9bbc1e7"
   }
 }

@@ -40,7 +40,7 @@
             </el-col>
 
             <el-col :xs="24" :sm="12" :md="12" :lg="12">
-              <el-form-item label="重复选项">
+              <el-form-item label="重复选项" prop="repeatType">
                 <el-select
                   v-model="formData.repeatType"
                   placeholder="选择重复类型"
@@ -53,7 +53,20 @@
                     :value="option.value"
                   />
                 </el-select>
-                <div v-if="formData.repeatType === 'custom'" class="custom-days">
+                <el-form-item 
+                  v-if="formData.repeatType === 'custom'" 
+                  prop="repeatDays"
+                  :rules="[{ 
+                    validator: (_, value, callback) => {
+                      if (formData.repeatType === 'custom' && (!value || value.length === 0)) {
+                        callback(new Error('请至少选择一个重复日期'))
+                      } else {
+                        callback()
+                      }
+                    },
+                    trigger: 'change' 
+                  }]"
+                >
                   <p class="el-form-item__tip">选择重复日期：</p>
                   <el-checkbox-group v-model="formData.repeatDays">
                     <el-checkbox
@@ -64,13 +77,13 @@
                       {{ day.label }}
                     </el-checkbox>
                   </el-checkbox-group>
-                </div>
+                </el-form-item>
                 <div class="el-form-item__tip">像定闹钟一样，选择重复日期</div>
               </el-form-item>
             </el-col>
 
             <el-col :span="24">
-              <el-form-item label="信息内容" prop="messageContent" required>
+              <el-form-item label="信息内容" prop="messageContent">
                 <el-input
                   v-model="formData.messageContent"
                   type="textarea"
@@ -124,7 +137,6 @@
           v-if="tasks.length > 0"
           :data="sortedTasks"
           style="width: 100%"
-          border
           stripe
           fit
           :row-class-name="tableRowClassName"
@@ -189,6 +201,7 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { User, Delete, Refresh, Edit } from '@element-plus/icons-vue'
 
+const taskForm = ref()
 const formData = reactive({
   recipient: '',
   sendTime: '',
@@ -200,22 +213,27 @@ const formData = reactive({
 const rules = {
   recipient: [
     { required: true, message: '请输入接收者', trigger: 'blur' },
-    { validator: (rule, value, callback) => {
-      if (!value.trim()) {
-        callback(new Error('请输入接收者'))
-      } else {
-        callback()
-      }
-    }, trigger: 'blur' }
+    { 
+      validator: (_, value, callback) => {
+        if (!value || !value.trim()) {
+          callback(new Error('请输入接收者'))
+        } else {
+          callback()
+        }
+      }, 
+      trigger: 'blur' 
+    }
   ],
   sendTime: [
     { required: true, message: '请选择发送时间', trigger: 'change' }
   ],
   messageContent: [
     { required: true, message: '请输入消息内容', trigger: 'blur' }
+  ],
+  repeatType: [
+    { required: true, message: '请选择重复类型', trigger: 'change' }
   ]
 }
-
 
 const tasks = ref([])
 
@@ -248,26 +266,25 @@ const sortedTasks = computed(() => {
 })
 
 const resetForm = () => {
-  formData.recipient = ''
-  formData.sendTime = ''
-  formData.repeatType = 'none'
-  formData.repeatDays = []
-  formData.messageContent = ''
+  taskForm.value?.resetFields()
 }
 
 const submitForm = async () => {
   try {
-    if (formData.repeatType === 'custom' && formData.repeatDays.length === 0) {
-      ElMessage.error('请至少选择一个重复日期')
-      return
-    }
+    await taskForm.value.validate()
 
+    const taskData = {
+      ...formData,
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    }
+    
     const response = await fetch('/api/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(taskData)
     })
 
     if (response.ok) {
@@ -275,34 +292,29 @@ const submitForm = async () => {
       tasks.value.push(newTask)
       ElMessage.success('任务创建成功')
       resetForm()
-    } else {
-      ElMessage.error('任务创建失败，请稍后重试')
     }
   } catch (error) {
-    console.error('创建任务失败:', error)
-    ElMessage.error('创建任务失败，请稍后重试')
+    if (!error.errors) {
+      console.error('创建任务失败:', error)
+      ElMessage.error('创建任务失败')
+    }
   }
 }
 
-
 const tableRowClassName = ({ row }) => {
-  return row.status === 'pending' ? 'task-pending' : 'task-completed';
+  return row.status === 'pending' ? 'task-pending' : 'task-completed'
 }
 
 const editTask = (taskId) => {
-  // 找到要编辑的任务
   const task = tasks.value.find(t => t.id === taskId)
   if (task) {
-    // 填充表单
     formData.recipient = task.recipient
     formData.sendTime = task.sendTime
     formData.repeatType = task.repeatType
     formData.repeatDays = task.repeatDays
     formData.messageContent = task.messageContent
     
-    // 删除原任务
     tasks.value = tasks.value.filter(t => t.id !== taskId)
-    
     ElMessage({ message: '请修改任务信息', type: 'info' })
   }
 }
@@ -342,19 +354,22 @@ const padZero = (num) => {
   return num < 10 ? '0' + num : num
 }
 
-
 const refreshTasks = async () => {
   try {
     const response = await fetch('/api/tasks')
     if (response.ok) {
-      tasks.value = await response.json()
-      ElMessage({ message: '任务列表已刷新', type: 'success', duration: 1000 });
+      const data = await response.json()
+      console.log('获取到的任务数据:', data)
+      tasks.value = data
+      ElMessage({ message: '任务列表已刷新', type: 'success', duration: 1000 })
     } else {
-      ElMessage.error('刷新任务列表失败，请稍后重试')
+      const errorText = await response.text()
+      console.error('刷新任务列表失败:', errorText)
+      ElMessage.error(`刷新任务列表失败: ${errorText || '未知错误'}`)
     }
   } catch (error) {
     console.error('刷新任务列表失败:', error)
-    ElMessage.error('刷新任务列表失败，请稍后重试')
+    ElMessage.error(`刷新任务列表失败: ${error.message || '网络错误'}`)
   }
 }
 
@@ -375,7 +390,6 @@ const getRepeatText = (repeatType, repeatDays) => {
 }
 
 onMounted(() => {
-  // 初始化加载任务
   refreshTasks()
 })
 </script>

@@ -26,11 +26,11 @@
               </el-form-item>
 
               <el-form-item label="回复延迟(秒)" prop="replyDelay">
-                <el-input v-model.number="formData.replyDelay" placeholder="输入回复延迟时间"></el-input>
+                <el-input-number v-model="formData.replyDelay" :min="0" :max="30" placeholder="输入回复延迟时间"></el-input-number>
               </el-form-item>
 
               <el-form-item label="最小回复间隔(秒)" prop="minReplyInterval">
-                <el-input v-model.number="formData.minReplyInterval" placeholder="输入最小回复间隔时间"></el-input>
+                <el-input-number v-model="formData.minReplyInterval" :min="0" :max="3600" placeholder="输入最小回复间隔时间"></el-input-number>
               </el-form-item>
 
               <el-form-item label="接管联系人" prop="contactPerson">
@@ -110,27 +110,23 @@
 
         <div class="custom-rules-container">
           <div class="rule-actions">
-            <el-button type="primary" @click="addRule" class="gradient-btn">添加规则</el-button>
+            <el-button type="primary" @click="openAddRuleDialog" class="gradient-btn">添加规则</el-button>
           </div>
 
-          <el-table v-model:data="formData.customRules" border class="rules-table" ref="rulesForm" row-key="id">
+          <el-table v-model:data="formData.customRules" class="rules-table" ref="rulesForm" row-key="id">
             <el-table-column prop="matchType" label="匹配类型" width="180">
               <template #default="{ row }">
-                <el-select v-model="row.matchType" placeholder="选择匹配类型" size="small" class="custom-select">
-                  <el-option label="包含关键词" value="contains"></el-option>
-                  <el-option label="完全匹配" value="equals"></el-option>
-                  <el-option label="正则表达式" value="regex"></el-option>
-                </el-select>
+                <span>{{ row.matchType === 'contains' ? '包含关键词' : row.matchType === 'equals' ? '完全匹配' : '正则表达式' }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="keyword" label="关键词/规则" width="240">
-              <template #default="{ row }"><!-- 移除未使用的$index变量 -->
-                <el-input v-model="row.keyword" placeholder="输入关键词或规则" size="small" class="custom-input"></el-input>
+              <template #default="{ row }">
+                <span>{{ row.keyword }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="reply" label="回复内容">
-              <template #default="{ row }"><!-- 移除未使用的$index变量 -->
-                <el-input v-model="row.reply" type="textarea" placeholder="输入回复内容" size="small" :rows="2" class="custom-input"></el-input>
+              <template #default="{ row }">
+                <span>{{ row.reply }}</span>
               </template>
             </el-table-column>
             <el-table-column label="操作" width="100" fixed="right">
@@ -143,6 +139,31 @@
           </el-table>
         </div>
       </el-card>
+
+      <!-- 添加规则对话框 -->
+      <el-dialog v-model="addRuleDialogVisible" title="添加回复规则" width="600px">
+        <el-form ref="ruleForm" :model="newRule" :rules="ruleFormRules" class="custom-input">
+          <el-form-item label="匹配类型" prop="matchType">
+            <el-select v-model="newRule.matchType" placeholder="选择匹配类型" class="custom-select">
+              <el-option label="包含关键词" value="contains"></el-option>
+              <el-option label="完全匹配" value="equals"></el-option>
+              <el-option label="正则表达式" value="regex"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="关键词/规则" prop="keyword">
+            <el-input v-model="newRule.keyword" placeholder="输入关键词或规则" class="custom-input"></el-input>
+          </el-form-item>
+          <el-form-item label="回复内容" prop="reply">
+            <el-input v-model="newRule.reply" type="textarea" placeholder="输入回复内容" :rows="4" class="custom-input"></el-input>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button @click="addRuleDialogVisible = false">取消</el-button>
+            <el-button type="primary" @click="confirmAddRule">确定</el-button>
+          </div>
+        </template>
+      </el-dialog>
 
       
       <el-card class="history-card" shadow="hover">
@@ -255,23 +276,9 @@ const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
   minReplyInterval: 60,
-  replyTemplate: '感谢您的消息：{content}。此消息由AI自动回复，时间：{time}。',
-  contactPerson: '',
+  contactPerson: '管理员', // 设置默认值，避免空字符串
   aiPersona: '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
-  customRules: [
-    {
-      id: 1,
-      matchType: 'contains',
-      keyword: '发货',
-      reply: '我们的商品通常会在下单后1-3个工作日内发货。'
-    },
-    {
-      id: 2,
-      matchType: 'equals',
-      keyword: '退款',
-      reply: '您可以在订单详情页面申请退款，我们会在24小时内处理。'
-    }
-  ]
+  customRules: []
 })
 
 
@@ -313,14 +320,10 @@ onUnmounted(() => {
 
 const rules = {
   replyDelay: [
-    { required: true, message: '请输入回复延迟', trigger: 'blur' },
-    { type: 'number', message: '回复延迟必须是数字', trigger: 'blur' },
-    { min: 0, max: 30, message: '回复延迟必须在0-30秒之间', trigger: 'blur' }
+    { required: true, message: '请输入回复延迟', trigger: 'blur' }
   ],
   minReplyInterval: [
-    { required: true, message: '请输入最小回复间隔时间', trigger: 'blur' },
-    { type: 'number', message: '间隔时间必须是数字', trigger: 'blur' },
-    { min: 0, max: 3600, message: '间隔时间必须在0-3600秒之间', trigger: 'blur' }
+    { required: true, message: '请输入最小回复间隔时间', trigger: 'blur' }
   ],
   contactPerson: [
     { required: true, message: '请输入接管联系人', trigger: 'blur' }
@@ -332,23 +335,94 @@ const rules = {
 }
 
 
-const addRule = () => {
-  formData.customRules.push({
-    id: Date.now(),
+// 添加规则相关变量
+const addRuleDialogVisible = ref(false)
+const ruleForm = ref(null)
+const newRule = reactive({
+  matchType: 'contains',
+  keyword: '',
+  reply: ''
+})
+
+// 规则表单验证规则
+const ruleFormRules = {
+  keyword: [
+    { required: true, message: '请输入关键词或规则', trigger: 'blur' },
+    { min: 1, max: 100, message: '关键词长度必须在1-100个字符之间', trigger: 'blur' }
+  ],
+  reply: [
+    { required: true, message: '请输入回复内容', trigger: 'blur' },
+    { min: 5, max: 500, message: '回复内容长度必须在5-500个字符之间', trigger: 'blur' }
+  ]
+}
+
+// 打开添加规则对话框
+const openAddRuleDialog = () => {
+  // 重置表单
+  if (ruleForm.value) {
+    ruleForm.value.resetFields()
+  }
+  Object.assign(newRule, {
     matchType: 'contains',
     keyword: '',
     reply: ''
   })
+  addRuleDialogVisible.value = true
+}
+
+// 添加规则
+const confirmAddRule = async () => {
+  try {
+    await ruleForm.value.validate()
+    formData.customRules.push({
+      id: Date.now(),
+      matchType: newRule.matchType,
+      keyword: newRule.keyword,
+      reply: newRule.reply
+    })
+    addRuleDialogVisible.value = false
+    ElMessage.success('规则添加成功')
+    await submitForm()
+  } catch (error) {
+    console.error('表单验证失败:', error)
+  }
 }
 
 
-const removeRule = (index) => {
+const removeRule = async (index) => {
   formData.customRules.splice(index, 1)
+  await submitForm()
+  ElMessage.success('规则删除成功')
 }
 
 
 const replyHistory = ref([])
 
+// 获取AI设置
+const fetchAiSettings = async () => {
+  try {
+    const response = await fetch('http://localhost:5000/api/ai-settings')
+    if (response.ok) {
+      const data = await response.json()
+      // 确保数值类型
+      Object.assign(formData, {
+        ...data,
+        replyDelay: Number(data.replyDelay ?? 5),
+        minReplyInterval: Number(data.minReplyInterval ?? 60)
+      })
+    } else {
+      ElMessage.error('获取AI设置失败')
+    }
+  } catch (error) {
+    console.error('获取AI设置失败:', error)
+    ElMessage.error('网络错误，无法获取AI设置')
+  }
+}
+
+// 在组件挂载时获取设置
+onMounted(() => {
+  fetchAiSettings()
+})
 
 const searchQuery = ref('')
 const filterStatus = ref('all')
@@ -395,25 +469,47 @@ const handleCurrentChange = (current) => {
 const submitForm = async () => {
   isSubmitting.value = true
   try {
-    await aiForm.value.validate()
-    await rulesForm.value.validate()
+    if (!formData.contactPerson.trim()) {
+      formData.contactPerson = '管理员'
+    }
 
-    const response = await fetch('/api/ai-settings', {
+    if (aiForm.value) {
+      await aiForm.value.validate()
+    }
+
+    const submitData = {
+      ...formData,
+      // 确保数值类型
+      replyDelay: Number(formData.replyDelay),
+      minReplyInterval: Number(formData.minReplyInterval),
+      customRules: Array.isArray(formData.customRules) ? formData.customRules : []
+    }
+
+    console.log('提交的AI设置:', submitData)
+
+    const response = await fetch('http://localhost:5000/api/ai-settings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(submitData)
     })
 
     if (response.ok) {
+      const data = await response.json()
       ElMessage.success('AI设置保存成功')
+      formData.customRules = data.customRules || []
     } else {
-      ElMessage.error('保存失败，请稍后重试')
+      const errorData = await response.json().catch(() => ({}))
+      ElMessage.error(`保存失败: ${errorData.error || '未知错误，请稍后重试'}`)
     }
   } catch (error) {
-    console.error('表单验证失败:', error)
-    ElMessage.error('保存失败，请检查表单填写是否正确')
+    console.error('保存设置失败:', error)
+    if (error.name === 'ValidationError') {
+      ElMessage.error(`表单验证失败: ${error.message}`)
+    } else {
+      ElMessage.error(`保存失败: ${error.message || '网络错误'}`)
+    }
   } finally {
     isSubmitting.value = false
   }
@@ -431,18 +527,7 @@ const resetForm = () => {
     formData.minReplyInterval = 60
     formData.contactPerson = ''
     formData.aiPersona = '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。'
-    formData.customRules = [
-      {
-        matchType: 'contains',
-        keyword: '发货',
-        reply: '我们的商品通常会在下单后1-3个工作日内发货。'
-      },
-      {
-        matchType: 'equals',
-        keyword: '退款',
-        reply: '您可以在订单详情页面申请退款，我们会在24小时内处理。'
-      }
-    ]
+    formData.customRules = []
     ElMessage.success('设置已重置')
   }).catch(() => {})
 }
@@ -540,6 +625,34 @@ const animateCounters = () => {
 }
 
 onMounted(() => {
+  fetchAISettings()
+})
+
+// 从后端获取AI设置
+  const fetchAISettings = async () => {
+    try {
+      const response = await fetch('/api/ai-settings')
+      console.log('获取到的AI响应:', response)
+      if (response.ok) {
+        const data = await response.json()
+        console.log('获取到的AI设置嘻嘻嘻:', data)
+        // 更新表单数据
+        formData.aiStatus = data.aiStatus !== undefined ? data.aiStatus : false
+        formData.replyDelay = data.replyDelay !== undefined ? data.replyDelay : 5
+        formData.minReplyInterval = data.minReplyInterval !== undefined ? data.minReplyInterval : 60
+        formData.contactPerson = data.contactPerson || ''
+        formData.aiPersona = data.aiPersona || '我是一个兵，来自老百姓，致力于为用户提供准确、及时的帮助。'
+        formData.customRules = Array.isArray(data.customRules) ? data.customRules : []
+      } else {
+        const errorData = await response.json().catch(() => ({}))
+        ElMessage.error(`获取AI设置失败: ${errorData.error || '未知错误'}`)
+      }
+    } catch (error) {
+      console.error('获取AI设置失败:', error)
+      ElMessage.error(`获取AI设置失败: ${error.message || '网络错误'}`)
+    }
+  }
+
   // 从API加载AI回复历史
   const fetchReplyHistory = async () => {
     isLoadingHistory.value = true
@@ -547,13 +660,16 @@ onMounted(() => {
       const response = await fetch('/api/ai-history')
       if (response.ok) {
         const data = await response.json()
-        replyHistory.value = data
+        console.log('获取到的回复历史:', data)
+        // 确保数据是数组
+        replyHistory.value = Array.isArray(data) ? data : []
       } else {
-        ElMessage.error('获取回复历史失败')
+        const errorData = await response.json().catch(() => ({}))
+        ElMessage.error(`获取回复历史失败: ${errorData.error || '未知错误'}`)
       }
     } catch (error) {
       console.error('获取回复历史失败:', error)
-      ElMessage.error('获取回复历史失败')
+      ElMessage.error(`获取回复历史失败: ${error.message || '网络错误'}`)
     } finally {
       isLoadingHistory.value = false
       // 加载完成后执行动画
@@ -563,8 +679,10 @@ onMounted(() => {
     }
   }
 
-  fetchReplyHistory()
-});
+  // 先加载设置，再加载历史
+  fetchAISettings().then(() => {
+    fetchReplyHistory()
+  })
 </script>
 
 <style scoped>
@@ -954,9 +1072,9 @@ onMounted(() => {
 
 /* 自定义规则样式 */
 .custom-rules-container {
-  border: 1px solid var(--border-color);
+  border: 0;
   border-radius: 12px;
-  padding: 15px;
+  padding: 0;
   background-color: white;
 }
 
