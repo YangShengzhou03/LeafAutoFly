@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, redirect
 from flask_cors import CORS
 
 from data_manager import (
-    load_tasks, load_ai_data, add_task, delete_task, update_task_status, clear_tasks,
+    load_tasks, load_ai_data, load_home_data, add_task, delete_task, update_task_status, clear_tasks,
     save_ai_settings, add_ai_history, ai_settings, reply_history
 )
 
@@ -91,6 +91,11 @@ def add_ai_history_route():
     history_data = request.json
     new_history = add_ai_history(history_data)
     return jsonify(new_history), 201
+
+
+@app.route('/api/home-data', methods=['GET'])
+def get_home_data():
+    return jsonify(load_home_data())
 
 
 if __name__ == '__main__':

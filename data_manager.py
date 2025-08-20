@@ -6,6 +6,9 @@ import datetime
 tasks = {}
 DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
 
+home_data = {}
+HOME_DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'home_data.json')
+
 ai_settings = {}
 AI_DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ai_data.json')
 reply_history = []
@@ -23,6 +26,35 @@ def load_tasks():
     except Exception as e:
         tasks = {}
     return tasks
+
+def load_home_data():
+    global home_data
+    try:
+        if os.path.exists(HOME_DATA_FILE):
+            with open(HOME_DATA_FILE, 'r', encoding='utf-8') as f:
+                home_data = json.load(f)
+        else:
+            home_data = {
+                "pricingPlans": [],
+                "keyMetrics": [],
+                "dashboardData": [],
+                "testimonials": []
+            }
+    except json.JSONDecodeError as e:
+        home_data = {
+            "pricingPlans": [],
+            "keyMetrics": [],
+            "dashboardData": [],
+            "testimonials": []
+        }
+    except Exception as e:
+        home_data = {
+            "pricingPlans": [],
+            "keyMetrics": [],
+            "dashboardData": [],
+            "testimonials": []
+        }
+    return home_data
 
 
 def save_tasks():
@@ -130,3 +162,4 @@ def add_ai_history(history_data):
 
 load_tasks()
 load_ai_data()
+load_home_data()
