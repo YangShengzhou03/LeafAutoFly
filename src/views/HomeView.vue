@@ -571,7 +571,7 @@ onMounted(() => {
 
 .status-normal {
   color: var(--success-color);
-  font-size: 1.2rem;
+  font-size: 1.8rem;
 }
 
 .card-footer {
