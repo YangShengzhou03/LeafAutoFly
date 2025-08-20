@@ -401,14 +401,18 @@ const replyHistory = ref([])
 // 获取AI设置
 const fetchAiSettings = async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/ai-settings')
+    const response = await fetch('api/ai-settings')
     if (response.ok) {
       const data = await response.json()
+      // 从外层数组的第0项中读取数据（修复点1）
+      const settingsData = Array.isArray(data) && data.length > 0 ? data[0] : data
+      
       // 确保数值类型
       Object.assign(formData, {
-        ...data,
-        replyDelay: Number(data.replyDelay ?? 5),
-        minReplyInterval: Number(data.minReplyInterval ?? 60)
+        ...settingsData,
+        replyDelay: Number(settingsData.replyDelay ?? 5),
+        minReplyInterval: Number(settingsData.minReplyInterval ?? 60),
+        customRules: settingsData.customRules || []
       })
     } else {
       ElMessage.error('获取AI设置失败')
@@ -419,10 +423,6 @@ const fetchAiSettings = async () => {
   }
 }
 
-// 在组件挂载时获取设置
-onMounted(() => {
-  fetchAiSettings()
-})
 
 const searchQuery = ref('')
 const filterStatus = ref('all')
@@ -470,7 +470,7 @@ const submitForm = async () => {
   isSubmitting.value = true
   try {
     if (!formData.contactPerson.trim()) {
-      formData.contactPerson = '管理员'
+      formData.contactPerson = '文件传输助手'
     }
 
     if (aiForm.value) {
@@ -487,7 +487,7 @@ const submitForm = async () => {
 
     console.log('提交的AI设置:', submitData)
 
-    const response = await fetch('http://localhost:5000/api/ai-settings', {
+    const response = await fetch('api/ai-settings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -498,7 +498,9 @@ const submitForm = async () => {
     if (response.ok) {
       const data = await response.json()
       ElMessage.success('AI设置保存成功')
-      formData.customRules = data.customRules || []
+      // 处理返回数据的格式（修复点2）
+      const responseData = Array.isArray(data) && data.length > 0 ? data[0] : data
+      formData.customRules = responseData.customRules || []
     } else {
       const errorData = await response.json().catch(() => ({}))
       ElMessage.error(`保存失败: ${errorData.error || '未知错误，请稍后重试'}`)
@@ -581,108 +583,10 @@ const tableRowClassName = ({ row }) => {
   return row.status === 'pending' ? 'task-pending' : 'task-completed';
 }
 
-const animateCounters = () => {
-  const counters = document.querySelectorAll('.counter');
-  if (counters.length) {
-    counters.forEach(counter => {
-      
-      counter.style.opacity = '0';
-      counter.style.transform = 'translateY(20px)';
-      counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-
-      
-      setTimeout(() => {
-        counter.style.opacity = '1';
-        counter.style.transform = 'translateY(0)';
-
-        const target = +counter.dataset.target;
-        const duration = 2500;
-        const frameDuration = 1000 / 60;
-        const totalFrames = Math.round(duration / frameDuration);
-        let frame = 0;
-
-        
-        const easeOutQuad = (t) => t * (2 - t);
-
-        const updateCounter = () => {
-          frame++;
-          const progress = easeOutQuad(frame / totalFrames);
-          const current = Math.round(target * progress);
-
-          counter.innerText = current.toLocaleString();
-
-          if ( frame < totalFrames) {
-            requestAnimationFrame(updateCounter);
-          } else {
-            counter.innerText = target.toLocaleString();
-          }
-        };
-
-        updateCounter();
-      }, Math.random() * 300);
-    });
-  }
-}
 
 onMounted(() => {
-  fetchAISettings()
+  fetchAiSettings()
 })
-
-// 从后端获取AI设置
-  const fetchAISettings = async () => {
-    try {
-      const response = await fetch('/api/ai-settings')
-      console.log('获取到的AI响应:', response)
-      if (response.ok) {
-        const data = await response.json()
-        console.log('获取到的AI设置嘻嘻嘻:', data)
-        // 更新表单数据
-        formData.aiStatus = data.aiStatus !== undefined ? data.aiStatus : false
-        formData.replyDelay = data.replyDelay !== undefined ? data.replyDelay : 5
-        formData.minReplyInterval = data.minReplyInterval !== undefined ? data.minReplyInterval : 60
-        formData.contactPerson = data.contactPerson || ''
-        formData.aiPersona = data.aiPersona || '我是一个兵，来自老百姓，致力于为用户提供准确、及时的帮助。'
-        formData.customRules = Array.isArray(data.customRules) ? data.customRules : []
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        ElMessage.error(`获取AI设置失败: ${errorData.error || '未知错误'}`)
-      }
-    } catch (error) {
-      console.error('获取AI设置失败:', error)
-      ElMessage.error(`获取AI设置失败: ${error.message || '网络错误'}`)
-    }
-  }
-
-  // 从API加载AI回复历史
-  const fetchReplyHistory = async () => {
-    isLoadingHistory.value = true
-    try {
-      const response = await fetch('/api/ai-history')
-      if (response.ok) {
-        const data = await response.json()
-        console.log('获取到的回复历史:', data)
-        // 确保数据是数组
-        replyHistory.value = Array.isArray(data) ? data : []
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        ElMessage.error(`获取回复历史失败: ${errorData.error || '未知错误'}`)
-      }
-    } catch (error) {
-      console.error('获取回复历史失败:', error)
-      ElMessage.error(`获取回复历史失败: ${error.message || '网络错误'}`)
-    } finally {
-      isLoadingHistory.value = false
-      // 加载完成后执行动画
-      setTimeout(() => {
-        animateCounters();
-      }, 500);
-    }
-  }
-
-  // 先加载设置，再加载历史
-  fetchAISettings().then(() => {
-    fetchReplyHistory()
-  })
 </script>
 
 <style scoped>

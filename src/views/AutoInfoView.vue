@@ -359,16 +359,12 @@ const refreshTasks = async () => {
     const response = await fetch('/api/tasks')
     if (response.ok) {
       const data = await response.json()
-      console.log('获取到的任务数据:', data)
       tasks.value = data
-      ElMessage({ message: '任务列表已刷新', type: 'success', duration: 1000 })
     } else {
       const errorText = await response.text()
-      console.error('刷新任务列表失败:', errorText)
       ElMessage.error(`刷新任务列表失败: ${errorText || '未知错误'}`)
     }
   } catch (error) {
-    console.error('刷新任务列表失败:', error)
     ElMessage.error(`刷新任务列表失败: ${error.message || '网络错误'}`)
   }
 }
@@ -402,8 +398,8 @@ onMounted(() => {
   --light-color: #f8fafc;
   --dark-color: #1e293b;
   --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --success-color: #10b981;
+  --text-secondary: #3b82f6;
+  --success-color: #8b5cf6;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
   --border-color: #e2e8f0;
