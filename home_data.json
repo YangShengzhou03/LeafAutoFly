@@ -1,0 +1,122 @@
+{
+  "pricingPlans": [
+    {
+      "id": 1,
+      "name": "基础版",
+      "price": 299,
+      "period": "/年",
+      "features": [
+        "基础消息发送功能",
+        "每日1000条发送限额",
+        "无数据分析功能",
+        "邮件支持"
+      ],
+      "isPopular": false
+    },
+    {
+      "id": 2,
+      "name": "企业版",
+      "price": 899,
+      "period": "/年",
+      "features": [
+        "无限制消息发送",
+        "高级数据分析与报表",
+        "客户画像分析",
+        "优先技术支持",
+        "API访问权限"
+      ],
+      "isPopular": true
+    },
+    {
+      "id": 3,
+      "name": "定制版",
+      "price": "联系我们",
+      "period": "获取报价",
+      "features": [
+        "完全定制化功能",
+        "专属客户经理",
+        "私有部署选项",
+        "24/7技术支持"
+      ],
+      "isPopular": false
+    }
+  ],
+  "keyMetrics": [
+    {
+      "id": 1,
+      "value": 500,
+      "label": "活跃企业客户"
+    },
+    {
+      "id": 2,
+      "value": 10000,
+      "label": "自动化任务"
+    },
+    {
+      "id": 3,
+      "value": 98,
+      "label": "系统稳定性"
+    },
+    {
+      "id": 4,
+      "value": 1000000,
+      "label": "消息发送量"
+    }
+  ],
+  "dashboardData": [
+    {
+      "id": 1,
+      "title": "自动化任务完成率",
+      "trend": "up",
+      "trendValue": 3.2,
+      "value": 12,
+      "footer": "较昨日"
+    },
+    {
+      "id": 2,
+      "title": "消息送达率",
+      "trend": "up",
+      "trendValue": 1.8,
+      "value": 97.5,
+      "footer": "较昨日"
+    },
+    {
+      "id": 3,
+      "title": "AI辅助功能使用率",
+      "trend": "down",
+      "trendValue": 0.5,
+      "value": 6,
+      "footer": "较昨日"
+    },
+    {
+      "id": 4,
+      "title": "系统状态",
+      "value": "正常运行",
+      "status": "normal",
+      "footer": "版本: v1.0.0"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "quote": "LeafAuto帮助我们公司节省了大量的人力成本，消息发送效率提升了60%以上。",
+      "customerName": "张三",
+      "customerCompany": "某科技公司市场总监",
+      "customerAvatar": "@/assets/images/user-avatar.svg"
+    },
+    {
+      "id": 2,
+      "quote": "数据分析功能非常强大，让我们能够精准了解客户需求，提升转化率。",
+      "customerName": "李四",
+      "customerCompany": "某电商平台运营主管",
+      "customerAvatar": "@/assets/images/user-avatar.svg"
+    },
+    {
+      "id": 3,
+      "quote": "系统稳定性非常好，从未出现过 downtime，客服响应也非常及时。",
+      "customerName": "王五",
+      "customerCompany": "某金融机构IT负责人",
+      "customerAvatar": "@/assets/images/user-avatar.svg"
+    }
+  ]
+}
