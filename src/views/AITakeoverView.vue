@@ -497,7 +497,6 @@ const submitForm = async () => {
 
     if (response.ok) {
       const data = await response.json()
-      ElMessage.success('AI设置保存成功')
       // 处理返回数据的格式（修复点2）
       const responseData = Array.isArray(data) && data.length > 0 ? data[0] : data
       formData.customRules = responseData.customRules || []

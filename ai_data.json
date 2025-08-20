@@ -7,15 +7,8 @@
     "minReplyInterval": 60,
     "contactPerson": "管理员",
     "aiPersona": "我是一个测测测友好、专业的AI助手，致力于为用户提供准确、及时的帮助。",
-    "customRules": [
-      {
-        "id": 1755697566376,
-        "keyword": "ce",
-        "matchType": "contains",
-        "reply": "测踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩"
-      }
-    ],
-    "updatedAt": "2025-08-20T21:46:17.124697"
+    "customRules": [],
+    "updatedAt": "2025-08-20T22:53:33.694711"
   },
   "history": []
 }
