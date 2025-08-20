@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <!-- 下方依次排列区域 -->
+      
       
       <el-card class="rules-card" shadow="hover">
         <template #header>
@@ -140,7 +140,7 @@
         </div>
       </el-card>
 
-      <!-- 添加规则对话框 -->
+      
       <el-dialog v-model="addRuleDialogVisible" title="添加回复规则" width="600px">
         <el-form ref="ruleForm" :model="newRule" :rules="ruleFormRules" class="custom-input">
           <el-form-item label="匹配类型" prop="matchType">
@@ -618,7 +618,7 @@ onMounted(() => {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* 顶部导航 */
+
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -657,7 +657,7 @@ onMounted(() => {
   color: white;
 }
 
-/* 页面标题区域 */
+
 .page-header-section {
   margin-bottom: 24px;
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
@@ -683,14 +683,14 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-/* 主要内容区域 */
+
 .main-content {
   padding: 0 24px 24px;
   max-width: 1600px;
   margin: 0 auto;
 }
 
-/* 上方左右排列区域 */
+
 .top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -710,7 +710,7 @@ onMounted(() => {
   flex-direction: column;
 }
 
-/* 统一卡片头部样式 */
+
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -729,12 +729,12 @@ onMounted(() => {
   color: var(--text-primary);
 }
 
-/* 统一表单行间距 */
+
 .el-row {
   margin-bottom: 20px;
 }
 
-/* 状态切换样式优化 */
+
 .status-controls {
   display: flex;
   align-items: center;
@@ -750,7 +750,7 @@ onMounted(() => {
   font-weight: 500;
 }
 
-/* 统一统计卡片样式 */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -785,7 +785,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-/* 图表样式 */
+
 .chart-card {
   background-color: white;
   border-radius: 12px;
@@ -816,14 +816,14 @@ onMounted(() => {
   width: 100px;
 }
 
-/* 统一表格操作按钮 */
+
 .el-table .el-button {
   margin: 0 4px;
   padding: 4px 8px;
   font-size: 12px;
 }
 
-/* 自定义输入框样式 */
+
 .custom-input .el-input__wrapper {
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -835,14 +835,14 @@ onMounted(() => {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-/* 自定义选择框样式 */
+
 .custom-select .el-input__wrapper {
   border-radius: 8px;
   border: 1px solid var(--border-color);
 }
 
-/* 按钮样式增强 - 与AutoInfoView统一 */
-/* 移除渐变按钮样式，使用标准按钮样式 */
+
+
 .el-button {
   transition: all 0.2s ease;
 }
@@ -883,7 +883,7 @@ onMounted(() => {
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
-/* 卡片样式 */
+
 .el-card {
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -898,11 +898,11 @@ onMounted(() => {
   border-color: var(--primary-light);
 }
 
-/* 卡片相关样式已与AutoInfoView统一 */
 
-/* 移除了.card-icon、.card-title-group、.card-title和.card-subtitle类，使用.header-title替代 */
 
-/* 表单样式 */
+
+
+
 .el-form-item {
   margin-bottom: 24px;
 }
@@ -924,7 +924,7 @@ onMounted(() => {
   padding: 5px 0;
 }
 
-/* 表格样式增强 - 与AutoInfoView统一 */
+
 .el-table {
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -952,7 +952,7 @@ onMounted(() => {
   background-color: var(--light-color);
 }
 
-/* 标签样式 */
+
 .el-tag--info {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--secondary-color);
@@ -967,14 +967,14 @@ onMounted(() => {
   border-radius: 6px;
 }
 
-/* 分页样式 */
+
 .custom-pagination {
   padding: 16px 0;
   display: flex;
   justify-content: flex-end;
 }
 
-/* 自定义规则样式 */
+
 .custom-rules-container {
   border: 0;
   border-radius: 12px;
@@ -994,7 +994,7 @@ onMounted(() => {
   box-shadow: var(--shadow);
 }
 
-/* 响应式设计 */
+
 @media (max-width: 1024px) {
   .top-row {
     grid-template-columns: 1fr;

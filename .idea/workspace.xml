@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4177cc9f-c194-485a-a7f5-3b0d2b9c4722" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/src/assets/css/modern-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/modern-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AITakeoverView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AITakeoverView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AutoInfoView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AutoInfoView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomeView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +90,7 @@
       <workItem from="1755215892348" duration="16000" />
       <workItem from="1755397956249" duration="1551000" />
       <workItem from="1755423197267" duration="221000" />
-      <workItem from="1755691818804" duration="3716000" />
+      <workItem from="1755691818804" duration="4334000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />

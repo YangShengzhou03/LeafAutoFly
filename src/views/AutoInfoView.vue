@@ -405,7 +405,7 @@ onMounted(() => {
   --border-color: #e2e8f0;
 }
 
-/* 表格行样式 */
+
 .task-pending .el-table__cell {
   background-color: rgba(59, 130, 246, 0.1);
 }
@@ -414,7 +414,7 @@ onMounted(() => {
   background-color: rgba(16, 185, 129, 0.1);
 }
 
-/* 动画效果 */
+
 .task-creation-card, .task-list-section .el-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-color);
@@ -429,7 +429,7 @@ onMounted(() => {
   border-color: var(--primary-color);
 }
 
-/* 按钮悬停效果增强 */
+
 .el-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
@@ -530,7 +530,7 @@ onMounted(() => {
   margin-top: 4px;
 }
 
-/* 表格样式增强 */
+
 .el-table {
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -558,12 +558,12 @@ onMounted(() => {
   background-color: rgba(59, 130, 246, 0.08);
 }
 
-/* 固定列样式优化 */
+
 .el-table__fixed-right {
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
 }
 
-/* 标签样式 */
+
 .el-tag--info {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--secondary-color);

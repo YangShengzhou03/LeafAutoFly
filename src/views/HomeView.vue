@@ -307,7 +307,7 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
-/* 核心数据区域 */
+
 .key-metrics {
   background-color: var(--primary-color);
   color: white;
@@ -349,7 +349,7 @@ onMounted(() => {
   opacity: 0.9;
 }
 
-/* 通用区域标题 */
+
 .section-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -369,7 +369,7 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-/* 会员计划区域 */
+
 .pricing {
   padding: 2rem 2%;
   background-color: white;
@@ -502,7 +502,7 @@ onMounted(() => {
   background-color: #1e3a8a;
 }
 
-/* 系统概览区域 */
+
 .dashboard {
   padding: 5rem 5%;
   background-color: #f1f5f9;
@@ -579,7 +579,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-/* 客户评价区域 */
+
 .testimonials {
   padding: 5rem 5%;
   background-color: white;
@@ -593,7 +593,7 @@ onMounted(() => {
   position: relative;
 }
 
-/* 轮播控制按钮 - 仅在移动设备上显示 */
+
 .testimonial-controls {
   display: none;
 }
@@ -706,7 +706,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-/* 响应式设计 - 只保留实际使用的元素的响应式样式 */
+
 @media (max-width: 768px) {
   .metrics-container {
     flex-direction: column;
