@@ -6,9 +6,6 @@ import datetime
 tasks = {}
 DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
 
-home_data = {}
-HOME_DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'home_data.json')
-
 ai_settings = {}
 AI_DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ai_data.json')
 reply_history = []
@@ -26,75 +23,6 @@ def load_tasks():
     except Exception as e:
         tasks = {}
     return tasks
-
-def load_home_data():
-    global home_data
-    try:
-        if os.path.exists(HOME_DATA_FILE):
-            with open(HOME_DATA_FILE, 'r', encoding='utf-8') as f:
-                home_data = json.load(f)
-        else:
-            home_data = {
-                "pricingPlans": [],
-                "keyMetrics": [],
-                "dashboardData": [],
-                "testimonials": []
-            }
-    except json.JSONDecodeError as e:
-        home_data = {
-            "pricingPlans": [],
-            "keyMetrics": [],
-            "dashboardData": [],
-            "testimonials": []
-        }
-    except Exception as e:
-        home_data = {
-            "pricingPlans": [],
-            "keyMetrics": [],
-            "dashboardData": [],
-            "testimonials": []
-        }
-    return home_data
-
-
-def get_ai_stats():
-    """计算并返回AI统计数据"""
-    global reply_history, ai_settings
-    
-    # 计算基本统计数据
-    total_interactions = len(reply_history)
-    
-    # 计算平均响应延迟
-    avg_reply_delay = ai_settings.get('replyDelay', 5)  # 默认值
-    
-    # 计算活跃天数
-    if total_interactions > 0:
-        # 按时间排序历史记录
-        sorted_history = sorted(reply_history, key=lambda x: x['time'])
-        first_interaction = sorted_history[0]['time']
-        last_interaction = sorted_history[-1]['time']
-        
-        # 解析时间字符串
-        first_date = datetime.datetime.strptime(first_interaction, '%Y-%m-%d %H:%M:%S').date()
-        last_date = datetime.datetime.strptime(last_interaction, '%Y-%m-%d %H:%M:%S').date()
-        active_days = (last_date - first_date).days + 1
-    else:
-        first_interaction = None
-        last_interaction = None
-        active_days = 0
-    
-    # 构建统计数据字典
-    stats = {
-        'totalInteractions': total_interactions,
-        'avgReplyDelay': avg_reply_delay,
-        'firstInteraction': first_interaction,
-        'lastInteraction': last_interaction,
-        'activeDays': active_days,
-        'aiStatus': ai_settings.get('aiStatus', False),
-        'minReplyInterval': ai_settings.get('minReplyInterval', 60)
-    }
-    
-    return stats
 
 
 def save_tasks():
@@ -202,4 +130,3 @@ def add_ai_history(history_data):
 
 load_tasks()
 load_ai_data()
-load_home_data()

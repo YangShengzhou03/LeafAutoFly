@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      
+      <!-- 下方依次排列区域 -->
       
       <el-card class="rules-card" shadow="hover">
         <template #header>
@@ -140,7 +140,7 @@
         </div>
       </el-card>
 
-      
+      <!-- 添加规则对话框 -->
       <el-dialog v-model="addRuleDialogVisible" title="添加回复规则" width="600px">
         <el-form ref="ruleForm" :model="newRule" :rules="ruleFormRules" class="custom-input">
           <el-form-item label="匹配类型" prop="matchType">
@@ -276,8 +276,8 @@ const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
   minReplyInterval: 60,
-  contactPerson: '文件传输助手', // 设置默认值，避免空字符串
-  aiPersona: '你是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
+  contactPerson: '管理员', // 设置默认值，避免空字符串
+  aiPersona: '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
   customRules: []
 })
 
@@ -401,18 +401,14 @@ const replyHistory = ref([])
 // 获取AI设置
 const fetchAiSettings = async () => {
   try {
-    const response = await fetch('api/ai-settings')
+    const response = await fetch('http://localhost:5000/api/ai-settings')
     if (response.ok) {
       const data = await response.json()
-      // 从外层数组的第0项中读取数据（修复点1）
-      const settingsData = Array.isArray(data) && data.length > 0 ? data[0] : data
-      
       // 确保数值类型
       Object.assign(formData, {
-        ...settingsData,
-        replyDelay: Number(settingsData.replyDelay ?? 5),
-        minReplyInterval: Number(settingsData.minReplyInterval ?? 60),
-        customRules: settingsData.customRules || []
+        ...data,
+        replyDelay: Number(data.replyDelay ?? 5),
+        minReplyInterval: Number(data.minReplyInterval ?? 60)
       })
     } else {
       ElMessage.error('获取AI设置失败')
@@ -423,6 +419,10 @@ const fetchAiSettings = async () => {
   }
 }
 
+// 在组件挂载时获取设置
+onMounted(() => {
+  fetchAiSettings()
+})
 
 const searchQuery = ref('')
 const filterStatus = ref('all')
@@ -434,37 +434,10 @@ const chartRange = ref('7d')
 
 
 const stats = reactive({
-  replyRate: 0,
-  averageTime: 0,
-  satisfactionRate: 0
+  replyRate: 95,
+  averageTime: 2.8,
+  satisfactionRate: 92
 })
-
-// 获取AI看板数据
-const fetchAiStats = async () => {
-  try {
-    isLoadingHistory.value = true;
-    const response = await fetch('api/ai-stats');
-    if (response.ok) {
-      const data = await response.json();
-      // 从外层数组的第0项中读取数据（如果需要）
-      const statsData = Array.isArray(data) && data.length > 0 ? data[0] : data;
-      
-      // 更新stats数据
-      Object.assign(stats, {
-        replyRate: Number(statsData.replyRate ?? 0),
-        averageTime: Number(statsData.averageTime ?? 0),
-        satisfactionRate: Number(statsData.satisfactionRate ?? 0)
-      });
-    } else {
-      ElMessage.error('获取AI看板数据失败');
-    }
-  } catch (error) {
-    console.error('获取AI看板数据失败:', error);
-    ElMessage.error('网络错误，无法获取AI看板数据');
-  } finally {
-    isLoadingHistory.value = false;
-  }
-}
 
 
 const filteredHistory = computed(() => {
@@ -497,7 +470,7 @@ const submitForm = async () => {
   isSubmitting.value = true
   try {
     if (!formData.contactPerson.trim()) {
-      formData.contactPerson = '文件传输助手'
+      formData.contactPerson = '管理员'
     }
 
     if (aiForm.value) {
@@ -514,7 +487,7 @@ const submitForm = async () => {
 
     console.log('提交的AI设置:', submitData)
 
-    const response = await fetch('api/ai-settings', {
+    const response = await fetch('http://localhost:5000/api/ai-settings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -524,9 +497,8 @@ const submitForm = async () => {
 
     if (response.ok) {
       const data = await response.json()
-      // 处理返回数据的格式（修复点2）
-      const responseData = Array.isArray(data) && data.length > 0 ? data[0] : data
-      formData.customRules = responseData.customRules || []
+      ElMessage.success('AI设置保存成功')
+      formData.customRules = data.customRules || []
     } else {
       const errorData = await response.json().catch(() => ({}))
       ElMessage.error(`保存失败: ${errorData.error || '未知错误，请稍后重试'}`)
@@ -609,11 +581,108 @@ const tableRowClassName = ({ row }) => {
   return row.status === 'pending' ? 'task-pending' : 'task-completed';
 }
 
+const animateCounters = () => {
+  const counters = document.querySelectorAll('.counter');
+  if (counters.length) {
+    counters.forEach(counter => {
+      
+      counter.style.opacity = '0';
+      counter.style.transform = 'translateY(20px)';
+      counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+      
+      setTimeout(() => {
+        counter.style.opacity = '1';
+        counter.style.transform = 'translateY(0)';
+
+        const target = +counter.dataset.target;
+        const duration = 2500;
+        const frameDuration = 1000 / 60;
+        const totalFrames = Math.round(duration / frameDuration);
+        let frame = 0;
+
+        
+        const easeOutQuad = (t) => t * (2 - t);
+
+        const updateCounter = () => {
+          frame++;
+          const progress = easeOutQuad(frame / totalFrames);
+          const current = Math.round(target * progress);
+
+          counter.innerText = current.toLocaleString();
+
+          if ( frame < totalFrames) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
+        };
+
+        updateCounter();
+      }, Math.random() * 300);
+    });
+  }
+}
 
 onMounted(() => {
-  fetchAiSettings();
-  fetchAiStats();
+  fetchAISettings()
 })
+
+// 从后端获取AI设置
+  const fetchAISettings = async () => {
+    try {
+      const response = await fetch('/api/ai-settings')
+      console.log('获取到的AI响应:', response)
+      if (response.ok) {
+        const data = await response.json()
+        console.log('获取到的AI设置嘻嘻嘻:', data)
+        // 更新表单数据
+        formData.aiStatus = data.aiStatus !== undefined ? data.aiStatus : false
+        formData.replyDelay = data.replyDelay !== undefined ? data.replyDelay : 5
+        formData.minReplyInterval = data.minReplyInterval !== undefined ? data.minReplyInterval : 60
+        formData.contactPerson = data.contactPerson || ''
+        formData.aiPersona = data.aiPersona || '我是一个兵，来自老百姓，致力于为用户提供准确、及时的帮助。'
+        formData.customRules = Array.isArray(data.customRules) ? data.customRules : []
+      } else {
+        const errorData = await response.json().catch(() => ({}))
+        ElMessage.error(`获取AI设置失败: ${errorData.error || '未知错误'}`)
+      }
+    } catch (error) {
+      console.error('获取AI设置失败:', error)
+      ElMessage.error(`获取AI设置失败: ${error.message || '网络错误'}`)
+    }
+  }
+
+  // 从API加载AI回复历史
+  const fetchReplyHistory = async () => {
+    isLoadingHistory.value = true
+    try {
+      const response = await fetch('/api/ai-history')
+      if (response.ok) {
+        const data = await response.json()
+        console.log('获取到的回复历史:', data)
+        // 确保数据是数组
+        replyHistory.value = Array.isArray(data) ? data : []
+      } else {
+        const errorData = await response.json().catch(() => ({}))
+        ElMessage.error(`获取回复历史失败: ${errorData.error || '未知错误'}`)
+      }
+    } catch (error) {
+      console.error('获取回复历史失败:', error)
+      ElMessage.error(`获取回复历史失败: ${error.message || '网络错误'}`)
+    } finally {
+      isLoadingHistory.value = false
+      // 加载完成后执行动画
+      setTimeout(() => {
+        animateCounters();
+      }, 500);
+    }
+  }
+
+  // 先加载设置，再加载历史
+  fetchAISettings().then(() => {
+    fetchReplyHistory()
+  })
 </script>
 
 <style scoped>
@@ -645,7 +714,7 @@ onMounted(() => {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
+/* 顶部导航 */
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -684,7 +753,7 @@ onMounted(() => {
   color: white;
 }
 
-
+/* 页面标题区域 */
 .page-header-section {
   margin-bottom: 24px;
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
@@ -710,14 +779,14 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-
+/* 主要内容区域 */
 .main-content {
   padding: 0 24px 24px;
   max-width: 1600px;
   margin: 0 auto;
 }
 
-
+/* 上方左右排列区域 */
 .top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -737,7 +806,7 @@ onMounted(() => {
   flex-direction: column;
 }
 
-
+/* 统一卡片头部样式 */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -756,12 +825,12 @@ onMounted(() => {
   color: var(--text-primary);
 }
 
-
+/* 统一表单行间距 */
 .el-row {
   margin-bottom: 20px;
 }
 
-
+/* 状态切换样式优化 */
 .status-controls {
   display: flex;
   align-items: center;
@@ -777,7 +846,7 @@ onMounted(() => {
   font-weight: 500;
 }
 
-
+/* 统一统计卡片样式 */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -812,7 +881,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-
+/* 图表样式 */
 .chart-card {
   background-color: white;
   border-radius: 12px;
@@ -843,14 +912,14 @@ onMounted(() => {
   width: 100px;
 }
 
-
+/* 统一表格操作按钮 */
 .el-table .el-button {
   margin: 0 4px;
   padding: 4px 8px;
   font-size: 12px;
 }
 
-
+/* 自定义输入框样式 */
 .custom-input .el-input__wrapper {
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -862,14 +931,14 @@ onMounted(() => {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-
+/* 自定义选择框样式 */
 .custom-select .el-input__wrapper {
   border-radius: 8px;
   border: 1px solid var(--border-color);
 }
 
-
-
+/* 按钮样式增强 - 与AutoInfoView统一 */
+/* 移除渐变按钮样式，使用标准按钮样式 */
 .el-button {
   transition: all 0.2s ease;
 }
@@ -910,7 +979,7 @@ onMounted(() => {
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
-
+/* 卡片样式 */
 .el-card {
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -925,11 +994,11 @@ onMounted(() => {
   border-color: var(--primary-light);
 }
 
+/* 卡片相关样式已与AutoInfoView统一 */
 
+/* 移除了.card-icon、.card-title-group、.card-title和.card-subtitle类，使用.header-title替代 */
 
-
-
-
+/* 表单样式 */
 .el-form-item {
   margin-bottom: 24px;
 }
@@ -951,7 +1020,7 @@ onMounted(() => {
   padding: 5px 0;
 }
 
-
+/* 表格样式增强 - 与AutoInfoView统一 */
 .el-table {
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -979,7 +1048,7 @@ onMounted(() => {
   background-color: var(--light-color);
 }
 
-
+/* 标签样式 */
 .el-tag--info {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--secondary-color);
@@ -994,14 +1063,14 @@ onMounted(() => {
   border-radius: 6px;
 }
 
-
+/* 分页样式 */
 .custom-pagination {
   padding: 16px 0;
   display: flex;
   justify-content: flex-end;
 }
 
-
+/* 自定义规则样式 */
 .custom-rules-container {
   border: 0;
   border-radius: 12px;
@@ -1021,7 +1090,7 @@ onMounted(() => {
   box-shadow: var(--shadow);
 }
 
-
+/* 响应式设计 */
 @media (max-width: 1024px) {
   .top-row {
     grid-template-columns: 1fr;

@@ -7,36 +7,118 @@
         <p>灵活的定价策略，满足不同规模企业的需求</p>
       </div>
       <div class="pricing-cards">
-        <template v-for="plan in homeData.pricingPlans" :key="plan.id">
-          <div :class="['pricing-card', { 'popular': plan.isPopular }]">
-            <div v-if="plan.isPopular" class="popular-tag">最受欢迎</div>
-            <div class="card-header">
-              <h3>{{ plan.name }}</h3>
-              <div class="price">
-                <span class="amount">¥{{ plan.price }}</span>
-                <span class="period">{{ plan.period }}</span>
-              </div>
+        <div class="pricing-card">
+          <div class="card-header">
+            <h3>基础版</h3>
+            <div class="price">
+              <span class="amount">¥299</span>
+              <span class="period">/月</span>
             </div>
-            <div class="card-features">
-              <div class="feature" v-for="feature in plan.features" :key="feature">
-                <i class="el-icon-check"></i>
-                <span>{{ feature }}</span>
-              </div>
-            </div>
-            <button :class="['select-plan', { 'popular-btn': plan.isPopular }]">
-              {{ plan.isPopular ? '选择方案' : (plan.id === 3 ? '联系我们' : '选择方案') }}
-            </button>
           </div>
-        </template>
+          <div class="card-features">
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>基础消息发送功能</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>每日1000条消息限额</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>基础数据分析</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>邮件支持</span>
+            </div>
+          </div>
+          <button class="select-plan">选择方案</button>
+        </div>
+
+        <div class="pricing-card popular">
+          <div class="popular-tag">最受欢迎</div>
+          <div class="card-header">
+            <h3>企业版</h3>
+            <div class="price">
+              <span class="amount">¥899</span>
+              <span class="period">/月</span>
+            </div>
+          </div>
+          <div class="card-features">
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>无限制消息发送</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>高级数据分析与报表</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>客户画像分析</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>优先技术支持</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>API访问权限</span>
+            </div>
+          </div>
+          <button class="select-plan popular-btn">选择方案</button>
+        </div>
+
+        <div class="pricing-card">
+          <div class="card-header">
+            <h3>定制版</h3>
+            <div class="price">
+              <span class="amount">联系我们</span>
+              <span class="period">获取报价</span>
+            </div>
+          </div>
+          <div class="card-features">
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>完全定制化功能</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>专属客户经理</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>私有部署选项</span>
+            </div>
+            <div class="feature">
+              <i class="el-icon-check"></i>
+              <span>24/7技术支持</span>
+            </div>
+          </div>
+          <button class="select-plan">联系我们</button>
+        </div>
       </div>
     </section>
 
         
     <section class="key-metrics">
       <div class="metrics-container">
-        <div class="metric-card" v-for="metric in homeData.keyMetrics" :key="metric.id">
-          <div class="metric-value counter" :data-target="metric.value">0</div>
-          <div class="metric-label">{{ metric.label }}</div>
+        <div class="metric-card">
+          <div class="metric-value counter" data-target="500">0</div>
+          <div class="metric-label">活跃企业客户</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value counter" data-target="10000">0</div>
+          <div class="metric-label">自动化任务</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value counter" data-target="98">0</div>
+          <div class="metric-label">系统稳定性</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value counter" data-target="1000000">0</div>
+          <div class="metric-label">消息发送量</div>
         </div>
       </div>
     </section>
@@ -48,18 +130,46 @@
         <p>实时监控您的自动化状态和效果</p>
       </div>
       <div class="dashboard-cards">
-        <div class="dashboard-card" v-for="item in homeData.dashboardData" :key="item.id">
+        <div class="dashboard-card">
           <div class="card-title">
-            <h3>{{ item.title }}</h3>
-            <span v-if="item.trend" :class="item.trend === 'up' ? 'trend-up' : 'trend-down'">
-              <i :class="item.trend === 'up' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i> {{ item.trendValue }}%
-            </span>
+            <h3>自动化任务完成率</h3>
+            <span class="trend-up"><i class="el-icon-arrow-up"></i> 3.2%</span>
           </div>
-          <div :class="['card-value', { 'status-normal': item.status === 'normal' }]">
-            {{ item.value }}{{ item.id !== 4 ? '%' : '' }}
-          </div>
+          <div class="card-value">12%</div>
           <div class="card-footer">
-            <span>{{ item.footer }}</span>
+            <span>较昨日</span>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-title">
+            <h3>消息送达率</h3>
+            <span class="trend-up"><i class="el-icon-arrow-up"></i> 1.8%</span>
+          </div>
+          <div class="card-value">97.5%</div>
+          <div class="card-footer">
+            <span>较昨日</span>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-title">
+            <h3>AI辅助功能使用率</h3>
+            <span class="trend-down"><i class="el-icon-arrow-down"></i> 0.5%</span>
+          </div>
+          <div class="card-value">6%</div>
+          <div class="card-footer">
+            <span>较昨日</span>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-title">
+            <h3>系统状态</h3>
+          </div>
+          <div class="card-value status-normal">正常运行</div>
+          <div class="card-footer">
+            <span>版本: v1.0.0</span>
           </div>
         </div>
       </div>
@@ -72,13 +182,35 @@
         <p>听听我们的客户怎么说</p>
       </div>
       <div class="testimonial-cards">
-        <div class="testimonial-card" v-for="testimonial in homeData.testimonials" :key="testimonial.id">
-          <div class="quote">"{{ testimonial.quote }}"</div>
+        <div class="testimonial-card">
+          <div class="quote">"LeafAuto帮助我们公司节省了大量的人力成本，消息发送效率提升了60%以上。"</div>
           <div class="customer-info">
-            <img :src="testimonial.customerAvatar" alt="客户头像" class="w-12 h-12 rounded-full object-cover mr-4 bg-gray-100" />
+            <img src="@/assets/images/user-avatar.svg" alt="客户头像" class="w-12 h-12 rounded-full object-cover mr-4 bg-gray-100" />
             <div class="customer-details">
-              <div class="name">{{ testimonial.customerName }}</div>
-              <div class="company">{{ testimonial.customerCompany }}</div>
+              <div class="name">张三</div>
+              <div class="company">某科技公司市场总监</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote">"数据分析功能非常强大，让我们能够精准了解客户需求，提升转化率。"</div>
+          <div class="customer-info">
+            <img src="@/assets/images/user-avatar.svg" alt="客户头像" class="w-12 h-12 rounded-full object-cover mr-4 bg-gray-100" />
+            <div class="customer-details">
+              <div class="name">李四</div>
+              <div class="company">某电商平台运营主管</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote">"系统稳定性非常好，从未出现过 downtime，客服响应也非常及时。"</div>
+          <div class="customer-info">
+            <img src="@/assets/images/user-avatar.svg" alt="客户头像" class="w-12 h-12 rounded-full object-cover mr-4 bg-gray-100" />
+            <div class="customer-details">
+              <div class="name">王五</div>
+              <div class="company">某金融机构IT负责人</div>
             </div>
           </div>
         </div>
@@ -91,86 +223,8 @@
 import { onMounted, ref } from 'vue';
 
 const animationActive = ref(false);
-const homeData = ref({
-  pricingPlans: [],
-  keyMetrics: [],
-  dashboardData: [],
-  testimonials: []
-});
-
-// 从后端获取数据
-const fetchHomeData = async () => {
-  try {
-    const response = await fetch('http://localhost:5000/api/home-data');
-    const data = await response.json();
-    homeData.value = data;
-
-    // 数据加载完成后触发动画
-    if (!animationActive.value) {
-      triggerAnimations();
-    }
-  } catch (error) {
-    console.error('获取首页数据失败:', error);
-  }
-};
-
-// 触发动画的函数
-const triggerAnimations = () => {
-  animationActive.value = true;
-  const counters = document.querySelectorAll('.counter');
-  if (counters.length) {
-    counters.forEach(counter => {
-      counter.style.opacity = '0';
-      counter.style.transform = 'translateY(20px)';
-      counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-
-      setTimeout(() => {
-        counter.style.opacity = '1';
-        counter.style.transform = 'translateY(0)';
-
-        const target = +counter.dataset.target;
-        const duration = 2500;
-        const frameDuration = 1000 / 60;
-        const totalFrames = Math.round(duration / frameDuration);
-        let frame = 0;
-
-        const easeOutQuad = (t) => t * (2 - t);
-
-        const updateCounter = () => {
-          frame++;
-          const progress = easeOutQuad(frame / totalFrames);
-          const current = Math.round(target * progress);
-
-          counter.innerText = current.toLocaleString();
-
-          if (frame < totalFrames) {
-            requestAnimationFrame(updateCounter);
-          } else {
-            counter.innerText = target.toLocaleString();
-          }
-        };
-
-        updateCounter();
-      }, Math.random() * 300);
-    });
-  }
-
-  setTimeout(() => {
-    document.querySelectorAll('.pricing-card, .dashboard-card, .testimonial-card, .metric-card').forEach((el, index) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-
-      setTimeout(() => {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, index * 100 + Math.random() * 100);
-    });
-  }, 100);
-};
 
 onMounted(() => {
-  fetchHomeData();
   const counters = document.querySelectorAll('.counter');
   if (counters.length && !animationActive.value) {
     animationActive.value = true;
@@ -253,7 +307,7 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
-
+/* 核心数据区域 */
 .key-metrics {
   background-color: var(--primary-color);
   color: white;
@@ -295,7 +349,7 @@ onMounted(() => {
   opacity: 0.9;
 }
 
-
+/* 通用区域标题 */
 .section-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -315,7 +369,7 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-
+/* 会员计划区域 */
 .pricing {
   padding: 2rem 2%;
   background-color: white;
@@ -448,7 +502,7 @@ onMounted(() => {
   background-color: #1e3a8a;
 }
 
-
+/* 系统概览区域 */
 .dashboard {
   padding: 5rem 5%;
   background-color: #f1f5f9;
@@ -517,7 +571,7 @@ onMounted(() => {
 
 .status-normal {
   color: var(--success-color);
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 .card-footer {
@@ -525,7 +579,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-
+/* 客户评价区域 */
 .testimonials {
   padding: 5rem 5%;
   background-color: white;
@@ -539,7 +593,7 @@ onMounted(() => {
   position: relative;
 }
 
-
+/* 轮播控制按钮 - 仅在移动设备上显示 */
 .testimonial-controls {
   display: none;
 }
@@ -652,7 +706,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-
+/* 响应式设计 - 只保留实际使用的元素的响应式样式 */
 @media (max-width: 768px) {
   .metrics-container {
     flex-direction: column;

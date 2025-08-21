@@ -34,14 +34,13 @@
 1. [简介](#简介)  
 2. [核心功能](#核心功能)  
 3. [技术栈](#技术栈)  
-4. [系统架构](#系统架构)  
-5. [安装指南](#安装指南)  
-6. [使用教程](#使用教程)  
-7. [项目结构](#项目结构)  
-8. [API 文档](#api-文档)  
-9. [贡献指南](#贡献指南)  
-10. [许可证](#许可证)  
-11. [联系方式](#联系方式)
+4. [安装指南](#安装指南)  
+5. [使用教程](#使用教程)  
+6. [项目结构](#项目结构)  
+7. [API 文档](#api-文档)  
+8. [贡献指南](#贡献指南)  
+9. [许可证](#许可证)  
+10. [联系方式](#联系方式)
 
 ---
 
@@ -137,27 +136,6 @@
 - **代码编辑器**：VS Code, PyCharm
 - **容器化**：Docker
 - **CI/CD**：GitHub Actions
-
----
-
-## 🏗️ 系统架构
-
-LeafAuto Web 采用前后端分离的架构设计，主要分为以下几个层次：
-
-1. **前端层**：基于 Vue 3 和 Element Plus 构建的用户界面，负责与用户交互
-2. **API 网关层**：处理前后端通信，实现请求路由、身份验证和权限控制
-3. **业务逻辑层**：实现核心业务功能，如任务调度、AI 回复处理等
-4. **数据访问层**：负责与数据存储系统交互
-5. **基础设施层**：提供系统运行所需的基础服务，如日志、配置管理等
-
-### 数据流设计
-1. 用户在前端界面发起操作请求
-2. 前端通过 Axios 发送 HTTP 请求到后端 API
-3. 后端 API 接收请求，进行身份验证和权限检查
-4. 业务逻辑层处理请求，进行相应的业务操作
-5. 数据访问层与数据存储系统交互，获取或存储数据
-6. 后端将处理结果返回给前端
-7. 前端更新界面显示
 
 ---
 
@@ -327,356 +305,95 @@ LeafAutoWeb/
 
 ## 📄 API 文档
 
-### 基础信息
-- **API 根路径**：`/api`
-- **请求格式**：JSON
-- **响应格式**：JSON
-- **认证方式**：JWT Token
-- **错误处理**：统一返回错误码和错误信息
-
-### 认证 API
-
-#### 登录
-- **URL**: `/api/auth/login`
-- **方法**: `POST`
-- **请求体**: 
-  ```json
-  {
-    "username": "admin",
-    "password": "password123"
-  }
-  ```
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "登录成功",
-    "data": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      "user_info": {
-        "id": 1,
-        "username": "admin",
-        "email": "admin@example.com",
-        "role": "admin"
-      }
-    }
-  }
-  ```
-- **错误响应**: 
-  ```json
-  {
-    "code": 401,
-    "message": "用户名或密码错误",
-    "data": null
-  }
-  ```
-
-#### 注册
-- **URL**: `/api/auth/register`
-- **方法**: `POST`
-- **请求体**: 
-  ```json
-  {
-    "username": "newuser",
-    "email": "newuser@example.com",
-    "password": "password123"
-  }
-  ```
-- **响应**: 
-  ```json
-  {
-    "code": 201,
-    "message": "注册成功",
-    "data": null
-  }
-  ```
-
-#### 刷新 Token
-- **URL**: `/api/auth/refresh`
-- **方法**: `POST`
-- **请求头**: `Authorization: Bearer <refresh_token>`
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "Token 刷新成功",
-    "data": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-    }
-  }
-  ```
-
 ### 任务管理 API
 
 #### 获取所有任务
 - **URL**: `/api/tasks`
 - **方法**: `GET`
-- **请求头**: `Authorization: Bearer <token>`
 - **参数**: 
   - `status` (可选): 任务状态 (pending/completed/failed)
   - `page` (可选): 页码，默认 1
   - `per_page` (可选): 每页数量，默认 10
-  - `sort_by` (可选): 排序字段，默认 'create_time'
-  - `order` (可选): 排序顺序，'asc' 或 'desc'，默认 'desc'
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "获取成功",
-    "data": {
-      "total": 100,
-      "page": 1,
-      "per_page": 10,
-      "tasks": [
-        {
-          "id": 1,
-          "recipients": ["user1@example.com", "user2@example.com"],
-          "send_time": "2024-05-20T14:30:00",
-          "repeat_type": "daily",
-          "message_content": "您的每日提醒",
-          "template_id": null,
-          "status": "pending",
-          "created_at": "2024-05-19T10:00:00",
-          "updated_at": "2024-05-19T10:00:00"
-        },
-        // 更多任务...
-      ]
-    }
-  }
-  ```
+- **响应**: 返回任务列表及分页信息
 
 #### 创建新任务
 - **URL**: `/api/tasks`
 - **方法**: `POST`
-- **请求头**: `Authorization: Bearer <token>`
 - **请求体**: 
   ```json
   {
     "recipients": ["user1@example.com", "user2@example.com"],
     "send_time": "2024-05-20T14:30:00",
     "repeat_type": "daily",
-    "repeat_config": {
-      "interval": 1,
-      "ends": "never",
-      "end_date": null
-    },
     "message_content": "您的每日提醒",
     "template_id": null
   }
   ```
-- **响应**: 
-  ```json
-  {
-    "code": 201,
-    "message": "创建成功",
-    "data": {
-      "id": 1,
-      "recipients": ["user1@example.com", "user2@example.com"],
-      "send_time": "2024-05-20T14:30:00",
-      "repeat_type": "daily",
-      "message_content": "您的每日提醒",
-      "status": "pending",
-      "created_at": "2024-05-19T10:00:00"
-    }
-  }
-  ```
+- **响应**: 返回创建的任务
 
 #### 获取单个任务
 - **URL**: `/api/tasks/<task_id>`
 - **方法**: `GET`
-- **请求头**: `Authorization: Bearer <token>`
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "获取成功",
-    "data": {
-      "id": 1,
-      "recipients": ["user1@example.com", "user2@example.com"],
-      "send_time": "2024-05-20T14:30:00",
-      "repeat_type": "daily",
-      "repeat_config": {
-        "interval": 1,
-        "ends": "never",
-        "end_date": null
-      },
-      "message_content": "您的每日提醒",
-      "template_id": null,
-      "status": "pending",
-      "created_at": "2024-05-19T10:00:00",
-      "updated_at": "2024-05-19T10:00:00",
-      "execution_history": [
-        {
-          "time": "2024-05-19T14:30:00",
-          "status": "success",
-          "details": "发送成功"
-        }
-      ]
-    }
-  }
-  ```
+- **响应**: 返回任务详情
 
 #### 更新任务
 - **URL**: `/api/tasks/<task_id>`
 - **方法**: `PUT`
-- **请求头**: `Authorization: Bearer <token>`
 - **请求体**: 任务信息（与创建任务相同）
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "更新成功",
-    "data": {
-      "id": 1,
-      "recipients": ["user1@example.com"],
-      "send_time": "2024-05-21T14:30:00",
-      "repeat_type": "weekly",
-      "message_content": "您的每周提醒",
-      "status": "pending",
-      "updated_at": "2024-05-19T11:00:00"
-    }
-  }
-  ```
+- **响应**: 返回更新后的任务
 
 #### 删除任务
 - **URL**: `/api/tasks/<task_id>`
 - **方法**: `DELETE`
-- **请求头**: `Authorization: Bearer <token>`
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "删除成功",
-    "data": null
-  }
-  ```
+- **响应**: 成功状态
 
 #### 更新任务状态
 - **URL**: `/api/tasks/<task_id>/status`
 - **方法**: `PATCH`
-- **请求头**: `Authorization: Bearer <token>`
 - **请求体**: 
   ```json
   {
     "status": "completed"
   }
   ```
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "更新成功",
-    "data": {
-      "id": 1,
-      "status": "completed",
-      "updated_at": "2024-05-20T14:35:00"
-    }
-  }
-  ```
+- **响应**: 返回更新后的任务
 
 ### AI 设置 API
 
 #### 获取 AI 设置
 - **URL**: `/api/ai-settings`
 - **方法**: `GET`
-- **请求头**: `Authorization: Bearer <token>`
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "获取成功",
-    "data": {
-      "ai_takeover_enabled": true,
-      "reply_delay": 2,
-      "min_reply_interval": 60,
-      "reply_style": "professional",
-      "max_reply_length": 300,
-      "contact_person": "文件传输助手",
-      "ai_persona": "你是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。",
-      "keywords": ["紧急", "重要"],
-      "custom_rules": [],
-      "reply_template": "您好，{{username}}，关于您的问题，{{response}}"
-    }
-  }
-  ```
+- **响应**: 返回 AI 设置信息
 
 #### 更新 AI 设置
 - **URL**: `/api/ai-settings`
 - **方法**: `POST`
-- **请求头**: `Authorization: Bearer <token>`
 - **请求体**: 
   ```json
   {
     "ai_takeover_enabled": true,
     "reply_delay": 2,
-    "min_reply_interval": 60,
     "reply_style": "professional",
     "max_reply_length": 300,
-    "contact_person": "文件传输助手",
-    "ai_persona": "你是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。",
     "keywords": ["紧急", "重要"],
-    "custom_rules": [],
     "reply_template": "您好，{{username}}，关于您的问题，{{response}}"
   }
   ```
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "更新成功",
-    "data": {
-      "ai_takeover_enabled": true,
-      "reply_delay": 2,
-      "min_reply_interval": 60,
-      "reply_style": "professional",
-      "max_reply_length": 300,
-      "contact_person": "文件传输助手",
-      "ai_persona": "你是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。",
-      "keywords": ["紧急", "重要"],
-      "custom_rules": [],
-      "reply_template": "您好，{{username}}，关于您的问题，{{response}}"
-    }
-  }
-  ```
+- **响应**: 返回更新后的 AI 设置
 
 ### AI 历史记录 API
 
 #### 获取 AI 回复历史
 - **URL**: `/api/ai-history`
 - **方法**: `GET`
-- **请求头**: `Authorization: Bearer <token>`
 - **参数**: 
   - `page` (可选): 页码，默认 1
   - `per_page` (可选): 每页数量，默认 20
-  - `start_date` (可选): 开始日期
-  - `end_date` (可选): 结束日期
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "获取成功",
-    "data": {
-      "total": 50,
-      "page": 1,
-      "per_page": 20,
-      "history": [
-        {
-          "id": 1,
-          "user_message": "您好，请问如何设置定时任务？",
-          "ai_response": "您好，进入自动信息页面，填写相关信息后点击创建任务即可。",
-          "timestamp": "2024-05-20T14:30:00",
-          "feedback_rating": 5
-        },
-        // 更多记录...
-      ]
-    }
-  }
-  ```
+- **响应**: 返回 AI 回复历史列表及分页信息
 
 #### 添加 AI 回复记录
 - **URL**: `/api/ai-history`
 - **方法**: `POST`
-- **请求头**: `Authorization: Bearer <token>`
 - **请求体**: 
   ```json
   {
@@ -685,107 +402,25 @@ LeafAutoWeb/
     "timestamp": "2024-05-20T14:30:00"
   }
   ```
-- **响应**: 
-  ```json
-  {
-    "code": 201,
-    "message": "添加成功",
-    "data": {
-      "id": 1,
-      "user_message": "您好，请问如何设置定时任务？",
-      "ai_response": "您好，进入自动信息页面，填写相关信息后点击创建任务即可。",
-      "timestamp": "2024-05-20T14:30:00"
-    }
-  }
-  ```
+- **响应**: 返回添加的记录
 
 ### 统计分析 API
 
 #### 获取任务统计
 - **URL**: `/api/stats/tasks`
 - **方法**: `GET`
-- **请求头**: `Authorization: Bearer <token>`
 - **参数**: 
   - `start_date` (可选): 开始日期
   - `end_date` (可选): 结束日期
-  - `group_by` (可选): 分组方式 (day/week/month/year)
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "获取成功",
-    "data": {
-      "total_tasks": 100,
-      "completed_tasks": 85,
-      "failed_tasks": 15,
-      "success_rate": 85,
-      "task_trends": [
-        {
-          "date": "2024-05-01",
-          "count": 5
-        },
-        // 更多趋势数据...
-      ],
-      "tasks_by_type": [
-        {
-          "type": "single",
-          "count": 40
-        },
-        {
-          "type": "daily",
-          "count": 30
-        },
-        // 更多类型数据...
-      ]
-    }
-  }
-  ```
+- **响应**: 返回任务统计数据
 
 #### 获取 AI 统计
 - **URL**: `/api/stats/ai`
 - **方法**: `GET`
-- **请求头**: `Authorization: Bearer <token>`
 - **参数**: 
   - `start_date` (可选): 开始日期
   - `end_date` (可选): 结束日期
-- **响应**: 
-  ```json
-  {
-    "code": 200,
-    "message": "获取成功",
-    "data": {
-      "total_replies": 200,
-      "avg_response_time": 2.5,
-      "avg_response_length": 150,
-      "feedback_scores": {
-        "1": 5,
-        "2": 10,
-        "3": 20,
-        "4": 60,
-        "5": 105
-      },
-      "reply_trends": [
-        {
-          "date": "2024-05-01",
-          "count": 10
-        },
-        // 更多趋势数据...
-      ]
-    }
-  }
-  ```
-
-### 错误码说明
-
-| 错误码 | 描述 |
-|--------|------|
-| 200    | 成功 |
-| 201    | 创建成功 |
-| 400    | 请求参数错误 |
-| 401    | 未授权 |
-| 403    | 权限不足 |
-| 404    | 资源不存在 |
-| 500    | 服务器内部错误 |
+- **响应**: 返回 AI 统计数据
 
 ---
 

@@ -359,12 +359,16 @@ const refreshTasks = async () => {
     const response = await fetch('/api/tasks')
     if (response.ok) {
       const data = await response.json()
+      console.log('获取到的任务数据:', data)
       tasks.value = data
+      ElMessage({ message: '任务列表已刷新', type: 'success', duration: 1000 })
     } else {
       const errorText = await response.text()
+      console.error('刷新任务列表失败:', errorText)
       ElMessage.error(`刷新任务列表失败: ${errorText || '未知错误'}`)
     }
   } catch (error) {
+    console.error('刷新任务列表失败:', error)
     ElMessage.error(`刷新任务列表失败: ${error.message || '网络错误'}`)
   }
 }
@@ -398,14 +402,14 @@ onMounted(() => {
   --light-color: #f8fafc;
   --dark-color: #1e293b;
   --text-primary: #0f172a;
-  --text-secondary: #3b82f6;
-  --success-color: #8b5cf6;
+  --text-secondary: #64748b;
+  --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
   --border-color: #e2e8f0;
 }
 
-
+/* 表格行样式 */
 .task-pending .el-table__cell {
   background-color: rgba(59, 130, 246, 0.1);
 }
@@ -414,7 +418,7 @@ onMounted(() => {
   background-color: rgba(16, 185, 129, 0.1);
 }
 
-
+/* 动画效果 */
 .task-creation-card, .task-list-section .el-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-color);
@@ -429,7 +433,7 @@ onMounted(() => {
   border-color: var(--primary-color);
 }
 
-
+/* 按钮悬停效果增强 */
 .el-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
@@ -530,7 +534,7 @@ onMounted(() => {
   margin-top: 4px;
 }
 
-
+/* 表格样式增强 */
 .el-table {
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -558,12 +562,12 @@ onMounted(() => {
   background-color: rgba(59, 130, 246, 0.08);
 }
 
-
+/* 固定列样式优化 */
 .el-table__fixed-right {
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
 }
 
-
+/* 标签样式 */
 .el-tag--info {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--secondary-color);
