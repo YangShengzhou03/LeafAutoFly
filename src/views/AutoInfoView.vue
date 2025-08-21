@@ -101,7 +101,7 @@
                   开始执行
                 </el-button>
               </el-button-group>
-              <input type="file" ref="fileInput" style="display: none;" accept=".json" @change="handleFileImport">
+              <input type="file" ref="fileInput" style="display: none;" accept=".xlsx" @change="handleFileImport">
             </div>
           </div>
         </template>
@@ -154,6 +154,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { User, Delete, Refresh, Edit } from '@element-plus/icons-vue'
+import * as XLSX from 'xlsx'
 
 const taskForm = ref()
 const formData = reactive({
@@ -330,23 +331,21 @@ const exportTasks = () => {
     return
   }
 
-  // 将任务数据转换为JSON字符串
-  const dataStr = JSON.stringify(tasks.value, null, 2)
-  const dataBlob = new Blob([dataStr], { type: 'application/json' })
-  const url = URL.createObjectURL(dataBlob)
+  // 准备导出的数据（只包含需要的字段）
+  const exportData = tasks.value.map(task => ({
+    '发送时间': formatDateTime(task.sendTime),
+    '接收者': task.recipient,
+    '内容': task.messageContent,
+    '重复类型': getRepeatText(task.repeatType, task.repeatDays)
+  }))
 
-  // 创建下载链接
-  const link = document.createElement('a')
-  link.href = url
-  link.download = `tasks_export_${new Date().toISOString().slice(0, 10)}.json`
-  document.body.appendChild(link)
-  link.click()
+  // 创建工作簿和工作表
+  const ws = XLSX.utils.json_to_sheet(exportData)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, '任务列表')
 
-  // 清理
-  setTimeout(() => {
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
-  }, 0)
+  // 导出Excel文件
+  XLSX.writeFile(wb, `tasks_export_${new Date().toISOString().slice(0, 10)}.xlsx`)
 
   ElMessage.success('任务导出成功')
 }
@@ -366,15 +365,54 @@ const handleFileImport = async (event) => {
     const reader = new FileReader()
     reader.onload = async (e) => {
       try {
-        const importedTasks = JSON.parse(e.target.result)
+        // 解析Excel文件
+        const data = new Uint8Array(e.target.result)
+        const workbook = XLSX.read(data, { type: 'array' })
+        const firstSheetName = workbook.SheetNames[0]
+        const worksheet = workbook.Sheets[firstSheetName]
+        const importedData = XLSX.utils.sheet_to_json(worksheet)
 
         // 验证导入的数据格式
-        if (!Array.isArray(importedTasks)) {
+        if (!Array.isArray(importedData)) {
           throw new Error('导入的文件格式不正确')
         }
 
-        // 检查每个任务是否包含必要的字段
-        const validTasks = importedTasks.filter(task => {
+        // 转换Excel数据为任务格式
+        const validTasks = importedData.map(item => {
+          // 处理重复类型
+          let repeatType = 'none'
+          let repeatDays = []
+          const repeatText = item['重复类型'] || ''
+
+          if (repeatText.includes('每天')) {
+            repeatType = 'daily'
+          } else if (repeatText.includes('法定工作日')) {
+            repeatType = 'workday'
+          } else if (repeatText.includes('法定节假日')) {
+            repeatType = 'holiday'
+          } else if (repeatText.includes('自定义')) {
+            repeatType = 'custom'
+            // 提取重复天数（这里简化处理，实际可能需要更复杂的解析）
+            const dayMap = {
+              '周日': '0', '周一': '1', '周二': '2', '周三': '3',
+              '周四': '4', '周五': '5', '周六': '6'
+            }
+            Object.keys(dayMap).forEach(day => {
+              if (repeatText.includes(day)) {
+                repeatDays.push(dayMap[day])
+              }
+            })
+          }
+
+          return {
+            recipient: item['接收者'] || '',
+            sendTime: item['发送时间'] ? new Date(item['发送时间']).toISOString() : '',
+            messageContent: item['内容'] || '',
+            repeatType,
+            repeatDays
+          }
+        }).filter(task => {
+          // 检查必要字段
           return task.recipient && task.sendTime && task.messageContent
         })
 
@@ -397,7 +435,7 @@ const handleFileImport = async (event) => {
         ElMessage.error(`导入失败: ${error.message}`)
       }
     }
-    reader.readAsText(file)
+    reader.readAsArrayBuffer(file)
   } catch (error) {
     ElMessage.error(`导入失败: ${error.message}`)
   }
