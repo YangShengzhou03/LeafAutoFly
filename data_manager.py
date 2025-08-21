@@ -57,6 +57,46 @@ def load_home_data():
     return home_data
 
 
+def get_ai_stats():
+    """计算并返回AI统计数据"""
+    global reply_history, ai_settings
+    
+    # 计算基本统计数据
+    total_interactions = len(reply_history)
+    
+    # 计算平均响应延迟
+    avg_reply_delay = ai_settings.get('replyDelay', 5)  # 默认值
+    
+    # 计算活跃天数
+    if total_interactions > 0:
+        # 按时间排序历史记录
+        sorted_history = sorted(reply_history, key=lambda x: x['time'])
+        first_interaction = sorted_history[0]['time']
+        last_interaction = sorted_history[-1]['time']
+        
+        # 解析时间字符串
+        first_date = datetime.datetime.strptime(first_interaction, '%Y-%m-%d %H:%M:%S').date()
+        last_date = datetime.datetime.strptime(last_interaction, '%Y-%m-%d %H:%M:%S').date()
+        active_days = (last_date - first_date).days + 1
+    else:
+        first_interaction = None
+        last_interaction = None
+        active_days = 0
+    
+    # 构建统计数据字典
+    stats = {
+        'totalInteractions': total_interactions,
+        'avgReplyDelay': avg_reply_delay,
+        'firstInteraction': first_interaction,
+        'lastInteraction': last_interaction,
+        'activeDays': active_days,
+        'aiStatus': ai_settings.get('aiStatus', False),
+        'minReplyInterval': ai_settings.get('minReplyInterval', 60)
+    }
+    
+    return stats
+
+
 def save_tasks():
     try:
         os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)

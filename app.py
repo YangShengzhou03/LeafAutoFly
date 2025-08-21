@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from data_manager import (
     load_tasks, load_ai_data, load_home_data, add_task, delete_task, update_task_status, clear_tasks,
-    save_ai_settings, add_ai_history, ai_settings, reply_history
+    save_ai_settings, add_ai_history, ai_settings, reply_history, get_ai_stats
 )
 
 # 初始化数据
@@ -96,6 +96,13 @@ def add_ai_history_route():
 @app.route('/api/home-data', methods=['GET'])
 def get_home_data():
     return jsonify(load_home_data())
+
+
+@app.route('/api/ai-stats', methods=['GET'])
+def get_ai_stats_route():
+    """获取AI统计数据"""
+    stats = get_ai_stats()
+    return jsonify(stats)
 
 
 if __name__ == '__main__':
