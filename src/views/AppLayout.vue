@@ -17,8 +17,8 @@
             <li class="menu-item" :class="{ active: currentRoute === '/ai_takeover' }">
               <router-link to="/ai_takeover">AI 运营</router-link>
             </li>
-            <li class="menu-item" :class="{ active: currentRoute === '/data_export' }">
-              <router-link to="/data_export">数据导出</router-link>
+            <li class="menu-item" :class="{ active: currentRoute === '/other_box' }">
+              <router-link to="/other_box">数据导出</router-link>
             </li>
           </ul>
         </nav>
