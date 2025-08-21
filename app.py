@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, redirect
 from flask_cors import CORS
 
 from data_manager import (
-    load_tasks, load_ai_data, load_home_data, add_task, delete_task, update_task_status, clear_tasks,
+    load_tasks, load_ai_data, load_home_data, add_task, delete_task, update_task_status, clear_tasks, import_tasks,
     save_ai_settings, add_ai_history, reply_history, get_ai_stats
 )
 
@@ -71,6 +71,24 @@ def clear_tasks_route():
     return jsonify({'success': True}), 200
 
 
+@app.route('/api/tasks/import', methods=['POST'])
+def import_tasks_route():
+    try:
+        tasks_data = request.json
+        if not isinstance(tasks_data, list):
+            return jsonify({'error': '请求数据必须是一个任务列表'}), 400
+
+        success_count, total_count = import_tasks(tasks_data)
+        return jsonify({
+            'success': True,
+            'imported': success_count,
+            'total': total_count,
+            'message': f'成功导入 {success_count}/{total_count} 个任务'
+        }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/ai-settings', methods=['GET'])
 def get_ai_settings():
     return jsonify(load_ai_data())
@@ -108,16 +126,25 @@ def get_ai_stats_route():
 
 @app.route('/api/stats/<range>', methods=['GET'])
 def get_chart_data(range):
-    print(f'获取范围: {range}')
     if range == '7d':
         return jsonify({
+            "stats": {
+                "replyRate": 10,
+                "averageTime": 80,
+                "satisfactionRate": 70
+            },
             "chartData": {
-                "dates": ["2023-10-01", "2023-10-02", "2023-10-03", "2023-10-04"],
-                "counts": [20, 60, 30, 40]
+                "dates": ["2023-09-01", "2023-09-02", "2023-09-03", "2023-09-04"],
+                "counts": [30, 90, 30, 15]
             }
         })
     elif range == '30d':
         return jsonify({
+            "stats": {
+                "replyRate": 100,
+                "averageTime": 50,
+                "satisfactionRate": 50
+            },
             "chartData": {
                 "dates": ["2023-09-01", "2023-09-02", "2023-09-03", "2023-09-04"],
                 "counts": [10, 90, 30, 15]
@@ -125,11 +152,16 @@ def get_chart_data(range):
         })
     else:
         return jsonify({
+            "stats": {
+                "replyRate": 100,
+                "averageTime": 10,
+                "satisfactionRate": 20
+            },
             "chartData": {
-                "dates": [1, 2, 3, 4],
-                "counts": [10, 60, 60, 40]
+                "dates": ["2023-09-01", "2023-09-02", "2023-09-03", "2023-09-04"],
+                "counts": [10, 60, 23, 15]
             }
-    })
+        })
 
 
 if __name__ == '__main__':

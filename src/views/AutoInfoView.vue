@@ -91,16 +91,17 @@
                     <Refresh />
                   </el-icon>刷新
                 </el-button>
-                <el-button :disabled="tasks.length === 0">
+                <el-button :disabled="tasks.length === 0" @click="importTasks">
                   导入
                 </el-button>
-                <el-button :disabled="tasks.length === 0">
+                <el-button :disabled="tasks.length === 0" @click="exportTasks">
                   导出
                 </el-button>
                 <el-button type="primary" :disabled="tasks.length === 0">
                   开始执行
                 </el-button>
               </el-button-group>
+              <input type="file" ref="fileInput" style="display: none;" accept=".json" @change="handleFileImport">
             </div>
           </div>
         </template>
@@ -320,6 +321,89 @@ const refreshTasks = async () => {
   } catch (error) {
     ElMessage.error(`刷新任务列表失败: ${error.message || '网络错误'}`)
   }
+}
+
+// 导出任务功能
+const exportTasks = () => {
+  if (tasks.value.length === 0) {
+    ElMessage.warning('没有任务可导出')
+    return
+  }
+
+  // 将任务数据转换为JSON字符串
+  const dataStr = JSON.stringify(tasks.value, null, 2)
+  const dataBlob = new Blob([dataStr], { type: 'application/json' })
+  const url = URL.createObjectURL(dataBlob)
+
+  // 创建下载链接
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `tasks_export_${new Date().toISOString().slice(0, 10)}.json`
+  document.body.appendChild(link)
+  link.click()
+
+  // 清理
+  setTimeout(() => {
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }, 0)
+
+  ElMessage.success('任务导出成功')
+}
+
+// 导入任务功能
+const fileInput = ref(null)
+
+const importTasks = () => {
+  fileInput.value?.click()
+}
+
+const handleFileImport = async (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  try {
+    const reader = new FileReader()
+    reader.onload = async (e) => {
+      try {
+        const importedTasks = JSON.parse(e.target.result)
+
+        // 验证导入的数据格式
+        if (!Array.isArray(importedTasks)) {
+          throw new Error('导入的文件格式不正确')
+        }
+
+        // 检查每个任务是否包含必要的字段
+        const validTasks = importedTasks.filter(task => {
+          return task.recipient && task.sendTime && task.messageContent
+        })
+
+        // 上传到服务器
+        const response = await fetch('/api/tasks/import', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(validTasks)
+        })
+
+        if (response.ok) {
+          ElMessage.success(`成功导入 ${validTasks.length} 个任务`)
+          refreshTasks()
+        } else {
+          throw new Error('服务器导入失败')
+        }
+      } catch (error) {
+        ElMessage.error(`导入失败: ${error.message}`)
+      }
+    }
+    reader.readAsText(file)
+  } catch (error) {
+    ElMessage.error(`导入失败: ${error.message}`)
+  }
+
+  // 重置文件输入，以便可以重复选择同一个文件
+  event.target.value = ''
 }
 
 const getRepeatText = (repeatType, repeatDays) => {

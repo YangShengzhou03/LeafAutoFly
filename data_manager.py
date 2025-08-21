@@ -154,6 +154,44 @@ def clear_tasks():
     return True
 
 
+def import_tasks(imported_tasks):
+    """导入任务列表
+    Args:
+        imported_tasks: 要导入的任务列表
+    Returns:
+        tuple: (成功导入的任务数量, 总任务数量)
+    """
+    total_count = len(imported_tasks)
+    success_count = 0
+
+    for task_data in imported_tasks:
+        # 检查必要字段
+        if not all(key in task_data for key in ['recipient', 'sendTime', 'messageContent']):
+            continue
+
+        # 如果任务没有ID，生成一个新的
+        if 'id' not in task_data or not task_data['id']:
+            task_id = str(uuid.uuid4())
+            task_data['id'] = task_id
+        else:
+            task_id = task_data['id']
+
+        # 确保任务有创建时间
+        if 'createdAt' not in task_data:
+            task_data['createdAt'] = datetime.datetime.now().isoformat()
+
+        # 设置状态为待执行
+        task_data['status'] = 'pending'
+
+        # 添加或更新任务
+        tasks[task_id] = task_data
+        success_count += 1
+
+    # 保存更改
+    save_tasks()
+    return success_count, total_count
+
+
 def save_ai_settings(settings_data):
     global ai_settings
     required_fields = ['aiStatus', 'replyDelay', 'minReplyInterval', 'contactPerson', 'aiPersona', 'customRules']

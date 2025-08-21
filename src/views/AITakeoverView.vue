@@ -582,7 +582,6 @@ const fetchChartData = async (range) => {
 
   try {
     const response = await fetch(`/api/stats/${range}`, { signal });
-    console.log('后端发送的数据:', response)
     if (response.ok) {
       const data = await response.json();
       chartData.value = data.chartData || { dates: [], counts: [] };

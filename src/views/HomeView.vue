@@ -104,7 +104,6 @@ const fetchHomeData = async () => {
   try {
     const response = await fetch('http://localhost:5000/api/home-data');
     const data = await response.json();
-    console.log('获取到的首页数据:', data);
     homeData.value = data;
 
     // 数据加载完成后触发动画
