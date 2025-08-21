@@ -434,10 +434,37 @@ const chartRange = ref('7d')
 
 
 const stats = reactive({
-  replyRate: 95,
-  averageTime: 2.8,
-  satisfactionRate: 92
+  replyRate: 0,
+  averageTime: 0,
+  satisfactionRate: 0
 })
+
+// 获取AI看板数据
+const fetchAiStats = async () => {
+  try {
+    isLoadingHistory.value = true;
+    const response = await fetch('api/ai-stats');
+    if (response.ok) {
+      const data = await response.json();
+      // 从外层数组的第0项中读取数据（如果需要）
+      const statsData = Array.isArray(data) && data.length > 0 ? data[0] : data;
+      
+      // 更新stats数据
+      Object.assign(stats, {
+        replyRate: Number(statsData.replyRate ?? 0),
+        averageTime: Number(statsData.averageTime ?? 0),
+        satisfactionRate: Number(statsData.satisfactionRate ?? 0)
+      });
+    } else {
+      ElMessage.error('获取AI看板数据失败');
+    }
+  } catch (error) {
+    console.error('获取AI看板数据失败:', error);
+    ElMessage.error('网络错误，无法获取AI看板数据');
+  } finally {
+    isLoadingHistory.value = false;
+  }
+}
 
 
 const filteredHistory = computed(() => {
@@ -584,7 +611,8 @@ const tableRowClassName = ({ row }) => {
 
 
 onMounted(() => {
-  fetchAiSettings()
+  fetchAiSettings();
+  fetchAiStats();
 })
 </script>
 

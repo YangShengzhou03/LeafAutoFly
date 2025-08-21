@@ -1,1 +1,12 @@
-{}
+{
+  "0f68df6d-0244-43b1-9c95-aab1d8a3ed1c": {
+    "recipient": "111",
+    "sendTime": "2025-08-21T08:24",
+    "repeatType": "none",
+    "repeatDays": [],
+    "messageContent": "11111111111111111",
+    "status": "pending",
+    "createdAt": "2025-08-21T08:24:35.720595",
+    "id": "0f68df6d-0244-43b1-9c95-aab1d8a3ed1c"
+  }
+}

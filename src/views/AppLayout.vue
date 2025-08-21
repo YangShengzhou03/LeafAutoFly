@@ -21,7 +21,7 @@
         </nav>
       </div>
       <div class="sidebar-footer">
-        <div class="dev-info">开发时间 2.458 / 10GB</div>
+        <div class="dev-info">信息余量 458 / 1000</div>
         <button class="upgrade-btn">升级专业版</button>
       </div>
     </aside>
