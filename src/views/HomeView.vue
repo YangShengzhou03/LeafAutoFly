@@ -55,7 +55,7 @@
               <i :class="item.trend === 'up' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i> {{ item.trendValue }}%
             </span>
           </div>
-          <div :class="['card-value', { 'status-normal': item.status === 'normal' }]">
+          <div :class="['card-value', { 'status-normal': item.status === 'normal', 'status-abnormal': item.status === 'abnormal' }]">
             {{ item.value }}{{ item.id !== 4 ? '%' : '' }}
           </div>
           <div class="card-footer">
@@ -518,7 +518,10 @@ onMounted(() => {
 
 .status-normal {
   color: var(--success-color);
-  font-size: 1.8rem;
+}
+
+.status-abnormal {
+  color: var(--danger-color);
 }
 
 .card-footer {
