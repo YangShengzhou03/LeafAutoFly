@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    
+
     <div class="main-content">
-      
+
       <div class="top-row">
-        
+
         <div class="config-card">
           <el-card class="config-card-inner" shadow="hover">
             <template #header>
@@ -18,7 +18,8 @@
             <el-form ref="aiForm" :model="formData" :rules="rules" class="custom-input">
               <el-form-item label="AI接管状态" prop="aiStatus">
                 <div class="status-toggle">
-                  <el-switch v-model="formData.aiStatus" active-color="#3b82f6" inactive-color="#d1d5db" @change="toggleTakeover"></el-switch>
+                  <el-switch v-model="formData.aiStatus" active-color="#3b82f6" inactive-color="#d1d5db"
+                    @change="toggleTakeover"></el-switch>
                   <div v-if="formData.aiStatus" class="takeover-time ml-3">
                     已接管: <span class="text-primary">{{ formattedTakeoverTime }}</span>
                   </div>
@@ -26,11 +27,13 @@
               </el-form-item>
 
               <el-form-item label="回复延迟(秒)" prop="replyDelay">
-                <el-input-number v-model="formData.replyDelay" :min="0" :max="30" placeholder="输入回复延迟时间"></el-input-number>
+                <el-input-number v-model="formData.replyDelay" :min="0" :max="30"
+                  placeholder="输入回复延迟时间"></el-input-number>
               </el-form-item>
 
               <el-form-item label="最小回复间隔(秒)" prop="minReplyInterval">
-                <el-input-number v-model="formData.minReplyInterval" :min="0" :max="3600" placeholder="输入最小回复间隔时间"></el-input-number>
+                <el-input-number v-model="formData.minReplyInterval" :min="0" :max="3600"
+                  placeholder="输入最小回复间隔时间"></el-input-number>
               </el-form-item>
 
               <el-form-item label="接管联系人" prop="contactPerson">
@@ -42,14 +45,15 @@
               </el-form-item>
 
               <div class="action-buttons">
-                <el-button type="primary" :loading="isSubmitting" @click="submitForm" class="gradient-btn">保存设置</el-button>
+                <el-button type="primary" :loading="isSubmitting" @click="submitForm"
+                  class="gradient-btn">保存设置</el-button>
                 <el-button @click="resetForm">重置</el-button>
               </div>
             </el-form>
           </el-card>
         </div>
 
-        
+
         <div class="insights-card">
           <el-card shadow="hover">
             <template #header>
@@ -71,10 +75,13 @@
                   <div class="stat-label">平均响应时间</div>
                 </div>
                 <div class="stat-item">
-                  <div class="stat-value counter" data-target="{{ stats.satisfactionRate }}">{{ stats.satisfactionRate }}%</div>
+                  <div class="stat-value counter" data-target="{{ stats.satisfactionRate }}">{{ stats.satisfactionRate
+                  }}%</div>
                   <div class="stat-label">满意度</div>
                 </div>
               </div>
+
+
               <div class="chart-container">
                 <div class="chart-card">
                   <div class="chart-header">
@@ -87,8 +94,35 @@
                       </el-select>
                     </div>
                   </div>
+
                   <div class="chart-content">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="180" viewBox="0 0 400 180"><defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs><path d="M0,150 Q50,120 100,130 T200,100 T300,120 T400,90" fill="url(#areaGradient)" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/><path d="M0,150 L400,150" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4"/><circle cx="100" cy="130" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/><circle cx="200" cy="100" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/><circle cx="300" cy="120" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/><circle cx="400" cy="90" r="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="180" viewBox="0 0 400 180">
+                      <defs>
+                        <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4" />
+                          <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                        </linearGradient>
+                      </defs>
+
+                      <!-- 动态路径 -->
+                      <path :d="generateChartPath(chartData.counts)" fill="url(#areaGradient)" stroke="#3b82f6"
+                        stroke-width="3" stroke-linecap="round" />
+
+                      <!-- 基准线 -->
+                      <path d="M0,150 L400,150" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4" />
+
+                      <!-- 动态数据点 -->
+                      <circle v-for="(count, index) in chartData.counts" :key="index"
+                        :cx="index * (400 / (chartData.counts.length - 1))" :cy="150 - (count / maxCount * 100)" r="4"
+                        fill="#ffffff" stroke="#3b82f6" stroke-width="2" />
+
+                      <!-- X轴标签 -->
+                      <text v-for="(date, index) in chartData.dates" :key="'label-' + index"
+                        :x="index * (400 / (chartData.dates.length - 1))" y="170" text-anchor="middle" font-size="10"
+                        fill="#64748b">
+                        {{ date }}
+                      </text>
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -97,16 +131,14 @@
         </div>
       </div>
 
-      <!-- 下方依次排列区域 -->
-      
       <el-card class="rules-card" shadow="hover">
         <template #header>
-              <div class="card-header">
-                <div class="header-title">
-                  <span>AI 自定义回复规则</span>
-                </div>
-              </div>
-            </template>
+          <div class="card-header">
+            <div class="header-title">
+              <span>AI 自定义回复规则</span>
+            </div>
+          </div>
+        </template>
 
         <div class="custom-rules-container">
           <div class="rule-actions">
@@ -116,7 +148,8 @@
           <el-table v-model:data="formData.customRules" class="rules-table" ref="rulesForm" row-key="id">
             <el-table-column prop="matchType" label="匹配类型" width="180">
               <template #default="{ row }">
-                <span>{{ row.matchType === 'contains' ? '包含关键词' : row.matchType === 'equals' ? '完全匹配' : '正则表达式' }}</span>
+                <span>{{ row.matchType === 'contains' ? '包含关键词' : row.matchType === 'equals' ? '完全匹配' : '正则表达式'
+                }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="keyword" label="关键词/规则" width="240">
@@ -140,7 +173,7 @@
         </div>
       </el-card>
 
-      <!-- 添加规则对话框 -->
+
       <el-dialog v-model="addRuleDialogVisible" title="添加回复规则" width="600px">
         <el-form ref="ruleForm" :model="newRule" :rules="ruleFormRules" class="custom-input">
           <el-form-item label="匹配类型" prop="matchType">
@@ -154,7 +187,8 @@
             <el-input v-model="newRule.keyword" placeholder="输入关键词或规则" class="custom-input"></el-input>
           </el-form-item>
           <el-form-item label="回复内容" prop="reply">
-            <el-input v-model="newRule.reply" type="textarea" placeholder="输入回复内容" :rows="4" class="custom-input"></el-input>
+            <el-input v-model="newRule.reply" type="textarea" placeholder="输入回复内容" :rows="4"
+              class="custom-input"></el-input>
           </el-form-item>
         </el-form>
         <template #footer>
@@ -165,36 +199,22 @@
         </template>
       </el-dialog>
 
-      
+
       <el-card class="history-card" shadow="hover">
         <template #header>
-              <div class="card-header">
-                <div class="header-title">
-                  <span>AI 回复历史</span>
-                </div>
-                <div class="history-controls">
-                  <el-input
-                    v-model="searchQuery"
-                    placeholder="搜索消息内容..."
-                    :prefix-icon="Search"
-                    size="small"
-                    class="search-input"
-                  ></el-input>
-                </div>
-              </div>
-            </template>
+          <div class="card-header">
+            <div class="header-title">
+              <span>AI 回复历史</span>
+            </div>
+            <div class="history-controls">
+              <el-input v-model="searchQuery" placeholder="搜索消息内容..." :prefix-icon="Search" size="small"
+                class="search-input"></el-input>
+            </div>
+          </div>
+        </template>
 
-        <el-table
-          v-if="filteredHistory.length > 0"
-          v-loading="isLoadingHistory"
-          :data="paginatedHistory"
-          style="width: 100%"
-          class="custom-table"
-          border
-          stripe
-          :row-class-name="tableRowClassName"
-          :show-empty="false"
-        >
+        <el-table v-if="filteredHistory.length > 0" v-loading="isLoadingHistory" :data="paginatedHistory"
+          style="width: 100%" class="custom-table" stripe :row-class-name="tableRowClassName" :show-empty="false">
           <el-table-column prop="time" label="时间" width="180" sortable>
             <template #default="{ row }">
               <div class="time-cell">
@@ -219,11 +239,7 @@
           </el-table-column>
           <el-table-column prop="status" label="状态" width="100">
             <template #default="{ row }">
-              <el-tag
-                :type="row.status === 'replied' ? 'success' : 'info'"
-                size="small"
-                class="status-tag"
-              >
+              <el-tag :type="row.status === 'replied' ? 'success' : 'info'" size="small" class="status-tag">
                 {{ row.status === 'replied' ? '已回复' : '待回复' }}
               </el-tag>
             </template>
@@ -231,12 +247,7 @@
           <el-table-column label="操作" width="120" fixed="right">
             <template #default="{ row }">
               <div class="operation-buttons">
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="viewDetails(row)"
-                  :icon="View"
-                >
+                <el-button type="primary" size="small" @click="viewDetails(row)" :icon="View">
                   查看
                 </el-button>
               </div>
@@ -245,15 +256,10 @@
         </el-table>
 
         <div class="pagination-container" v-if="filteredHistory.length > 0">
-          <el-pagination
-            v-model:current-page="currentPage"
-            :page-size="pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="filteredHistory.length"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            class="custom-pagination"
-          ></el-pagination>
+          <el-pagination v-model:current-page="currentPage" :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper" :total="filteredHistory.length"
+            @size-change="handleSizeChange" @current-change="handleCurrentChange"
+            class="custom-pagination"></el-pagination>
         </div>
 
         <el-empty v-else-if="!isLoadingHistory" description="暂无回复历史" />
@@ -263,7 +269,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { View, Search } from '@element-plus/icons-vue'
 
@@ -276,8 +282,8 @@ const formData = reactive({
   aiStatus: false,
   replyDelay: 5,
   minReplyInterval: 60,
-  contactPerson: '管理员', // 设置默认值，避免空字符串
-  aiPersona: '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
+  contactPerson: '文件传输助手',
+  aiPersona: '你是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。',
   customRules: []
 })
 
@@ -398,17 +404,18 @@ const removeRule = async (index) => {
 
 const replyHistory = ref([])
 
-// 获取AI设置
+// 获取AI设置 ai接管状态 回复延迟 最小回复间隔 接管联系人 AI人设 自定义规则
 const fetchAiSettings = async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/ai-settings')
+    const response = await fetch('api/ai-settings')
     if (response.ok) {
       const data = await response.json()
-      // 确保数值类型
+      const settingsData = Array.isArray(data) && data.length > 0 ? data[0] : data
       Object.assign(formData, {
-        ...data,
-        replyDelay: Number(data.replyDelay ?? 5),
-        minReplyInterval: Number(data.minReplyInterval ?? 60)
+        ...settingsData,
+        replyDelay: Number(settingsData.replyDelay ?? 5),
+        minReplyInterval: Number(settingsData.minReplyInterval ?? 60),
+        customRules: settingsData.customRules || []
       })
     } else {
       ElMessage.error('获取AI设置失败')
@@ -419,10 +426,6 @@ const fetchAiSettings = async () => {
   }
 }
 
-// 在组件挂载时获取设置
-onMounted(() => {
-  fetchAiSettings()
-})
 
 const searchQuery = ref('')
 const filterStatus = ref('all')
@@ -434,9 +437,9 @@ const chartRange = ref('7d')
 
 
 const stats = reactive({
-  replyRate: 95,
-  averageTime: 2.8,
-  satisfactionRate: 92
+  replyRate: 0,
+  averageTime: 0,
+  satisfactionRate: 0
 })
 
 
@@ -444,7 +447,7 @@ const filteredHistory = computed(() => {
   return replyHistory.value
     .filter(item => {
       const matchesSearch = item.originalMessage.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                          item.aiReply.toLowerCase().includes(searchQuery.value.toLowerCase())
+        item.aiReply.toLowerCase().includes(searchQuery.value.toLowerCase())
       const matchesStatus = filterStatus.value === 'all' || item.status === filterStatus.value
       return matchesSearch && matchesStatus
     })
@@ -470,7 +473,7 @@ const submitForm = async () => {
   isSubmitting.value = true
   try {
     if (!formData.contactPerson.trim()) {
-      formData.contactPerson = '管理员'
+      formData.contactPerson = '文件传输助手'
     }
 
     if (aiForm.value) {
@@ -487,7 +490,7 @@ const submitForm = async () => {
 
     console.log('提交的AI设置:', submitData)
 
-    const response = await fetch('http://localhost:5000/api/ai-settings', {
+    const response = await fetch('api/ai-settings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -497,8 +500,9 @@ const submitForm = async () => {
 
     if (response.ok) {
       const data = await response.json()
-      ElMessage.success('AI设置保存成功')
-      formData.customRules = data.customRules || []
+      // 处理返回数据的格式（修复点2）
+      const responseData = Array.isArray(data) && data.length > 0 ? data[0] : data
+      formData.customRules = responseData.customRules || []
     } else {
       const errorData = await response.json().catch(() => ({}))
       ElMessage.error(`保存失败: ${errorData.error || '未知错误，请稍后重试'}`)
@@ -529,7 +533,7 @@ const resetForm = () => {
     formData.aiPersona = '我是一个友好、专业的AI助手，致力于为用户提供准确、及时的帮助。'
     formData.customRules = []
     ElMessage.success('设置已重置')
-  }).catch(() => {})
+  }).catch(() => { })
 }
 
 
@@ -559,6 +563,110 @@ const viewDetails = (row) => {
   })
 }
 
+// 在原有代码基础上添加以下内容
+
+// 图表相关数据
+const chartData = ref({
+  dates: [],
+  counts: []
+})
+
+// 获取图表数据的方法
+const fetchChartData = async (range) => {
+  // 创建一个AbortController实例
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  // 存储当前请求的控制器，以便在需要时取消
+  activeChartRequest.value = controller;
+
+  try {
+    const response = await fetch(`/api/stats/${range}`, { signal });
+    console.log('后端发送的数据:', response)
+    if (response.ok) {
+      const data = await response.json();
+      chartData.value = data.chartData || { dates: [], counts: [] };
+
+      if (data.stats) {
+        Object.assign(stats, {
+          replyRate: Number(data.stats.replyRate ?? 0),
+          averageTime: Number(data.stats.averageTime ?? 0),
+          satisfactionRate: Number(data.stats.satisfactionRate ?? 100)
+        });
+      }
+    }
+  } catch (error) {
+    // 忽略由于取消请求而产生的错误
+    if (error.name !== 'AbortError') {
+      console.error('获取图表数据失败:', error);
+    }
+  } finally {
+    // 如果当前请求是最后一个，则清除
+    if (activeChartRequest.value === controller) {
+      activeChartRequest.value = null;
+    }
+  }
+};
+
+// 用于存储当前激活的图表请求控制器
+const activeChartRequest = ref(null);
+
+// 在组件卸载时取消请求
+onUnmounted(() => {
+  if (activeChartRequest.value) {
+    activeChartRequest.value.abort();
+    activeChartRequest.value = null;
+  }
+});
+
+// 监听时间范围变化
+watch(chartRange, (newVal) => {
+  fetchChartData(newVal);
+});
+
+// 修改原有的 fetchAiStats 方法
+const fetchAiStats = async () => {
+  try {
+    isLoadingHistory.value = true;
+    await fetchChartData(chartRange.value);
+  } catch (error) {
+    console.error('获取AI看板数据失败:', error);
+    ElMessage.error('网络错误，无法获取AI看板数据');
+  } finally {
+    isLoadingHistory.value = false;
+  }
+};
+
+// 添加计算属性用于图表
+const maxCount = computed(() => {
+  return Math.max(...chartData.value.counts, 1);
+});
+
+// 生成SVG路径
+const generateChartPath = (counts) => {
+  if (!counts || counts.length === 0) return 'M0,150 L400,150';
+
+  const points = counts.map((count, index) => {
+    const x = index * (400 / (counts.length - 1));
+    const y = 150 - (count / maxCount.value * 100);
+    return `${x},${y}`;
+  });
+
+  // 平滑曲线
+  let path = `M${points[0]}`;
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1].split(',');
+    const curr = points[i].split(',');
+    const cpx1 = (Number(prev[0]) + Number(curr[0])) / 2;
+    const cpy1 = Number(prev[1]);
+    const cpx2 = cpx1;
+    const cpy2 = Number(curr[1]);
+    path += ` C${cpx1},${cpy1} ${cpx2},${cpy2} ${curr[0]},${curr[1]}`;
+  }
+  return path;
+};
+
+
 
 const formatDate = (dateTime) => {
   const date = new Date(dateTime)
@@ -581,108 +689,22 @@ const tableRowClassName = ({ row }) => {
   return row.status === 'pending' ? 'task-pending' : 'task-completed';
 }
 
-const animateCounters = () => {
-  const counters = document.querySelectorAll('.counter');
-  if (counters.length) {
-    counters.forEach(counter => {
-      
-      counter.style.opacity = '0';
-      counter.style.transform = 'translateY(20px)';
-      counter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
-      
-      setTimeout(() => {
-        counter.style.opacity = '1';
-        counter.style.transform = 'translateY(0)';
-
-        const target = +counter.dataset.target;
-        const duration = 2500;
-        const frameDuration = 1000 / 60;
-        const totalFrames = Math.round(duration / frameDuration);
-        let frame = 0;
-
-        
-        const easeOutQuad = (t) => t * (2 - t);
-
-        const updateCounter = () => {
-          frame++;
-          const progress = easeOutQuad(frame / totalFrames);
-          const current = Math.round(target * progress);
-
-          counter.innerText = current.toLocaleString();
-
-          if ( frame < totalFrames) {
-            requestAnimationFrame(updateCounter);
-          } else {
-            counter.innerText = target.toLocaleString();
-          }
-        };
-
-        updateCounter();
-      }, Math.random() * 300);
-    });
+onMounted(async () => {
+  try {
+    await fetchAiSettings();
+  } catch (error) {
+    ElMessage.error('初始化AI设置失败');
+    console.error('初始化AI设置失败:', error);
   }
-}
 
-onMounted(() => {
-  fetchAISettings()
+  try {
+    await fetchAiStats();
+  } catch (error) {
+    ElMessage.error('初始化AI统计数据失败');
+    console.error('初始化AI统计数据失败:', error);
+  }
 })
-
-// 从后端获取AI设置
-  const fetchAISettings = async () => {
-    try {
-      const response = await fetch('/api/ai-settings')
-      console.log('获取到的AI响应:', response)
-      if (response.ok) {
-        const data = await response.json()
-        console.log('获取到的AI设置嘻嘻嘻:', data)
-        // 更新表单数据
-        formData.aiStatus = data.aiStatus !== undefined ? data.aiStatus : false
-        formData.replyDelay = data.replyDelay !== undefined ? data.replyDelay : 5
-        formData.minReplyInterval = data.minReplyInterval !== undefined ? data.minReplyInterval : 60
-        formData.contactPerson = data.contactPerson || ''
-        formData.aiPersona = data.aiPersona || '我是一个兵，来自老百姓，致力于为用户提供准确、及时的帮助。'
-        formData.customRules = Array.isArray(data.customRules) ? data.customRules : []
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        ElMessage.error(`获取AI设置失败: ${errorData.error || '未知错误'}`)
-      }
-    } catch (error) {
-      console.error('获取AI设置失败:', error)
-      ElMessage.error(`获取AI设置失败: ${error.message || '网络错误'}`)
-    }
-  }
-
-  // 从API加载AI回复历史
-  const fetchReplyHistory = async () => {
-    isLoadingHistory.value = true
-    try {
-      const response = await fetch('/api/ai-history')
-      if (response.ok) {
-        const data = await response.json()
-        console.log('获取到的回复历史:', data)
-        // 确保数据是数组
-        replyHistory.value = Array.isArray(data) ? data : []
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        ElMessage.error(`获取回复历史失败: ${errorData.error || '未知错误'}`)
-      }
-    } catch (error) {
-      console.error('获取回复历史失败:', error)
-      ElMessage.error(`获取回复历史失败: ${error.message || '网络错误'}`)
-    } finally {
-      isLoadingHistory.value = false
-      // 加载完成后执行动画
-      setTimeout(() => {
-        animateCounters();
-      }, 500);
-    }
-  }
-
-  // 先加载设置，再加载历史
-  fetchAISettings().then(() => {
-    fetchReplyHistory()
-  })
 </script>
 
 <style scoped>
@@ -714,7 +736,7 @@ onMounted(() => {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* 顶部导航 */
+
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -753,7 +775,7 @@ onMounted(() => {
   color: white;
 }
 
-/* 页面标题区域 */
+
 .page-header-section {
   margin-bottom: 24px;
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
@@ -779,14 +801,14 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-/* 主要内容区域 */
+
 .main-content {
-  padding: 0 24px 24px;
-  max-width: 1600px;
+  padding: 0;
+  max-width: 100vw;
   margin: 0 auto;
 }
 
-/* 上方左右排列区域 */
+
 .top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -806,7 +828,7 @@ onMounted(() => {
   flex-direction: column;
 }
 
-/* 统一卡片头部样式 */
+
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -825,12 +847,12 @@ onMounted(() => {
   color: var(--text-primary);
 }
 
-/* 统一表单行间距 */
+
 .el-row {
   margin-bottom: 20px;
 }
 
-/* 状态切换样式优化 */
+
 .status-controls {
   display: flex;
   align-items: center;
@@ -846,7 +868,7 @@ onMounted(() => {
   font-weight: 500;
 }
 
-/* 统一统计卡片样式 */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -881,7 +903,7 @@ onMounted(() => {
   color: var(--text-secondary);
 }
 
-/* 图表样式 */
+
 .chart-card {
   background-color: white;
   border-radius: 12px;
@@ -912,14 +934,14 @@ onMounted(() => {
   width: 100px;
 }
 
-/* 统一表格操作按钮 */
+
 .el-table .el-button {
   margin: 0 4px;
   padding: 4px 8px;
   font-size: 12px;
 }
 
-/* 自定义输入框样式 */
+
 .custom-input .el-input__wrapper {
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -931,14 +953,14 @@ onMounted(() => {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-/* 自定义选择框样式 */
+
 .custom-select .el-input__wrapper {
   border-radius: 8px;
   border: 1px solid var(--border-color);
 }
 
-/* 按钮样式增强 - 与AutoInfoView统一 */
-/* 移除渐变按钮样式，使用标准按钮样式 */
+
+
 .el-button {
   transition: all 0.2s ease;
 }
@@ -979,7 +1001,7 @@ onMounted(() => {
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
-/* 卡片样式 */
+
 .el-card {
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -994,11 +1016,11 @@ onMounted(() => {
   border-color: var(--primary-light);
 }
 
-/* 卡片相关样式已与AutoInfoView统一 */
 
-/* 移除了.card-icon、.card-title-group、.card-title和.card-subtitle类，使用.header-title替代 */
 
-/* 表单样式 */
+
+
+
 .el-form-item {
   margin-bottom: 24px;
 }
@@ -1020,7 +1042,7 @@ onMounted(() => {
   padding: 5px 0;
 }
 
-/* 表格样式增强 - 与AutoInfoView统一 */
+
 .el-table {
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -1044,11 +1066,11 @@ onMounted(() => {
   border-bottom: none;
 }
 
-.el-table--enable-row-hover .el-table__body tr:hover > td {
+.el-table--enable-row-hover .el-table__body tr:hover>td {
   background-color: var(--light-color);
 }
 
-/* 标签样式 */
+
 .el-tag--info {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--secondary-color);
@@ -1063,14 +1085,14 @@ onMounted(() => {
   border-radius: 6px;
 }
 
-/* 分页样式 */
+
 .custom-pagination {
   padding: 16px 0;
   display: flex;
   justify-content: flex-end;
 }
 
-/* 自定义规则样式 */
+
 .custom-rules-container {
   border: 0;
   border-radius: 12px;
@@ -1090,7 +1112,7 @@ onMounted(() => {
   box-shadow: var(--shadow);
 }
 
-/* 响应式设计 */
+
 @media (max-width: 1024px) {
   .top-row {
     grid-template-columns: 1fr;
@@ -1103,7 +1125,7 @@ onMounted(() => {
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }

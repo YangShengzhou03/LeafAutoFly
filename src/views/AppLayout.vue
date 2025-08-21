@@ -17,11 +17,14 @@
             <li class="menu-item" :class="{ active: currentRoute === '/ai_takeover' }">
               <router-link to="/ai_takeover">AI 运营</router-link>
             </li>
+            <li class="menu-item" :class="{ active: currentRoute === '/data_export' }">
+              <router-link to="/data_export">数据导出</router-link>
+            </li>
           </ul>
         </nav>
       </div>
       <div class="sidebar-footer">
-        <div class="dev-info">开发时间 2.458 / 10GB</div>
+        <div class="dev-info">信息余量 458 / 1000</div>
         <button class="upgrade-btn">升级专业版</button>
       </div>
     </aside>
@@ -253,7 +256,7 @@ onBeforeRouteUpdate((to) => {
   .sidebar {
     width: 160px;
   }
-  
+
   .menu-item a {
     font-size: 14px;
   }

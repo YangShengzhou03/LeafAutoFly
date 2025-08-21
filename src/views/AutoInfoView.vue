@@ -7,18 +7,16 @@
             <span>创建新任务</span>
           </div>
         </template>
-        
+
         <el-form ref="taskForm" :model="formData" :rules="rules" label-width="100px">
           <el-row :gutter="20">
             <el-col :xs="24" :sm="12" :md="12" :lg="12">
               <el-form-item label="接收者" prop="recipient">
-                <el-input
-                  v-model="formData.recipient"
-                  placeholder="输入接收者信息"
-                  clearable
-                >
+                <el-input v-model="formData.recipient" placeholder="输入接收者信息" clearable>
                   <template #prefix>
-                    <el-icon><User /></el-icon>
+                    <el-icon>
+                      <User />
+                    </el-icon>
                   </template>
                 </el-input>
                 <div class="el-form-item__tip">多个接收者用逗号分隔</div>
@@ -27,53 +25,31 @@
 
             <el-col :xs="24" :sm="12" :md="12" :lg="12">
               <el-form-item label="发送时间" prop="sendTime">
-                <el-date-picker
-                  v-model="formData.sendTime"
-                  type="datetime"
-                  placeholder="选择发送时间"
-                  value-format="YYYY-MM-DDTHH:mm"
-                  :default-value="defaultDateTime"
-                  style="width: 100%"
-                />
+                <el-date-picker v-model="formData.sendTime" type="datetime" placeholder="选择发送时间"
+                  value-format="YYYY-MM-DDTHH:mm" :default-value="defaultDateTime" style="width: 100%" />
                 <div class="el-form-item__tip">选择发送时间，到点就会发送</div>
               </el-form-item>
             </el-col>
 
             <el-col :xs="24" :sm="12" :md="12" :lg="12">
               <el-form-item label="重复选项" prop="repeatType">
-                <el-select
-                  v-model="formData.repeatType"
-                  placeholder="选择重复类型"
-                  style="width: 100%"
-                >
-                  <el-option
-                    v-for="option in repeatOptions"
-                    :key="option.value"
-                    :label="option.label"
-                    :value="option.value"
-                  />
+                <el-select v-model="formData.repeatType" placeholder="选择重复类型" style="width: 100%">
+                  <el-option v-for="option in repeatOptions" :key="option.value" :label="option.label"
+                    :value="option.value" />
                 </el-select>
-                <el-form-item 
-                  v-if="formData.repeatType === 'custom'" 
-                  prop="repeatDays"
-                  :rules="[{ 
-                    validator: (_, value, callback) => {
-                      if (formData.repeatType === 'custom' && (!value || value.length === 0)) {
-                        callback(new Error('请至少选择一个重复日期'))
-                      } else {
-                        callback()
-                      }
-                    },
-                    trigger: 'change' 
-                  }]"
-                >
+                <el-form-item v-if="formData.repeatType === 'custom'" prop="repeatDays" :rules="[{
+                  validator: (_, value, callback) => {
+                    if (formData.repeatType === 'custom' && (!value || value.length === 0)) {
+                      callback(new Error('请至少选择一个重复日期'))
+                    } else {
+                      callback()
+                    }
+                  },
+                  trigger: 'change'
+                }]">
                   <p class="el-form-item__tip">选择重复日期：</p>
                   <el-checkbox-group v-model="formData.repeatDays">
-                    <el-checkbox
-                      v-for="day in daysOfWeek"
-                      :key="day.value"
-                      :label="day.value"
-                    >
+                    <el-checkbox v-for="day in daysOfWeek" :key="day.value" :label="day.value">
                       {{ day.label }}
                     </el-checkbox>
                   </el-checkbox-group>
@@ -84,14 +60,8 @@
 
             <el-col :span="24">
               <el-form-item label="信息内容" prop="messageContent">
-                <el-input
-                  v-model="formData.messageContent"
-                  type="textarea"
-                  placeholder="输入信息内容"
-                  :rows="4"
-                  show-word-limit
-                  maxlength="500"
-                />
+                <el-input v-model="formData.messageContent" type="textarea" placeholder="输入信息内容" :rows="4"
+                  show-word-limit maxlength="500" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -112,12 +82,14 @@
           <div class="card-header">
             <div class="header-title">
               <span>任务列表</span>
-              <span class="task-count">({{ tasks.length }})</span>
+              <span class="task-count">{{ tasks.length }}</span>
             </div>
             <div class="task-actions">
               <el-button-group>
                 <el-button @click="refreshTasks">
-                  <el-icon><Refresh /></el-icon>刷新
+                  <el-icon>
+                    <Refresh />
+                  </el-icon>刷新
                 </el-button>
                 <el-button :disabled="tasks.length === 0">
                   导入
@@ -133,14 +105,8 @@
           </div>
         </template>
 
-        <el-table
-          v-if="tasks.length > 0"
-          :data="sortedTasks"
-          style="width: 100%"
-          stripe
-          fit
-          :row-class-name="tableRowClassName"
-        >
+        <el-table v-if="tasks.length > 0" :data="sortedTasks" style="width: 100%" stripe fit
+          :row-class-name="tableRowClassName">
           <el-table-column prop="recipient" label="接收者" min-width="20px" />
           <el-table-column prop="messageContent" label="内容" min-width="20px">
             <template #default="{ row }">
@@ -161,10 +127,7 @@
           </el-table-column>
           <el-table-column label="状态" min-width="10px" fixed="right">
             <template #default="{ row }">
-              <el-tag
-                :type="row.status === 'pending' ? 'info' : 'success'"
-                size="small"
-              >
+              <el-tag :type="row.status === 'pending' ? 'info' : 'success'" size="small">
                 {{ row.status === 'pending' ? '待执行' : '已完成' }}
               </el-tag>
             </template>
@@ -172,18 +135,8 @@
           <el-table-column label="操作" min-width="16px" fixed="right">
             <template #default="{ row }">
               <div class="operation-buttons">
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="editTask(row.id)"
-                  :icon="Edit"
-                >编辑</el-button>
-                <el-button
-                  type="danger"
-                  size="small"
-                  @click="deleteTask(row.id)"
-                  :icon="Delete"
-                >删除</el-button>
+                <el-button type="primary" size="small" @click="editTask(row.id)" :icon="Edit">编辑</el-button>
+                <el-button type="danger" size="small" @click="deleteTask(row.id)" :icon="Delete">删除</el-button>
               </div>
             </template>
           </el-table-column>
@@ -213,15 +166,15 @@ const formData = reactive({
 const rules = {
   recipient: [
     { required: true, message: '请输入接收者', trigger: 'blur' },
-    { 
+    {
       validator: (_, value, callback) => {
         if (!value || !value.trim()) {
           callback(new Error('请输入接收者'))
         } else {
           callback()
         }
-      }, 
-      trigger: 'blur' 
+      },
+      trigger: 'blur'
     }
   ],
   sendTime: [
@@ -278,7 +231,7 @@ const submitForm = async () => {
       status: 'pending',
       createdAt: new Date().toISOString()
     }
-    
+
     const response = await fetch('/api/tasks', {
       method: 'POST',
       headers: {
@@ -313,7 +266,7 @@ const editTask = (taskId) => {
     formData.repeatType = task.repeatType
     formData.repeatDays = task.repeatDays
     formData.messageContent = task.messageContent
-    
+
     tasks.value = tasks.value.filter(t => t.id !== taskId)
     ElMessage({ message: '请修改任务信息', type: 'info' })
   }
@@ -340,7 +293,7 @@ const deleteTask = async (taskId) => {
       console.error('删除任务失败:', error)
       ElMessage.error('任务删除失败，请稍后重试')
     }
-  }).catch(() => {})
+  }).catch(() => { })
 }
 
 const formatDateTime = (dateString) => {
@@ -359,16 +312,12 @@ const refreshTasks = async () => {
     const response = await fetch('/api/tasks')
     if (response.ok) {
       const data = await response.json()
-      console.log('获取到的任务数据:', data)
       tasks.value = data
-      ElMessage({ message: '任务列表已刷新', type: 'success', duration: 1000 })
     } else {
       const errorText = await response.text()
-      console.error('刷新任务列表失败:', errorText)
       ElMessage.error(`刷新任务列表失败: ${errorText || '未知错误'}`)
     }
   } catch (error) {
-    console.error('刷新任务列表失败:', error)
     ElMessage.error(`刷新任务列表失败: ${error.message || '网络错误'}`)
   }
 }
@@ -378,8 +327,8 @@ const getRepeatText = (repeatType, repeatDays) => {
     '0': '周日', '1': '周一', '2': '周二', '3': '周三',
     '4': '周四', '5': '周五', '6': '周六'
   }
-  
-  switch(repeatType) {
+
+  switch (repeatType) {
     case 'none': return '不重复'
     case 'daily': return '每天'
     case 'workday': return '法定工作日'
@@ -402,14 +351,14 @@ onMounted(() => {
   --light-color: #f8fafc;
   --dark-color: #1e293b;
   --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --success-color: #10b981;
+  --text-secondary: #3b82f6;
+  --success-color: #8b5cf6;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
   --border-color: #e2e8f0;
 }
 
-/* 表格行样式 */
+
 .task-pending .el-table__cell {
   background-color: rgba(59, 130, 246, 0.1);
 }
@@ -418,8 +367,9 @@ onMounted(() => {
   background-color: rgba(16, 185, 129, 0.1);
 }
 
-/* 动画效果 */
-.task-creation-card, .task-list-section .el-card {
+
+.task-creation-card,
+.task-list-section .el-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -427,13 +377,14 @@ onMounted(() => {
   background-color: white;
 }
 
-.task-creation-card:hover, .task-list-section .el-card:hover {
+.task-creation-card:hover,
+.task-list-section .el-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.04);
   border-color: var(--primary-color);
 }
 
-/* 按钮悬停效果增强 */
+
 .el-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
@@ -534,7 +485,7 @@ onMounted(() => {
   margin-top: 4px;
 }
 
-/* 表格样式增强 */
+
 .el-table {
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -558,16 +509,16 @@ onMounted(() => {
   border-bottom: none;
 }
 
-.el-table--enable-row-hover .el-table__body tr:hover > td {
+.el-table--enable-row-hover .el-table__body tr:hover>td {
   background-color: rgba(59, 130, 246, 0.08);
 }
 
-/* 固定列样式优化 */
+
 .el-table__fixed-right {
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
 }
 
-/* 标签样式 */
+
 .el-tag--info {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--secondary-color);
@@ -586,16 +537,16 @@ onMounted(() => {
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .task-actions {
     width: 100%;
   }
-  
+
   .el-button-group {
     display: flex;
     width: 100%;
   }
-  
+
   .el-button-group .el-button {
     flex: 1;
   }

@@ -44,22 +44,22 @@
   "keyMetrics": [
     {
       "id": 1,
-      "value": 500,
+      "value": "500+",
       "label": "活跃企业客户"
     },
     {
       "id": 2,
-      "value": 10000,
+      "value": "9999+",
       "label": "自动化任务"
     },
     {
       "id": 3,
-      "value": 98,
+      "value": "98%",
       "label": "系统稳定性"
     },
     {
       "id": 4,
-      "value": 1000000,
+      "value": "10000+",
       "label": "消息发送量"
     }
   ],

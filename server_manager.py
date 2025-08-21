@@ -1,5 +1,4 @@
 import subprocess
-import platform
 import time
 import socket
 import webbrowser
@@ -23,32 +22,18 @@ def start_vue_server():
         
         print('正在启动Vue开发服务器...')
         
-        if platform.system() == 'Windows':
-            cmd = 'npm run serve'
-            process = subprocess.Popen(
-                cmd,
-                cwd=os.path.dirname(os.path.abspath(__file__)),
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                shell=True
-            )
-        else:
-            cmd = ['npm', 'run', 'serve']
-            process = subprocess.Popen(
-                cmd,
-                cwd=os.path.dirname(os.path.abspath(__file__)),
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                shell=False
-            )
+        cmd = ['npm', 'run', 'serve']
+        process = subprocess.Popen(
+            cmd,
+            cwd=os.path.dirname(os.path.abspath(__file__)),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=False
+        )
         
-        stdout, stderr = process.communicate()
-        print(f'Vue服务器输出: {stdout.decode() if stdout else "无"}')
-        if stderr:
-            print(f'Vue服务器错误: {stderr.decode()}')
-            
         print('Vue开发服务器已启动')
         time.sleep(3)
+        return process
     except Exception as e:
         print(f'启动Vue开发服务器失败: {e}')
 
